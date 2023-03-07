@@ -49,3 +49,68 @@ function 함수(...x:[string, boolean, ...(number|string)[]]) {
 }
 함수('a',true,6,3,'1',4)
 ```
+
+---
+
+# 03.07
+
+###### declare_ambient_module.ts
+
+```typescript
+// js에 있는 변수를 ts에서 이용
+
+console.log(a + 1);
+// 콘솔창에 동작은 잘되긴 함
+
+// 변수 재정의가 가능한 declare 문법
+declare let a; // => 어딘가에 분명 변수 a가 있으니 에러가 나지 않도록함
+// 일반 js파일 등에 있던 변수를 쓸 때 에러가 나지 않도록 재정의 하는데 쓰임
+// declare로 정의한 내용은 js로 변환되지 않음
+
+// 특히 js로 만든 라이브러리 사용할 때, 변수, 함수같은 걸 declare로 재정의하기도 함
+
+// ts 파일 -> ts파일로 변수를 가져다 쓰고 싶다면
+// import { a } from "./23_data2.ts";
+
+// ts의 특징 : 모든 ts 파일은 ambient modle(글로벌모듈)
+// 즉 ts 파일끼리는 import export가 없어도 서로 변수 사용 가능
+
+let name = 123; // 타입스크립트 기본파일에 이미 name이 존재
+
+// ts파일을 ambent 모듈이 아니라 로컬 모듈로 만드는법
+// ==> import export 하나라도 있으면 자동으로 로컬 모듈로 바뀌게 됨
+export {}; // => 현재 로컬모듈
+
+// 갑자기 글로벌 변수를 만들고 싶다면
+// declare global {} 안에 적으면 됨
+declare global 
+{
+  type Dog = string;
+}
+```
+
+###### data.ts
+
+declare_ambient_module.ts파일에서 declare global로 정의한 type -> Dog는 전역으로 사용이 가능해져서 다른 파일에서도 사용 가능
+
+```ts
+let animal : Dog = 'puppy'
+```
+
+###### declare_ambient_module.js
+
+```javascript
+// js에 있는 변수를 ts에서 이용
+Object.defineProperty(exports, "__esModule", { value: true });
+console.log(a + 1);
+// 일반 js파일 등에 있던 변수를 쓸 때 에러가 나지 않도록 재정의 하는데 쓰임
+// declare로 정의한 내용은 js로 변환되지 않음
+// 특히 js로 만든 라이브러리 사용할 때, 변수, 함수같은 걸 declare로 재정의하기도 함
+// ts 파일 -> ts파일로 변수를 가져다 쓰고 싶다면
+// import { a } from "./23_data2.ts";
+// ts의 특징 : 모든 ts 파일은 ambient modle(글로벌모듈)
+// 즉 ts 파일끼리는 import export가 없어도 서로 변수 사용 가능
+let name = 123; // 타입스크립트 기본파일에 이미 name이 존재
+```
+
+---
