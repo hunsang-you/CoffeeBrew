@@ -114,3 +114,74 @@ let name = 123; // 타입스크립트 기본파일에 이미 name이 존재
 ```
 
 ---
+
+# 03.08
+
+###### typescript 사용시 있는 ~~.d.ts파일에 대해 정리
+
+###### test.d.ts
+
+```typescript
+// 파일이름.d.ts
+// - 타입 정의 보관용 파일(자바스크립트로 컴파일되지 않음)
+// - 다른 ts파일에서 import 가능
+// ts파일에 타입정의가 너무 길면 d.ts파일 만들기도 함
+// 프로젝트에서 사용하는 타입을 쭉 정리해놓을 레퍼런스용으로 사용
+// tsconfig -> "declaration": true => ts파일마다 d.ts파일 자동생성 옵션
+
+// import / export 할 것이 많으면 namespace를 사용하거나 import * as ~~ 로 사용
+
+// export type Age = number;
+// export interface Person { name : string }
+type Age = number;
+interface Person { name : string }
+
+```
+
+
+
+###### index.ts
+
+```typescript
+// import { Age } from './types/common/23_test';
+// import * from './23_test.d'
+
+// index.d.ts.는 수정x
+// 기본적으로 d.ts는 글로벌 모듈이 아니다(타입들에 export를 해야한다)
+// 그래서 d.ts파일을 글로벌 모듈로 만드는 법
+// tsconfig -> "typeRoots": ["./폴더명"] => 여기있는 타입들은 글로벌하게 이용가능
+
+let age: Age = 20;
+let age2: Age = 30;
+let person : string = '홍길동';
+type Age2 = number;
+
+// 외부라이브러리 쓸 때 타입정의가 안되어 있다면
+// $().append() => 동작은 잘될지 몰라도 에러가 발생
+
+// 즉 j.query의 타입정의를 알아서 해주어야 함
+// Definitely Typed github repository에서 원하는 타입.d.ts 확인
+// 혹은 타입스크립트 공식홈페이지에서 검색(jquery)
+// npm 설치시엔 대부분 타입도 들어옴
+// npm i @types/jquery
+// node_modules/@types 폴더에 있는 타입들은 글로벌 모듈
+// tsconfig의 typeRoots를 따로 설정해놓으면 자동으로 @types를 포함하지 않음
+// 그러므로 typeRoots에 @types를 추가하거나 typeRoots 자체를 다 지운다
+$().append()
+```
+
+###### tsconfing.json
+
+```typescript
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "strictNullChecks": true,
+        "declaration": true,
+        // "typeRoots": ["./types/common"], // 해당폴더에 d.ts파
+        
+    },
+
+}
+```
