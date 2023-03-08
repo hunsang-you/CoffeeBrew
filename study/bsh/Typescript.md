@@ -1,4 +1,5 @@
 # 타입스크립트
+
 qodnwk
 
 # 타입스크립트를 배우는 이유?
@@ -501,3 +502,38 @@ function 함수({ user, comment, admin }: UserType): void {
 조건1: 파라미터문법사용
 
 조건2: 전부 콘솔창에 출력
+
+---
+
+0308
+footer 하단 고정
+
+```
+function Main() {
+  return (
+    <div className='wrapper'>
+      <div className='contentWrapper'>
+        <Navbar />
+        <Banner />
+        <Contents/>
+      </div>
+        <Footer />
+    </div>
+  )
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.contentWrapper{
+  flex: 1;
+}
+```
+
+세로로 flex를 써서 위의 content가 나머지 공간을 다 쓰도록
+flex: 1 을 써주게 되면 해결 됨.
+이때 중요한 건 react에서는 heigit: 100%가 먹지 않으므로
+height: 100vh로 해주면 됨.
