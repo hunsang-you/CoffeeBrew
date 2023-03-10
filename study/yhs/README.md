@@ -205,7 +205,6 @@ let myCar = new Car1('morning');
 // Car1이라는 class를 사용한 object들은 model과 price 속성을 가지게 됨
 // class가 model, price 속성을 가지고 있는지 타입으로 확인하고 싶으면?
 // interface + implements 키워드로 확인
-
 ```
 
 ```typescript
@@ -238,7 +237,10 @@ class Car3 implements CarType {
 
 // Car3의 경우, model이 string이 반영되는 것이 아닌, any 타입
 // implement는 class의 타입을 체크하는 용도일 뿐, 할당하는게 아님을 꼭 명심
-
 ```
 
 ---
+
+# 03.10
+
+피그마 작업
