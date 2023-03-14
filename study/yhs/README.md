@@ -244,3 +244,101 @@ class Car3 implements CarType {
 # 03.10
 
 피그마 작업
+
+---
+
+# 03.14
+
+#### object index signatures
+
+
+
+object자료에 타입을 만들어 주고 싶은데
+
+어떤 속성이 들어올지 모르거, 혹은 타입지정할 속성이 너무 많을때
+
+index signatures 사용
+
+```typescript
+interface StringOnly {
+  [key: string]: string
+}
+
+let obj :StringOnly = {
+  name : 'kim',
+  age : '20',
+  location : 'seoul'
+}
+```
+
+stringOnly라는 interface 생성
+
+타입을 적을 때 `[key : string] : string` 이라고 적은 것은
+
+###### 모든 string으로 들어오는 key값에 할당되는 value는 string이어야 한다
+
+라는 것, 즉 ` {모든속성 : string}`
+
+
+
+```typescript
+interface StringOnly {
+  age : number,
+  [key: string]: string,
+}
+
+interface StringOnly {
+  age : string,  ///가능  
+  [key: string]: string,
+}
+```
+
+모든속성 : string이어야 하므로 age:number는 오류를 발생시킴
+
+
+
+##### **Recursive Index Signatures**
+
+```typescript
+let obj = {
+  'font-size' : {
+    'font-size' : {
+      'font-size' : 14
+    }
+  }
+}
+```
+
+중첩된 Object들을 한 번에 타입지정하려면?
+
+
+
+```typescript
+interface MyType {
+  'font-size' : {
+    'font-size' : {
+      'font-size' : number
+    }
+
+  }
+}
+```
+
+
+
+```typescript
+interface MyType {
+  'font-size': MyType | number
+}
+
+
+let obj :MyType = {
+  'font-size' : {
+    'font-size' : {
+      'font-size' : 14
+    }
+  }
+}
+```
+
+두 가지 사용 가능
