@@ -55,7 +55,7 @@ jwt:
 
 user:
   url:
-    client: ${public_link}
+    client: https://j8b305.p.ssafy.io
     logout: /logout
     admin: /api/admin
     member: /api/member
