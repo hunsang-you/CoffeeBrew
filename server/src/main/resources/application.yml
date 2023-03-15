@@ -1,0 +1,87 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8081
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      pattern: '%{yyyy-MM-dd HH:mm:ss}t\t%s\t%r\t%{User-Agent}i\t%{Referer}i\t%a\t%b'
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${datasource}/${schema}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${dbUser}
+    password: ${dbPwd}
+    hikari:
+      connection-timeout: 10000000
+      validation-timeout: 10000000
+      max-lifetime: 580000000
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: 'true'
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    generate-ddl: true
+  devtools:
+    restart:
+      enabled: false
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+  main:
+    allow-circular-references: true
+  web:
+    resources:
+      add-mappings: false
+
+jwt:
+  header:
+    access: Authorization
+    refresh: RefreshToken
+  type:
+    access: "Bearer "
+    refresh: "refresh-"
+  time:
+    access: 18000000
+    refresh: 6048000000
+  secret:
+    key: ${jwt_secret_key}
+
+user:
+  url:
+    client: ${public_link}
+    logout: /logout
+    admin: /api/admin
+    member: /api/member
+  role:
+    admin: ROLE_ADMIN
+    member: ROLE_MEMBER
+  permit:
+    all: '/**'
+  session:
+    id: 'JSESSIONID'
+  cors:
+    method: 'POST, GET, PUT, PATCH, DELETE'
+    header: '*'
+    pattern: '*'
+    source:
+      pattern: '/**'
+  cookie:
+    credential: true
+
+logging:
+  level:
+    b305.coffeebrew.server: debug
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
