@@ -97,3 +97,73 @@ Builder 패턴의 장점
 - 사용방법
   1. xml 파일에 설정
   2. 자바파일안에 설정
+
+#0317
+
+### Spring boot application properties
+
+- 중요한 설정 key값들은 환경 변수로 빼서 저장 <br>
+
+```
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${datasource}/${schema}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${dbUser}
+    password: ${dbPwd}
+    hikari:
+      connection-timeout: 10000000
+      validation-timeout: 10000000
+      max-lifetime: 580000000
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: 'true'
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    generate-ddl: true
+  devtools:
+    restart:
+      enabled: false
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+  main:
+    allow-circular-references: true
+  web:
+    resources:
+      add-mappings: false
+```
+
+### Kakao Oauth설정
+
+```
+spring:
+      security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${rest_api_key}
+            client-secret: ${client_secret_key}
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+            client-name: Kakao
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+              - gender
+              - age_range
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+```
