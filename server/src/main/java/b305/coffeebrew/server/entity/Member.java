@@ -29,8 +29,8 @@ public class Member extends BaseAtTime implements Serializable {
     private Long idx;
 
     @NotBlank
-    @Column(name = "member_id", unique = true)
-    private String memberId; // 사용자 ID
+    @Column(name = "member_email", unique = true)
+    private String memberEmail; // 사용자 email
 
     @NotBlank
     @Column(name = "sns_type")

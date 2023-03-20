@@ -25,9 +25,9 @@ public class DecodeEncodeHandler {
 
 	public String roleValid(String memberId) {
 		log.info(METHOD_NAME + "- roleValid() ...");
-		if (memberRepository.existsByMemberId(memberId)) {
+		if (memberRepository.existsByMemberEmail(memberId)) {
 			log.info("Member memberId Validate - Success");
-			Member member = memberRepository.findByMemberId(memberId);
+			Member member = memberRepository.findByMemberEmail(memberId);
 			return member.getRole();
 		}
 		log.warn("Member memberId Validate - Fail");
@@ -37,10 +37,10 @@ public class DecodeEncodeHandler {
 	public boolean memberIdValid(String memberId) {
 		log.info(METHOD_NAME + "- emailValid() ...");
 		try {
-			Member member = memberRepository.findByMemberId(memberId);
+			Member member = memberRepository.findByMemberEmail(memberId);
 			if (member != null) {
 				log.info("Memeber Validate - Success");
-				if (member.getMemberId() != null) {
+				if (member.getMemberEmail() != null) {
 					log.info("Member memberId Validate - Success");
 					return true;
 				} else log.warn("Member memberId Validate - Fail");
