@@ -43,7 +43,8 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(globalFilter.getPermitAll()).permitAll()
-                .antMatchers("/api/**").authenticated();
+                .antMatchers("/api/**").authenticated()
+                .and().oauth2Login();// oauth2추가 설정 필요 handler
         return http.build();
     }
 }

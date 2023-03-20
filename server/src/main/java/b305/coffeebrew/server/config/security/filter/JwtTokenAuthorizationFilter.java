@@ -18,7 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+import static b305.coffeebrew.server.config.utils.Msg.*;
 /**
  * 제외 지정한 URL 이 아닌 모든 URL 이 인가된 Token 을 보유하고 있는지 검증하는 클래스
  * 액세스 토큰 보유를 확인해서 올바른 토큰을 보유하고 있는 경우 doFilter 를 사용하여 다음 필터로 패스
