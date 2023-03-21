@@ -21,15 +21,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Likelist extends BaseAtTime implements Serializable {
 
-    // 사용자 Idx
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    // 등록자 IDX
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
-    private Member member;// 사용자
+    private Member member;
 
     @NotBlank
     @Column(name = "item_type")
