@@ -1,0 +1,31 @@
+[
+  {"student id": 100,
+    "name": "Tony",
+    "score": 90.72
+  },
+  {
+    "student id": 101,
+    "name": "Pilwoong",
+    "score": 98.43
+  },
+  {
+    "student id": 102,
+    "name": "Jane",
+    "score": 64.19
+  },
+  {
+    "student id": 103,
+    "name": "Doyeon",
+    "score": 81.30
+  },
+  {
+    "student id": 104,
+    "name": "James",
+    "score": 99.14
+  },
+  {
+    "student id": 105,
+    "name": "Steve",
+    "score": 78.09
+  }
+]
