@@ -1,16 +1,19 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
-import logo from './logo.svg';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Router from './Router';
 import './App.css';
 
-const Tests = tw.p`bg-slate-600 text-red-600 text-center`;
+const ContentContainer = tw.div`mt-10vh w-1200 h-90vh mx-auto flex flex-col`;
 function App() {
   return (
     <div className="App">
-      <Tests>
-        유헌상
-        바보ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-      </Tests>
+      <Navbar />
+      <ContentContainer>
+        <Router />
+      </ContentContainer>
+      <Footer />
     </div>
   );
 }
