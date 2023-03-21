@@ -22,20 +22,36 @@ public class BeanScore extends BaseAtTime implements Serializable {
 
     // 식별번호
     @Id
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bean_idx")
+    private Bean beanIdx;
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private int overall; // 총점
 
     @NotBlank
-    private String description; // 설명
+    private int aroma; // 향
 
     @NotBlank
-    private String species; // 원두 원종
+    private int flavor; // 맛
 
     @NotBlank
-    private String origin; // 원산지
+    private int acidity; // 산미
 
     @NotBlank
-    private String processing; // 원두 가공
+    private int body; // 바디감
+
+    @NotBlank
+    private int balance; // 밸런스
+
+    @NotBlank
+    private int after; // 후미
+
+    @NotBlank
+    private String aroma_note; // 향 상세
+
+    @NotBlank
+    private String flavor_note; // 맛 상세
 
     @Override
     public void prePersist() {
