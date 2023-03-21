@@ -15,3 +15,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+	font-family: "IbmPlexSansKrLight";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-Light.ttf);
+}
+
+@font-face {
+	font-family: "IbmPlexSansKrMedium";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-Medium.ttf);
+}
+@font-face {
+	font-family: "IbmPlexSansKrRegular";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-Regular.ttf);
+}
+
+@font-face {
+	font-family: "IbmPlexSansKrSemiBold";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-SemiBold.ttf);
+}
+:root {
+  --font-IbmPlexSansKrLight: "IbmPlexSansKrLight";
+  --font-IbmPlexSansKrMedium: "IbmPlexSansKrMedium";
+  --font-IbmPlexSansKrRegular: "IbmPlexSansKrRegular";
+  --font-IbmPlexSansKrSemiBold: "IbmPlexSansKrSemiBold";
+}
