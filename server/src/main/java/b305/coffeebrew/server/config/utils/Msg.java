@@ -27,4 +27,7 @@ public interface Msg {
 	// member
 	String SUCCESS_MEMBER_PROFILE = "회원 프로필 조회에 성공하였습니다.";
 	String SUCCESS_MEMBER_MYPAGE= "회원 마이 페이지 조회에 성공하였습니다.";
+
+	String SUCCESS_MEMBER_DELETE= "회원 탈퇴에 성공하였습니다.";
+	String FAIL_MEMBER_DELETE= "회원 탈퇴에 실패하였습니다.";
 }
