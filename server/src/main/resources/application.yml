@@ -18,6 +18,9 @@ spring:
       connection-timeout: 10000000
       validation-timeout: 10000000
       max-lifetime: 580000000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     properties:
       hibernate:
@@ -46,7 +49,7 @@ spring:
           kakao:
             client-id: ${rest_api_key}
             client-secret: ${client_secret_key}
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: http://localhost:8081/api/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao

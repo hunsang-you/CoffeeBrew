@@ -11,6 +11,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Optional;
 
 @DynamicInsert
 @DynamicUpdate
@@ -29,12 +30,15 @@ public class Member extends BaseAtTime implements Serializable {
     private Long idx;
 
     @NotBlank
-    @Column(name = "member_id", unique = true)
-    private String memberId; // 사용자 ID
+    @Column(name = "member_email", unique = true)
+    private String memberEmail; // 사용자 email
 
     @NotBlank
     @Column(name = "sns_type")
     private String snsType; // 사용자 sns 종류
+
+    @NotBlank
+    private String hashcode; // #GP8MV
 
     private String profileImg; // 프사
 
@@ -42,7 +46,9 @@ public class Member extends BaseAtTime implements Serializable {
     private String nickname; // 사용자 nickname
 
     private String gender; // 사용자 nickname
-    private int age; // 사용자 nickname
+
+    @Column(name = "age_range")
+    private String  ageRange; // 사용자 나잇대
 
     @ColumnDefault("'ROLE_MEMBER'")
     private String role;
@@ -57,8 +63,10 @@ public class Member extends BaseAtTime implements Serializable {
         this.role = "ROLE_MEMBER";
     }
 
-    public void update(SignModReqDTO signModReqDTO) {
+    public Member update(SignModReqDTO signModReqDTO) {
         this.profileImg = signModReqDTO.getProfileImg();
         this.nickname = signModReqDTO.getNickname();
+        return this;
     }
+
 }

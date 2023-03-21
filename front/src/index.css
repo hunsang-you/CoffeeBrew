@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+	font-family: "IbmPlexSansKrLight";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-Light.ttf);
+}
+
+@font-face {
+	font-family: "IbmPlexSansKrMedium";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-Medium.ttf);
+}
+@font-face {
+	font-family: "IbmPlexSansKrRegular";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-Regular.ttf);
+}
+
+@font-face {
+	font-family: "IbmPlexSansKrSemiBold";
+	src: url(./assets/IBM_Plex_Sans_KR/IBMPlexSansKR-SemiBold.ttf);
+}
+:root {
+  --font-IbmPlexSansKrLight: "IbmPlexSansKrLight";
+  --font-IbmPlexSansKrMedium: "IbmPlexSansKrMedium";
+  --font-IbmPlexSansKrRegular: "IbmPlexSansKrRegular";
+  --font-IbmPlexSansKrSemiBold: "IbmPlexSansKrSemiBold";
+}

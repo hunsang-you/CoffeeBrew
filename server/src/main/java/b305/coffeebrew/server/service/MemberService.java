@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -45,7 +47,7 @@ public class MemberService {
         member.update(signModReqDTO);
         memberRepository.updateMember(profileImg, nickname, idx);
 
-        return member.getMemberId();
+        return member.getMemberEmail();
     }
 
     /**
@@ -56,6 +58,19 @@ public class MemberService {
 
         List<Member> MyInfoList = memberRepository.findMyProfile(idx);
         return MyInfoList.stream().map(member -> ProfileResDTO.builder().build().of(member)).collect(Collectors.toList()).get(0);
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    @Transactional
+    public Long deleteMember(long memberIdx) {
+        Optional<Member> member = memberRepository.findById(memberIdx);
+        if(Objects.equals(member.get().getIdx(), memberIdx)) {
+            memberRepository.deleteById(member.get().getIdx());
+            return member.get().getIdx();
+        }
+        return -1L;
     }
 
 //    @Transactional

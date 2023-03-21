@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -58,9 +59,9 @@ public class MemberDTO {
         this.expired = expired;
     }
 
-    public MemberDTO of(Member member) {
+    public MemberDTO of(Optional<Member> member) {
         return MemberDTO.builder()
-                .idx(member.getIdx())
+                .idx(member.get().getIdx())
                 .build();
     }
 }
