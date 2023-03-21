@@ -5,6 +5,7 @@ import b305.coffeebrew.server.config.utils.Msg;
 import b305.coffeebrew.server.config.utils.ResponseDTO;
 import b305.coffeebrew.server.dto.member.SignModReqDTO;
 import b305.coffeebrew.server.dto.member.mod;
+import b305.coffeebrew.server.exception.ErrorCode;
 import b305.coffeebrew.server.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,6 +53,19 @@ public class MemberController {
     })
     public ResponseEntity<ResponseDTO> readProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_PROFILE, memberService.readProfile(principalDetails.getMember().getIdx())));
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    @DeleteMapping()
+    @ApiOperation(value="회원 탈퇴", notes = "회원 탈퇴를 진행")
+    public ResponseEntity<ResponseDTO> delete(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Long result = memberService.deleteMember(principalDetails.getMember().getIdx());
+        if(result == -1L) {
+            return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.SUCCESS_MEMBER_DELETE));
+        }
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MEMBER_DELETE));
     }
 
     /**

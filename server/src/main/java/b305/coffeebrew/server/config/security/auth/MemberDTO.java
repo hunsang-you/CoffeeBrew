@@ -61,7 +61,7 @@ public class MemberDTO {
 
     public MemberDTO of(Optional<Member> member) {
         return MemberDTO.builder()
-                .idx(member.getIdx())
+                .idx(member.get().getIdx())
                 .build();
     }
 }
