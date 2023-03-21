@@ -30,12 +30,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		// userRequest에 있는 access Token으로 정보 얻기
 		OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
+
 		// registrationId: 현재 로그인 진행 중인 서비스를 구분하는 코드(네이버, 카카오... 로그인인지 구분하기 위해 사용)
 		String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
 		// userNameAttributeName: Oauth2 로그인 진행시 키가 되는 필드 값(Primary key와 비슷)
 		String userNameAttributeName = userRequest.getClientRegistration()
 				.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 		log.debug("registrationId = {}", registrationId);
+
 		// naver는 response, kakao는 kakao_account 안에 필요한 정보가 들어가 있으니 해당 내용을 application-oauth.yml에 미리 설정해둠
 		log.debug("userNameAttributeName = {}", userNameAttributeName);
 
