@@ -1,5 +1,6 @@
 package b305.coffeebrew.server.dto.auth;
 
+import b305.coffeebrew.server.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class OAuth2Attribute {
     private String email;
     private String name;
     private String ageRange;
+    private String gender;
     private String nickname;
     private String picture;
     private String provider;
@@ -41,6 +43,7 @@ public class OAuth2Attribute {
                 .picture((String) kakaoProfile.get("profile_image_url"))
                 .nickname((String) kakaoProfile.get("nickname"))
                 .ageRange((String) kakaoAccount.get("age_range"))
+                .gender((String) kakaoAccount.get("gender"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .provider("KAKAO")
@@ -62,19 +65,16 @@ public class OAuth2Attribute {
 //                .build();
 //    }
 
-    public Map<String,Object> convertToMap(){
-        Map<String,Object> map = new HashMap<>();
-
-        map.put("id",attributeKey);
-        map.put("key",attributeKey);
-        map.put("name",name);
-        map.put("nickname",nickname);
-        map.put("ageRange", ageRange);
-        map.put("email",email);
-        map.put("picture",picture);
-        map.put("provider",provider);
-
-        return map;
+    public Member toEntity() {
+        return Member.builder()
+                .nickname(name)
+                .memberEmail(email)
+                .profileImg(picture)
+                .role("ROLE_MEMBER")
+                .snsType(provider)
+                .gender(gender)
+                .ageRange(ageRange)
+                .build();
     }
 
 }
