@@ -45,7 +45,7 @@ public class MemberService {
         member.update(signModReqDTO);
         memberRepository.updateMember(profileImg, nickname, idx);
 
-        return member.getMemberId();
+        return member.getMemberEmail();
     }
 
     /**

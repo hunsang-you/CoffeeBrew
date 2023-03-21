@@ -44,7 +44,12 @@ public class MemberController {
     /**
      * 회원 프로필 조회
      */
-    @GetMapping("/profile/read")
+    @GetMapping("/profile")
+    @ApiOperation(value="회원 프로필 조회", notes = "회원 닉네임, 프로필 이미지 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
     public ResponseEntity<ResponseDTO> readProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_PROFILE, memberService.readProfile(principalDetails.getMember().getIdx())));
     }
