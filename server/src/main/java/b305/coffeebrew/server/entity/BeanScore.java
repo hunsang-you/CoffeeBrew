@@ -22,6 +22,9 @@ public class BeanScore extends BaseAtTime implements Serializable {
 
     // 식별번호
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idx;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bean_idx")
     private Bean beanIdx;

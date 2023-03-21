@@ -22,11 +22,13 @@ public class CapsuleScore extends BaseAtTime implements Serializable {
 
     // 식별번호
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idx;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "capsule_idx")
     private Bean capsuleIdx;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int overall; // 총점
 
     @NotBlank

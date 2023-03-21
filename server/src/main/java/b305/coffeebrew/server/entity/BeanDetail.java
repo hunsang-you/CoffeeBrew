@@ -25,6 +25,10 @@ public class BeanDetail extends BaseAtTime implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bean_idx")
+    private Bean beanIdx;
+
     @NotBlank
     private String description; // 설명
 

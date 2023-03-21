@@ -25,6 +25,10 @@ public class CapsuleDetail extends BaseAtTime implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "capsule_idx")
+    private Bean capsuleIdx;
+
     @NotBlank
     private String description; // 설명
 
