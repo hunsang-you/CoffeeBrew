@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnHoverOutside } from '../hooks/useOnHoverOutside';
 import tw from 'tailwind-styled-components';
+import { Tests } from './Tests';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isMenuDropDownOpen, setMenuDropDownOpen] = useState(false);
+  const closeHoverMenu = () => {
+    setMenuDropDownOpen(false);
+  };
+  useOnHoverOutside(dropdownRef, closeHoverMenu);
   return (
-    <NavBa>
+    <NavBa ref={dropdownRef} onMouseOver={() => setMenuDropDownOpen(true)}>
+      {isMenuDropDownOpen && <Tests />}
       <NDiv
         onClick={() => {
           navigate('/');
