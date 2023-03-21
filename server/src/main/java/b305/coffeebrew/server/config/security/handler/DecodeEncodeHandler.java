@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @Slf4j
 public class DecodeEncodeHandler {
@@ -27,8 +29,8 @@ public class DecodeEncodeHandler {
 		log.info(METHOD_NAME + "- roleValid() ...");
 		if (memberRepository.existsByMemberEmail(memberId)) {
 			log.info("Member memberId Validate - Success");
-			Member member = memberRepository.findByMemberEmail(memberId);
-			return member.getRole();
+			Optional<Member> member = memberRepository.findByMemberEmail(memberId);
+			return member.get().getRole();
 		}
 		log.warn("Member memberId Validate - Fail");
 		return null;
@@ -37,10 +39,10 @@ public class DecodeEncodeHandler {
 	public boolean memberIdValid(String memberId) {
 		log.info(METHOD_NAME + "- emailValid() ...");
 		try {
-			Member member = memberRepository.findByMemberEmail(memberId);
+			Optional<Member> member = memberRepository.findByMemberEmail(memberId);
 			if (member != null) {
 				log.info("Memeber Validate - Success");
-				if (member.getMemberEmail() != null) {
+				if (null != member.get().getMemberEmail()) {
 					log.info("Member memberId Validate - Success");
 					return true;
 				} else log.warn("Member memberId Validate - Fail");

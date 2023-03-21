@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Member findByMemberEmail(String memberEmail);
-
+//    Member findByMemberEmail(String memberEmail);
+    Optional<Member> findByMemberEmail(String memberEmail); // 이미 email을 통해 생성된 사용자인지 체크
     @Query("SELECT m FROM Member m WHERE m.idx = :idx")
     List<Member> findMyProfile(@Param("idx") long idx);
 
@@ -21,5 +22,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     int updateMember(@Param("profileImg") String profileImg, @Param("nickname") String nickname, @Param("idx") long idx);
 
     @Query("select m.idx from Member m where m.memberEmail like :memberEmail")
-    Long findIdxByMemberId(String memberEmail);
+    Optional<Long> findIdxByMemberEmail(String memberEmail);
 }

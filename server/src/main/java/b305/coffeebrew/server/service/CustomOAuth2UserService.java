@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.auth.OAuth2Attribute;
+import b305.coffeebrew.server.dto.member.SignModReqDTO;
 import b305.coffeebrew.server.entity.Member;
 import b305.coffeebrew.server.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import java.util.stream.Stream;
 
 import java.util.Collections;
 import java.util.Map;
@@ -43,11 +45,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuth2Attribute oAuth2Attribute = OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
 		// 만들어진 객체를 map 형식으로 변환 후 OAuth2User 기본객체인 DefaultOAuth2User 생성후 리턴 ( 권한, 유저 데이터, nameAttributeKey ( 사용자 식별을 하기위한 키 ))
-		Map<String,Object> memberAttribute = oAuth2Attribute.convertToMap();
-		log.debug("login email = {}", (String) memberAttribute.get("email"));
+		Member member = saveOrUpdate(oAuth2Attribute);
+		log.debug("member = {}", member);
 
 		return new DefaultOAuth2User(
-				Collections.singleton(new SimpleGrantedAuthority("ROLE_MEMBER")),
-				memberAttribute, "email");
+				Collections.singleton(new SimpleGrantedAuthority(member.getRole())),
+				oAuth2Attribute.getAttributes(), oAuth2Attribute.getAttributeKey());
+	}
+	private Member saveOrUpdate(OAuth2Attribute attributes) {
+		Member member = memberRepository.findByMemberEmail(attributes.getEmail())
+				.map(entity -> entity.update(new SignModReqDTO(attributes.getName(), attributes.getPicture())))
+				.orElse(attributes.toEntity());
+		return memberRepository.save(member);
 	}
 }
