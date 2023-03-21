@@ -37,13 +37,18 @@ public class Member extends BaseAtTime implements Serializable {
     @Column(name = "sns_type")
     private String snsType; // 사용자 sns 종류
 
+    @NotBlank
+    private String hashcode; // #GP8MV
+
     private String profileImg; // 프사
 
     @NotBlank
     private String nickname; // 사용자 nickname
 
     private String gender; // 사용자 nickname
-    private int age; // 사용자 nickname
+
+    @Column(name = "age_range")
+    private int ageRange; // 사용자 나잇대
 
     @ColumnDefault("'ROLE_MEMBER'")
     private String role;
