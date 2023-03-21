@@ -18,6 +18,9 @@ spring:
       connection-timeout: 10000000
       validation-timeout: 10000000
       max-lifetime: 580000000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     properties:
       hibernate:
