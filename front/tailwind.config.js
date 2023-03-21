@@ -8,16 +8,21 @@ module.exports = {
         fotColor: '#222222',
       },
       width: {
-        '88vw': '88vw',
         1200: '1200px',
       },
       height: {
         920: '920px',
-        '10vh': '10vh',
-        '90vh': '90vh',
+        '10vh': '7vh',
+        '90vh': '93vh',
+      },
+      minHeight: {
+        '90vh': '93vh',
       },
       margin: {
-        '10vh': '10vh',
+        '10vh': '7vh',
+      },
+      zIndex: {
+        100: 100,
       },
     },
   },

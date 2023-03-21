@@ -5,7 +5,6 @@ import Footer from './components/Footer';
 import Router from './Router';
 import './App.css';
 
-const ContentContainer = tw.div`mt-10vh w-1200 h-90vh mx-auto flex flex-col`;
 function App() {
   return (
     <div className="App">
@@ -18,4 +17,5 @@ function App() {
   );
 }
 
+const ContentContainer = tw.div`mt-10vh min-h-90vh flex flex-col`;
 export default App;

@@ -13,4 +13,4 @@ const Loading = () => {
 
 export default Loading;
 
-const LoadingDiv = tw.div`absolute h-screen w-88vw top-0 z-50 flex items-center justify-center flex-col `;
+const LoadingDiv = tw.div`absolute h-screen w-screen top-0 z-100 flex items-center justify-center flex-col `;

@@ -52,7 +52,7 @@ const Navbar = () => {
   );
 };
 
-const NavBa = tw.nav`fixed top-0 h-10vh w-full flex border-2 border-solid bg-navColor`;
+const NavBa = tw.nav`fixed top-0 h-10vh w-screen flex bg-navColor z-50`;
 const NDiv = tw.div`w-full flex justify-center items-center text-base`;
 
 export default Navbar;
