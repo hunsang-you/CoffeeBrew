@@ -62,9 +62,6 @@ public class Review extends BaseAtTime implements Serializable {
     private int balance; // 밸런스
 
     @NotBlank
-    private int after; // 후미
-
-    @NotBlank
     private String aroma_note; // 향 상세
 
     @NotBlank
