@@ -61,6 +61,7 @@ public class Member extends BaseAtTime implements Serializable {
     public void prePersist() {
         super.prePersist();
         this.role = "ROLE_MEMBER";
+        this.expired = false;
     }
 
     public Member update(SignModReqDTO signModReqDTO) {
