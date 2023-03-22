@@ -1,5 +1,6 @@
 package b305.coffeebrew.server.dto.auth;
 
+import b305.coffeebrew.server.config.utils.HashCodeGenerator;
 import b305.coffeebrew.server.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -74,6 +75,7 @@ public class OAuth2Attribute {
                 .snsType(provider)
                 .gender(gender)
                 .ageRange(ageRange)
+                .hashcode(HashCodeGenerator.generate())
                 .build();
     }
 

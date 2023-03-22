@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +38,7 @@ public class WebSecurityConfig {
                 .logoutSuccessHandler(globalFilter.logoutSuccessHandler())
                 .and()
 //                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
-                .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 필요한가? Form기반 아닌가
+//                .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 //                .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
