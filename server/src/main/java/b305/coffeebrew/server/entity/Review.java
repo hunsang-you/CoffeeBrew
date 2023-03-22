@@ -27,7 +27,7 @@ public class Review extends BaseAtTime implements Serializable {
     private Long idx;
 
     // 회원 식별
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private Member memberIdx;
 

@@ -29,6 +29,7 @@ public class CapsuleScore extends BaseAtTime implements Serializable {
     @JoinColumn(name = "capsule_idx")
     private Capsule capsuleIdx;
 
+    @NotBlank
     private int overall; // 총점
 
     @NotBlank
