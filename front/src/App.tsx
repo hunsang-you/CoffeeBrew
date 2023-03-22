@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './components/navbarandfoot/Navbar';
+import Footer from './components/navbarandfoot/Footer';
 import Router from './Router';
 import './App.css';
 

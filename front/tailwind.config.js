@@ -7,8 +7,12 @@ module.exports = {
         navColor: '#F9F5E0',
         fotColor: '#222222',
       },
+      textColor: {
+        navFontColor: '#4A2919',
+      },
       width: {
         1200: '1200px',
+        120: '120px',
       },
       height: {
         920: '920px',

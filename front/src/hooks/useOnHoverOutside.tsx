@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, MouseEvent, RefObject } from 'react';
 
 // type CustomMouseEvent = MouseEvent<HTMLDivElement, MouseEvent>;
-type HoverType = (ref: any | object, handler: Function) => void;
-type ListenerType = (event: MouseEvent | React.BaseSyntheticEvent) => void;
+type HoverType = (ref: RefObject<HTMLElement>, handler: () => void) => void;
+type ListenerType = (
+  event: React.MouseEvent | React.BaseSyntheticEvent,
+) => void;
 export const useOnHoverOutside: HoverType = (ref, handler) => {
   useEffect(() => {
-    console.log('2');
-    const listener = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        handler(event);
+    const listener = (event: CustomEvent<React.MouseEvent>) => {
+      if (ref.current && ref.current.contains(event.target as Node)) {
+        return;
       }
+      handler();
     };
-    document.addEventListener('mouseover', listener);
+    document.addEventListener('mouseover', listener as EventListener);
     return () => {
-      document.removeEventListener('mouseout', listener);
+      document.removeEventListener('mouseleave', listener as EventListener);
     };
   }, [ref, handler]);
 };
