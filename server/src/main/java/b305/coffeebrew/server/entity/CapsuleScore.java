@@ -12,7 +12,7 @@ import java.io.Serializable;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "bean_score")
+@Table(name = "capsule_score")
 @Getter
 @Setter
 @Builder
@@ -27,7 +27,7 @@ public class CapsuleScore extends BaseAtTime implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "capsule_idx")
-    private Bean capsuleIdx;
+    private Capsule capsuleIdx;
 
     private int overall; // 총점
 

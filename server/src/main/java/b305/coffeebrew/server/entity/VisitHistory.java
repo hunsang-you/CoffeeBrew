@@ -13,7 +13,7 @@ import java.io.Serializable;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "shop_history")
+@Table(name = "visit_history")
 @Getter
 @Setter
 @Builder
