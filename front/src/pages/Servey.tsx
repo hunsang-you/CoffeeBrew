@@ -1,7 +1,8 @@
 import React from 'react';
+import * as S from '../components/useageStyle';
 
 const Survey = () => {
-  return <div>설문조사페이지입니다.</div>;
+  return <S.ContentContainer>설문조사페이지입니다.</S.ContentContainer>;
 };
 
 export default Survey;
