@@ -49,11 +49,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		// 만들어진 객체를 map 형식으로 변환 후 OAuth2User 기본객체인 DefaultOAuth2User 생성후 리턴 ( 권한, 유저 데이터, nameAttributeKey ( 사용자 식별을 하기위한 키 ))
 		Member member = saveOrUpdate(oAuth2Attribute);
-		log.debug("member = {}", member);
-
+		log.debug("getAttributes = {}", oAuth2Attribute.getAttributes());
 		return new DefaultOAuth2User(
 				Collections.singleton(new SimpleGrantedAuthority(member.getRole())),
-				oAuth2Attribute.getAttributes(), oAuth2Attribute.getAttributeKey());
+				oAuth2Attribute.getAttributes(), "email");
 	}
 	private Member saveOrUpdate(OAuth2Attribute attributes) {
 		Member member = memberRepository.findByMemberEmail(attributes.getEmail())
