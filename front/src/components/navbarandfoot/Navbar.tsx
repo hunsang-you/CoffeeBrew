@@ -8,19 +8,20 @@ import { LoginModal } from '../login/Login';
 const Navbar = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isMenuDropDownOpen, setMenuDropDownOpen] = useState(false);
+  const [isMenuDropDownOpen, setMenuDropDownOpen] = useState(true);
   const closeHoverMenu = () => {
     setMenuDropDownOpen(false);
   };
   useOnHoverOutside(dropdownRef, closeHoverMenu);
   return (
     <div
+      className=""
       ref={dropdownRef}
       onMouseOver={() => setMenuDropDownOpen(true)}
       onMouseOut={() => setMenuDropDownOpen(false)} //외부로나갔을때 사라지게
     >
       <NavBa>
-        <div className="flex w-1200 mx-auto justify-between px-5">
+        <div className="flex w-1200 mx-auto justify-between ">
           <NDiv
             onClick={() => {
               navigate('/');

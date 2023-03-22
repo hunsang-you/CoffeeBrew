@@ -54,6 +54,7 @@ export const LoginModal = () => {
   return (
     <div>
       <button
+        className="animate-bounce"
         onClick={() => {
           handleClickOpen();
         }}
