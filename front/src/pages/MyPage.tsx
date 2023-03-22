@@ -1,7 +1,8 @@
 import React from 'react';
+import * as S from '../components/useageStyle';
 
 const MyPage = () => {
-  return <div>마이페이지입니다.</div>;
+  return <S.ContentContainer>마이페이지입니다.</S.ContentContainer>;
 };
 
 export default MyPage;

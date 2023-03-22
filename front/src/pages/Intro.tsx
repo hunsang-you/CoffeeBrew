@@ -1,7 +1,8 @@
 import React from 'react';
+import * as S from '../components/useageStyle';
 
 const Intro = () => {
-  return <div>커피브루 소개페이지입니다.</div>;
+  return <S.ContentContainer>커피브루 소개페이지입니다.</S.ContentContainer>;
 };
 
 export default Intro;
