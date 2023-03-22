@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
 
-const subjects: string[] = ['향', '맛', '산미', '밸런스', '바디감'];
+type ChartProps = {};
 
-class Chart extends React.Component {
-  componentDidMount() {
-    let options = {
+const Chart: React.FC<ChartProps> = () => {
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const options = {
       series: [
         {
           name: 'coffee',
@@ -90,13 +92,15 @@ class Chart extends React.Component {
         enabled: false,
       },
     };
-    let chart = new ApexCharts(document.querySelector('#chart'), options);
-    chart.render();
-  }
+    const Chart = new ApexCharts(chartRef.current, options);
+    Chart.render();
 
-  render() {
-    return <div id="chart"></div>;
-  }
-}
+    return () => {
+      Chart.destroy();
+    };
+  }, []);
+
+  return <div ref={chartRef} />;
+};
 
 export default Chart;
