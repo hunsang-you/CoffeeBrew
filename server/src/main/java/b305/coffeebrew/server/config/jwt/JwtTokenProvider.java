@@ -183,6 +183,10 @@ public class JwtTokenProvider {
         return false;
     }
 
+    public long getRefreshValidTime() {
+        return refreshValidTime;
+    }
+
     public Cookie generateCookie(String value) {
         log.info(METHOD_NAME + "- generateCookie() ...");
         Cookie cookie = new Cookie(headerKeyRefresh, typeRefresh + value);
