@@ -6,6 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import tw from 'tailwind-styled-components';
 import Slide from '@mui/material/Slide';
+import Coffeebrew from '../../assets/logincoffee.svg';
+import Kakao from '../../assets/kakao.png';
 
 const Transition = forwardRef(function Transition(
   props: { children: React.ReactElement },
@@ -74,13 +76,8 @@ export const LoginModal = () => {
         <CustomDialogTitle onClose={handleClose}></CustomDialogTitle>
         <DialogContent>
           <LoginDiv>
-            <img
-              src={'logincoffee.svg'}
-              width={360}
-              height={312}
-              alt="no_img"
-            />
-            <img src={'kakao.png'} width={240} height={60} alt="no_img" />
+            <img src={Coffeebrew} width={360} height={312} alt="no_img" />
+            <img src={Kakao} width={240} height={60} alt="no_img" />
           </LoginDiv>
         </DialogContent>
       </Dialog>

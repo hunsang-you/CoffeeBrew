@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setNavbar, AppDispatch } from '../../store';
 import { useOnHoverOutside } from '../../hooks/useOnHoverOutside';
+import Logo from '../../assets/Coffeebrew.svg';
 
 import tw from 'tailwind-styled-components';
 import { DropDown } from './DropDown';
@@ -37,7 +38,7 @@ const Navbar = () => {
               setMenuDropDownOpen(false);
             }}
           >
-            <img src={'Coffeebrew.svg'} width={60} height={52} alt="no_img" />
+            <img src={Logo} width={60} height={52} alt="no_img" />
           </NDiv>
           <div className="flex flex-row w-2/3 justify-between">
             <NDiv
