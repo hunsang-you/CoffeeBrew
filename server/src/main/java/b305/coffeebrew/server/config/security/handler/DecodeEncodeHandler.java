@@ -27,13 +27,14 @@ public class DecodeEncodeHandler {
 
 	public String roleValid(String memberId) {
 		log.info(METHOD_NAME + "- roleValid() ...");
-		if (memberRepository.existsByMemberEmail(memberId)) {
+		Optional<Member> optionalMember = memberRepository.findByMemberEmail(memberId);
+		if (optionalMember.isPresent()) {
 			log.info("Member memberId Validate - Success");
-			Optional<Member> member = memberRepository.findByMemberEmail(memberId);
-			return member.get().getRole();
+			return optionalMember.get().getRole();
+		} else {
+			log.warn("Member memberId Validate - Fail");
+			return "ROLE_MEMBER"; // 기본값 설정
 		}
-		log.warn("Member memberId Validate - Fail");
-		return null;
 	}
 
 	public boolean memberIdValid(String memberId) {
@@ -52,18 +53,4 @@ public class DecodeEncodeHandler {
 		}
 		return false;
 	}
-
-//	public boolean passwordValid(String memberId, String password) {
-//		log.info(METHOD_NAME + "- passwordValid() ...");
-//		try {
-//			Member member = memberRepository.findByMemberId(memberId);
-//			if (passwordEncoder.matches(password, member.getPassword())) {
-//				log.info("Password validate - Success");
-//				return true;
-//			} else log.warn("Password validate - Fail");
-//		} catch (Exception e) {
-//			log.error("SERVER ERROR " + METHOD_NAME, e);
-//		}
-//		return false;
-//	}
 }

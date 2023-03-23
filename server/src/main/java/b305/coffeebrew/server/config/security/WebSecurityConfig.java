@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                 .and()
 //                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
                 .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()

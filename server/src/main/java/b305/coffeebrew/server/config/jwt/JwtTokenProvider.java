@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.Date;
 
@@ -59,6 +60,9 @@ public class JwtTokenProvider {
         this.refreshValidTime = Long.parseLong(refreshValidString) * 1000;
     }
 
+    @Autowired
+    private HttpServletResponse response;
+
     public CommonTokenDTO generateToken(String userPk) {
         log.info(METHOD_NAME + "- generateToken() ...");
         Date now = new Date();
@@ -69,6 +73,9 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now.getTime() + refreshValidTime))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
+
+        // access token을 요청의 헤더에 담아서 보내기
+        response.setHeader(headerKeyAccess, typeAccess + accessToken);
 
         return CommonTokenDTO.builder().accessToken(accessToken)
                 .reIssuanceTokenDTO(ReIssuanceTokenDTO.builder()
@@ -96,6 +103,10 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         log.info(METHOD_NAME + "- validateToken() ...");
         try {
+            if (token == null || token.trim().isEmpty()) {
+                log.error("토큰 값이 비어 있습니다. " + METHOD_NAME);
+                return false;
+            }
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (SignatureException se) {
@@ -119,15 +130,15 @@ public class JwtTokenProvider {
     public TokenResDTO requestCheckToken(HttpServletRequest request) {
         log.info(METHOD_NAME + "- requestCheckToken() ...");
         try {
-            String token = request.getHeader(headerKeyAccess);
+            String token = request.getHeader(headerKeyAccess); // 수정된 부분
 
-            if (token.startsWith(typeAccess)) {
+            if (token != null && token.startsWith(typeAccess)) { // token이 null인 경우 처리 추가
                 return TokenResDTO.builder()
                         .code(0)
                         .token(token.replace(typeAccess, ""))
                         .build();
             }
-            if (token.startsWith(typeRefresh)) {
+            if (token != null && token.startsWith(typeRefresh)) { // token이 null인 경우 처리 추가
                 return TokenResDTO.builder()
                         .code(1)
                         .token(token.replace(typeRefresh, "")).build();
