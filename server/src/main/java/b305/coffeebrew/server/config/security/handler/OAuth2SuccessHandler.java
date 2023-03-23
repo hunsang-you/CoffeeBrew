@@ -39,7 +39,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		// 등록되지 않은 회원일경우 회원가입
 		Optional<Member> member = memberRepository.findByMemberEmail((String) oAuth2User.getAttribute("email"));
 
-		String member_id = Long.toString(member.get().getIdx());
+		String member_id = member.get().getMemberEmail();
 		// 만약 해당 이메일로 리프레쉬 토큰이 존재한다면 삭제
 		if (redisUtil.getData(member_id) != null) {
 			log.info("refresh token exists.Remove refresh token");
@@ -60,7 +60,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		response.setContentType("application/json;charset=UTF-8");
 		// Authorization 헤더필드에 accesstoken 적재 , Set-Cookkie 헤더 필드에 리프레쉬 토큰 cookie 적재
 		response.setHeader("Set-Cookie", cookie.toString());
-
+		//redirect main page로.
 
 	}
 
