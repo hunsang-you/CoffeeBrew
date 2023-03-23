@@ -1,4 +1,4 @@
-import { useState, forwardRef, RefObject } from 'react';
+import { useState, forwardRef } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -74,8 +74,13 @@ export const LoginModal = () => {
         <CustomDialogTitle onClose={handleClose}></CustomDialogTitle>
         <DialogContent>
           <LoginDiv>
-            <img src={'logincoffee.svg'} width={360} height={312} />
-            <img src={'kakao.png'} width={240} height={60} />
+            <img
+              src={'logincoffee.svg'}
+              width={360}
+              height={312}
+              alt="no_img"
+            />
+            <img src={'kakao.png'} width={240} height={60} alt="no_img" />
           </LoginDiv>
         </DialogContent>
       </Dialog>

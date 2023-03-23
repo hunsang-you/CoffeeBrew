@@ -8,7 +8,8 @@ module.exports = {
         fotColor: '#222222',
       },
       textColor: {
-        navFontColor: '#4A2919',
+        mainColorBrown: '#4A2919',
+        mainColorOrange: '#FF9900',
       },
       width: {
         1200: '1200px',

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loading from './components/Loading';
@@ -30,7 +29,7 @@ const Router = () => {
         }
       />
       <Route
-        path="/info"
+        path="/info/*"
         element={
           <Suspense fallback={<Loading />}>
             <Info />
