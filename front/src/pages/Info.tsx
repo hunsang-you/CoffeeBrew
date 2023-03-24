@@ -1,8 +1,17 @@
 import * as S from '../components/useageStyle';
 import { Route, Routes } from 'react-router-dom';
 import { CoffeeHis, CoffeeMap, CoffeeWord } from './info/index';
+import { useEffect } from 'react';
 
-const Info = () => {
+interface IsFooterType {
+  setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Info = ({ setIsFooter }: IsFooterType) => {
+  useEffect(() => {
+    setIsFooter(true);
+  }, [setIsFooter]);
+
   return (
     <S.ContentContainer>
       <Routes>

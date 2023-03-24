@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setNavbar, AppDispatch } from '../../store';
-=======
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
->>>>>>> a10e13a (feat: 풀페이지 완료 #16)
+
 import { useOnHoverOutside } from '../../hooks/useOnHoverOutside';
 import Logo from '../../assets/Coffeebrew.svg';
 import tw from 'tailwind-styled-components';
@@ -100,7 +96,6 @@ const Navbar = () => {
             </NDiv>
             <NDiv
               className="text-mainColorBrown"
-
               onMouseOver={(e) => {
                 e.stopPropagation();
                 setMenuDropDownOpen(false);
@@ -120,6 +115,5 @@ const Navbar = () => {
 
 const NavBa = tw.div`fixed top-0 h-10vh w-screen flex bg-navColor z-50`;
 const NDiv = tw.div` flex justify-center items-center text-base cursor-default hover:text-mainColorOrange font-bold`;
-
 
 export default Navbar;

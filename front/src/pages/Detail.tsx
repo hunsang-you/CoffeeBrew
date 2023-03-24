@@ -1,10 +1,19 @@
 import DetailBean from '../components/Detail/DetailBean';
+import * as S from '../components/useageStyle';
+import { useEffect } from 'react';
 
-const Detail = () => {
+interface IsFooterType {
+  setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Detail = ({ setIsFooter }: IsFooterType) => {
+  useEffect(() => {
+    setIsFooter(true);
+  }, [setIsFooter]);
   return (
-    <div>
+    <S.ContentContainer>
       <DetailBean />
-    </div>
+    </S.ContentContainer>
   );
 };
 

@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -22,7 +24,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final MemberRepository memberRepository;
 	private final RedisUtil redisUtil;
@@ -69,7 +71,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 			log.info("Response headers: {}", response.getHeaderNames());
 
 			// redirect 방식으로 /api 로 보냅니다.
-			response.sendRedirect("/api/test");
+			String url = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth2/redirect/"+accessToken)
+					.build().toUriString();
+			log.info("Url: {}", url);
+			getRedirectStrategy().sendRedirect(request, response, url);
 		}
 	}
 }
