@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = {extras = ["all"], version = "*"}
+sqlalchemy = "*"
+requests = "*"
+numpy = "*"
+pandas = "*"
+scikit-learn = "*"
+python-dotenv = "*"
+pymysql = "*"
+cryptography = "*"
+pydantic = "*"
+
+[dev-packages]
+jupyter = "*"
+ipykernel = "*"
+pytest = "*"
+black = "*"
+pylint = "*"
+pylint-pydantic = "*"
+
+[requires]
+python_version = "3.9"
+python_full_version = "3.9.10"
