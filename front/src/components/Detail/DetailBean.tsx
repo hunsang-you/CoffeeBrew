@@ -1,5 +1,5 @@
-import React from 'react';
 import { useState, useRef } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import bean from '../../assets/bean.png';
 import bean2 from '../../assets/bean2.png';
@@ -7,18 +7,19 @@ import machine1 from '../../assets/machine1.png';
 import grinding2 from '../../assets/grinding2.png';
 // import RadarChartExample from './Chart/rechart';
 import Chart from './Chart/apexchart';
-import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiOutlineQuestionCircle } from 'react-icons/ai';
+import RecommendBean from './RecommendBean';
 
-const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20`;
+const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const NullDiv = tw.div``;
 const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 
 const DetailBg = tw.div`text-center bg-background`;
 
 // 최상단 좌측
-const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10`;
+const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
 const BeanImg1 = tw.img`object-cover mt-10`;
-const HeartImg1 = tw.div`flex justify-center `;
+const HeartImg1 = tw.div`flex justify-center  `;
 
 // 최상단 우측 설명
 const BeanDesc = tw.div`flex ml-12 border-4 border-brownBorder w-592 mt-10 `;
@@ -31,15 +32,15 @@ const DescRight = tw.div`w-1/2 my-6 mr-6 ml-1 bg-slate-300`;
 const Description = tw.div`mx-auto mt-2`;
 
 // 두번째 추천칸
-const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10`;
+const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
 // 이동바
-const MoveBar = tw.div` flex justify-evenly w-1040 mx-auto `;
-const RecbarBean = tw.div`w-344 bg-recBean text-base`;
-const RecbarMachine = tw.div`w-344 bg-recMachine text-base`;
-const ReviewBar = tw.div`w-344 bg-review text-base`;
+const MoveBar = tw.div` flex justify-evenly w-1040 mx-auto`;
+const RecbarBean = tw.div`w-344 bg-recBean text-base cursor-pointer hover:bg-slate-500`;
+const RecbarMachine = tw.div`w-344 bg-recMachine text-base cursor-pointer hover:bg-slate-500`;
+const ReviewBar = tw.div`w-344 bg-review text-base cursor-pointer hover:bg-slate-500`;
 
 // 추천원두
-const RecboxBean = tw.div`flex justify-center w-1000 h-400 bg-gradient-to-r from-recBeanbox1 to-recBeanbox2  mx-auto `;
+const RecboxBean = tw.div`flex justify-center w-1000 h-400 bg-gradient-to-r from-recBeanbox1 to-recBeanbox2  mx-auto flex-col `;
 const RecBeanImg = tw.img`w-60 h-60`;
 const RecBeanName = tw.div`text-3xl `;
 const RecBeanCountry = tw.div``;
@@ -49,18 +50,19 @@ const RecBeanScore = tw.div``;
 const RecOther = tw.div`w-1040 h-552 flex justify-between`;
 const RecMachine = tw.div`flex w-460 h-400 justify-center bg-gradient-to-r from-recMachine1 to-recMachine2 ml-4`;
 const RecMachineImg = tw.img`w-60 h-60 rounded-full mt-4 `;
-const Grinding = tw.div`flex w-460 h-400  justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10`;
-const GrindingImg = tw.img`w-60 h-60 rounded-full mt-4`;
+const Grinding = tw.div`flex-row w-460 h-400 justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10`;
+const GrindingImg = tw.img`w-60 h-60 rounded-full mt-4 mx-auto`;
+const Question = tw.div`w-12 h-12 mx-auto cursor-pointer `;
 
 // 세번째 리뷰칸
-const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;
+const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down`;
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
 const FilterOn = tw.div`w-20 h-10 rounded-full border-2 text-xl text-center leading-9  bg-black text-white ml-4`;
-const FilterOff = tw.div`w-20 h-10 rounded-full border-2 bg-gray-300 text-xl  text-black leading-9 ml-4`;
+const FilterOff = tw.div`w-20 h-10 rounded-full border-2 bg-gray-300 text-xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
 
 const ReviewList = tw.div`w-1000 mx-auto`;
-const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14`;
+const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
 const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder`;
 const ReviewName = tw.div`text-xl  mt-12 mb-4`;
 const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
@@ -74,7 +76,8 @@ const ReviewStandardBottom = tw.div`w-720 text-2xl mt-2 mb-2`;
 const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
 const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
 const ReviewContent = tw.div`text-left ml-4 mt-2 h-fit mb-4`;
-const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4`;
+const ReviewCreated = tw.p`text-sm ml-10`;
+const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
 
 // 네번째 칸(구매사이트)
 const BeanTop4 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;
@@ -84,10 +87,14 @@ const ShopItemT1 = tw(ShopItemT)`bg-brownBorder border-0`;
 const ShopItemImg = tw.img`w-24 h-24 rounded-full mx-auto mt-2 `;
 
 const ShopItemB = tw(ShopItemT1)`w-40 justify-center bg-navColor mt-2`;
-const ShopItemName = tw.div`text-nameColor pt-4 font-bold`;
-const LinkBtn = tw.button`w-20 h-8 rounded-full bg-black text-white mt-2 mb-4`;
+const ShopItemName = tw.div`text-nameColor pt-4 font-bold text-ellipsis overflow-hidden ... whitespace-nowrap mx-1`;
+const LinkBtn = tw.button`w-20 h-8 rounded-full bg-black text-white mt-2 mb-4 cursor-pointer hover:bg-slate-500`;
 
-const MoveTop = tw.div`w-10 h-10 border-2 border-fotColor ml-auto top-100 right-40 bottom-0 fixed`;
+// SideBar(맨위로이동, 최근조회)
+const SideBar = tw.div`w-20  border-2  border-brownBorder ml-auto top-100 right-40 bottom-60 fixed`;
+const RecentItems = tw.div`text-lg font-bold`;
+const RecentItem = tw.div` h-20 text-sm border-t-4 border-brownBorder text-ellipsis overflow-hidden`;
+const MoveTop = tw.div`h-20 border-8 border-gray-500`;
 
 const DetailBean = (): JSX.Element => {
   // 리뷰 최신/추천 순 조회버튼
@@ -111,22 +118,25 @@ const DetailBean = (): JSX.Element => {
 
   const handleClick = () => {
     if (recbeanRef.current) {
-      const location = recbeanRef.current.offsetTop;
+      const location: number = recbeanRef.current.offsetTop;
       console.log(location);
+      window.scrollTo({ top: location - 80, behavior: 'smooth' });
     }
   };
 
   const handleClick2 = () => {
     if (recotherRef.current) {
-      const location = recotherRef.current.offsetTop;
-      console.log(location);
+      const location: number = recotherRef.current.offsetTop;
+      // console.log(location);
+      window.scrollTo({ top: location - 80, behavior: 'smooth' });
     }
   };
 
   const handleClick3 = () => {
     if (reviewRef.current) {
-      const location = reviewRef.current.offsetTop;
-      console.log(location);
+      const location: number = reviewRef.current.offsetTop;
+      // console.log(location);
+      window.scrollTo({ top: location - 80, behavior: 'smooth' });
     }
   };
 
@@ -143,6 +153,7 @@ const DetailBean = (): JSX.Element => {
           <DescLeft>
             <BeanName> 케냐 AA </BeanName>
             <BeanCountry> 원산지 : 케냐</BeanCountry>
+
             <BeanChart>
               <Chart />
               {/* <RadarChartExample /> */}
@@ -156,15 +167,6 @@ const DetailBean = (): JSX.Element => {
               단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
               감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
               단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-              감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-              단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-              감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-              단맛, 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한
-              맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운
-              향과 과일의 단맛, 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-              단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-              감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-              단맛, 쌉쌀한 맛의 조화
             </Description>
           </DescRight>
         </BeanDesc>
@@ -175,17 +177,20 @@ const DetailBean = (): JSX.Element => {
       <BeanTop2>
         {/* 이동 버튼 */}
         <MoveBar>
-          <RecbarBean> 원두 추천 </RecbarBean>
-          <RecbarMachine> 기기 추천 </RecbarMachine>
-          <ReviewBar> 리뷰 </ReviewBar>
+          <RecbarBean onClick={handleClick}> 원두 추천 </RecbarBean>
+          <RecbarMachine onClick={handleClick2}> 기기 추천 </RecbarMachine>
+          <ReviewBar onClick={handleClick3}> 리 뷰 </ReviewBar>
         </MoveBar>
         <NullDiv ref={recbeanRef} id="Recbean">
           <Title onClick={handleClick}>이런 원두는 어떠세요?</Title>
         </NullDiv>
         {/* 캐러셀 부분 */}
         <RecboxBean>
-          <RecBeanImg src={bean2} />
+          {/* <RecBeanImg src={bean2} />
           <RecBeanName> 파푸아뉴기니 AA</RecBeanName>
+          <RecBeanCountry> 파푸아 뉴기니 </RecBeanCountry>
+          <RecBeanScore> 111</RecBeanScore> */}
+          <RecommendBean />
         </RecboxBean>
       </BeanTop2>
       {/* <Line></Line> */}
@@ -193,9 +198,7 @@ const DetailBean = (): JSX.Element => {
       {/* 추가 추천기능(머신, 분쇄도) */}
       <BeanTop2>
         <NullDiv ref={recotherRef}>
-          <Title id="RecOther" onClick={handleClick2}>
-            이렇게 먹어볼까요?
-          </Title>
+          <Title id="RecOther">이렇게 먹어볼까요?</Title>
         </NullDiv>
         <RecOther>
           <RecMachine>
@@ -203,11 +206,12 @@ const DetailBean = (): JSX.Element => {
           </RecMachine>
           <Grinding>
             <GrindingImg src={grinding2} alt="분쇄도" />
+            <Question>{<AiOutlineQuestionCircle size={50} />}</Question>
           </Grinding>
         </RecOther>
       </BeanTop2>
       {/* <Line></Line> */}
-      <BeanTop3 ref={reviewRef} id="Reivew" onClick={handleClick3}>
+      <BeanTop3 ref={reviewRef} id="Reivew">
         <ReviewFilter>
           {isActive ? (
             <FilterOn>최신순</FilterOn>
@@ -235,7 +239,10 @@ const DetailBean = (): JSX.Element => {
                 바디감 ★★★★★ 바디감 ★★★★★
               </ReviewStandardBottom>
               <ReviewArticle>
-                <ReviewTitle> 리뷰제목</ReviewTitle>
+                <ReviewTitle>
+                  리뷰제목리뷰제목
+                  <ReviewCreated> 2023-03-23 </ReviewCreated>
+                </ReviewTitle>
                 <ReviewContent>
                   리뷰내용 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운
                   향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛,
@@ -263,7 +270,9 @@ const DetailBean = (): JSX.Element => {
           <ShopItemT1>
             <ShopItemImg src={bean} />
             <ShopItemB>
-              <ShopItemName>레스트빈</ShopItemName>
+              <ShopItemName>
+                레스트빈레스트빈레스트빈레스트빈레스트빈레스트빈
+              </ShopItemName>
               <LinkBtn>이동</LinkBtn>
             </ShopItemB>
           </ShopItemT1>
@@ -297,7 +306,18 @@ const DetailBean = (): JSX.Element => {
           </ShopItemT1>
         </ShopList>
       </BeanTop4>
-      <MoveTop onClick={ScrollTop}>↑</MoveTop>
+      <SideBar>
+        <RecentItems>
+          최근 조회
+          <RecentItem>케냐AA케냐AA케냐AA케냐AA케냐AA</RecentItem>
+          <RecentItem>파푸아뉴기니파푸아뉴기니파푸아뉴기니</RecentItem>
+          <RecentItem>
+            스타벅스스타벅스스타벅스스타벅스스타벅스스타벅스 스타벅스
+          </RecentItem>
+        </RecentItems>
+        <MoveTop onClick={ScrollTop}>↑</MoveTop>
+      </SideBar>
+      <MoreBtn> 돌아가기 </MoreBtn>
     </DetailBg>
   );
 };

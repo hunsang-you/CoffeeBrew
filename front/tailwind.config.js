@@ -56,6 +56,25 @@ module.exports = {
       },
       zIndex: {
         100: 100,
+      keyframes: {
+        'fade-in-down': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-10px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
+      animation: {
+        'fade-in-down': 'fade-in-down 1s ease-out',
+      },
+      transitionDuration: {
+        0: '0ms',
+        2000: '2000ms',
+        1: '10000ms',
       },
       keyframes: {
         'fade-in-up': {
