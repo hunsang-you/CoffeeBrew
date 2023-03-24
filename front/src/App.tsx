@@ -1,4 +1,3 @@
-import React from 'react';
 import tw from 'tailwind-styled-components';
 import Navbar from './components/navbarandfoot/Navbar';
 import Footer from './components/navbarandfoot/Footer';
@@ -13,6 +12,7 @@ function App() {
         <Router />
       </ContentContainer>
       <Footer />
+      {/* { isMain && <Footer />} */}
     </div>
   );
 }
