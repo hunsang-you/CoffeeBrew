@@ -4,8 +4,6 @@ import b305.coffeebrew.server.config.utils.RedisUtil;
 import b305.coffeebrew.server.dto.token.CommonTokenDTO;
 import b305.coffeebrew.server.dto.token.ReIssuanceTokenDTO;
 import b305.coffeebrew.server.dto.token.TokenResDTO;
-import b305.coffeebrew.server.entity.Token;
-import b305.coffeebrew.server.repository.TokenRepository;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ import java.util.Enumeration;
 /**
  * generateToken() : 사번 값을 입력하여 accessToken, refreshToken 을 CommonTokenSet 으로 리턴
  * generateAccessToken() : 사번 값을 입력하여 accessToken 을 String 으로 리턴
- * getuserEmail() : accessToken 값을 입력하여 Token 안에 있는 유저의 사번을 String 으로 리턴
+ * getUserEmail() : accessToken 값을 입력하여 Token 안에 있는 유저의 사번을 String 으로 리턴
  * validateToken() : accessToken 검증 함수
  * requestCheckToken() : Token 이 accessToken 인지 refreshToken 인지 확인 후 TokenReqDTO 로 리턴 ... 0 : accessToken / 1 : refreshToken / 2 : 에러
  * saveRefresh() :
@@ -43,7 +41,7 @@ public class JwtTokenProvider {
     private final long refreshValidTime;
 
     @Autowired
-    public JwtTokenProvider(TokenRepository tokenRepository,
+    public JwtTokenProvider(
                             @Value(value = "${jwt.header.access}") String headerKeyAccess,
                             @Value(value = "${jwt.header.refresh}") String headerKeyRefresh,
                             @Value(value = "${jwt.type.access}") String typeAccess,
@@ -99,13 +97,10 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String getuserEmail(String token) {
+    public String getUserEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
-    public String getUserEmail(String token) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-        return claims.get("email", String.class);
-    }
+
 
     public boolean validateToken(String token) {
         log.info(METHOD_NAME + "- validateToken() ...");
@@ -182,7 +177,7 @@ public class JwtTokenProvider {
         log.info(METHOD_NAME + "- validateExistingToken() ...");
         try {
             if (this.validateToken(token)) {
-                String userEmail = this.getuserEmail(token);
+                String userEmail = this.getUserEmail(token);
                 //Redis에서 refreshToken가져오기
                 String existingToken = redisUtil.getData(userEmail);
                 if (existingToken.equals(token)) return true;
@@ -221,7 +216,7 @@ public class JwtTokenProvider {
         return cookie;
     }
 
-    public String getRefreshToken(String userEmail) {
-        return redisUtil.getData(userEmail);
-    }
+//    public String getRefreshToken(String userEmail) {
+//        return redisUtil.getData(userEmail);
+//    }
 }

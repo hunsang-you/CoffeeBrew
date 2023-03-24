@@ -6,23 +6,17 @@ import b305.coffeebrew.server.config.security.handler.UserLoginFailureHandler;
 import b305.coffeebrew.server.config.utils.RedisUtil;
 import b305.coffeebrew.server.dto.token.CommonTokenDTO;
 import b305.coffeebrew.server.entity.Member;
-import b305.coffeebrew.server.entity.Token;
 import b305.coffeebrew.server.repository.MemberRepository;
-import b305.coffeebrew.server.repository.TokenRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -50,7 +44,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 
 	private RedisUtil redisUtil;
 
-	public UserAuthenticationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, TokenRepository tokenRepository, RedisUtil redisUtil) {
+	public UserAuthenticationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, RedisUtil redisUtil) {
 		super(userAuthenticationManager);
 		this.userAuthenticationManager = userAuthenticationManager;
 		this.jwtTokenProvider = jwtTokenProvider;
@@ -62,8 +56,8 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 //		log.info(METHOD_NAME + "- attemptAuthentication() ...");
 //		try {
 //			Member member = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).readValue(request.getInputStream(), Member.class);
-//
-//			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getMemberId(), member.getPassword());
+//			log.info("접근 member = {}", member);
+//			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getMemberEmail(), null);
 //
 //			return userAuthenticationManager.authenticate(authenticationToken);
 //		} catch (IOException ie) {

@@ -63,7 +63,7 @@ public class RoleInterceptor implements HandlerInterceptor {
 			{
 				if (jwtTokenProvider.validateToken(token)) {
 					log.info("Token validate - success");
-					String memberId = jwtTokenProvider.getuserEmail(token);
+					String memberId = jwtTokenProvider.getUserEmail(token);
 
 					if (decodeEncodeHandler.memberIdValid(memberId)) {
 						log.info("Member validate - Success");
