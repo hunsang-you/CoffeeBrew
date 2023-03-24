@@ -1,7 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { Page1, Page2, Page3, Dots } from '../components/main';
+import { Page1, Page2, Page3, Dots, Test } from '../components/main';
 import Footer from '../components/navbarandfoot/Footer';
+import qweqelogo from './qweqwe.png';
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -138,6 +139,8 @@ const Main = ({ setIsFooter }: IsFooterType) => {
   return (
     <Outer ref={outerDivRef}>
       <Dots scrollIndex={scrollIndex} pushIndex={pushIndex} />
+      {/* <Test /> */}
+      <img src="./qweqwe" alt="" />
       <Page1 />
       <Page2 />
       <Page3 />

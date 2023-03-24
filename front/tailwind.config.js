@@ -51,9 +51,6 @@ module.exports = {
       minHeight: {
         '90vh': '93vh',
       },
-      minHeight: {
-        '90vh': '93vh',
-      },
       margin: {
         '10vh': '7vh',
         dropdown: '140px',
@@ -61,48 +58,30 @@ module.exports = {
       },
       zIndex: {
         100: 100,
-        keyframes: {
-          'fade-in-down': {
-            '0%': {
-              opacity: '0',
-              transform: 'translateY(-10px)',
-            },
-            '100%': {
-              opacity: '1',
-              transform: 'translateY(0)',
-            },
+      },
+      keyframes: {
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(0)',
           },
-        },
-        animation: {
-          'fade-in-down': 'fade-in-down 1s ease-out',
-        },
-        zIndex: {
-          100: 100,
-        },
-        keyframes: {
-          'fade-in-up': {
-            '0%': {
-              opacity: '0',
-              transform: 'translateY(0)',
-            },
-            '100%': {
-              opacity: '1',
-              transform: 'translateY(0)',
-            },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
           },
-        },
-        animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
-        backgroundImage: {
-          mainBg1: "url('../public/mainImg/bg1.jpg')",
-          mainBg2: "url('../public/mainImg/bg2.svg')",
-          mainBg3: "url('../public/mainImg/bg3.jpg')",
-        },
-        spacing: {
-          47: '47%',
-          '1/10': '10%',
         },
       },
+      animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
+      backgroundImage: {
+        mainBg1: "url('./assets/mainImg/bg1.jpg')",
+        mainBg2: "url('./assets/mainImg/bg2.svg')",
+        mainBg3: "url('./assets/mainImg/bg3.jpg')",
+      },
+      spacing: {
+        47: '47%',
+        '1/10': '10%',
+      },
     },
-    plugins: [],
   },
+  plugins: [],
 };
