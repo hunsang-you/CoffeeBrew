@@ -1,18 +1,39 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { Page1, Page2, Page3 } from '../components/main';
+import { Page1, Page2, Page3, Dots } from '../components/main';
+import Footer from '../components/navbarandfoot/Footer';
 
 const Main = () => {
   const outerDivRef = useRef<HTMLDivElement>(null);
-  const [pageN, setPageN] = useState<Number>(0);
+  // const [pageN, setPageN] = useState<Number>(0);
+  const [scrollIndex, setScrollIndex] = useState(1);
 
-  const pushText = (): void => {
-    console.log(outerDivRef.current);
-    if (outerDivRef.current) {
-      const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-      console.log(scrollTop);
-      console.log(document.body.offsetHeight);
-      console.log(outerDivRef);
+  const pushIndex = (N: number): void => {
+    // console.log(N);
+    if (outerDivRef.current && outerDivRef.current.scrollTop) {
+      const pageHeight = document.body.offsetHeight;
+      if (N === 1) {
+        setScrollIndex(1);
+        outerDivRef.current.scrollTo({
+          top: pageHeight * 0.06,
+          left: 0,
+          behavior: 'smooth',
+        });
+      } else if (N === 2) {
+        setScrollIndex(2);
+        outerDivRef.current.scrollTo({
+          top: pageHeight * 1.1,
+          left: 0,
+          behavior: 'smooth',
+        });
+      } else {
+        setScrollIndex(3);
+        outerDivRef.current.scrollTo({
+          top: pageHeight * 2.2,
+          left: 0,
+          behavior: 'smooth',
+        });
+      }
     }
   };
 
@@ -23,60 +44,74 @@ const Main = () => {
         // 스크롤 행동 구현
         const { deltaY } = event;
         const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-        const pageHeight = document.body.offsetHeight * 0.855; // 화면 세로길이, 100vh와 같습니다.
-        //   const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-        console.log('스크롤 윗부분 : ' + scrollTop);
-        console.log('화면 세로길이 : ' + pageHeight);
+        const pageHeight = document.body.offsetHeight; // 화면 세로길이, 100vh와 같습니다.
+        const fullPageH = document.body.offsetHeight * 1.1;
+        // console.log('스크롤 윗부분 : ' + scrollTop);
+        // console.log('화면 세로길이 : ' + pageHeight);
+
         if (deltaY > 0) {
           // 스크롤 내릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
-            //현재 1페이지
-            console.log('현재 1페이지, down');
+            // console.log('현재 1페이지, down');
+            setScrollIndex(2);
             outerDivRef.current.scrollTo({
-              top: pageHeight,
+              top: fullPageH,
               left: 0,
               behavior: 'smooth',
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            // 현재 2페이지
-            console.log('현재 2페이지, down');
+            // console.log('현재 2페이지, down');
+            setScrollIndex(3);
             outerDivRef.current.scrollTo({
-              top: pageHeight * 2,
+              top: fullPageH * 2,
+              left: 0,
+              behavior: 'smooth',
+            });
+          } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2.2) {
+            // console.log('현재 3페이지, down');
+            outerDivRef.current.scrollTo({
+              top: fullPageH * 3,
               left: 0,
               behavior: 'smooth',
             });
           } else {
-            // 현재 3페이지
-            console.log('현재 3페이지, down');
+            // console.log('현재 푸터, down');
             outerDivRef.current.scrollTo({
-              top: pageHeight * 2,
+              top: fullPageH * 3,
               left: 0,
               behavior: 'smooth',
             });
           }
         } else {
           // 스크롤 올릴 때
-          if (scrollTop >= 0 && scrollTop < pageHeight) {
-            //현재 1페이지
-            console.log('현재 1페이지, up');
+          if (scrollTop >= 0 && scrollTop < pageHeight * 0.2) {
+            // console.log('현재 1페이지, up');
             outerDivRef.current.scrollTo({
-              top: 0,
+              top: pageHeight * 0.06,
               left: 0,
               behavior: 'smooth',
             });
-          } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            //현재 2페이지
-            console.log('현재 2페이지, up');
+          } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 1.2) {
+            // console.log('현재 2페이지, up');
+            setScrollIndex(1);
             outerDivRef.current.scrollTo({
-              top: scrollTop - pageHeight,
+              top: pageHeight * 0.06,
+              left: 0,
+              behavior: 'smooth',
+            });
+          } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2.2) {
+            // console.log('현재 3페이지, up');
+            setScrollIndex(2);
+            outerDivRef.current.scrollTo({
+              top: fullPageH,
               left: 0,
               behavior: 'smooth',
             });
           } else {
-            // 현재 3페이지
-            console.log('현재 3페이지, up');
+            // console.log('현재 푸터, up');
+            setScrollIndex(3);
             outerDivRef.current.scrollTo({
-              top: scrollTop - pageHeight,
+              top: fullPageH * 2,
               left: 0,
               behavior: 'smooth',
             });
@@ -95,9 +130,11 @@ const Main = () => {
 
   return (
     <Outer ref={outerDivRef}>
-      <Page1 pushText={pushText} />
-      <Page2 pushText={pushText} />
-      <Page3 pushText={pushText} />
+      <Dots scrollIndex={scrollIndex} pushIndex={pushIndex} />
+      <Page1 />
+      <Page2 />
+      <Page3 />
+      <Footer />
     </Outer>
   );
 };

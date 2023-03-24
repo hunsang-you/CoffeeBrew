@@ -1,25 +1,14 @@
-import React from 'react';
 import tw from 'tailwind-styled-components';
 
-interface MainProps {
-  pushText: () => void;
-}
-
-const Page3 = (props: MainProps) => {
+const Page3 = () => {
   return (
     <Inner>
-      <Texth1
-        onClick={() => {
-          props.pushText();
-        }}
-      >
-        Page3
-      </Texth1>
+      <Texth1>Page3</Texth1>
     </Inner>
   );
 };
 
 export default Page3;
 
-const Inner = tw.div`h-screen flex justify-center items-center bg-lime-200`;
-const Texth1 = tw.div`text-8xl`;
+const Inner = tw.div`h-screen flex justify-center items-center bg-mainBg3 bg-cover`;
+const Texth1 = tw.div`text-white text-8xl`;

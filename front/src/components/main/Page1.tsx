@@ -1,19 +1,11 @@
-import React from 'react';
 import tw from 'tailwind-styled-components';
+import { Carousel } from './index';
 
-interface MainProps {
-  pushText: () => void;
-}
-
-const Page1 = (props: MainProps) => {
+const Page1 = () => {
   return (
     <Inner>
-      <Texth1
-        onClick={() => {
-          props.pushText();
-        }}
-      >
-        Page1
+      <Texth1>
+        <Carousel />
       </Texth1>
     </Inner>
   );
@@ -21,5 +13,5 @@ const Page1 = (props: MainProps) => {
 
 export default Page1;
 
-const Inner = tw.div`h-screen flex justify-center items-center bg-red-100`;
-const Texth1 = tw.div`text-8xl`;
+const Inner = tw.div`h-screen flex justify-center items-center bg-mainBg1 bg-cover`;
+const Texth1 = tw.div`text-white text-8xl`;
