@@ -87,7 +87,7 @@ function CoffeeMap() {
     VEN: { nation: '베네수엘라', desc: 'dd', flags: venezuela },
     DOM: { nation: '도미니카 공화국', desc: 'dd', flags: dominican },
     CUB: { nation: '쿠바', desc: 'dd', flags: cuba },
-    JAM: { nation: '자메이카', desc: 'dd', flags: jamaica },
+    JAM: { nation: '자메이카', desc: 'ddd', flags: jamaica },
     SLV: { nation: '엘살바도르', desc: 'dd', flags: elsalvador },
     HND: { nation: '온두라스', desc: 'dd', flags: honduras },
     ECU: { nation: '에콰도르', desc: 'dd', flags: ecuador },
@@ -557,28 +557,19 @@ function CoffeeMap() {
         >
           <Fade in={open}>
             <Box sx={style}>
-              {/* <Ken /> */}
-              {/* <Box
-                component="img"
-                sx={{
-                  height: 233,
-                  width: 350,
-                  maxHeight: { xs: 233, md: 167 },
-                  maxWidth: { xs: 350, md: 250 },
-                }}
-                alt="The house from the offer."
-                src={logo}
-              /> */}
               <img
                 src={region[checkNa].flags}
-                width={256}
-                height={256}
+                width={64}
+                height={64}
                 alt="nono"
+                className="block m-auto"
               />
+
               <Typography
                 id="transition-modal-title"
                 variant="h6"
                 component="h2"
+                textAlign={'center'}
               >
                 {region[checkNa].nation}
               </Typography>
