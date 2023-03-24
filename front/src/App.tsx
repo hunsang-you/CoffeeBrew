@@ -8,14 +8,14 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <ContentContainer>
+      <MainContainer>
         <Router />
-      </ContentContainer>
-      <Footer />
-      {/* { isMain && <Footer />} */}
+      </MainContainer>
+      {/* <Footer /> */}
     </div>
   );
 }
 
 const ContentContainer = tw.div`mt-10vh min-h-90vh flex flex-col`;
+const MainContainer = tw.div`mt-10vh h-90vh flex flex-col`;
 export default App;
