@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ReIssuanceTokenDTO {
-	private String memberId;
+	private String memberEmail;
 	private String refreshToken;
 }
