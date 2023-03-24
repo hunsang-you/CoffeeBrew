@@ -2,13 +2,15 @@ import { useState, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import bean from '../../assets/bean.png';
-import bean2 from '../../assets/bean2.png';
-import machine1 from '../../assets/machine1.png';
 import grinding2 from '../../assets/grinding2.png';
+import machine1 from '../../assets/machine1.png';
+import ratingempty from '../../assets/rating-empty.png';
+
 // import RadarChartExample from './Chart/rechart';
 import Chart from './Chart/apexchart';
 import { AiOutlineHeart, AiOutlineQuestionCircle } from 'react-icons/ai';
 import RecommendBean from './RecommendBean';
+// import RecommendMachine from './RecommendMachine';
 
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const NullDiv = tw.div``;
@@ -18,7 +20,7 @@ const DetailBg = tw.div`text-center bg-background`;
 
 // 최상단 좌측
 const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
-const BeanImg1 = tw.img`object-cover mt-10`;
+const BeanImg1 = tw.img`object-cover mt-10 drop-shadow-xl`;
 const HeartImg1 = tw.div`flex justify-center  `;
 
 // 최상단 우측 설명
@@ -34,25 +36,27 @@ const Description = tw.div`mx-auto mt-2`;
 // 두번째 추천칸
 const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
 // 이동바
-const MoveBar = tw.div` flex justify-evenly w-1040 mx-auto`;
+const MoveBar = tw.div` flex justify-evenly w-1040 mx-auto drop-shadow-xl`;
 const RecbarBean = tw.div`w-344 bg-recBean text-base cursor-pointer hover:bg-slate-500`;
 const RecbarMachine = tw.div`w-344 bg-recMachine text-base cursor-pointer hover:bg-slate-500`;
 const ReviewBar = tw.div`w-344 bg-review text-base cursor-pointer hover:bg-slate-500`;
 
 // 추천원두
-const RecboxBean = tw.div`flex justify-center w-1000 h-400 bg-gradient-to-r from-recBeanbox1 to-recBeanbox2  mx-auto flex-col `;
-const RecBeanImg = tw.img`w-60 h-60`;
-const RecBeanName = tw.div`text-3xl `;
-const RecBeanCountry = tw.div``;
-const RecBeanScore = tw.div``;
+const RecboxBean = tw.div`flex justify-center w-1000  bg-gradient-to-r from-recBeanbox1 to-recBeanbox2  mx-auto flex-col `;
+// const RecBeanImg = tw.img`w-60 h-60`;
+// const RecBeanName = tw.div`text-3xl `;
+// const RecBeanCountry = tw.div``;
+// const RecBeanScore = tw.div``;
 
 // 기기 및 분쇄도
-const RecOther = tw.div`w-1040 h-552 flex justify-between`;
-const RecMachine = tw.div`flex w-460 h-400 justify-center bg-gradient-to-r from-recMachine1 to-recMachine2 ml-4`;
-const RecMachineImg = tw.img`w-60 h-60 rounded-full mt-4 `;
-const Grinding = tw.div`flex-row w-460 h-400 justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10`;
+const RecOther = tw.div`w-1040  flex justify-between `;
+const RecMachine = tw.div`flex-col w-460 justify-center bg-gradient-to-br from-recMachine1 to-recMachine2 mx-auto rounded-3xl drop-shadow-2xl`;
+const RecMachineImg = tw.img`w-60 h-60 rounded-full my-4 mx-auto`;
+const MachineBtn = tw.button`w-52 h-16 bg-pinkColor rounded-full text-white my-4 mx-auto drop-shadow-xl`;
+const Grinding = tw.div`flex-row w-460 justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10 rounded-3xl drop-shadow-2xl`;
 const GrindingImg = tw.img`w-60 h-60 rounded-full mt-4 mx-auto`;
-const Question = tw.div`w-12 h-12 mx-auto cursor-pointer `;
+const GrindingInfo = tw.div`mt-6 text-2xl `;
+const Question = tw.div`w-12 h-12 mx-auto cursor-pointer mt-8 `;
 
 // 세번째 리뷰칸
 const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down`;
@@ -91,7 +95,7 @@ const ShopItemName = tw.div`text-nameColor pt-4 font-bold text-ellipsis overflow
 const LinkBtn = tw.button`w-20 h-8 rounded-full bg-black text-white mt-2 mb-4 cursor-pointer hover:bg-slate-500`;
 
 // SideBar(맨위로이동, 최근조회)
-const SideBar = tw.div`w-20  border-2  border-brownBorder ml-auto top-100 right-40 bottom-60 fixed`;
+const SideBar = tw.div`w-20  border-2  border-brownBorder ml-auto top-100 right-44 bottom-60 fixed`;
 const RecentItems = tw.div`text-lg font-bold`;
 const RecentItem = tw.div` h-20 text-sm border-t-4 border-brownBorder text-ellipsis overflow-hidden`;
 const MoveTop = tw.div`h-20 border-8 border-gray-500`;
@@ -202,10 +206,23 @@ const DetailBean = (): JSX.Element => {
         </NullDiv>
         <RecOther>
           <RecMachine>
-            <RecMachineImg src={machine1} alt="machine" />
+            <RecMachineImg src={machine1} alt="machine" onClick={() => {}} />
+            <div
+              style={{ fontSize: '24px', marginTop: '24px', color: '#A71717' }}
+            >
+              드롱기 디스틴타 드립 커피 메이커
+            </div>
+            <MachineBtn>
+              <div style={{ fontSize: '24px', margin: 'auto' }}>보러가기 →</div>
+            </MachineBtn>
           </RecMachine>
+          {/* <RecommendMachine /> */}
           <Grinding>
             <GrindingImg src={grinding2} alt="분쇄도" />
+            <GrindingInfo style={{ color: '#B49150' }}> 모카포트</GrindingInfo>
+            <GrindingInfo style={{ color: '#B49150' }}>
+              (조금고운 타입)
+            </GrindingInfo>
             <Question>{<AiOutlineQuestionCircle size={50} />}</Question>
           </Grinding>
         </RecOther>

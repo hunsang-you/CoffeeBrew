@@ -18,6 +18,7 @@ module.exports = {
         grinding1: '#FFEF9D',
         grinding2: 'rgba(211, 243, 170, 1)',
         nameColor: '#9A6533',
+        pinkColor: '#FF8383',
       },
       textColor: {
         mainColorBrown: '#4A2919',
@@ -71,24 +72,6 @@ module.exports = {
       animation: {
         'fade-in-down': 'fade-in-down 1s ease-out',
       },
-      transitionDuration: {
-        0: '0ms',
-        2000: '2000ms',
-        1: '10000ms',
-      },
-      keyframes: {
-        'fade-in-up': {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(0)',
-          },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)',
-          },
-        },
-      },
-      animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
     },
   },
   plugins: [],

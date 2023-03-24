@@ -6,19 +6,20 @@ import grinding2 from '../../assets/grinding2.png';
 import machine1 from '../../assets/machine1.png';
 import spin from '../../assets/Spin-1s-200px.gif';
 
-const Body = tw.div`flex justify-center select-none w-100vw h-100vh my-10 `;
-const Container = tw.div`flex-col `;
-const Slide = tw.div`flex align-middle`;
+const Body = tw.div`flex justify-center select-none drop-shadow-xl bg-gradient-to-br from-pinkColor rounded-3xl`;
+const Container = tw.div`flex-col w-480  `;
+const Slide = tw.div`flex `;
 
-const Img = tw.img`w-64 h-64 flex-none rounded-full justify-center mx-auto drop-shadow-xl`;
-const Btn = tw.div` cursor-pointer text-8xl my-auto mx-28 `;
-const Position = tw.div`mb-6 flex justify-center`;
+const Img = tw.img`w-60 h-60 flex-none rounded-full justify-center mx-auto drop-shadow-xl`;
+const Btn = tw.div`cursor-pointer text-6xl my-auto  `;
+const Flexbox = tw.div`flex flex-col pt-8 px-8`;
+const Position = tw.div`mb-6 flex justify-center mt-4`;
 const Current = tw.div`bg-gray-500 rounded-full w-3 h-3 ml-5  cursor-pointer`;
-const Dot = tw(Current)`bg-orange-400 w-10 ml-5 cursor-pointer`;
+const Dot = tw(Current)`bg-orange-400 w-10 ml-5 cursor-pointer `;
 
-const Score = tw.div`text-xl`;
+const LinkBtn = tw.button`w-52 h-16 bg-pinkColor rounded-full text-white my-4 mx-auto drop-shadow-xl`;
 
-const RecommendBean = (): JSX.Element => {
+const RecommendMachine = (): JSX.Element => {
   // 캐러셀 페이지 순서 확인
   const [page, setPage] = useState(0);
 
@@ -81,44 +82,29 @@ const RecommendBean = (): JSX.Element => {
           <Btn onClick={() => moveSlide(-1)}>&lt;</Btn>
           <Slide>
             {/* carousel 출력 */}
-            <div style={{ width: '640px', fontSize: '32px' }}>
+            <div style={{ width: '400px', fontSize: '24px' }}>
               <div className="flexBox" style={style}>
                 {images.current.map((img, i) => (
-                  <div
-                    key={i}
-                    style={{ display: 'flex', flexDirection: 'row' }}
-                  >
+                  //   <div
+                  //     key={i}
+                  //     style={{
+                  //       display: 'flex',
+                  //       flexDirection: 'column',
+                  //       backgroundColor: 'black',
+                  //     }}
+                  //   >
+                  <Flexbox>
                     <Img
                       key={i}
                       style={{ backgroundImage: `url(${img.src[page]})` }}
                     ></Img>
-                    <div
-                      style={{
-                        marginLeft: '16px',
-                        width: '450px',
-                      }}
-                    >
-                      <div
-                        style={{ wordBreak: 'break-word', fontSize: '24px' }}
-                      >
-                        {images.current[0].src[page]}
-                      </div>
-                      <div
-                        style={{
-                          textAlign: 'start',
-                          fontSize: '20px',
-                          marginLeft: '8px',
-                        }}
-                      >
-                        원산지 : 케냐
-                      </div>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
+                    <div style={{ marginTop: '8px', wordBreak: 'break-word' }}>
+                      {images.current[0].src[page]}
                     </div>
-                  </div>
+                    <LinkBtn>
+                      <div> 보러가기 →</div>
+                    </LinkBtn>
+                  </Flexbox>
                 ))}
               </div>
             </div>
@@ -130,4 +116,4 @@ const RecommendBean = (): JSX.Element => {
   );
 };
 
-export default RecommendBean;
+export default RecommendMachine;

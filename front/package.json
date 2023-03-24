@@ -57,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-slick": "^0.23.10",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "tailwind-styled-components": "^2.2.0",
