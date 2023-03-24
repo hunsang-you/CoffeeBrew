@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnHoverOutside } from '../hooks/useOnHoverOutside';
 import tw from 'tailwind-styled-components';
-import { Tests } from './Tests';
+import { DropDown } from './navbarandfoot/DropDown';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const Navbar = () => {
           임시마이페이지
         </NDiv>
       </NavBa>
-      {isMenuDropDownOpen && <Tests />}
+      {/* {isMenuDropDownOpen && <DropDown />} */}
     </div>
   );
 };

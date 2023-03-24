@@ -1,12 +1,9 @@
 import tw from 'tailwind-styled-components';
-import { Carousel } from './index';
 
 const Page1 = () => {
   return (
     <Inner>
-      <Texth1>
-        <Carousel />
-      </Texth1>
+      <Texth1></Texth1>
     </Inner>
   );
 };
