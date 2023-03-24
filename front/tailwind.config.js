@@ -93,7 +93,6 @@ module.exports = {
         },
         animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
         backgroundImage: {
-          //'hero-pattern': "url('/img/hero-pattern.svg')",
           mainBg1: "url('../public/mainImg/bg1.jpg')",
           mainBg2: "url('../public/mainImg/bg2.svg')",
           mainBg3: "url('../public/mainImg/bg3.jpg')",

@@ -3,7 +3,7 @@ import tw from 'tailwind-styled-components';
 const Page1 = () => {
   return (
     <Inner>
-      <Texth1></Texth1>
+      <Texth1>page1</Texth1>
     </Inner>
   );
 };

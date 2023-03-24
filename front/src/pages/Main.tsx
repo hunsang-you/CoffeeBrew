@@ -3,7 +3,11 @@ import tw from 'tailwind-styled-components';
 import { Page1, Page2, Page3, Dots } from '../components/main';
 import Footer from '../components/navbarandfoot/Footer';
 
-const Main = () => {
+interface IsFooterType {
+  setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Main = ({ setIsFooter }: IsFooterType) => {
   const outerDivRef = useRef<HTMLDivElement>(null);
   // const [pageN, setPageN] = useState<Number>(0);
   const [scrollIndex, setScrollIndex] = useState(1);
@@ -36,6 +40,9 @@ const Main = () => {
       }
     }
   };
+  useEffect(() => {
+    setIsFooter(false);
+  }, [setIsFooter]);
 
   useEffect(() => {
     const wheelHandler = (event: React.WheelEvent<HTMLDivElement>) => {
