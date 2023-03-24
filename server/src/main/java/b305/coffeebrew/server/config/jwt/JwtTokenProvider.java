@@ -22,7 +22,7 @@ import java.util.Enumeration;
 /**
  * generateToken() : 사번 값을 입력하여 accessToken, refreshToken 을 CommonTokenSet 으로 리턴
  * generateAccessToken() : 사번 값을 입력하여 accessToken 을 String 으로 리턴
- * getUserPk() : accessToken 값을 입력하여 Token 안에 있는 유저의 사번을 String 으로 리턴
+ * getuserEmail() : accessToken 값을 입력하여 Token 안에 있는 유저의 사번을 String 으로 리턴
  * validateToken() : accessToken 검증 함수
  * requestCheckToken() : Token 이 accessToken 인지 refreshToken 인지 확인 후 TokenReqDTO 로 리턴 ... 0 : accessToken / 1 : refreshToken / 2 : 에러
  * saveRefresh() :
@@ -34,7 +34,6 @@ import java.util.Enumeration;
 @Component
 public class JwtTokenProvider {
     private static final String METHOD_NAME = JwtTokenProvider.class.getName();
-    private final TokenRepository tokenRepository;
     private final String headerKeyAccess;
     private final String headerKeyRefresh;
     private final String typeAccess;
@@ -52,7 +51,6 @@ public class JwtTokenProvider {
                             @Value(value = "${jwt.secret.key}") String secretValue,
                             @Value(value = "${jwt.time.access}") String accessValidString,
                             @Value(value = "${jwt.time.refresh}") String refreshValidString) {
-        this.tokenRepository = tokenRepository;
         this.headerKeyAccess = headerKeyAccess;
         this.headerKeyRefresh = headerKeyRefresh;
         this.typeAccess = typeAccess;
@@ -68,13 +66,13 @@ public class JwtTokenProvider {
     @Autowired
     private HttpServletResponse response;
 
-    public CommonTokenDTO generateToken(String userPk) {
+    public CommonTokenDTO generateToken(String userEmail) {
         log.info(METHOD_NAME + "- generateToken() ...");
         Date now = new Date();
 
-        String accessToken = generateAccessToken(userPk);
+        String accessToken = generateAccessToken(userEmail);
         String refreshToken = Jwts.builder()
-                .setSubject(userPk)
+                .setSubject(userEmail)
                 .setExpiration(new Date(now.getTime() + refreshValidTime))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
@@ -84,24 +82,24 @@ public class JwtTokenProvider {
 
         return CommonTokenDTO.builder().accessToken(accessToken)
                 .reIssuanceTokenDTO(ReIssuanceTokenDTO.builder()
-                        .memberId(userPk)
+                        .memberEmail(userEmail)
                         .refreshToken(refreshToken)
                         .build()).build();
     }
 
-    public String generateAccessToken(String userPk) {
+    public String generateAccessToken(String userEmail) {
         log.info(METHOD_NAME + "- generateAccessToken() ...");
         Date now = new Date();
 
         return Jwts.builder()
-                .setSubject(userPk)
+                .setSubject(userEmail)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + accessValidTime))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 
-    public String getUserPk(String token) {
+    public String getuserEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
     public String getUserEmail(String token) {
@@ -170,11 +168,8 @@ public class JwtTokenProvider {
     public boolean saveRefresh(ReIssuanceTokenDTO reIssuanceTokenDTO) {
         log.info(METHOD_NAME + "- saveRefresh() ...");
         try {
-            Token tokenEntity = tokenRepository.save(Token.builder()
-                    .memberId(reIssuanceTokenDTO.getMemberId())
-                    .refreshToken(reIssuanceTokenDTO.getRefreshToken())
-                    .build());
-            if (tokenEntity.getMemberId() != null) return true;
+            redisUtil.setDataExpire(reIssuanceTokenDTO.getMemberEmail(),reIssuanceTokenDTO.getRefreshToken() , refreshValidTime);
+            return true;
         } catch (NullPointerException ne) {
             log.error("토큰 셋이 비어있습니다. " + METHOD_NAME, ne);
         } catch (Exception e) {
@@ -187,8 +182,9 @@ public class JwtTokenProvider {
         log.info(METHOD_NAME + "- validateExistingToken() ...");
         try {
             if (this.validateToken(token)) {
-                String userPk = this.getUserPk(token);
-                String existingToken = tokenRepository.findByMemberId(userPk).getRefreshToken();
+                String userEmail = this.getuserEmail(token);
+                //Redis에서 refreshToken가져오기
+                String existingToken = redisUtil.getData(userEmail);
                 if (existingToken.equals(token)) return true;
             }
         } catch (Exception e) {
@@ -200,8 +196,9 @@ public class JwtTokenProvider {
     public boolean updateRefresh(ReIssuanceTokenDTO reIssuanceTokenDTO) {
         log.info(METHOD_NAME + "- updateRefresh() ...");
         try {
-            Integer result = tokenRepository.updateToken(reIssuanceTokenDTO.getRefreshToken(), reIssuanceTokenDTO.getMemberId());
-            if (result > 0) return true;
+            redisUtil.deleteData(reIssuanceTokenDTO.getMemberEmail());
+            redisUtil.setDataExpire(reIssuanceTokenDTO.getMemberEmail(),reIssuanceTokenDTO.getRefreshToken() , refreshValidTime);
+            return true;
         } catch (NullPointerException ne) {
             log.error("토큰 저장소가 비어있습니다. " + METHOD_NAME, ne);
         } catch (Exception e) {

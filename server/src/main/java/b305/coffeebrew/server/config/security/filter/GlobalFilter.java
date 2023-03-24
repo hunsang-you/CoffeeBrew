@@ -4,6 +4,7 @@ import b305.coffeebrew.server.config.jwt.JwtTokenProvider;
 import b305.coffeebrew.server.config.security.auth.PrincipalDetailService;
 import b305.coffeebrew.server.config.security.handler.UserLogoutHandler;
 import b305.coffeebrew.server.config.security.handler.UserLogoutSuccessHandler;
+import b305.coffeebrew.server.config.utils.RedisUtil;
 import b305.coffeebrew.server.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,6 +53,7 @@ public class GlobalFilter {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final PrincipalDetailService principalDetailService;
 	private final TokenRepository tokenRepository;
+	private final RedisUtil redisUtil;
 
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -69,7 +71,7 @@ public class GlobalFilter {
 	}
 
 	public UserAuthenticationFilter authenticationFilter() {
-		UserAuthenticationFilter userAuthenticationFilter = new UserAuthenticationFilter(userAuthenticationManager, jwtTokenProvider, tokenRepository);
+		UserAuthenticationFilter userAuthenticationFilter = new UserAuthenticationFilter(userAuthenticationManager, jwtTokenProvider, tokenRepository, redisUtil);
 		userAuthenticationFilter.setHeaderKeyAccess(headerAccess);
 		userAuthenticationFilter.setTypeAccess(typeAccess);
 
