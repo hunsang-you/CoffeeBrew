@@ -48,6 +48,7 @@ public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
 		try {
 			TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
 			String token = tokenResDTO.getToken();
+			log.info("token= {}", token);
 			switch (tokenResDTO.getCode()) {
 				case 0:
 					if (jwtTokenProvider.validateToken(token)) {

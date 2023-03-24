@@ -76,13 +76,13 @@ public class GlobalFilter {
 		return userAuthenticationFilter;
 	}
 
-//	public JwtTokenAuthorizationFilter authorizationFilter() {
-//		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService);
-//		jwtTokenAuthorizationFilter.setHeaderKeyAccess(headerAccess);
-//		jwtTokenAuthorizationFilter.setTypeAccess(typeAccess);
-//
-//		return jwtTokenAuthorizationFilter;
-//	}
+	public JwtTokenAuthorizationFilter authorizationFilter() {
+		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService);
+		jwtTokenAuthorizationFilter.setHeaderKeyAccess(headerAccess);
+		jwtTokenAuthorizationFilter.setTypeAccess(typeAccess);
+
+		return jwtTokenAuthorizationFilter;
+	}
 
 	public String getLogoutURL() {
 		return logoutURL;

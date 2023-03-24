@@ -18,6 +18,10 @@ spring:
       connection-timeout: 10000000
       validation-timeout: 10000000
       max-lifetime: 580000000
+  redis:
+    port: 6379
+    host: ${datasource}
+    password: ${redisPwd}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -85,6 +89,7 @@ user:
     logout: /logout
     admin: /api/admin
     member: /api/member
+    test: /api/test
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER

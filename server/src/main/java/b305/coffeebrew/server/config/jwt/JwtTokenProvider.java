@@ -1,5 +1,6 @@
 package b305.coffeebrew.server.config.jwt;
 
+import b305.coffeebrew.server.config.utils.RedisUtil;
 import b305.coffeebrew.server.dto.token.CommonTokenDTO;
 import b305.coffeebrew.server.dto.token.ReIssuanceTokenDTO;
 import b305.coffeebrew.server.dto.token.TokenResDTO;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Enumeration;
 
 /**
  * generateToken() : 사번 값을 입력하여 accessToken, refreshToken 을 CommonTokenSet 으로 리턴
@@ -59,6 +62,12 @@ public class JwtTokenProvider {
         this.refreshValidTime = Long.parseLong(refreshValidString) * 1000;
     }
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private HttpServletResponse response;
+
     public CommonTokenDTO generateToken(String userPk) {
         log.info(METHOD_NAME + "- generateToken() ...");
         Date now = new Date();
@@ -69,6 +78,9 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now.getTime() + refreshValidTime))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
+
+        // access token을 요청의 헤더에 담아서 보내기
+        response.setHeader(headerKeyAccess, typeAccess + accessToken);
 
         return CommonTokenDTO.builder().accessToken(accessToken)
                 .reIssuanceTokenDTO(ReIssuanceTokenDTO.builder()
@@ -92,10 +104,18 @@ public class JwtTokenProvider {
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
+    public String getUserEmail(String token) {
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        return claims.get("email", String.class);
+    }
 
     public boolean validateToken(String token) {
         log.info(METHOD_NAME + "- validateToken() ...");
         try {
+            if (token == null || token.trim().isEmpty()) {
+                log.error("토큰 값이 비어 있습니다. " + METHOD_NAME);
+                return false;
+            }
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (SignatureException se) {
@@ -119,15 +139,22 @@ public class JwtTokenProvider {
     public TokenResDTO requestCheckToken(HttpServletRequest request) {
         log.info(METHOD_NAME + "- requestCheckToken() ...");
         try {
-            String token = request.getHeader(headerKeyAccess);
+            Enumeration<String> headerNames = request.getHeaderNames();
+            while (headerNames.hasMoreElements()) {
+                String headerName = headerNames.nextElement();
+                log.info(headerName + ": " + request.getHeader(headerName));
+            }
+            String token = request.getHeader(headerKeyAccess); // 수정된 부분
+            log.info("headerKeyAccess: {}", headerKeyAccess);
+            log.info("token: {}", token);
 
-            if (token.startsWith(typeAccess)) {
+            if (token != null && token.startsWith(typeAccess)) { // token이 null인 경우 처리 추가
                 return TokenResDTO.builder()
                         .code(0)
                         .token(token.replace(typeAccess, ""))
                         .build();
             }
-            if (token.startsWith(typeRefresh)) {
+            if (token != null && token.startsWith(typeRefresh)) { // token이 null인 경우 처리 추가
                 return TokenResDTO.builder()
                         .code(1)
                         .token(token.replace(typeRefresh, "")).build();
@@ -183,6 +210,10 @@ public class JwtTokenProvider {
         return false;
     }
 
+    public long getRefreshValidTime() {
+        return refreshValidTime;
+    }
+
     public Cookie generateCookie(String value) {
         log.info(METHOD_NAME + "- generateCookie() ...");
         Cookie cookie = new Cookie(headerKeyRefresh, typeRefresh + value);
@@ -191,5 +222,9 @@ public class JwtTokenProvider {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         return cookie;
+    }
+
+    public String getRefreshToken(String userEmail) {
+        return redisUtil.getData(userEmail);
     }
 }
