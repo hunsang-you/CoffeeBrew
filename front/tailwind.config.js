@@ -6,12 +6,34 @@ module.exports = {
       colors: {
         navColor: '#F9F5E0',
         fotColor: '#222222',
+        background: 'rgba(249, 245, 224, 0.4)',
+        brownBorder: '#A68F62',
+        recBean: '#E9BCBC',
+        recMachine: '#88B877',
+        review: '#9E8484',
+        recBeanbox1: '#F29F70',
+        recBeanbox2: 'rgba(150, 145, 137, 0)',
+        recMachine1: 'rgba(255, 131, 131, 1)',
+        recMachine2: 'rgba(255, 229, 229, 1)',
+        grinding1: '#FFEF9D',
+        grinding2: 'rgba(211, 243, 170, 1)',
+        nameColor: '#9A6533',
+        pinkColor: '#FF8383',
       },
       textColor: {
         mainColorBrown: '#4A2919',
         mainColorOrange: '#FF9900',
       },
       width: {
+        '88vw': '88vw',
+        344: '344px',
+        360: '360px',
+        400: '400px',
+        460: '460px',
+        592: '592px',
+        720: '720px',
+        1000: '1000px',
+        1040: '1040px',
         1200: '1200px',
         120: '120px',
         dropdown: '78.3%',
@@ -23,6 +45,7 @@ module.exports = {
         920: '920px',
         '10vh': '7vh',
         '90vh': '93vh',
+        400: '400px',
       },
       minHeight: {
         '90vh': '93vh',
@@ -34,12 +57,11 @@ module.exports = {
       },
       zIndex: {
         100: 100,
-      },
       keyframes: {
-        'fade-in-up': {
+        'fade-in-down': {
           '0%': {
             opacity: '0',
-            transform: 'translateY(0)',
+            transform: 'translateY(-10px)',
           },
           '100%': {
             opacity: '1',
@@ -47,7 +69,9 @@ module.exports = {
           },
         },
       },
-      animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
+      animation: {
+        'fade-in-down': 'fade-in-down 1s ease-out',
+      },
     },
   },
   plugins: [],
