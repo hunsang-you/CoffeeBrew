@@ -72,6 +72,9 @@ module.exports = {
       animation: {
         'fade-in-down': 'fade-in-down 1s ease-out',
       },
+      backgroundImage: {
+        // 'hero-pattern': "",
+      },
     },
   },
   plugins: [],

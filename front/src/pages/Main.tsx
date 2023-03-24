@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Page1, Page2, Page3 } from '../components/main';
 
 const Main = () => {
   const outerDivRef = useRef<HTMLDivElement>(null);
+  const [pageN, setPageN] = useState<Number>(0);
 
   const pushText = (): void => {
     console.log(outerDivRef.current);
@@ -11,18 +12,18 @@ const Main = () => {
       const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
       console.log(scrollTop);
       console.log(document.body.offsetHeight);
+      console.log(outerDivRef);
     }
   };
 
   useEffect(() => {
-    console.log(1);
     const wheelHandler = (event: React.WheelEvent<HTMLDivElement>) => {
       if (outerDivRef.current && outerDivRef.current.scrollTop) {
         event.preventDefault();
         // 스크롤 행동 구현
         const { deltaY } = event;
         const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-        const pageHeight = document.body.offsetHeight * 0.9; // 화면 세로길이, 100vh와 같습니다.
+        const pageHeight = document.body.offsetHeight * 0.855; // 화면 세로길이, 100vh와 같습니다.
         //   const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
         console.log('스크롤 윗부분 : ' + scrollTop);
         console.log('화면 세로길이 : ' + pageHeight);
@@ -32,15 +33,15 @@ const Main = () => {
             //현재 1페이지
             console.log('현재 1페이지, down');
             outerDivRef.current.scrollTo({
-              top: scrollTop + pageHeight,
+              top: pageHeight,
               left: 0,
               behavior: 'smooth',
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            //현재 2페이지
+            // 현재 2페이지
             console.log('현재 2페이지, down');
             outerDivRef.current.scrollTo({
-              top: scrollTop + pageHeight,
+              top: pageHeight * 2,
               left: 0,
               behavior: 'smooth',
             });
@@ -48,7 +49,7 @@ const Main = () => {
             // 현재 3페이지
             console.log('현재 3페이지, down');
             outerDivRef.current.scrollTo({
-              top: scrollTop + pageHeight,
+              top: pageHeight * 2,
               left: 0,
               behavior: 'smooth',
             });
@@ -94,9 +95,9 @@ const Main = () => {
 
   return (
     <Outer ref={outerDivRef}>
-      <Page1 />
-      <Page2 />
-      <Page3 />
+      <Page1 pushText={pushText} />
+      <Page2 pushText={pushText} />
+      <Page3 pushText={pushText} />
     </Outer>
   );
 };
