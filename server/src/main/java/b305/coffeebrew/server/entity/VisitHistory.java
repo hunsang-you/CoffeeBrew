@@ -13,7 +13,7 @@ import java.io.Serializable;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "shop_history")
+@Table(name = "visit_history")
 @Getter
 @Setter
 @Builder
@@ -27,7 +27,7 @@ public class VisitHistory extends BaseAtTime implements Serializable {
     private Long idx;
 
     // 회원 식별
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private Member memberIdx;
 

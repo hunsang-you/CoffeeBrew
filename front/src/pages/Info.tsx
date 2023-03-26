@@ -1,7 +1,26 @@
-import React from 'react';
+import * as S from '../components/useageStyle';
+import { Route, Routes } from 'react-router-dom';
+import { CoffeeHis, CoffeeMap, CoffeeWord } from './info/index';
+import { useEffect } from 'react';
 
-const Info = () => {
-  return <div>정보페이지입니다.</div>;
+interface IsFooterType {
+  setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Info = ({ setIsFooter }: IsFooterType) => {
+  useEffect(() => {
+    setIsFooter(true);
+  }, [setIsFooter]);
+
+  return (
+    <S.ContentContainer>
+      <Routes>
+        <Route path="" element={<CoffeeHis />} />
+        <Route path="map" element={<CoffeeMap />} />
+        <Route path="word" element={<CoffeeWord />} />
+      </Routes>
+    </S.ContentContainer>
+  );
 };
 
 export default Info;

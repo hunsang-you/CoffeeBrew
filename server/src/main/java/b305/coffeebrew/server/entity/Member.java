@@ -53,8 +53,8 @@ public class Member extends BaseAtTime implements Serializable {
     @ColumnDefault("'ROLE_MEMBER'")
     private String role;
 
+    @Column(name = "expired", columnDefinition = "BOOLEAN DEFAULT FALSE")
     @Convert(converter = BooleanToYNConverter.class)
-    @NotBlank
     private boolean expired;
 
     @Override

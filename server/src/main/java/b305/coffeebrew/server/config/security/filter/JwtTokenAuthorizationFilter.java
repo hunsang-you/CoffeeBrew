@@ -48,14 +48,15 @@ public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
 		try {
 			TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
 			String token = tokenResDTO.getToken();
+			log.info("token= {}", token);
 			switch (tokenResDTO.getCode()) {
 				case 0:
 					if (jwtTokenProvider.validateToken(token)) {
 						log.info("Access Token Validation - Success");
 
-						String userPk = jwtTokenProvider.getUserPk(token);
+						String userEmail = jwtTokenProvider.getUserEmail(token);
 
-						UserDetails userDetails = principalDetailService.loadUserByUsername(userPk);
+						UserDetails userDetails = principalDetailService.loadUserByUsername(userEmail);
 						UsernamePasswordAuthenticationToken authenticationToken =
 								new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
@@ -73,7 +74,7 @@ public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
 				case 1:
 					if (jwtTokenProvider.validateRefreshToken(token)) {
 						log.info("Refresh Token Validation - Success");
-						String accessToken = jwtTokenProvider.generateAccessToken(jwtTokenProvider.getUserPk(token));
+						String accessToken = jwtTokenProvider.generateAccessToken(jwtTokenProvider.getUserEmail(token));
 
 						response.addHeader(headerKeyAccess, typeAccess + accessToken);
 

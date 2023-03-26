@@ -1,11 +1,13 @@
 package b305.coffeebrew.server.config.security.filter;
 
+import b305.coffeebrew.server.config.security.auth.PrincipalDetailService;
 import b305.coffeebrew.server.config.security.handler.DecodeEncodeHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Component;
 public class UserAuthenticationManager implements AuthenticationManager {
 	private static final String METHOD_NAME = UserAuthenticationManager.class.getName();
 	private final DecodeEncodeHandler decodeEncodeHandler;
+	private final PrincipalDetailService principalDetailsService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -37,10 +40,8 @@ public class UserAuthenticationManager implements AuthenticationManager {
 				log.warn("Member password validate - Empty or null");
 				throw new NullPointerException();
 			} else {
-//				if (decodeEncodeHandler.memberIdValid(memberId)) {
-//					if (decodeEncodeHandler.passwordValid(memberId, password))
-//						return new UsernamePasswordAuthenticationToken(memberId, password);
-//				}
+				UserDetails userDetails = principalDetailsService.loadUserByUsername(memberId);
+				return new UsernamePasswordAuthenticationToken(memberId, password, userDetails.getAuthorities());
 			}
 		} catch (LockedException le) {
 			log.error("잠겨 있는 계정 " + METHOD_NAME, le);

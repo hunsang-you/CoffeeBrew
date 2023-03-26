@@ -27,7 +27,7 @@ public class Review extends BaseAtTime implements Serializable {
     private Long idx;
 
     // 회원 식별
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private Member memberIdx;
 
@@ -60,9 +60,6 @@ public class Review extends BaseAtTime implements Serializable {
 
     @NotBlank
     private int balance; // 밸런스
-
-    @NotBlank
-    private int after; // 후미
 
     @NotBlank
     private String aroma_note; // 향 상세

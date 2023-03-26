@@ -1,10 +1,9 @@
 package b305.coffeebrew.server.config.jwt;
 
+import b305.coffeebrew.server.config.utils.RedisUtil;
 import b305.coffeebrew.server.dto.token.CommonTokenDTO;
 import b305.coffeebrew.server.dto.token.ReIssuanceTokenDTO;
 import b305.coffeebrew.server.dto.token.TokenResDTO;
-import b305.coffeebrew.server.entity.Token;
-import b305.coffeebrew.server.repository.TokenRepository;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,15 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Enumeration;
 
 /**
  * generateToken() : 사번 값을 입력하여 accessToken, refreshToken 을 CommonTokenSet 으로 리턴
  * generateAccessToken() : 사번 값을 입력하여 accessToken 을 String 으로 리턴
- * getUserPk() : accessToken 값을 입력하여 Token 안에 있는 유저의 사번을 String 으로 리턴
+ * getUserEmail() : accessToken 값을 입력하여 Token 안에 있는 유저의 사번을 String 으로 리턴
  * validateToken() : accessToken 검증 함수
  * requestCheckToken() : Token 이 accessToken 인지 refreshToken 인지 확인 후 TokenReqDTO 로 리턴 ... 0 : accessToken / 1 : refreshToken / 2 : 에러
  * saveRefresh() :
@@ -31,7 +32,6 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
     private static final String METHOD_NAME = JwtTokenProvider.class.getName();
-    private final TokenRepository tokenRepository;
     private final String headerKeyAccess;
     private final String headerKeyRefresh;
     private final String typeAccess;
@@ -41,7 +41,7 @@ public class JwtTokenProvider {
     private final long refreshValidTime;
 
     @Autowired
-    public JwtTokenProvider(TokenRepository tokenRepository,
+    public JwtTokenProvider(
                             @Value(value = "${jwt.header.access}") String headerKeyAccess,
                             @Value(value = "${jwt.header.refresh}") String headerKeyRefresh,
                             @Value(value = "${jwt.type.access}") String typeAccess,
@@ -49,7 +49,6 @@ public class JwtTokenProvider {
                             @Value(value = "${jwt.secret.key}") String secretValue,
                             @Value(value = "${jwt.time.access}") String accessValidString,
                             @Value(value = "${jwt.time.refresh}") String refreshValidString) {
-        this.tokenRepository = tokenRepository;
         this.headerKeyAccess = headerKeyAccess;
         this.headerKeyRefresh = headerKeyRefresh;
         this.typeAccess = typeAccess;
@@ -59,43 +58,57 @@ public class JwtTokenProvider {
         this.refreshValidTime = Long.parseLong(refreshValidString) * 1000;
     }
 
-    public CommonTokenDTO generateToken(String userPk) {
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private HttpServletResponse response;
+
+    public CommonTokenDTO generateToken(String userEmail) {
         log.info(METHOD_NAME + "- generateToken() ...");
         Date now = new Date();
 
-        String accessToken = generateAccessToken(userPk);
+        String accessToken = generateAccessToken(userEmail);
         String refreshToken = Jwts.builder()
-                .setSubject(userPk)
+                .setSubject(userEmail)
                 .setExpiration(new Date(now.getTime() + refreshValidTime))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
 
+        // access token을 요청의 헤더에 담아서 보내기
+        response.setHeader(headerKeyAccess, typeAccess + accessToken);
+
         return CommonTokenDTO.builder().accessToken(accessToken)
                 .reIssuanceTokenDTO(ReIssuanceTokenDTO.builder()
-                        .memberId(userPk)
+                        .memberEmail(userEmail)
                         .refreshToken(refreshToken)
                         .build()).build();
     }
 
-    public String generateAccessToken(String userPk) {
+    public String generateAccessToken(String userEmail) {
         log.info(METHOD_NAME + "- generateAccessToken() ...");
         Date now = new Date();
 
         return Jwts.builder()
-                .setSubject(userPk)
+                .setSubject(userEmail)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + accessValidTime))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 
-    public String getUserPk(String token) {
+    public String getUserEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
+
 
     public boolean validateToken(String token) {
         log.info(METHOD_NAME + "- validateToken() ...");
         try {
+            if (token == null || token.trim().isEmpty()) {
+                log.error("토큰 값이 비어 있습니다. " + METHOD_NAME);
+                return false;
+            }
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (SignatureException se) {
@@ -119,15 +132,22 @@ public class JwtTokenProvider {
     public TokenResDTO requestCheckToken(HttpServletRequest request) {
         log.info(METHOD_NAME + "- requestCheckToken() ...");
         try {
-            String token = request.getHeader(headerKeyAccess);
+            Enumeration<String> headerNames = request.getHeaderNames();
+            while (headerNames.hasMoreElements()) {
+                String headerName = headerNames.nextElement();
+                log.info(headerName + ": " + request.getHeader(headerName));
+            }
+            String token = request.getHeader(headerKeyAccess); // 수정된 부분
+            log.info("headerKeyAccess: {}", headerKeyAccess);
+            log.info("token: {}", token);
 
-            if (token.startsWith(typeAccess)) {
+            if (token != null && token.startsWith(typeAccess)) { // token이 null인 경우 처리 추가
                 return TokenResDTO.builder()
                         .code(0)
                         .token(token.replace(typeAccess, ""))
                         .build();
             }
-            if (token.startsWith(typeRefresh)) {
+            if (token != null && token.startsWith(typeRefresh)) { // token이 null인 경우 처리 추가
                 return TokenResDTO.builder()
                         .code(1)
                         .token(token.replace(typeRefresh, "")).build();
@@ -143,11 +163,8 @@ public class JwtTokenProvider {
     public boolean saveRefresh(ReIssuanceTokenDTO reIssuanceTokenDTO) {
         log.info(METHOD_NAME + "- saveRefresh() ...");
         try {
-            Token tokenEntity = tokenRepository.save(Token.builder()
-                    .memberId(reIssuanceTokenDTO.getMemberId())
-                    .refreshToken(reIssuanceTokenDTO.getRefreshToken())
-                    .build());
-            if (tokenEntity.getMemberId() != null) return true;
+            redisUtil.setDataExpire(reIssuanceTokenDTO.getMemberEmail(),reIssuanceTokenDTO.getRefreshToken() , refreshValidTime);
+            return true;
         } catch (NullPointerException ne) {
             log.error("토큰 셋이 비어있습니다. " + METHOD_NAME, ne);
         } catch (Exception e) {
@@ -160,8 +177,9 @@ public class JwtTokenProvider {
         log.info(METHOD_NAME + "- validateExistingToken() ...");
         try {
             if (this.validateToken(token)) {
-                String userPk = this.getUserPk(token);
-                String existingToken = tokenRepository.findByMemberId(userPk).getRefreshToken();
+                String userEmail = this.getUserEmail(token);
+                //Redis에서 refreshToken가져오기
+                String existingToken = redisUtil.getData(userEmail);
                 if (existingToken.equals(token)) return true;
             }
         } catch (Exception e) {
@@ -173,14 +191,19 @@ public class JwtTokenProvider {
     public boolean updateRefresh(ReIssuanceTokenDTO reIssuanceTokenDTO) {
         log.info(METHOD_NAME + "- updateRefresh() ...");
         try {
-            Integer result = tokenRepository.updateToken(reIssuanceTokenDTO.getRefreshToken(), reIssuanceTokenDTO.getMemberId());
-            if (result > 0) return true;
+            redisUtil.deleteData(reIssuanceTokenDTO.getMemberEmail());
+            redisUtil.setDataExpire(reIssuanceTokenDTO.getMemberEmail(),reIssuanceTokenDTO.getRefreshToken() , refreshValidTime);
+            return true;
         } catch (NullPointerException ne) {
             log.error("토큰 저장소가 비어있습니다. " + METHOD_NAME, ne);
         } catch (Exception e) {
             log.error("SERVER ERROR " + METHOD_NAME, e);
         }
         return false;
+    }
+
+    public long getRefreshValidTime() {
+        return refreshValidTime;
     }
 
     public Cookie generateCookie(String value) {
@@ -192,4 +215,8 @@ public class JwtTokenProvider {
         cookie.setPath("/");
         return cookie;
     }
+
+//    public String getRefreshToken(String userEmail) {
+//        return redisUtil.getData(userEmail);
+//    }
 }

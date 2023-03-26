@@ -27,7 +27,7 @@ public class CapsuleDetail extends BaseAtTime implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "capsule_idx")
-    private Bean capsuleIdx;
+    private Capsule capsuleIdx;
 
     @NotBlank
     private String description; // 설명

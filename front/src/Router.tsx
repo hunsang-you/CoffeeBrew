@@ -1,7 +1,7 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loading from './components/Loading';
+import tw from 'tailwind-styled-components';
 const Main = lazy(() => import('./pages/Main'));
 const Detail = lazy(() => import('./pages/Detail'));
 const Intro = lazy(() => import('./pages/Intro'));
@@ -10,14 +10,20 @@ const MyPage = lazy(() => import('./pages/MyPage'));
 const ProductList = lazy(() => import('./pages/ProductList'));
 const Survey = lazy(() => import('./pages/Servey'));
 
-const Router = () => {
+interface IsFooterType {
+  setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Router = ({ setIsFooter }: IsFooterType) => {
   return (
     <Routes>
       <Route
         path="/"
         element={
           <Suspense fallback={<Loading />}>
-            <Main />
+            <MainContainer>
+              <Main setIsFooter={setIsFooter} />
+            </MainContainer>
           </Suspense>
         }
       />
@@ -25,15 +31,19 @@ const Router = () => {
         path="/detail"
         element={
           <Suspense fallback={<Loading />}>
-            <Detail />
+            <ContentContainer>
+              <Detail setIsFooter={setIsFooter} />
+            </ContentContainer>
           </Suspense>
         }
       />
       <Route
-        path="/info"
+        path="/info/*"
         element={
           <Suspense fallback={<Loading />}>
-            <Info />
+            <ContentContainer>
+              <Info setIsFooter={setIsFooter} />
+            </ContentContainer>
           </Suspense>
         }
       />
@@ -41,7 +51,9 @@ const Router = () => {
         path="/mypage"
         element={
           <Suspense fallback={<Loading />}>
-            <MyPage />
+            <ContentContainer>
+              <MyPage setIsFooter={setIsFooter} />
+            </ContentContainer>
           </Suspense>
         }
       />
@@ -49,7 +61,9 @@ const Router = () => {
         path="/survey"
         element={
           <Suspense fallback={<Loading />}>
-            <Survey />
+            <ContentContainer>
+              <Survey setIsFooter={setIsFooter} />
+            </ContentContainer>
           </Suspense>
         }
       />
@@ -57,7 +71,9 @@ const Router = () => {
         path="/coffeelist"
         element={
           <Suspense fallback={<Loading />}>
-            <ProductList />
+            <ContentContainer>
+              <ProductList setIsFooter={setIsFooter} />
+            </ContentContainer>
           </Suspense>
         }
       />
@@ -65,7 +81,9 @@ const Router = () => {
         path="/intro"
         element={
           <Suspense fallback={<Loading />}>
-            <Intro />
+            <ContentContainer>
+              <Intro setIsFooter={setIsFooter} />
+            </ContentContainer>
           </Suspense>
         }
       />
@@ -74,3 +92,6 @@ const Router = () => {
 };
 
 export default Router;
+
+const ContentContainer = tw.div`mt-10vh min-h-90vh flex flex-col`;
+const MainContainer = tw.div`mt-10vh h-90vh flex flex-col`;

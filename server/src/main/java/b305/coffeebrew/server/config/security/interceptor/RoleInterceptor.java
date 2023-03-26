@@ -34,19 +34,22 @@ public class RoleInterceptor implements HandlerInterceptor {
 
 	private final String adminURL;
 	private final String memberURL;
+	private final String testURL;
 
 	@Autowired
 	public RoleInterceptor(DecodeEncodeHandler decodeEncodeHandler, JwtTokenProvider jwtTokenProvider,
 						   @Value(value = "${user.role.admin}") String adminRole,
 						   @Value(value = "${user.role.member}") String memberRole,
 						   @Value(value = "${user.url.admin}") String adminURL,
-						   @Value(value = "${user.url.member}") String memberURL) {
+						   @Value(value = "${user.url.member}") String memberURL,
+						   @Value(value = "${user.url.test}") String testURL) {
 		this.decodeEncodeHandler = decodeEncodeHandler;
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.adminRole = adminRole;
 		this.memberRole = memberRole;
 		this.adminURL = adminURL;
 		this.memberURL = memberURL;
+		this.testURL = testURL;
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class RoleInterceptor implements HandlerInterceptor {
 			{
 				if (jwtTokenProvider.validateToken(token)) {
 					log.info("Token validate - success");
-					String memberId = jwtTokenProvider.getUserPk(token);
+					String memberId = jwtTokenProvider.getUserEmail(token);
 
 					if (decodeEncodeHandler.memberIdValid(memberId)) {
 						log.info("Member validate - Success");
@@ -78,6 +81,18 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(memberURL)) {
+							log.info("MEMBER role validate ...");
+							if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
+								log.info("MEMBER role validate - Success");
+								result = true;
+							} else {
+								log.warn("MEMBER role validate - Fail");
+								response.setContentType("text/html; charset=UTF-8");
+								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
+							}
+							break Outer;
+						}
+						if (request.getRequestURI().startsWith(testURL)) {
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
 								log.info("MEMBER role validate - Success");

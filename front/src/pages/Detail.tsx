@@ -1,7 +1,20 @@
-import React from 'react';
+import DetailBean from '../components/Detail/DetailBean';
+import * as S from '../components/useageStyle';
+import { useEffect } from 'react';
 
-const Detail = () => {
-  return <div>상세페이지입니다.</div>;
+interface IsFooterType {
+  setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Detail = ({ setIsFooter }: IsFooterType) => {
+  useEffect(() => {
+    setIsFooter(true);
+  }, [setIsFooter]);
+  return (
+    <S.ContentContainer>
+      <DetailBean />
+    </S.ContentContainer>
+  );
 };
 
 export default Detail;
