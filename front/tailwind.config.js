@@ -31,16 +31,19 @@ module.exports = {
         360: '360px',
         400: '400px',
         460: '460px',
+        480: '480px',
         592: '592px',
         720: '720px',
         1000: '1000px',
         1040: '1040px',
         1200: '1200px',
         120: '120px',
+        240: '240px',
         dropdown: '78.3%',
         dropdownbrew: '196px',
         dropdownstory: '181px',
         dropdownlist: '166px',
+        600: '600px',
       },
       height: {
         920: '920px',
@@ -58,51 +61,44 @@ module.exports = {
         '10vh': '7vh',
         dropdown: '140px',
         dropdown1: '196px',
+        infoCustom: '13%',
       },
       zIndex: {
         100: 100,
-        keyframes: {
-          'fade-in-down': {
-            '0%': {
-              opacity: '0',
-              transform: 'translateY(-10px)',
-            },
-            '100%': {
-              opacity: '1',
-              transform: 'translateY(0)',
-            },
+      },
+
+      keyframes: {
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(0)',
           },
-        },
-        animation: {
-          'fade-in-down': 'fade-in-down 1s ease-out',
-        },
-        zIndex: {
-          100: 100,
-        },
-        keyframes: {
-          'fade-in-up': {
-            '0%': {
-              opacity: '0',
-              transform: 'translateY(0)',
-            },
-            '100%': {
-              opacity: '1',
-              transform: 'translateY(0)',
-            },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
           },
-        },
-        animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
-        backgroundImage: {
-          mainBg1: "url('../public/mainImg/bg1.jpg')",
-          mainBg2: "url('../public/mainImg/bg2.svg')",
-          mainBg3: "url('../public/mainImg/bg3.jpg')",
-        },
-        spacing: {
-          47: '47%',
-          '1/10': '10%',
         },
       },
+      animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
+      backgroundImage: {
+        mainBg1: "url('../public/mainImg/bg1.jpg')",
+        mainBg2: "url('../public/mainImg/bg2.svg')",
+        mainBg3: "url('../public/mainImg/bg3.jpg')",
+      },
+      spacing: {
+        47: '47%',
+        '1/10': '10%',
+      },
+      backgroundColor: {
+        lightgray: '#f4f4f2',
+      },
+      lineHeight: {
+        12: '3rem',
+      },
+      borderWidth: {
+        1: '1px',
+      },
     },
-    plugins: [],
   },
+  plugins: [],
 };
