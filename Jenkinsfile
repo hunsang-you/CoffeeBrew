@@ -29,7 +29,8 @@ pipeline {
 		stage('Deploy') {
             steps{
                 sh "pwd"
-                sh "docker-compose --file ../docker-compose-client.yml up -d --build"
+                sh "cd .."
+                sh "docker-compose --file docker-compose-client.yml up -d --build"
                 sh "docker network connect web workspace-client-1"
                 sh "docker-compose ps"
             }
