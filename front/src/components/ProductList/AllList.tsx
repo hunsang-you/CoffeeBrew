@@ -1,7 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bean from '../../assets/bean.png';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import CoffeeList from './CoffeeList';

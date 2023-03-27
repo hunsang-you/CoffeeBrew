@@ -2,14 +2,14 @@ import tw from 'tailwind-styled-components';
 import { useState, useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import TextField from '@mui/material/TextField';
-import Survey from '../../pages/Servey';
+import Logo from '../../assets/Coffeebrew.svg';
 // 검색창
 const SearchDiv = tw.div`flex flex-col text-center `;
 const SearchBtn = tw.button`w-20 h-12 bg-black text-white rounded-full mx-4 mt-10`;
 const SearchDetailBtn = tw.button`w-20 h-12 bg-black text-white rounded-xl mt-4 mx-auto`;
 const SearchDetail = tw.div`w-720 min-h-full border-4 rounded-3xl border-y-brownBorder mx-auto mt-4 drop-shadow-lg `;
 const CheckKeyword = tw.button`w-20 border-4 border-nameColor text-black rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold `;
-const CheckedKeyword = tw.button`w-20 border-4 border-nameColor bg-nameColor text-white rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold `;
+const CheckedKeyword = tw.button`w-20 border-4 border-nameColor bg-nameColor text-white rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold  `;
 
 const KeywordTitle = tw.div`w-20 text-xl font-bold mx-auto my-auto break-words`;
 const KeywordGroup = tw.div`w-592 mx-auto border-4 border-recMachine2 rounded-2xl flex `;
@@ -252,14 +252,14 @@ const SearchBar = () => {
   return (
     <SearchDiv>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <AiOutlineSearch
+        {/* <AiOutlineSearch
           size={50}
           style={{
             marginRight: '16px',
             marginTop: '2.5rem',
           }}
-        />
-
+        /> */}
+        <img src={Logo} alt="Logo" width={100} style={{ marginTop: '24px' }} />
         <TextField
           id="outlined-basic"
           label="원두 혹은 원산지를 입력"

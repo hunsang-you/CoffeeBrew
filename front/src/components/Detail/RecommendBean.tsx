@@ -9,6 +9,7 @@ import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';
 import ratingempty from '../../assets/ratingempty.png';
 
+const RecboxBean = tw.div`flex justify-center w-1000  mx-auto flex-col `;
 const Body = tw.div`flex justify-center select-none w-100vw h-100vh my-10 `;
 const Container = tw.div`flex-col `;
 const Slide = tw.div`flex align-middle`;
@@ -61,6 +62,7 @@ const RecommendBean = (): JSX.Element => {
     setStyle({ marginLeft: `-${current}00%` });
   }, [current]);
   return (
+    // <RecboxBean>
     <Body>
       <Container>
         {/* 위치표시 */}
@@ -166,6 +168,7 @@ const RecommendBean = (): JSX.Element => {
         </div>
       </Container>
     </Body>
+    // </RecboxBean>
   );
 };
 
