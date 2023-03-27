@@ -1,8 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { Page1, Page2, Page3, Dots, Test } from '../components/main';
+import { Page1, Page2, Page3, Dots } from '../components/main';
 import Footer from '../components/navbarandfoot/Footer';
-import qweqelogo from './qweqwe.png';
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -151,4 +150,4 @@ const Main = ({ setIsFooter }: IsFooterType) => {
 
 export default Main;
 
-const Outer = tw.div`h-screen overflow-y-auto`;
+const Outer = tw.div`h-screen overflow-y-auto select-none`;
