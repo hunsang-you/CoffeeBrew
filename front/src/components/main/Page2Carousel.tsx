@@ -6,8 +6,6 @@ interface Item {
   [key: string]: string;
 }
 
-type ItemType = Item[];
-
 interface ItemProps {
   key: number;
   item: Item;
