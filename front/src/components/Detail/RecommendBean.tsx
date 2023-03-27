@@ -5,6 +5,9 @@ import bean2 from '../../assets/bean2.png';
 import grinding2 from '../../assets/grinding2.png';
 import machine1 from '../../assets/machine1.png';
 import spin from '../../assets/Spin-1s-200px.gif';
+import ratingfull from '../../assets/ratingfull.png';
+import ratinghalf from '../../assets/ratinghalf.png';
+import ratingempty from '../../assets/ratingempty.png';
 
 const Body = tw.div`flex justify-center select-none w-100vw h-100vh my-10 `;
 const Container = tw.div`flex-col `;
@@ -16,7 +19,8 @@ const Position = tw.div`mb-6 flex justify-center`;
 const Current = tw.div`bg-gray-500 rounded-full w-3 h-3 ml-5  cursor-pointer`;
 const Dot = tw(Current)`bg-orange-400 w-10 ml-5 cursor-pointer`;
 
-const Score = tw.div`text-xl`;
+const ScoreTitle = tw.div`text-xl flex justify-center`;
+const Score = tw.img`w-8`;
 
 const RecommendBean = (): JSX.Element => {
   // 캐러셀 페이지 순서 확인
@@ -112,11 +116,46 @@ const RecommendBean = (): JSX.Element => {
                       >
                         원산지 : 케냐
                       </div>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
-                      <Score> 향 ★★★★★</Score>
+                      <ScoreTitle>
+                        <p style={{ marginRight: '16px' }}>향</p>
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                      </ScoreTitle>
+                      <ScoreTitle>
+                        <p style={{ marginRight: '16px' }}>산미</p>
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingempty} />
+                      </ScoreTitle>
+                      <ScoreTitle>
+                        <p style={{ marginRight: '16px' }}>단맛</p>
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingempty} />
+                      </ScoreTitle>
+                      <ScoreTitle>
+                        <p style={{ marginRight: '16px' }}>쓴맛</p>
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratinghalf} />
+                        <Score src={ratingempty} />
+                        <Score src={ratingempty} />
+                      </ScoreTitle>
+                      <ScoreTitle>
+                        <p style={{ marginRight: '16px' }}>바디감</p>
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingfull} />
+                        <Score src={ratingempty} />
+                      </ScoreTitle>
                     </div>
                   </div>
                 ))}

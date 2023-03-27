@@ -24,6 +24,7 @@ module.exports = {
       textColor: {
         mainColorBrown: '#4A2919',
         mainColorOrange: '#FF9900',
+        productTextBrown: '#4A2919',
       },
       width: {
         '88vw': '88vw',
