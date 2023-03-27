@@ -394,7 +394,7 @@ function CoffeeMap() {
   ];
 
   return (
-    <div className="App">
+    <div className="bg-white">
       <div>
         <div>react-simple-maps test</div>
         <ComposableMap

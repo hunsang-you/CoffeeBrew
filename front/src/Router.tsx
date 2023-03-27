@@ -41,7 +41,7 @@ const Router = ({ setIsFooter }: IsFooterType) => {
         path="/info/*"
         element={
           <Suspense fallback={<Loading />}>
-            <ContentContainer>
+            <ContentContainer className="bg-wordimg">
               <Info setIsFooter={setIsFooter} />
             </ContentContainer>
           </Suspense>

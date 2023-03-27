@@ -21,6 +21,7 @@ const CoffeeWord = () => {
       <div>
         <div className="fixed border-solid border-fotColor border-1 rounded-3xl flex flex-col cursor-default select-none p-5 mt-infoCustom bg-lightgray">
           <Choose
+            className={`${showComp === '향' ? 'bg-red-400' : null}`}
             onClick={() => {
               setShowComp('향');
             }}
@@ -28,6 +29,7 @@ const CoffeeWord = () => {
             향 기
           </Choose>
           <Choose
+            className={`${showComp === '맛' ? 'bg-orange-400' : null}`}
             onClick={() => {
               setShowComp('맛');
             }}
@@ -35,13 +37,15 @@ const CoffeeWord = () => {
             맛
           </Choose>
           <Choose
+            className={`${showComp === '원두' ? 'bg-yellow-400' : null}`}
             onClick={() => {
               setShowComp('원두');
             }}
           >
-            원 두
+            에스프레소
           </Choose>
           <Choose
+            className={`${showComp === '바디감' ? 'bg-emerald-400' : null}`}
             onClick={() => {
               setShowComp('바디감');
             }}
@@ -49,11 +53,12 @@ const CoffeeWord = () => {
             바 디 감
           </Choose>
           <Choose
+            className={`${showComp === '기본' ? 'bg-cyan-400' : null}`}
             onClick={() => {
               setShowComp('기본');
             }}
           >
-            기 본
+            원 두
           </Choose>
         </div>
       </div>
@@ -61,6 +66,6 @@ const CoffeeWord = () => {
   );
 };
 const Container = tw.div`flex flex-row m-12`;
-const Choose = tw.div`border-1 rounded-2xl text-center px-4 my-2`;
+const Choose = tw.div`border-1 rounded-2xl text-center px-4 my-2 font-bold text-mainColorBrown`;
 
 export default CoffeeWord;
