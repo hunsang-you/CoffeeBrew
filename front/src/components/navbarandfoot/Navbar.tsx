@@ -8,6 +8,7 @@ import Logo from '../../assets/Coffeebrew.svg';
 import tw from 'tailwind-styled-components';
 import { DropDown } from './DropDown';
 import { LoginModal } from '../login/Login';
+import hypeboy from '../../assets/hypeboy.mp3';
 
 const Navbar = () => {
   const reduxData = useSelector((state: RootState) => state);
@@ -16,6 +17,7 @@ const Navbar = () => {
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isMenuDropDownOpen, setMenuDropDownOpen] = useState(false);
+  const [isPlay, setIsPlay] = useState(false);
 
   useEffect(() => {
     dispatch(setNavbar(location.pathname));
@@ -24,6 +26,11 @@ const Navbar = () => {
     setMenuDropDownOpen(false);
   };
   useOnHoverOutside(dropdownRef, closeHoverMenu); //full dropdwon hovering
+  const playMusic = () => {
+    const audio = new Audio(hypeboy);
+    audio.loop = true;
+    audio.play();
+  };
   return (
     <div
       className=""
@@ -40,6 +47,13 @@ const Navbar = () => {
             }}
           >
             <img src={Logo} width={60} height={52} alt="no_img" />
+            <button
+              onClick={() => {
+                playMusic();
+              }}
+            >
+              음악재생
+            </button>
           </NDiv>
           <div className="flex flex-row w-2/3 justify-between">
             <NDiv
