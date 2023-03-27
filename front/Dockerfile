@@ -1,7 +1,7 @@
 FROM node:16.18.0
-WORKDIR /client
-COPY ./package*.json /client
-COPY / /client
+WORKDIR /front
+COPY ./package*.json /front
+COPY / /front
 RUN npm install
 EXPOSE 3000
 RUN npm run build
