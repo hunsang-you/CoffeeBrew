@@ -37,7 +37,7 @@ public class ReviewController {
             @ApiResponse(code = 500, message = "서버 오류"),
     })
     public ResponseEntity<ResponseDTO> regist(@RequestBody ReviewRegistDTO reviewRegistDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_MOD, reviewService.registReview(reviewRegistDTO, principalDetails.getMember().getIdx())));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_REGISTER, reviewService.registReview(reviewRegistDTO, principalDetails.getMember().getIdx())));
     }
 
     /**
@@ -50,7 +50,7 @@ public class ReviewController {
             @ApiResponse(code = 500, message = "서버 오류"),
     })
     public ResponseEntity<ResponseDTO> readProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_PROFILE, reviewService.updateReview(principalDetails.getMember().getIdx())));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_MOD, reviewService.updateReview(principalDetails.getMember().getIdx())));
     }
 
     /**
@@ -59,6 +59,6 @@ public class ReviewController {
     @DeleteMapping("/{reviewId}")
     @ApiOperation(value = "리뷰 삭제", notes = "리뷰 삭제를 진행")
     public ResponseEntity<ResponseDTO> delete(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MEMBER_DELETE,  reviewService.deleteReview(principalDetails.getMember().getIdx())));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_DELETE,  reviewService.deleteReview(principalDetails.getMember().getIdx())));
     }
 }
