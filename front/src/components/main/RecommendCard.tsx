@@ -1,10 +1,10 @@
 import tw from 'tailwind-styled-components';
 
 const RecommendCard = () => {
-  const cardcolor = 'blue';
+  const cardcolor = 'rgb(148 168 184)';
   return (
-    <OuterCard>
-      <TopCard style={{ backgroundColor: cardcolor }}>
+    <OuterCard style={{ backgroundColor: cardcolor }}>
+      <TopCard>
         <TopContent>top</TopContent>
       </TopCard>
       <UnderCard>
@@ -17,7 +17,7 @@ const RecommendCard = () => {
 
 export default RecommendCard;
 
-const OuterCard = tw.div`h-1/2 w-1/6 bg-slate-400 rounded-xl`;
+const OuterCard = tw.div`h-1/2 w-1/5 rounded-xl mx-5`;
 const TopCard = tw.div`h-2/3 flex items-center justify-center rounded-t-xl`;
 const TopContent = tw.div``;
 const UnderCard = tw.div`h-1/3 flex flex-col items-center justify-center bg-orange-200 rounded-xl`;

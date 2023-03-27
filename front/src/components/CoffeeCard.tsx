@@ -1,9 +1,24 @@
+import { ReactComponent as Acidity } from '../../assets/coffeecard/acidity.svg';
+import { ReactComponent as Bitterness } from '../../assets/coffeecard/bitterness.svg';
+import { ReactComponent as Body } from '../../assets/coffeecard/body.svg';
+import { ReactComponent as Flavor } from '../../assets/coffeecard/flavor.svg';
+import { ReactComponent as Sweetness } from '../../assets/coffeecard/sweetness.svg';
+
 const CoffeeCard = () => {
-  return (
-    <div>
-      <h1>원두 포장지 디자인할거</h1>
-    </div>
-  );
+  const apidate: string = '';
+  if (apidate === 'acidity') {
+    return <Acidity />;
+  } else if (apidate === '') {
+    return <Bitterness />;
+  } else if (apidate === '') {
+    return <Body />;
+  } else if (apidate === '') {
+    return <Flavor />;
+  } else if (apidate === '') {
+    return <Sweetness />;
+  } else {
+    return <Sweetness />;
+  }
 };
 
 export default CoffeeCard;

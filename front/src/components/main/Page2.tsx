@@ -5,10 +5,10 @@ import tw from 'tailwind-styled-components';
 const Page2 = () => {
   return (
     <Inner>
-      {/* <CarouselDiv>
+      <CarouselDiv>
         <Page2Carousel />
-      </CarouselDiv> */}
-      <RecommendCard />
+      </CarouselDiv>
+      {/* <RecommendCard /> */}
     </Inner>
   );
 };
