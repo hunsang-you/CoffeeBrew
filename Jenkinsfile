@@ -30,7 +30,7 @@ pipeline {
             steps{
                 sh "pwd"
                 sh "cd .."
-                sh "docker-compose --file docker-compose-client.yml up -d --build"
+                sh "docker-compose --file /var/jenkins_home/workspace/docker-compose-client.yml up -d --build"
                 sh "docker network connect web workspace-client-1"
                 sh "docker-compose ps"
             }
