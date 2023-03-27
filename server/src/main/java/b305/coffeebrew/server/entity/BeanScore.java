@@ -48,13 +48,12 @@ public class BeanScore extends BaseAtTime implements Serializable {
     private int balance; // 밸런스
 
     @NotBlank
-    private int after; // 후미
+    @Column(name = "coffeeing_note")
+    private String coffeeingNote;
 
     @NotBlank
-    private String aroma_note; // 향 상세
-
-    @NotBlank
-    private String flavor_note; // 맛 상세
+    @Column(name = "roasting_point")
+    private String roastingPoint;
 
     @Override
     public void prePersist() {
