@@ -4,7 +4,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
     }
     environment {
-        SOURCECODE_JENKINS_CREDENTIAL_ID = 'user_donghun'
+        SOURCECODE_JENKINS_CREDENTIAL_ID = 'donghun'
         SOURCE_CODE_URL = 'https://lab.ssafy.com/s08-bigdata-recom-sub2/S08P22B305.git'
         RELEASE_BRANCH = 'release-client'
     }
