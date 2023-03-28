@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -35,7 +36,7 @@ public class Review extends BaseAtTime implements Serializable {
     @NotBlank
     private String item_type;
 
-    @NotBlank
+    @NotNull
     private Long item_idx;
 
     @NotBlank
@@ -44,32 +45,31 @@ public class Review extends BaseAtTime implements Serializable {
     @NotBlank
     private String content;
 
-    @NotBlank
+    @NotNull
     private int overall; // 총점
     
-    @NotBlank
+    @NotNull
     private int flavor; // 향미
 
-    @NotBlank
+    @NotNull
     private int acidity; // 산미
 
-    @NotBlank
+    @NotNull
     private int sweetness; // 단맛
-    @NotBlank
+    @NotNull
     private int bitterness; // 쓴맛
 
-    @NotBlank
+    @NotNull
     private int body; // 바디감
 
 
     @NotBlank
     private String coffeeing_note; // 커핑노트(향 상세)
 
-    @NotBlank
-    private int like; // 좋아요 수자
+    @NotNull
+    private int like; // 좋아요 수치
 
     @Convert(converter = BooleanToYNConverter.class)
-    @NotBlank
     private boolean expired;
 
     @Override

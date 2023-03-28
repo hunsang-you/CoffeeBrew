@@ -24,19 +24,25 @@ public class ReviewService {
     @Transactional
     public Long registReview(ReviewPageDTO reviewPageDTO, Long idx) throws RuntimeException{
         Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        reviewRepository.save(reviewPageDTO.of(member, 0));
+        reviewRepository.save(reviewPageDTO.of(member));
         return member.getIdx();
     }
     @Transactional
-    public Long updateReview(String reviewId, ReviewPageDTO reviewPageDTO){
+    public Long updateReview(String reviewId, ReviewPageDTO reviewPageDTO, Long idx) throws RuntimeException{
         Review review = reviewRepository.findById(Long.valueOf(reviewId)).orElseThrow(() -> new ReviewNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+        if (!idx.equals(review.getMemberIdx().getIdx())){
+            throw new ReviewNotFoundException(ErrorCode.REVIEW_NOT_EQUAL);
+        }
         review.update(reviewPageDTO);
         reviewRepository.save(review);
         return review.getIdx();
     }
     @Transactional
-    public Long deleteReview(String reviewId) throws RuntimeException{
+    public Long deleteReview(String reviewId, Long idx) throws RuntimeException {
         Review review = reviewRepository.findById(Long.valueOf(reviewId)).orElseThrow(() -> new ReviewNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+        if (!idx.equals(review.getMemberIdx().getIdx())){
+            throw new ReviewNotFoundException(ErrorCode.REVIEW_NOT_EQUAL);
+        }
         // 사옹자 expired로 변경
         review.setExpired(true);
         reviewRepository.save(review);
