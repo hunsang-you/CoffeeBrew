@@ -26,7 +26,7 @@ const Page3Carousel = () => {
           <TextDiv>커피를 생산할까요?</TextDiv>
           <MoveButton
             onClick={() => {
-              navigate('/intro');
+              navigate('/info/map');
             }}
           >
             SHOW NOW
@@ -35,11 +35,11 @@ const Page3Carousel = () => {
       </BgDiv1>
       <BgDiv2 style={{ backgroundImage: `url(${bg2})` }}>
         <ItemDiv>
-          <TextDiv>커피 기구는</TextDiv>
+          <TextDiv>커피 용어는</TextDiv>
           <TextDiv>어떤 것이 있을까요?</TextDiv>
           <MoveButton
             onClick={() => {
-              navigate('/intro');
+              navigate('/info/word');
             }}
           >
             SHOW NOW
@@ -52,7 +52,7 @@ const Page3Carousel = () => {
           <TextDiv>대해서 알아볼까요?</TextDiv>
           <MoveButton
             onClick={() => {
-              navigate('/intro');
+              navigate('/info');
             }}
           >
             SHOW NOW

@@ -15,4 +15,3 @@ export default Page3;
 
 const Inner = tw.div`h-screen flex justify-center items-center`;
 const CarouselDiv = tw.div`w-full h-full`;
-const TextDiv = tw.div`text-white text-8xl`;

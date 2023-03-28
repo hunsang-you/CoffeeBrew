@@ -138,7 +138,6 @@ const Main = ({ setIsFooter }: IsFooterType) => {
   return (
     <Outer ref={outerDivRef}>
       <Dots scrollIndex={scrollIndex} pushIndex={pushIndex} />
-      {/* <Test /> */}
       <img src="./qweqwe" alt="" />
       <Page1 />
       <Page2 />
