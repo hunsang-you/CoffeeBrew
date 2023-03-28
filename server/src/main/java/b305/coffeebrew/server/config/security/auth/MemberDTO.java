@@ -36,7 +36,7 @@ public class MemberDTO {
     private String nickname; // 사용자 nickname
 
     private String gender; // 사용자 nickname
-    private int age; // 사용자 nickname
+    private String ageRange; // 사용자 nickname
 
     @ColumnDefault("'ROLE_MEMBER'")
     private String role;
@@ -45,19 +45,21 @@ public class MemberDTO {
     @NotBlank
     private boolean expired;
 
-
     @Builder
-    public MemberDTO(Long idx, String memberId, String snsType, String profileImg, String nickname, String gender, int age, String role, boolean expired) {
+    public MemberDTO(Long idx, String memberId, String snsType, String profileImg, String nickname, String gender, String ageRange, String role, boolean expired) {
         this.idx = idx;
         this.memberId = memberId;
         this.snsType = snsType;
         this.profileImg = profileImg;
         this.nickname = nickname;
         this.gender = gender;
-        this.age = age;
+        this.ageRange = ageRange;
         this.role = role;
         this.expired = expired;
     }
+
+
+
 
     public MemberDTO of(Optional<Member> member) {
         return MemberDTO.builder()

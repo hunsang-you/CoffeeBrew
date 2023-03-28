@@ -41,15 +41,15 @@ public class SwaggerConfig {
 		String version = "v1";
 		return buildDocket("회원 " + version, Predicates
 				.or(PathSelectors.ant("/" + version + "/auth/**"),
-						PathSelectors.ant("/" + version + "/user"),
-						PathSelectors.ant("/" + version + "/user/**")));
+						PathSelectors.ant("/" + version + "/member"),
+						PathSelectors.ant("/" + version + "/member/**")));
 	}
 
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo()) // API 문서에 대한 설명
-				.securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정 1
-				.securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정 2
+//				.securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정 1
+//				.securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정 2
 				.useDefaultResponseMessages(false)
 				.groupName(groupName)
 				.select()

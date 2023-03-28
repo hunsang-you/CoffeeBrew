@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.entity;
 
 import b305.coffeebrew.server.config.utils.BaseAtTime;
+import b305.coffeebrew.server.config.utils.BooleanToYNConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -33,13 +34,20 @@ public class BeanDetail extends BaseAtTime implements Serializable {
     private String description; // 설명
 
     @NotBlank
-    private String species; // 원두 원종
+    private String origin; // 생산국
 
     @NotBlank
-    private String origin; // 원산지
+    private String region; // 생산지
 
     @NotBlank
-    private String processing; // 원두 가공
+    private String rank; // 등급
+
+    @NotBlank
+    private String processing; // 가공
+
+    @NotBlank
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean decaffeination; // 원두 가공
 
     @Override
     public void prePersist() {

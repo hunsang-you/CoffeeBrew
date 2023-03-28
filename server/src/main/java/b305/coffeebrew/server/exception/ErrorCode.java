@@ -19,6 +19,10 @@ public enum ErrorCode {
     BOOKMARK_ALREADY_EXIST(400, "이미 존재하는 즐겨찾기 입니다."),
     PW_NOT_MATCH(404, "기존 패스워드가 일치하지 않습니다."),
 
+    // REVIEW
+    REVIEW_NOT_FOUND(404, "리뷰를 찾을 수 없습니다."),
+    REVIEW_NOT_EQUAL(404, "자신의 리뷰가 아닙니다."),
+
     //500
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류 입니다."),
 
@@ -33,8 +37,10 @@ public enum ErrorCode {
     MISS_MATCH_ENDPOINT(404, "해당 end point는 요청 할 수 없습니다."),
     MAX_UPLOAD_SIZE_EXCEEDED(400, "파일 용량이 초과하였습니다."),
     SOCKET_NOT_CLOSE_ERROR(500, "소켓이 정상적으로 종료되지 않았습니다."),
-    MYPAGE_HISTORY_ERROR(500, "거래 내역 조회 에러입니다.");
+    MYPAGE_HISTORY_ERROR(500, "거래 내역 조회 에러입니다."),
 
+    BEAN_NOT_FOUND(404, "원두 정보를 찾을 수 없습니다"),
+    CAPSULE_NOT_FOUND(404, "캡슐 정보를 찾을 수 없습니다");
 
     private final int status;
     private final String message;
