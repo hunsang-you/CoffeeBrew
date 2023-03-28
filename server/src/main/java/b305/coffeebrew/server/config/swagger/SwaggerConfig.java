@@ -48,8 +48,8 @@ public class SwaggerConfig {
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo()) // API 문서에 대한 설명
-				.securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정 1
-				.securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정 2
+//				.securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정 1
+//				.securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정 2
 				.useDefaultResponseMessages(false)
 				.groupName(groupName)
 				.select()

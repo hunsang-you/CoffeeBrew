@@ -27,7 +27,8 @@ public class WebSecurityConfig {
     @Order(0)
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/sign");
+        return (web) -> web.ignoring().antMatchers("/sign"
+        , "/swagger-ui.html");
     }
 
     @Bean
@@ -46,7 +47,8 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(globalFilter.getPermitAll()).permitAll()
-                .antMatchers("/api/**").authenticated()
+//                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").permitAll()
                 .and()
                 .oauth2Login()
                 .successHandler(oAuth2SuccessHandler)

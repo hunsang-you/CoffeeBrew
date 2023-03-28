@@ -61,11 +61,7 @@ public class MemberController {
     @DeleteMapping()
     @ApiOperation(value="회원 탈퇴", notes = "회원 탈퇴를 진행")
     public ResponseEntity<ResponseDTO> delete(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        Long result = memberService.deleteMember(principalDetails.getMember().getIdx());
-        if(result == -1L) {
-            return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.SUCCESS_MEMBER_DELETE));
-        }
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MEMBER_DELETE));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_DELETE, memberService.deleteMember(principalDetails.getMember().getIdx())));
     }
 
     /**

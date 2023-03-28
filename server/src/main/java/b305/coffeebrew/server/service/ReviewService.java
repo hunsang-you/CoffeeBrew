@@ -1,7 +1,13 @@
 package b305.coffeebrew.server.service;
 
 
-import b305.coffeebrew.server.dto.review.ReviewRegistDTO;
+import b305.coffeebrew.server.dto.review.ReviewPageDTO;
+import b305.coffeebrew.server.entity.Member;
+import b305.coffeebrew.server.entity.Review;
+import b305.coffeebrew.server.exception.ErrorCode;
+import b305.coffeebrew.server.exception.MemberNotFoundException;
+import b305.coffeebrew.server.exception.ReviewNotFoundException;
+import b305.coffeebrew.server.repository.MemberRepository;
 import b305.coffeebrew.server.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,17 +19,27 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
+    private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
     @Transactional
-    public String registReview(ReviewRegistDTO reviewRegistDTO, long idx){
-        return "";
+    public Long registReview(ReviewPageDTO reviewPageDTO, Long idx) throws RuntimeException{
+        Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        reviewRepository.save(reviewPageDTO.of(member, 0));
+        return member.getIdx();
     }
     @Transactional
-    public String updateReview(long idx){
-        return "";
+    public Long updateReview(String reviewId, ReviewPageDTO reviewPageDTO){
+        Review review = reviewRepository.findById(Long.valueOf(reviewId)).orElseThrow(() -> new ReviewNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+        review.update(reviewPageDTO);
+        reviewRepository.save(review);
+        return review.getIdx();
     }
     @Transactional
-    public String deleteReview(long idx){
-        return "";
+    public Long deleteReview(String reviewId) throws RuntimeException{
+        Review review = reviewRepository.findById(Long.valueOf(reviewId)).orElseThrow(() -> new ReviewNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
+        // 사옹자 expired로 변경
+        review.setExpired(true);
+        reviewRepository.save(review);
+        return review.getIdx();
     }
 }

@@ -2,6 +2,7 @@ package b305.coffeebrew.server.entity;
 
 import b305.coffeebrew.server.config.utils.BaseAtTime;
 import b305.coffeebrew.server.config.utils.BooleanToYNConverter;
+import b305.coffeebrew.server.dto.review.ReviewPageDTO;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -45,27 +46,24 @@ public class Review extends BaseAtTime implements Serializable {
 
     @NotBlank
     private int overall; // 총점
-
+    
     @NotBlank
-    private int aroma; // 향
-
-    @NotBlank
-    private int flavor; // 맛
+    private int flavor; // 향미
 
     @NotBlank
     private int acidity; // 산미
 
     @NotBlank
+    private int sweetness; // 단맛
+    @NotBlank
+    private int bitterness; // 쓴맛
+
+    @NotBlank
     private int body; // 바디감
 
-    @NotBlank
-    private int balance; // 밸런스
 
     @NotBlank
-    private String aroma_note; // 향 상세
-
-    @NotBlank
-    private String flavor_note; // 맛 상세
+    private String coffeeing_note; // 커핑노트(향 상세)
 
     @NotBlank
     private int like; // 좋아요 수자
@@ -77,5 +75,18 @@ public class Review extends BaseAtTime implements Serializable {
     @Override
     public void prePersist() {
         super.prePersist();
+    }
+
+    public void update(ReviewPageDTO reviewPageDTO){
+        this.title = reviewPageDTO.getTitle();
+        this.content = reviewPageDTO.getContent();
+        this.overall = reviewPageDTO.getOverall();
+        this.flavor = reviewPageDTO.getFlavor();
+        this.acidity = reviewPageDTO.getAcidity();
+        this.sweetness = reviewPageDTO.getSweetness();
+        this.bitterness = reviewPageDTO.getBitterness();
+        this.body = reviewPageDTO.getBody();
+        this.coffeeing_note = reviewPageDTO.getCoffeeing_note();
+        this.like = reviewPageDTO.getLike();
     }
 }
