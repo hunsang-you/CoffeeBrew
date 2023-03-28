@@ -9,7 +9,7 @@ import Slide from '@mui/material/Slide';
 import Coffeebrew from '../../assets/logincoffee.svg';
 import Kakao from '../../assets/kakao.png';
 
-const KAKAO_URL = 'https://j8b305.p.ssafy.io/api/v1/login';
+const KAKAO_URL = 'https://j8b305.p.ssafy.io/api/v1/oauth2/authorization/kakao';
 
 const Transition = forwardRef(function Transition(
   props: { children: React.ReactElement },
