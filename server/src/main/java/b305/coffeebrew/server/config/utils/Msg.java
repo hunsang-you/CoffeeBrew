@@ -34,4 +34,6 @@ public interface Msg {
 	// bean
     String SUCCESS_BEAN_INQUIRE = "원두 상세 페이지 조회에 성공했습니다.";
 	String FAIL_BEAN_INQUIRE = "원두 상세 페이지 조회에 실패했습니다.";
+    String SUCCESS_CAPSULE_INQUIRE = "캡슐 상세 페이지 조회에 성공했습니다.";
+	String FAIL_CAPSULE_INQUIRE = "캡슐 상세 페이지 조회에 실패했습니다.";
 }

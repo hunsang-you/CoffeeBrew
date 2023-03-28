@@ -10,15 +10,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CapsuleDetailPageResDTO {
 
-    private String name_ko;
-    private String name_en;
+    private String nameKo;
+    private String nameEn;
     private String summary;
     private String thumbnail;
-    private int user_grade;
+    private int userGrade;
     private String description;
     private String company;
     private String origin;
-    private String machine_type;
+    private String machineType;
     private int overall;
     private int intensity; // 얜 강도네? 원두는 향미던데
     private int acidity;
@@ -28,16 +28,16 @@ public class CapsuleDetailPageResDTO {
     private String coffeeingNote;
 
     @Builder
-    public CapsuleDetailPageResDTO(String name_ko, String name_en, String summary, String thumbnail, int user_grade, String description, String company, String origin, String machine_type, int overall, int intensity, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
-        this.name_ko = name_ko;
-        this.name_en = name_en;
+    public CapsuleDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String company, String origin, String machineType, int overall, int intensity, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
+        this.nameKo = nameKo;
+        this.nameEn = nameEn;
         this.summary = summary;
         this.thumbnail = thumbnail;
-        this.user_grade = user_grade;
+        this.userGrade = userGrade;
         this.description = description;
         this.company = company;
         this.origin = origin;
-        this.machine_type = machine_type;
+        this.machineType = machineType;
         this.overall = overall;
         this.intensity = intensity;
         this.acidity = acidity;
@@ -47,17 +47,17 @@ public class CapsuleDetailPageResDTO {
         this.coffeeingNote = coffeeingNote;
     }
 
-    public static CapsuleDetailPageResDTO of(String name_ko, String name_en, String summary, String thumbnail, int user_grade, String description, String company, String origin, String machine_type, int overall, int intensity, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
+    public static CapsuleDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String company, String origin, String machineType, int overall, int intensity, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
         return CapsuleDetailPageResDTO.builder()
-                .name_ko(name_ko)
-                .name_en(name_en)
+                .nameKo(nameKo)
+                .nameEn(nameEn)
                 .summary(summary)
                 .thumbnail(thumbnail)
-                .user_grade(user_grade)
+                .userGrade(userGrade)
                 .description(description)
                 .company(company)
                 .origin(origin)
-                .machine_type(machine_type)
+                .machineType(machineType)
                 .overall(overall)
                 .intensity(intensity)
                 .acidity(acidity)

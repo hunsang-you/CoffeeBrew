@@ -33,19 +33,19 @@ public class BeanScore extends BaseAtTime implements Serializable {
     private int overall; // 총점
 
     @NotBlank
-    private int aroma; // 향
-
-    @NotBlank
     private int flavor; // 맛
 
     @NotBlank
     private int acidity; // 산미
 
     @NotBlank
-    private int body; // 바디감
+    private int sweetness; // 단맛
 
     @NotBlank
-    private int balance; // 밸런스
+    private int bitterness; // 쓴맛
+
+    @NotBlank
+    private int body; // 바디감
 
     @NotBlank
     @Column(name = "coffeeing_note")

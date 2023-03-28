@@ -34,13 +34,16 @@ public class BeanDetail extends BaseAtTime implements Serializable {
     private String description; // 설명
 
     @NotBlank
-    private String species; // 원두 원종
+    private String origin; // 생산국
 
     @NotBlank
-    private String origin; // 원산지
+    private String region; // 생산지
 
     @NotBlank
-    private String processing; // 원두 가공
+    private String rank; // 등급
+
+    @NotBlank
+    private String processing; // 가공
 
     @NotBlank
     @Convert(converter = BooleanToYNConverter.class)

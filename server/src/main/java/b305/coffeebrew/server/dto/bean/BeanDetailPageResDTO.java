@@ -10,17 +10,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BeanDetailPageResDTO {
 
-    private String name_ko;
-    private String name_en;
+    private String nameKo;
+    private String nameEn;
     private String summary;
     private String thumbnail;
-    private int user_grade;
+    private int userGrade;
     private String description;
     private String origin;
     private String region;
     private String rank;
     private String processing;
-    private String decaffeination;
+    private boolean decaffeination;
     private int overall;
     private int flavor;
     private int acidity;
@@ -28,14 +28,15 @@ public class BeanDetailPageResDTO {
     private int bitterness;
     private int body;
     private String coffeeingNote;
+    private String roastingPoint;
 
     @Builder
-    public BeanDetailPageResDTO(String name_ko, String name_en, String summary, String thumbnail, int user_grade, String description, String origin, String region, String rank, String processing, String decaffeination, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote) {
-        this.name_ko = name_ko;
-        this.name_en = name_en;
+    public BeanDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint) {
+        this.nameKo = nameKo;
+        this.nameEn = nameEn;
         this.summary = summary;
         this.thumbnail = thumbnail;
-        this.user_grade = user_grade;
+        this.userGrade = userGrade;
         this.description = description;
         this.origin = origin;
         this.region = region;
@@ -49,15 +50,16 @@ public class BeanDetailPageResDTO {
         this.bitterness = bitterness;
         this.body = body;
         this.coffeeingNote = coffeeingNote;
+        this.roastingPoint = roastingPoint;
     }
 
-    public static BeanDetailPageResDTO of(String name_ko, String name_en, String summary, String thumbnail, int user_grade, String description, String origin, String region, String rank, String processing, String decaffeination, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote) {
+    public static BeanDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint) {
         return BeanDetailPageResDTO.builder()
-                .name_ko(name_ko)
-                .name_en(name_en)
+                .nameKo(nameKo)
+                .nameEn(nameEn)
                 .summary(summary)
                 .thumbnail(thumbnail)
-                .user_grade(user_grade)
+                .userGrade(userGrade)
                 .description(description)
                 .origin(origin)
                 .region(region)
@@ -71,6 +73,7 @@ public class BeanDetailPageResDTO {
                 .bitterness(bitterness)
                 .body(body)
                 .coffeeingNote(coffeeingNote)
+                .roastingPoint(roastingPoint)
                 .build();
     }
 }

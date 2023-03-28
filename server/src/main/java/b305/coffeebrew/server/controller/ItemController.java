@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "원두 관련 API", tags = {"Bean"})
 public class ItemController {
 
-    private static final String METHOD_NAME = b305.coffeebrew.server.controller.BeanController.class.getName();
+    private static final String METHOD_NAME = b305.coffeebrew.server.controller.ItemController.class.getName();
 
     private final BeanService beanService;
     private final CapsuleService capsuleService;
@@ -48,6 +48,6 @@ public class ItemController {
             @ApiResponse(code = 500, message = "서버 오류"),
     })
     public ResponseEntity<ResponseDTO> getCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_INQUIRE, capsuleService.getCapsuleDetail(capsuleId)));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_INQUIRE, capsuleService.getCapsuleDetail(capsuleId)));
     }
 }
