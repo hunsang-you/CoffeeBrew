@@ -1,26 +1,36 @@
 import tw from 'tailwind-styled-components';
 import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useState, useRef, useCallback } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import Logo from '../../assets/Coffeebrew.svg';
+import { fontWeight } from '@mui/system';
 
 const CreateReviewBtn = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mr-auto text-xl`;
-const CreateReviewDiv = tw.div`w-1040 h-fit flex-col mx-auto`;
+const CreateReviewDiv = tw.div`w-1040 h-fit flex-col mx-auto drop-shadow-2xl`;
+const ImageBox = tw.div`w-48 h-48 rounded-full`;
 
-const ImageBox = tw.div`w-40 h-40 rounded-full bg-slate-400`;
-const EditBtn = tw.div`w-20 h-6 bg-pinkColor my-4 mx-auto text-center rounded-xl`;
-const SliderDiv = tw.div`flex justify-center my-2 mx-2 `;
+const EditBtn = tw.button`w-24 h-10 bg-pinkColor my-4 mx-auto text-center rounded-xl`;
+const Label = tw.label`w-full h-full text-lg font-bold text-white flex items-center justify-center cursor-pointer`;
+const SliderDiv = tw.div`flex justify-center my-2 mx-2 drop-shadow-md`;
+
+const Submit = tw.div`w-40 h-10 rounded-full bg-red-200 my-6 mx-auto`;
 
 const ReviewCreate2 = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const handleClickOpen = () => {
     setOpenCreate(!openCreate);
+    if (openCreate === false) {
+      setReviewTitle('');
+      setReviewContent('');
+    }
   };
 
   const [reviewTitle, setReviewTitle] = useState('');
   const changeTitle = (e: any) => {
     setReviewTitle(e.target.value);
+
     console.log(reviewTitle);
   };
 
@@ -30,10 +40,34 @@ const ReviewCreate2 = () => {
     console.log(reviewContent);
   };
 
+  // 파일 업로드 작업을 수행
+  const [isProfile, setIsProfile] = useState<boolean>(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file: File = event.target.files![0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const preview = reader.result as string;
+        setPreviewImage(preview);
+        setIsProfile(true);
+        console.log(reader.result);
+      };
+      reader.readAsDataURL(file);
+
+      // 파일 업로드 작업을 수행합니다.
+    }
+  };
   return (
     <div>
       <CreateReviewBtn onClick={handleClickOpen}>
-        {openCreate ? '등록 취소' : '리뷰 등록'}
+        {openCreate ? (
+          <div style={{ fontWeight: 'bold' }}> 취 소 </div>
+        ) : (
+          <div style={{ fontWeight: 'bold' }}> 리뷰 등록 </div>
+        )}
       </CreateReviewBtn>
       {openCreate ? (
         <CreateReviewDiv>
@@ -54,15 +88,49 @@ const ReviewCreate2 = () => {
                 flexDirection: 'row',
               }}
             >
-              <ImageBox
-                style={{ marginLeft: 'auto', marginRight: 'auto' }}
-              ></ImageBox>
+              {isProfile ? (
+                <ImageBox style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                  {previewImage && (
+                    <div>
+                      <img
+                        src={previewImage}
+                        alt="Preview"
+                        style={{
+                          borderRadius: '1000px',
+                          maxWidth: '200px',
+                          minWidth: '200px',
+                          maxHeight: '200px',
+                          minHeight: '200px',
+                        }}
+                      />
+                    </div>
+                  )}
+                </ImageBox>
+              ) : (
+                <img
+                  src={Logo}
+                  style={{
+                    width: '200px',
+                    margin: 'auto',
+                  }}
+                />
+              )}
 
-              <EditBtn> 등록 </EditBtn>
+              <EditBtn>
+                <Label htmlFor="image-upload">
+                  이미지 첨부
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="image-upload"
+                    onChange={handleImageUpload}
+                    style={{ display: 'none' }}
+                  />
+                </Label>
+              </EditBtn>
               <div
                 style={{
                   width: '280px',
-                  border: 'solid 1px',
                   margin: 'auto',
                 }}
               >
@@ -108,7 +176,7 @@ const ReviewCreate2 = () => {
                 style={{
                   flexDirection: 'row',
                   maxWidth: '400',
-                  marginLeft: '24px',
+                  marginLeft: '12px',
                   marginTop: '24px',
                 }}
               >
@@ -149,12 +217,12 @@ const ReviewCreate2 = () => {
                   aria-label="empty textarea"
                   placeholder="리뷰를 작성하세요"
                   style={{
-                    width: 600,
-                    minHeight: 280,
-                    maxHeight: 280,
+                    width: 580,
+                    minHeight: 320,
+                    maxHeight: 320,
                     border: 'solid 8px #CBAC97',
                     borderRadius: '24px',
-                    marginLeft: '24px',
+                    marginLeft: '32px',
                     resize: 'none',
                     padding: '24px',
                   }}
@@ -163,20 +231,29 @@ const ReviewCreate2 = () => {
               </Box>
             </div>
           </div>
+          <Submit
+            onClick={() =>
+              console.log(
+                'reviewTitle ::',
+                reviewTitle,
+                'reviewContent ::',
+                reviewContent,
+              )
+            }
+          >
+            <div
+              style={{
+                fontWeight: 'bold',
+                fontSize: '24px',
+                textAlign: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              작성 완료
+            </div>
+          </Submit>
         </CreateReviewDiv>
       ) : null}
-      <button
-        onClick={() =>
-          console.log(
-            'reviewTitle ::',
-            reviewTitle,
-            'reviewContent ::',
-            reviewContent,
-          )
-        }
-      >
-        11
-      </button>
     </div>
   );
 };
