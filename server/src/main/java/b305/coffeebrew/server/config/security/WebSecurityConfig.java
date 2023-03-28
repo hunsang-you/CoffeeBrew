@@ -20,40 +20,44 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final GlobalFilter globalFilter;
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+	private final GlobalFilter globalFilter;
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
-    @Order(0)
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/sign"
-        , "/swagger-ui.html");
-    }
+	@Order(0)
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().antMatchers("/sign"
+				, "/swagger-ui.html",
+				"/v2/api-docs",
+				"/swagger-resources/**",
+				"/webjars/**",
+				"/swagger/**");
+	}
 
-    @Bean
-    public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().csrf().disable().cors().and().formLogin().disable()
-                .logout()
-                .logoutUrl(globalFilter.getLogoutURL())
-                .deleteCookies(globalFilter.getSessionId())
-                .addLogoutHandler(globalFilter.logoutHandler())
-                .logoutSuccessHandler(globalFilter.logoutSuccessHandler())
-                .and()
+	@Bean
+	public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
+		http.httpBasic().disable().csrf().disable().cors().and().formLogin().disable()
+				.logout()
+				.logoutUrl(globalFilter.getLogoutURL())
+				.deleteCookies(globalFilter.getSessionId())
+				.addLogoutHandler(globalFilter.logoutHandler())
+				.logoutSuccessHandler(globalFilter.logoutSuccessHandler())
+				.and()
 //                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
-                .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(globalFilter.getPermitAll()).permitAll()
+				.addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.authorizeRequests()
+				.antMatchers(globalFilter.getPermitAll()).permitAll()
 //                .antMatchers("/api/**").authenticated()
-                .antMatchers("/api/**").permitAll()
-                .and()
-                .oauth2Login()
-                .successHandler(oAuth2SuccessHandler)
-                .userInfoEndpoint() // oauth2Login 성공 이후의 설정을 시작
-                .userService(customOAuth2UserService); // 로그인  성공 후 customOAuth2UserService에서 설정 처리
-        return http.build();
-    }
+				.antMatchers("/api/**").permitAll()
+				.and()
+				.oauth2Login()
+				.successHandler(oAuth2SuccessHandler)
+				.userInfoEndpoint() // oauth2Login 성공 이후의 설정을 시작
+				.userService(customOAuth2UserService); // 로그인  성공 후 customOAuth2UserService에서 설정 처리
+		return http.build();
+	}
 }
