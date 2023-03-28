@@ -31,9 +31,20 @@ public interface Msg {
 	String SUCCESS_MEMBER_DELETE= "회원 탈퇴에 성공하였습니다.";
 	String FAIL_MEMBER_DELETE= "회원 탈퇴에 실패하였습니다.";
 
+	//reveiw
+	String SUCCESS_REVIEW_REGISTER= "리뷰 등록에 성공하였습니다.";
+	String FAIL_REVIEW_REGISTER= "리뷰 등록에 실패하였습니다.";
+
+	String SUCCESS_REVIEW_MOD= "리뷰 수정에 성공하였습니다.";
+	String FAIL_REVIEW_MOD= "리뷰 수정에 실패하였습니다.";
+
+	String SUCCESS_REVIEW_DELETE= "리뷰 삭제에 성공하였습니다.";
+	String FAIL_REVIEW_DEKETE= "리뷰 삭제에 실패하였습니다.";
+
 	// bean
     String SUCCESS_BEAN_INQUIRE = "원두 상세 페이지 조회에 성공했습니다.";
 	String FAIL_BEAN_INQUIRE = "원두 상세 페이지 조회에 실패했습니다.";
     String SUCCESS_CAPSULE_INQUIRE = "캡슐 상세 페이지 조회에 성공했습니다.";
 	String FAIL_CAPSULE_INQUIRE = "캡슐 상세 페이지 조회에 실패했습니다.";
+
 }

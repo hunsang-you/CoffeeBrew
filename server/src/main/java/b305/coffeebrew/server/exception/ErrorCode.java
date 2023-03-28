@@ -19,6 +19,9 @@ public enum ErrorCode {
     BOOKMARK_ALREADY_EXIST(400, "이미 존재하는 즐겨찾기 입니다."),
     PW_NOT_MATCH(404, "기존 패스워드가 일치하지 않습니다."),
 
+    // REVIEW
+    REVIEW_NOT_FOUND(404, "리뷰를 찾을 수 없습니다."),
+
     //500
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류 입니다."),
 
