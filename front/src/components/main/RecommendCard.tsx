@@ -1,14 +1,20 @@
 import tw from 'tailwind-styled-components';
+import CoffeeCard from '../CoffeeCard';
+import { ReactComponent as Acidity } from '../../assets/coffeecard/body.svg';
 
-const RecommendCard = () => {
-  const cardcolor = 'rgb(148 168 184)';
+interface TastProps {
+  taste: string;
+}
+
+const RecommendCard = (props: TastProps) => {
+  const cardcolor = '';
   return (
     <OuterCard style={{ backgroundColor: cardcolor }}>
       <TopCard>
-        <TopContent>top</TopContent>
+        <CoffeeCard taste={props.taste} />
       </TopCard>
       <UnderCard>
-        <CardTitle>under</CardTitle>
+        <CardTitle>{props.taste}</CardTitle>
         <CardText>text</CardText>
       </UnderCard>
     </OuterCard>
@@ -17,9 +23,8 @@ const RecommendCard = () => {
 
 export default RecommendCard;
 
-const OuterCard = tw.div`h-1/2 w-1/5 rounded-xl mx-5`;
-const TopCard = tw.div`h-2/3 flex items-center justify-center rounded-t-xl`;
-const TopContent = tw.div``;
-const UnderCard = tw.div`h-1/3 flex flex-col items-center justify-center bg-orange-200 rounded-xl`;
-const CardTitle = tw.div`text-3xl`;
-const CardText = tw.div`text-xl`;
+const OuterCard = tw.div`w-1/6 rounded-xl mx-5`;
+const TopCard = tw.div`flex items-center justify-center rounded-t-xl`;
+const UnderCard = tw.div`flex flex-col items-center justify-center bg-mainOrige rounded-xl p-3`;
+const CardTitle = tw.div`text-3xl text-white`;
+const CardText = tw.div`text-xl text-white`;

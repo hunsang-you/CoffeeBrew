@@ -6,16 +6,16 @@ const Page2Carousel = () => {
   return (
     <Carousel>
       <BigDiv>
-        <RecommendCard />
-        <RecommendCard />
-        <RecommendCard />
-        <RecommendCard />
+        <RecommendCard taste={'acidity'} />
+        <RecommendCard taste={'acidity'} />
+        <RecommendCard taste={'body'} />
+        <RecommendCard taste={'flavor'} />
       </BigDiv>
       <BigDiv>
-        <RecommendCard />
-        <RecommendCard />
-        <RecommendCard />
-        <RecommendCard />
+        <RecommendCard taste={'bitter'} />
+        <RecommendCard taste={'body'} />
+        <RecommendCard taste={'flavor'} />
+        <RecommendCard taste={'sweetness'} />
       </BigDiv>
     </Carousel>
   );
@@ -23,4 +23,4 @@ const Page2Carousel = () => {
 
 export default Page2Carousel;
 
-const BigDiv = tw.div`flex h-screen`;
+const BigDiv = tw.div`flex justify-center items-center`;
