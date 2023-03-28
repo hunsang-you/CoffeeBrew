@@ -6,6 +6,7 @@ type HoverType = (ref: RefObject<HTMLElement>, handler: () => void) => void;
 //   event: React.MouseEvent | React.BaseSyntheticEvent,
 // ) => void;
 
+/**hover 훅 */
 export const useOnHoverOutside: HoverType = (ref, handler) => {
   useEffect(() => {
     const listener = (event: CustomEvent<React.MouseEvent>) => {
