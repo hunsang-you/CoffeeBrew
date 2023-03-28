@@ -1,4 +1,6 @@
 import DetailBean from '../components/Detail/DetailBean';
+
+import { Route, Routes } from 'react-router-dom';
 import * as S from '../components/useageStyle';
 import { useEffect } from 'react';
 
@@ -12,7 +14,9 @@ const Detail = ({ setIsFooter }: IsFooterType) => {
   }, [setIsFooter]);
   return (
     <S.ContentContainer>
-      <DetailBean />
+      <Routes>
+        <Route path="" element={<DetailBean />} />
+      </Routes>
     </S.ContentContainer>
   );
 };

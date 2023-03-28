@@ -1,10 +1,11 @@
 import tw from 'tailwind-styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import bean from '../../assets/bean.png';
 import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';
 import ratingempty from '../../assets/ratingempty.png';
+
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
 const FilterOn = tw.div`w-20 h-10 rounded-full border-2 text-xl text-center leading-9  bg-black text-white ml-4`;
@@ -40,22 +41,23 @@ const Review = () => {
   const handleReviewLike = () => {
     setReviewLike(!reviewLike);
   };
+
   return (
     <div>
-      <ReviewFilter>
-        <CreateReview> 리뷰 등록</CreateReview>
-        {isActive ? (
-          <FilterOn>최신순</FilterOn>
-        ) : (
-          <FilterOff onClick={activeBtn}>최신순</FilterOff>
-        )}
-        {isActive ? (
-          <FilterOff onClick={activeBtn}>추천순</FilterOff>
-        ) : (
-          <FilterOn>추천순</FilterOn>
-        )}
-      </ReviewFilter>
       <ReviewList>
+        <ReviewFilter>
+          {isActive ? (
+            <FilterOn>최신순</FilterOn>
+          ) : (
+            <FilterOff onClick={activeBtn}>최신순</FilterOff>
+          )}
+          {isActive ? (
+            <FilterOff onClick={activeBtn}>추천순</FilterOff>
+          ) : (
+            <FilterOn>추천순</FilterOn>
+          )}
+        </ReviewFilter>
+
         <ReviewDelete>삭제</ReviewDelete>
         <ReviewItem>
           <ReviewName>

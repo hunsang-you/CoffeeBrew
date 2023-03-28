@@ -61,6 +61,15 @@ const RecommendBean = (): JSX.Element => {
   useEffect(() => {
     setStyle({ marginLeft: `-${current}00%` });
   }, [current]);
+
+  const RecommendRating = {
+    향: 5,
+    산미: 4,
+    단맛: 3.5,
+    쓴맛: 3,
+    바디감: 4,
+  };
+
   return (
     // <RecboxBean>
     <Body>
@@ -120,11 +129,6 @@ const RecommendBean = (): JSX.Element => {
                       </div>
                       <ScoreTitle>
                         <p style={{ marginRight: '16px' }}>향</p>
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
                       </ScoreTitle>
                       <ScoreTitle>
                         <p style={{ marginRight: '16px' }}>산미</p>

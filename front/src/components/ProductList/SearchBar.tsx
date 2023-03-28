@@ -53,10 +53,11 @@ const SearchBar = () => {
   const [textWord, setTextWord] = useState('');
   const ChangeText = (e: any) => {
     setTextWord(e.target.value);
+    console.log(textWord);
   };
   // 단어 전송
   const SendWord = (e: any) => {
-    // 엔터 or 검색 버튼 클릭시 전송
+    // 엔터 and 검색 버튼 클릭시 전송
     console.log(textWord);
   };
 
@@ -268,6 +269,7 @@ const SearchBar = () => {
           onChange={ChangeText}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
+              // 엔터를 쳤을때도 검색
               console.log(textWord);
             }
           }}

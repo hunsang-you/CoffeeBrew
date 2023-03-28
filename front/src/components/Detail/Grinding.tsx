@@ -1,11 +1,12 @@
 import tw from 'tailwind-styled-components';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import grinding2 from '../../assets/grinding2.png';
 import grindingList from '../../assets/grindingList.png';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
 
 const GrindingDiv = tw.div`flex-row w-460 justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10 rounded-3xl drop-shadow-2xl`;
 const GrindingImg = tw.img`w-60 h-60 rounded-full mt-4 mx-auto`;
@@ -17,12 +18,13 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1200,
+  width: 1000,
   bgcolor: '#F9F5E0',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
+
 const Grinding = () => {
   const [open, setOpen] = useState(false);
   const modalOpen = () => setOpen(!open);
@@ -40,6 +42,7 @@ const Grinding = () => {
           onClose={modalOpen}
           aria-labelledby="GrindingImg"
           aria-describedby="GridingDescription"
+          closeAfterTransition
         >
           <Box sx={style}>
             <Typography id="GrindingImg" component="h2">
