@@ -50,7 +50,7 @@ public class CapsuleService {
                 .origin(capsuleDetail.getOrigin())
                 .machineType(capsuleDetail.getMachineType())
                 .overall(capsuleScore.getOverall())
-                .intensity(capsuleScore.getIntensity())
+                .flavor(capsuleScore.getFlavor())
                 .acidity(capsuleScore.getAcidity())
                 .bitterness(capsuleScore.getBitterness())
                 .body(capsuleScore.getBody())
