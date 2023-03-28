@@ -10,12 +10,12 @@ export const api = axios.create({
   },
 });
 
-// api.interceptors.request.use(function (config) {
-//   const token = localStorage.getItem('accessToken');
-//   config.headers.Authorization = token;
+api.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('accessToken');
+  config.headers.Authorization = token;
 
-//   return config;
-// });
+  return config;
+});
 
 export default api;
 
