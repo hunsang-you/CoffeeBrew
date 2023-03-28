@@ -15,8 +15,12 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from .recom import bean_cbf_recom
+
 URI_PREFIX = "/api/recom"
-DATA_LOAD_DIR_PATH = path.join(".", "data", "output")
+DIR_PATH = path.join(".", "data")
+
+recom_data = []
 
 
 # bean(원두)에 관한 추천 정보 csv파일을 불러오는 메소드
@@ -25,7 +29,7 @@ def load_bean_recom_data():
     df = pd.DataFrame()
 
     with open(
-        path.join(DATA_LOAD_DIR_PATH, "bean_cbf_recom.csv"), encoding="UTF-8"
+        path.join(DIR_PATH, "output", "bean_cbf_recom.csv"), encoding="UTF-8"
     ) as f:
         df = pd.read_csv(f)
         print("bean_cbf_recom loaded!!")
@@ -37,15 +41,15 @@ def load_bean_recom_data():
 # yield 이후에 적히는 구문들은 FastAPI가 종료 될 때 destruction 해야 할 영역을 기술
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print(path.join(DATA_LOAD_DIR_PATH, "bean_cbf_recom.csv"))
+    print(path.join(DIR_PATH, "output", "bean_cbf_recom.csv"))
 
     # Load Data
-    global bean_recom_data
-    bean_recom_data = load_bean_recom_data()
-    print(bean_recom_data.head(1))
+    global recom_data
+    recom_data = load_bean_recom_data()
+    print(recom_data.head(1))
 
     yield
-    bean_recom_data.clear()
+    recom_data.clear()
 
 
 app = FastAPI(lifespan=lifespan)
@@ -68,7 +72,7 @@ async def getBeanInfoAll():
 async def getBeanRecom(beanId: Union[int, None] = None):
     print("id:{}, type:{}".format(beanId, type(beanId)))
 
-    df_out = bean_recom_data.loc[bean_recom_data["id"] == beanId].to_dict("records")
+    df_out = recom_data.loc[recom_data["id"] == beanId].to_dict("records")
     if not df_out:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -93,6 +97,20 @@ async def getUserRecom(userId: Union[int, None] = None):
 async def updateRecom():
     pass
     return {"message": "call /update"}
+
+
+@app.get(URI_PREFIX + "/update/bean")
+async def updateBeanRecom(type: Union[str, None] = "status"):
+    global recom_data
+
+    if type == "keyword":
+        bean_cbf_recom.calc_bean_recom_by_keyword(DIR_PATH)
+        recom_data = load_bean_recom_data()
+        return {"message": "update keyword-based recommendation list"}
+    else:
+        bean_cbf_recom.calc_bean_recom_by_status(DIR_PATH)
+        recom_data = load_bean_recom_data()
+        return {"message": "update status-based recommendation list"}
 
 
 if __name__ == "__main__":
