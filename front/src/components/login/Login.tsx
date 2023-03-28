@@ -8,7 +8,8 @@ import tw from 'tailwind-styled-components';
 import Slide from '@mui/material/Slide';
 import Coffeebrew from '../../assets/logincoffee.svg';
 import Kakao from '../../assets/kakao.png';
-import { loginAPI } from '../../api/api';
+
+const KAKAO_URL = 'https://j8b305.p.ssafy.io/api/v1/login';
 
 const Transition = forwardRef(function Transition(
   props: { children: React.ReactElement },
@@ -80,12 +81,7 @@ export const LoginModal = () => {
             <img src={Coffeebrew} width={360} height={312} alt="no_img" />
             <img
               onClick={() => {
-                loginAPI
-                  .login()
-                  .then((request) => {
-                    console.log(request);
-                  })
-                  .catch((err) => console.log(err));
+                setTimeout(() => (window.location.href = KAKAO_URL), 300);
               }}
               src={Kakao}
               width={240}
