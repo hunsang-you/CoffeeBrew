@@ -25,6 +25,7 @@ const Navbar = () => {
   const closeHoverMenu = () => {
     setMenuDropDownOpen(false);
   };
+
   useOnHoverOutside(dropdownRef, closeHoverMenu); //full dropdwon hovering
   const playMusic = () => {
     const audio = new Audio(hypeboy);
