@@ -89,6 +89,8 @@ user:
     logout: /api/v1/logout
     admin: /api/v1/admin
     member: /api/v1/member
+    item: /api/v1/item
+    review: /api/v1/review
     test: /api/v1/test
   role:
     admin: ROLE_ADMIN
