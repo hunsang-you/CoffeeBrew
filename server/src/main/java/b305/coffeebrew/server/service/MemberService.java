@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@RequestMapping(value = "/member")
-@Transactional(readOnly = true)
 public class MemberService {
 
     private static final String METHOD_NAME = MemberController.class.getName();

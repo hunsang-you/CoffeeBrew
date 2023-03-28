@@ -38,6 +38,10 @@ public class CapsuleDetail extends BaseAtTime implements Serializable {
     @NotBlank
     private String origin; // 원산지
 
+    @NotBlank
+    @Column(name = "machine_type")
+    private String machineType; // 원산지
+
     @Override
     public void prePersist() {
         super.prePersist();

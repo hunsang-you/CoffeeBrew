@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /api
+    context-path: /api/v1
   port: 8081
   tomcat:
     basedir: .
@@ -53,7 +53,7 @@ spring:
           kakao:
             client-id: ${rest_api_key}
             client-secret: ${client_secret_key}
-            redirect-uri: http://localhost:8081/api/login/oauth2/code/kakao
+            redirect-uri: http://localhost:8081/api/v1/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
@@ -86,10 +86,10 @@ jwt:
 user:
   url:
     client: https://j8b305.p.ssafy.io
-    logout: /logout
-    admin: /api/admin
-    member: /api/member
-    test: /api/test
+    logout: /api/v1/logout
+    admin: /api/v1/admin
+    member: /api/v1/member
+    test: /api/v1/test
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER

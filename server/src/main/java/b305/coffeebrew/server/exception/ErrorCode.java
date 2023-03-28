@@ -33,8 +33,10 @@ public enum ErrorCode {
     MISS_MATCH_ENDPOINT(404, "해당 end point는 요청 할 수 없습니다."),
     MAX_UPLOAD_SIZE_EXCEEDED(400, "파일 용량이 초과하였습니다."),
     SOCKET_NOT_CLOSE_ERROR(500, "소켓이 정상적으로 종료되지 않았습니다."),
-    MYPAGE_HISTORY_ERROR(500, "거래 내역 조회 에러입니다.");
+    MYPAGE_HISTORY_ERROR(500, "거래 내역 조회 에러입니다."),
 
+    BEAN_NOT_FOUND(404, "원두 정보를 찾을 수 없습니다"),
+    CAPSULE_NOT_FOUND(404, "캡슐 정보를 찾을 수 없습니다");
 
     private final int status;
     private final String message;
