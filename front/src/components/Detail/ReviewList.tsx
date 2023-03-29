@@ -5,6 +5,7 @@ import bean from '../../assets/bean.png';
 import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';
 import ratingempty from '../../assets/ratingempty.png';
+import { exit } from 'process';
 
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
@@ -22,7 +23,7 @@ const ReviewStandard = tw.div`justify-center mx-auto mt-6`;
 const ReviewStandardTop = tw.div`w-720 text-2xl mb-2 flex justify-center`;
 const ReviewStandardBottom = tw.div`w-720 text-2xl mt-2 mb-2 flex justify-center`;
 const Score = tw.img`w-8`;
-const ScoreTitle = tw.div`text-xl flex justify-center`;
+const ScoreTitle = tw.div`text-xl flex justify-end  drop-shadow-2xl`;
 // 리뷰내용
 const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
 const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
@@ -44,38 +45,59 @@ const ReviewLists = () => {
 
   const RecommendRating = {
     향: 5,
-    산미: 4.5,
-    단맛: 3.5,
+    산미: 3.5,
+    단맛: 0.5,
     쓴맛: 3,
     바디감: 2,
   };
 
   const scoreArray = Object.entries(RecommendRating);
   const beanScore = () => {
-    console.log(scoreArray);
+    const scoreItem = [];
 
-    const scoreItem = scoreArray.map((score, i) => {
+    for (let i = 0; i < scoreArray.length; i++) {
+      const score = scoreArray[i];
       // score[0] = 기준, score[1] = 점수
       // console.log(score); //  ['향', 5]
-      const isHalfCheck: boolean = score[1] - Math.floor(score[1]) > 0;
+      // .5인지 판별
+      const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
 
-      const scoreRatingFull = Array.from({ length: score[1] }, () => (
-        <Score src={ratingfull} />
-      ));
+      // 점수만큼 가득찬 이미지
+      const scoreRatingFull = [];
+      if (Number.isInteger(score[1])) {
+        for (let j = 0; j < score[1]; j++) {
+          scoreRatingFull.push(<Score src={ratingfull} key={j} />);
+        }
+      } else {
+        // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
+        for (let k = 0; k < Math.floor(score[1]); k++) {
+          scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+        }
+      }
 
+      // .5라면 반개 추가
       const scoreRatingHalf = isHalfCheck ? <Score src={ratinghalf} /> : null;
 
-      const scoreRatingEmpty = Array.from({ length: 5 - score[1] }, () => (
-        <Score src={ratingempty} />
-      ));
+      const scoreRatingEmpty = [];
+      if (Number.isInteger(score[1])) {
+        for (let k = 0; k < 5 - score[1]; k++) {
+          scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
+        }
+      } else {
+        for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+          scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
+        }
+      }
 
-      return (
-        <ScoreTitle>
-          <p style={{ marginRight: '16px' }}>{score[0]}</p>
-          {scoreRatingFull} {scoreRatingHalf} {scoreRatingEmpty}
-        </ScoreTitle>
+      scoreItem.push(
+        <ScoreTitle key={i}>
+          <p style={{ marginRight: '16px', fontWeight: 'bold' }}>{score[0]}</p>
+          {scoreRatingFull} {scoreRatingHalf}
+          {scoreRatingEmpty}
+        </ScoreTitle>,
       );
-    });
+    }
+
     return scoreItem;
   };
 

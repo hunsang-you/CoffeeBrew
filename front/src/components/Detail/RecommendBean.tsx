@@ -9,18 +9,18 @@ import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';
 import ratingempty from '../../assets/ratingempty.png';
 
-const RecboxBean = tw.div`flex justify-center w-1000  mx-auto flex-col `;
+// const RecboxBean = tw.div`flex justify-center w-1000  mx-auto flex-col `;
 const Body = tw.div`flex justify-center select-none w-100vw h-100vh my-10 `;
 const Container = tw.div`flex-col `;
 const Slide = tw.div`flex align-middle`;
 
 const Img = tw.img`w-64 h-64 flex-none rounded-full justify-center mx-auto drop-shadow-xl`;
-const Btn = tw.div` cursor-pointer text-8xl my-auto mx-28 `;
+const Btn = tw.div` cursor-pointer text-8xl my-auto mx-28 hover:scale-125`;
 const Position = tw.div`mb-6 flex justify-center`;
 const Current = tw.div`bg-gray-500 rounded-full w-3 h-3 ml-5  cursor-pointer`;
 const Dot = tw(Current)`bg-orange-400 w-10 ml-5 cursor-pointer`;
 
-const ScoreTitle = tw.div`text-xl flex justify-center`;
+const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
 const Score = tw.img`w-8`;
 
 const RecommendBean = (): JSX.Element => {
@@ -55,7 +55,7 @@ const RecommendBean = (): JSX.Element => {
 
     setStyle({ marginLeft: `-${nextIndex}00%` }); // 변경된 nextIndex 값으로 style 변수 업데이트
     setCurrent(nextIndex);
-    console.log(images.current);
+    // console.log(images.current);
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const RecommendBean = (): JSX.Element => {
 
   const RecommendRating = {
     향: 5,
-    산미: 2,
+    산미: 3,
     단맛: 3.5,
     쓴맛: 3,
     바디감: 4,
@@ -72,30 +72,51 @@ const RecommendBean = (): JSX.Element => {
 
   const scoreArray = Object.entries(RecommendRating);
   const beanScore = () => {
-    console.log(scoreArray);
+    const scoreItem = [];
 
-    const scoreItem = scoreArray.map((score, i) => {
+    for (let i = 0; i < scoreArray.length; i++) {
+      const score = scoreArray[i];
       // score[0] = 기준, score[1] = 점수
       // console.log(score); //  ['향', 5]
-      const isHalfCheck: boolean = score[1] - Math.floor(score[1]) > 0;
+      // .5인지 판별
+      const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
 
-      const scoreRatingFull = Array.from({ length: score[1] }, () => (
-        <Score src={ratingfull} />
-      ));
+      // 점수만큼 가득찬 이미지
+      const scoreRatingFull = [];
+      if (Number.isInteger(score[1])) {
+        for (let j = 0; j < score[1]; j++) {
+          scoreRatingFull.push(<Score src={ratingfull} key={j} />);
+        }
+      } else {
+        // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
+        for (let k = 0; k < Math.floor(score[1]); k++) {
+          scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+        }
+      }
 
+      // .5라면 반개 추가
       const scoreRatingHalf = isHalfCheck ? <Score src={ratinghalf} /> : null;
 
-      const scoreRatingEmpty = Array.from({ length: 5 - score[1] }, () => (
-        <Score src={ratingempty} />
-      ));
+      const scoreRatingEmpty = [];
+      if (Number.isInteger(score[1])) {
+        for (let k = 0; k < 5 - score[1]; k++) {
+          scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
+        }
+      } else {
+        for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+          scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
+        }
+      }
 
-      return (
-        <ScoreTitle>
-          <p style={{ marginRight: '16px' }}>{score[0]}</p>
-          {scoreRatingFull} {scoreRatingHalf} {scoreRatingEmpty}
-        </ScoreTitle>
+      scoreItem.push(
+        <ScoreTitle key={i}>
+          <p style={{ marginRight: '16px', fontWeight: 'bold' }}>{score[0]}</p>
+          {scoreRatingFull} {scoreRatingHalf}
+          {scoreRatingEmpty}
+        </ScoreTitle>,
       );
-    });
+    }
+
     return scoreItem;
   };
 
@@ -144,6 +165,7 @@ const RecommendBean = (): JSX.Element => {
                     >
                       <div
                         style={{ wordBreak: 'break-word', fontSize: '24px' }}
+                        key={i}
                       >
                         {images.current[0].src[page]}
                       </div>
