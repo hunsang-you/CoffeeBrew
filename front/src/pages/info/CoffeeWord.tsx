@@ -1,5 +1,4 @@
 import tw from 'tailwind-styled-components';
-import CardComponent from '../../components/info/Card';
 import { useState } from 'react';
 import Aroma from '../../components/info/Aroma';
 import Taste from '../../components/info/Taste';

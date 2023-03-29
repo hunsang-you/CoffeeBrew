@@ -16,7 +16,7 @@ const Redirect = () => {
       }
     };
     getToken();
-  }, []);
+  }, [navigate]);
   return <div></div>;
 };
 
