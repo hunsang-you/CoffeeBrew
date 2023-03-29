@@ -36,9 +36,9 @@ public class BeanService {
         BeanDetail beanDetail = beanDetailRepository.findByBeanIdx(bean);
         BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
 
-//        if (bean==null || beanDetail==null || beanScore==null) {
-//            throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
-//        }
+        if (bean==null || beanDetail==null || beanScore==null) {
+            throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
+        }
 
         String nameKo = bean.getNameKo();
         String nameEn = bean.getNameEn();

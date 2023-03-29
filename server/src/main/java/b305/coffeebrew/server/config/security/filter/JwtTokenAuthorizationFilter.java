@@ -56,7 +56,7 @@ public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
             TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
             String token = tokenResDTO.getToken();
             log.info("token= {}", token);
-            if (!request.getRequestURI().startsWith(memberURL)) {
+            if (request.getRequestURI().startsWith(memberURL)) {
                 switch (tokenResDTO.getCode()) {
                     case 0:
                         if (jwtTokenProvider.validateToken(token)) {
@@ -95,6 +95,7 @@ public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
                         log.warn("Access/Refresh Token Validation - Fail");
                 }
             } else {
+                filterChain.doFilter(request, response);
                 return;
             }
         } catch (NullPointerException ne) {
