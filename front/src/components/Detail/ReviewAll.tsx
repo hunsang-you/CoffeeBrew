@@ -1,14 +1,12 @@
 import tw from 'tailwind-styled-components';
+import ReviewLists from './ReviewList';
 import ReviewCreate from './ReviewCreate';
-import Review from './ReviewList';
-import ReviewCreate2 from './ReviewCreate2';
 
 const ReviewAll = () => {
   return (
     <div>
-      {/* <ReviewCreate /> */}
-      <ReviewCreate2 />
-      <Review />
+      <ReviewCreate />
+      <ReviewLists />
     </div>
   );
 };

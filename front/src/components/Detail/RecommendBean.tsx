@@ -64,10 +64,39 @@ const RecommendBean = (): JSX.Element => {
 
   const RecommendRating = {
     향: 5,
-    산미: 4,
+    산미: 2,
     단맛: 3.5,
     쓴맛: 3,
     바디감: 4,
+  };
+
+  const scoreArray = Object.entries(RecommendRating);
+  const beanScore = () => {
+    console.log(scoreArray);
+
+    const scoreItem = scoreArray.map((score, i) => {
+      // score[0] = 기준, score[1] = 점수
+      // console.log(score); //  ['향', 5]
+      const isHalfCheck: boolean = score[1] - Math.floor(score[1]) > 0;
+
+      const scoreRatingFull = Array.from({ length: score[1] }, () => (
+        <Score src={ratingfull} />
+      ));
+
+      const scoreRatingHalf = isHalfCheck ? <Score src={ratinghalf} /> : null;
+
+      const scoreRatingEmpty = Array.from({ length: 5 - score[1] }, () => (
+        <Score src={ratingempty} />
+      ));
+
+      return (
+        <ScoreTitle>
+          <p style={{ marginRight: '16px' }}>{score[0]}</p>
+          {scoreRatingFull} {scoreRatingHalf} {scoreRatingEmpty}
+        </ScoreTitle>
+      );
+    });
+    return scoreItem;
   };
 
   return (
@@ -127,41 +156,7 @@ const RecommendBean = (): JSX.Element => {
                       >
                         원산지 : 케냐
                       </div>
-                      <ScoreTitle>
-                        <p style={{ marginRight: '16px' }}>향</p>
-                      </ScoreTitle>
-                      <ScoreTitle>
-                        <p style={{ marginRight: '16px' }}>산미</p>
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingempty} />
-                      </ScoreTitle>
-                      <ScoreTitle>
-                        <p style={{ marginRight: '16px' }}>단맛</p>
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingempty} />
-                      </ScoreTitle>
-                      <ScoreTitle>
-                        <p style={{ marginRight: '16px' }}>쓴맛</p>
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratinghalf} />
-                        <Score src={ratingempty} />
-                        <Score src={ratingempty} />
-                      </ScoreTitle>
-                      <ScoreTitle>
-                        <p style={{ marginRight: '16px' }}>바디감</p>
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingfull} />
-                        <Score src={ratingempty} />
-                      </ScoreTitle>
+                      <div>{beanScore()}</div>
                     </div>
                   </div>
                 ))}

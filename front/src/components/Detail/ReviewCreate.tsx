@@ -1,158 +1,120 @@
 import tw from 'tailwind-styled-components';
-import { useState, useCallback, useRef } from 'react';
-import ratingfull from '../../assets/ratingfull.png';
-import ratinghalf from '../../assets/ratinghalf.png';
-import ratingempty from '../../assets/ratingempty.png';
-
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-
 import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
+import { useState, ChangeEvent } from 'react';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import axios from 'axios';
 
-const CreateReview = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mr-auto text-xl`;
+const CreateReviewBtn = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mx-auto text-xl`;
+const CreateReviewDiv = tw.div`w-1040 h-fit flex-col mx-auto drop-shadow-2xl`;
+const SliderDiv = tw.div`flex justify-center my-2 mx-2 drop-shadow-md`;
 
-const ImageBox = tw.div`w-40 h-40 rounded-full bg-slate-400`;
-const EditBtn = tw.div`w-20 h-6 bg-pinkColor my-4 mx-auto text-center rounded-xl`;
-const SliderDiv = tw.div`flex justify-center my-2 mx-2 `;
+const Submit = tw.div`w-40 h-10 rounded-full bg-red-200 my-6 mx-auto`;
 
 const ReviewCreate = () => {
-  interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-  }
-
-  // 작성모달 open
   const [openCreate, setOpenCreate] = useState(false);
   const handleClickOpen = () => {
-    setOpenCreate(true);
-  };
-  const handleClose = () => {
-    setOpenCreate(false);
+    setOpenCreate(!openCreate);
+    if (openCreate === false) {
+      setReviewTitle('');
+      setReviewContent('');
+      setScoreValue([3, 3, 3, 3, 3]);
+    }
   };
 
   const [reviewTitle, setReviewTitle] = useState('');
-  const ChangeTitle = (e: any) => {
+  const changeTitle = (e: any) => {
     setReviewTitle(e.target.value);
+
     console.log(reviewTitle);
   };
 
-  const [content, setContent] = useState('');
-  // dialog
-  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
-  // X 닫기버튼
-  const BootstrapDialogTitle = (props: DialogTitleProps) => {
-    const { children, onClose, ...other } = props;
-
-    return (
-      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
+  const [reviewContent, setReviewContent] = useState('');
+  const changeContent = (e: any) => {
+    setReviewContent(e.target.value);
+    console.log(reviewContent);
   };
 
-  // 이미지 등록
-  const [profile, setProfile] = useState('../../assets/Coffeebrew.svg');
+  const standards = ['향', '산미', '단맛', '쓴맛', '바디감'];
+
+  const [scoreValue, setScoreValue] = useState<number[]>([3, 3, 3, 3, 3]);
+  const standardItem = () => {
+    const Item = standards.map((item: string, i: number) => {
+      return (
+        <SliderDiv
+          key={i}
+          style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '24px' }}
+        >
+          <div style={{ marginRight: '8px' }}>{item}</div>
+          <Box width={150} key={i}>
+            <Slider
+              key={i}
+              defaultValue={3}
+              max={5}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              onChange={(e, value) => {
+                const newScoreValue: number[] = [...scoreValue];
+                newScoreValue[i] = value as number;
+                setScoreValue(newScoreValue);
+                console.log(scoreValue);
+              }}
+              sx={{
+                color: '#9A6533',
+              }}
+            />
+          </Box>
+          <div style={{ marginLeft: '20px' }}>{scoreValue[i]}</div>
+        </SliderDiv>
+      );
+    });
+    return Item;
+  };
 
   return (
     <div>
-      <CreateReview onClick={handleClickOpen}> 리뷰 등록 </CreateReview>
+      {openCreate ? null : (
+        <CreateReviewBtn onClick={handleClickOpen}>
+          <div style={{ fontWeight: 'bold' }}> 리뷰 등록 </div>{' '}
+        </CreateReviewBtn>
+      )}
 
-      <BootstrapDialog
-        aria-labelledby="ReviewCreate"
-        open={openCreate}
-        PaperProps={{
-          style: {
-            minWidth: '960px',
-          },
-        }}
-      >
-        <BootstrapDialogTitle id="Custom-ReviewTitle" onClose={handleClose}>
-          <div style={{ fontSize: '24px', width: '920px' }}>
-            당신만의 리뷰를 남겨주세요
+      {openCreate ? (
+        <CreateReviewDiv>
+          <div
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              width: '920px',
+              margin: 'auto',
+              marginTop: '24px',
+            }}
+          >
+            당신의 리뷰를 남겨주세요
           </div>
-        </BootstrapDialogTitle>
-        <div style={{ display: 'flex', width: '960px' }}>
-          <DialogContent dividers style={{ display: 'flex' }}>
-            {/* 이미지 등록 */}
-            <div style={{ width: '240px' }}>
-              <ImageBox
-                style={{ marginLeft: 'auto', marginRight: 'auto' }}
-              ></ImageBox>
-
-              <EditBtn> 등록 </EditBtn>
-              <input></input>
-              {/* 점수 */}
-              <div>
-                <div
-                  style={{
-                    width: '220px',
-                    border: 'solid 1px',
-                    borderColor: 'gray',
-                    margin: 'auto',
-                  }}
-                >
-                  <SliderDiv id="flavor">
-                    <div style={{ marginRight: '8px' }}>향</div>
-                    <SliderSizes />
-                  </SliderDiv>
-                  <SliderDiv id="acidity">
-                    <div style={{ marginRight: '8px' }}>산미</div>
-                    <SliderSizes />
-                  </SliderDiv>
-                  <SliderDiv id="sweetness">
-                    <div style={{ marginRight: '8px' }}>단맛</div>
-                    <SliderSizes />
-                  </SliderDiv>
-                  <SliderDiv id="bitterness">
-                    <div style={{ marginRight: '8px' }}>쓴맛</div>
-                    <SliderSizes />
-                  </SliderDiv>
-                  <SliderDiv id="body">
-                    <div style={{ marginRight: '8px' }}>바디감</div>
-                    <SliderSizes />
-                  </SliderDiv>
-                </div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div
+              style={{
+                flexDirection: 'row',
+              }}
+            >
+              <div
+                style={{
+                  width: '280px',
+                }}
+              >
+                <div style={{ marginTop: '50%' }}>{standardItem()}</div>
               </div>
             </div>
+
             <div>
               <div
                 style={{
-                  flexDirection: 'column',
-                  maxWidth: '600',
-                  marginLeft: '24px',
+                  flexDirection: 'row',
+                  maxWidth: '400',
+                  marginLeft: '12px',
+                  marginTop: '24px',
                 }}
               >
                 <Box
@@ -171,141 +133,76 @@ const ReviewCreate = () => {
                         border: '6px solid #BCA3A3',
                         borderRadius: '40px',
                         boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.35)',
+                        fontSize: '20px',
+                        padding: '4px',
                       },
                     }}
                     placeholder="작성할 제목을 입력하세요"
-                    value={reviewTitle}
-                    onChange={ChangeTitle}
+                    onChange={changeTitle}
                   />
                 </Box>
-                {/* <Box
-                  component="form"
-                  sx={{
-                    '& > :not(style)': { m: 2, width: '600px' },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <TextareaAutosize
-                    aria-label="empty textarea"
-                    placeholder="리뷰를 작성하세요"
-                    style={{
-                      width: 600,
-                      minHeight: 280,
-                      maxHeight: 280,
-                      border: 'solid 4px #CBAC97',
-                      borderRadius: '24px',
-                      marginLeft: '24px',
-                      resize: 'none',
-                    }}
-                    onChange={(e: any) => {
-                      setContent(e.target.value);
-                    }}
-                  />
-                </Box> */}
-                <button onClick={() => console.log(reviewTitle)}> 11</button>
               </div>
+              <Box
+                component="form"
+                sx={{
+                  '& > :not(style)': { m: 2, width: '600px' },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <TextareaAutosize
+                  aria-label="empty textarea"
+                  placeholder="리뷰를 작성하세요"
+                  style={{
+                    width: 580,
+                    minHeight: 320,
+                    maxHeight: 320,
+                    border: 'solid 8px #CBAC97',
+                    borderRadius: '24px',
+                    marginLeft: '32px',
+                    resize: 'none',
+                    padding: '24px',
+                  }}
+                  onChange={changeContent}
+                />
+              </Box>
             </div>
-          </DialogContent>
-        </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {openCreate ? (
+              <CreateReviewBtn onClick={handleClickOpen}>
+                <div style={{ fontWeight: 'bold' }}> 취 소 </div>
+              </CreateReviewBtn>
+            ) : null}
 
-        <DialogActions>
-          {/* <Button autoFocus onClick={handleClose}> */}
-          <Button
-            onClick={() => {
-              console.log('reviewTitle :', reviewTitle, content);
-            }}
-          >
-            Save changes
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
+            <Submit
+              onClick={() =>
+                console.log(
+                  'reviewTitle ::',
+                  reviewTitle,
+                  'reviewContent ::',
+                  reviewContent,
+                  'score',
+                  scoreValue,
+                )
+              }
+            >
+              <div
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '24px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                작성 완료
+              </div>
+            </Submit>
+          </div>
+        </CreateReviewDiv>
+      ) : null}
     </div>
   );
 };
 
 export default ReviewCreate;
-
-export function SliderSizes() {
-  return (
-    <Box width={150}>
-      <Slider
-        defaultValue={3}
-        max={5}
-        aria-label="Default"
-        valueLabelDisplay="auto"
-        onChange={(e, value) => {
-          console.log(value);
-        }}
-      />
-    </Box>
-  );
-}
-
-export function TitleTextFields() {
-  const [title, setTitle] = useState('');
-  const createTitle = (e: any) => {
-    setTitle(e.target.value);
-    console.log('title ::', title);
-  };
-  return (
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 2, width: '600px' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        InputProps={{
-          style: {
-            border: '6px solid #BCA3A3',
-            borderRadius: '40px',
-            boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.35)',
-          },
-        }}
-        placeholder="작성할 제목을 입력하세요"
-        onChange={(e) => {
-          createTitle(e);
-        }}
-      />
-    </Box>
-  );
-}
-
-export function ContentTextFields() {
-  const [content, setContent] = useState('');
-
-  const createContent = (e: any) => {
-    setContent(e.target.value);
-    console.log('content ::', content);
-  };
-  return (
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 2, width: '600px' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextareaAutosize
-        aria-label="empty textarea"
-        placeholder="리뷰를 작성하세요"
-        style={{
-          width: 600,
-          minHeight: 280,
-          maxHeight: 280,
-          border: 'solid 4px #CBAC97',
-          borderRadius: '24px',
-          marginLeft: '24px',
-          resize: 'none',
-        }}
-        onChange={createContent}
-      />
-    </Box>
-  );
-}
