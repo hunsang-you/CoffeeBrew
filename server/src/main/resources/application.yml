@@ -93,6 +93,7 @@ user:
     review: /api/v1/review
     test: /api/v1/test
     swagger: /api/v1/swagger-ui.html
+    swagger-index: /api/v1/swagger-ui/
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER

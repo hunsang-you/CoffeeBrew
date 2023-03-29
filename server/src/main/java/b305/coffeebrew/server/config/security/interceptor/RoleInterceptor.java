@@ -37,6 +37,8 @@ public class RoleInterceptor implements HandlerInterceptor {
     private final String itemURL;
     private final String reviewURL;
     private final String testURL;
+    private final String swaggerURL;
+    private final String swaggerIndexURL;
 
     @Autowired
     public RoleInterceptor(DecodeEncodeHandler decodeEncodeHandler, JwtTokenProvider jwtTokenProvider,
@@ -46,7 +48,9 @@ public class RoleInterceptor implements HandlerInterceptor {
                            @Value(value = "${user.url.member}") String memberURL,
                            @Value(value = "${user.url.item}") String itemURL,
                            @Value(value = "${user.url.review}") String reviewURL,
-                           @Value(value = "${user.url.test}") String testURL) {
+                           @Value(value = "${user.url.test}") String testURL,
+                           @Value(value = "${user.url.swagger}") String swaggerURL,
+                           @Value(value = "${user.url.swagger-index}") String swaggerIndexURL) {
         this.decodeEncodeHandler = decodeEncodeHandler;
         this.jwtTokenProvider = jwtTokenProvider;
         this.adminRole = adminRole;
@@ -56,12 +60,15 @@ public class RoleInterceptor implements HandlerInterceptor {
         this.itemURL = itemURL;
         this.reviewURL = reviewURL;
         this.testURL = testURL;
+        this.swaggerURL = swaggerURL;
+        this.swaggerIndexURL = swaggerIndexURL;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info(METHOD_NAME + "- preHandle() ...");
         boolean result = false;
+        log.info("SIbar request URL = {} url 위치입니다.",request.getRequestURI());
         try {
             TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
             String token = tokenResDTO.getToken();
@@ -113,6 +120,16 @@ public class RoleInterceptor implements HandlerInterceptor {
                             result = true;
                             break Outer;
                         }
+                        if (request.getRequestURI().startsWith(swaggerURL)) {
+                            log.info("swagger URL is public");
+                            result = true;
+                            break Outer;
+                        }
+                        if (request.getRequestURI().startsWith(swaggerIndexURL)) {
+                            log.info("swagger index URL is public");
+                            result = true;
+                            break Outer;
+                        }
                         log.warn("Unverified role ACCESS ... ");
                         response.setContentType("text/html; charset=UTF-8");
                         response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_UNVERIFIED_SERVER_ADDRESS));
@@ -134,6 +151,16 @@ public class RoleInterceptor implements HandlerInterceptor {
                     }
                     if (request.getRequestURI().startsWith(testURL)) {
                         log.info("TEST URL is public");
+                        result = true;
+                        break Outer;
+                    }
+                    if (request.getRequestURI().startsWith(swaggerURL)) {
+                        log.info("swagger URL is public");
+                        result = true;
+                        break Outer;
+                    }
+                    if (request.getRequestURI().startsWith(swaggerIndexURL)) {
+                        log.info("swagger URL is public");
                         result = true;
                         break Outer;
                     }

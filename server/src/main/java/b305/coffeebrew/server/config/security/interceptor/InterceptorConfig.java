@@ -21,7 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		registry.addInterceptor(roleInterceptor)
 				.order(0)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/swagger-ui.html");
+				.excludePathPatterns("/api/v1/swagger-ui.html");
 
 	}
 }

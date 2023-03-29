@@ -132,11 +132,6 @@ public class JwtTokenProvider {
     public TokenResDTO requestCheckToken(HttpServletRequest request) {
         log.info(METHOD_NAME + "- requestCheckToken() ...");
         try {
-            Enumeration<String> headerNames = request.getHeaderNames();
-            while (headerNames.hasMoreElements()) {
-                String headerName = headerNames.nextElement();
-                log.info(headerName + ": " + request.getHeader(headerName));
-            }
             String token = request.getHeader(headerKeyAccess); // 수정된 부분
             log.info("headerKeyAccess: {}", headerKeyAccess);
             log.info("token: {}", token);
