@@ -2,13 +2,13 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setNavbar, AppDispatch } from '../../store';
-
 import { useOnHoverOutside } from '../../hooks/useOnHoverOutside';
 import Logo from '../../assets/Coffeebrew.svg';
 import tw from 'tailwind-styled-components';
 import { DropDown } from './DropDown';
 import { LoginModal } from '../login/Login';
 import hypeboy from '../../assets/hypeboy.mp3';
+import MyProfile from './MyProfile';
 
 const Navbar = () => {
   const reduxData = useSelector((state: RootState) => state);
@@ -47,7 +47,7 @@ const Navbar = () => {
               setMenuDropDownOpen(false);
             }}
           >
-            <img src={Logo} width={60} height={52} alt="no_img" />
+            <img src={Logo} width={60} height={60} alt="no_img" />
             <button
               onClick={() => {
                 playMusic();
@@ -116,7 +116,7 @@ const Navbar = () => {
                 setMenuDropDownOpen(false);
               }}
             >
-              <LoginModal />
+              {reduxData.login === false ? <LoginModal /> : <MyProfile />}
             </NDiv>
           </div>
         </div>
