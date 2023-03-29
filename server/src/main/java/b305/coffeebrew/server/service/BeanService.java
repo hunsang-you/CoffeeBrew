@@ -33,8 +33,8 @@ public class BeanService {
         log.info(METHOD_NAME + "- getBeanDetail");
 
         Bean bean = beanRepository.findByIdx(beanId);
-        BeanDetail beanDetail = beanDetailRepository.findByIdx(beanId);
-        BeanScore beanScore = beanScoreRepository.findByIdx(beanId);
+        BeanDetail beanDetail = beanDetailRepository.findByBeanIdx(bean);
+        BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
 
 //        if (bean==null || beanDetail==null || beanScore==null) {
 //            throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
