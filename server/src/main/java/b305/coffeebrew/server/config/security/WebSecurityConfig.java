@@ -27,28 +27,28 @@ public class WebSecurityConfig {
     @Order(0)
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/sign"
-        , "/swagger-ui.html");
+        return (web) -> web.ignoring().antMatchers("/api/v1/swagger-ui.html");
     }
 
     @Bean
     public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().csrf().disable().cors().and().formLogin().disable()
+        http.httpBasic().disable()
+                .csrf().disable()
+                .cors().and()
+                .formLogin().disable()
                 .logout()
                 .logoutUrl(globalFilter.getLogoutURL())
                 .deleteCookies(globalFilter.getSessionId())
                 .addLogoutHandler(globalFilter.logoutHandler())
                 .logoutSuccessHandler(globalFilter.logoutSuccessHandler())
                 .and()
-//                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
                 .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(globalFilter.getPermitAll()).permitAll()
-//                .antMatchers("/api/**").authenticated()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/v1/member/**").authenticated() // member controller는 인증을 요구
+                .antMatchers("/api/v1/**").permitAll() // 그 외의 URL은 인증을 요구하지 않음
                 .and()
                 .oauth2Login()
                 .successHandler(oAuth2SuccessHandler)

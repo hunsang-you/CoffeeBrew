@@ -47,6 +47,8 @@ public class GlobalFilter {
 	private String sessionId;
 	@Value(value = "${user.cookie.credential}")
 	private boolean cookieConfig;
+	@Value(value = "${user.url.member}")
+	private String memberURL;
 
 	private final UserAuthenticationManager userAuthenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -77,7 +79,7 @@ public class GlobalFilter {
 	}
 
 	public JwtTokenAuthorizationFilter authorizationFilter() {
-		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService);
+		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService, memberURL);
 		jwtTokenAuthorizationFilter.setHeaderKeyAccess(headerAccess);
 		jwtTokenAuthorizationFilter.setTypeAccess(typeAccess);
 
