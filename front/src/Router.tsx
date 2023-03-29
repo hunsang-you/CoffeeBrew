@@ -9,6 +9,7 @@ const Info = lazy(() => import('./pages/Info'));
 const MyPage = lazy(() => import('./pages/MyPage'));
 const ProductList = lazy(() => import('./pages/ProductList'));
 const Survey = lazy(() => import('./pages/Servey'));
+const Redirect = lazy(() => import('./pages/Redirect'));
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -84,6 +85,14 @@ const Router = ({ setIsFooter }: IsFooterType) => {
             <ContentContainer>
               <Intro setIsFooter={setIsFooter} />
             </ContentContainer>
+          </Suspense>
+        }
+      />
+      <Route
+        path="/redirect"
+        element={
+          <Suspense fallback={<Loading />}>
+            <Redirect />
           </Suspense>
         }
       />

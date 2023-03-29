@@ -53,7 +53,7 @@ public class BeanService {
         String processing = beanDetail.getProcessing();
         boolean decaffeination = beanDetail.isDecaffeination();
 
-        int overall = beanScore.getOverall();
+        int balance = beanScore.getBalance();
         int flavor = beanScore.getFlavor();
         int acidity = beanScore.getAcidity();
         int sweetness = beanScore.getSweetness();
@@ -73,7 +73,7 @@ public class BeanService {
                 .rank(rank)
                 .processing(processing)
                 .decaffeination(decaffeination)
-                .overall(overall)
+                .balance(balance)
                 .flavor(flavor)
                 .acidity(acidity)
                 .sweetness(sweetness)

@@ -41,8 +41,8 @@ public class SwaggerConfig {
 		String version = "v1";
 		return buildDocket("회원 " + version, Predicates
 				.or(PathSelectors.ant("/" + version + "/auth/**"),
-						PathSelectors.ant("/" + version + "/user"),
-						PathSelectors.ant("/" + version + "/user/**")));
+						PathSelectors.ant("/" + version + "/member"),
+						PathSelectors.ant("/" + version + "/member/**")));
 	}
 
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {

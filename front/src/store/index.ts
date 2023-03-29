@@ -25,14 +25,26 @@ const navBarSlice = createSlice({
     },
   },
 });
+const loginSlice = createSlice({
+  name: 'accessToken',
+  initialState: '',
+  reducers: {
+    setAccessToken: (state, action: PayloadAction<string>) => {
+      return action.payload;
+    },
+  },
+});
 
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['navbar'],
+  whitelist: ['navbar', 'accessToken'],
 };
 
-const rootReducer = combineReducers({ navbar: navBarSlice.reducer }); // combineReducers를 통해 따로 rootReducer 만들어준다.
+const rootReducer = combineReducers({
+  navbar: navBarSlice.reducer,
+  accessToken: loginSlice.reducer,
+}); // combineReducers를 통해 따로 rootReducer 만들어준다.
 const persistedReducer = persistReducer(persistConfig, rootReducer); // 그리고 설정해놓은 local storage
 export const store = configureStore({
   reducer: persistedReducer,
@@ -49,3 +61,4 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const { setNavbar } = navBarSlice.actions;
+export const { setAccessToken } = loginSlice.actions;

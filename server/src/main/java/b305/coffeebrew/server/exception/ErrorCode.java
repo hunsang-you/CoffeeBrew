@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     // REVIEW
     REVIEW_NOT_FOUND(404, "리뷰를 찾을 수 없습니다."),
+    REVIEW_NOT_EQUAL(404, "자신의 리뷰가 아닙니다."),
 
     //500
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류 입니다."),

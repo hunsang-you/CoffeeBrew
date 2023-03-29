@@ -14,6 +14,7 @@ python-dotenv = "*"
 pymysql = "*"
 cryptography = "*"
 pydantic = "*"
+scipy = "*"
 
 [dev-packages]
 jupyter = "*"
