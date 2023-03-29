@@ -6,6 +6,8 @@ import b305.coffeebrew.server.config.security.handler.ResponseHandler;
 import b305.coffeebrew.server.dto.token.TokenResDTO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +20,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import static b305.coffeebrew.server.config.utils.Msg.*;
+
 /**
  * 제외 지정한 URL 이 아닌 모든 URL 이 인가된 Token 을 보유하고 있는지 검증하는 클래스
  * 액세스 토큰 보유를 확인해서 올바른 토큰을 보유하고 있는 경우 doFilter 를 사용하여 다음 필터로 패스
@@ -30,68 +34,75 @@ import static b305.coffeebrew.server.config.utils.Msg.*;
 @Setter
 public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private static final String METHOD_NAME = JwtTokenAuthorizationFilter.class.getName();
-	private JwtTokenProvider jwtTokenProvider;
-	private PrincipalDetailService principalDetailService;
-	private String headerKeyAccess;
-	private String typeAccess;
+    private static final String METHOD_NAME = JwtTokenAuthorizationFilter.class.getName();
+    private JwtTokenProvider jwtTokenProvider;
+    private PrincipalDetailService principalDetailService;
+    private String headerKeyAccess;
+    private String typeAccess;
 
-	public JwtTokenAuthorizationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, PrincipalDetailService principalDetailService) {
-		super(userAuthenticationManager);
-		this.jwtTokenProvider = jwtTokenProvider;
-		this.principalDetailService = principalDetailService;
-	}
+    private final String memberURL;
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		log.info(METHOD_NAME + "- doFilterInternal() ...");
-		try {
-			TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
-			String token = tokenResDTO.getToken();
-			log.info("token= {}", token);
-			switch (tokenResDTO.getCode()) {
-				case 0:
-					if (jwtTokenProvider.validateToken(token)) {
-						log.info("Access Token Validation - Success");
+    public JwtTokenAuthorizationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, PrincipalDetailService principalDetailService, @Value(value = "${user.url.member}") String memberURL) {
+        super(userAuthenticationManager);
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.principalDetailService = principalDetailService;
+        this.memberURL = memberURL;
+    }
 
-						String userEmail = jwtTokenProvider.getUserEmail(token);
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info(METHOD_NAME + "- doFilterInternal() ...");
+        try {
+            TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
+            String token = tokenResDTO.getToken();
+            log.info("token= {}", token);
+            if (!request.getRequestURI().startsWith(memberURL)) {
+                switch (tokenResDTO.getCode()) {
+                    case 0:
+                        if (jwtTokenProvider.validateToken(token)) {
+                            log.info("Access Token Validation - Success");
 
-						UserDetails userDetails = principalDetailService.loadUserByUsername(userEmail);
-						UsernamePasswordAuthenticationToken authenticationToken =
-								new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                            String userEmail = jwtTokenProvider.getUserEmail(token);
 
-						authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-						SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                            UserDetails userDetails = principalDetailService.loadUserByUsername(userEmail);
+                            UsernamePasswordAuthenticationToken authenticationToken =
+                                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-						filterChain.doFilter(request, response);
-					} else {
-						log.info("Access Token Validation - Fail");
+                            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-						response.setContentType("text/html; charset=UTF-8");
-						response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_ACCESS + FAIL_TOKEN_VALIDATE));
-					}
-					return;
-				case 1:
-					if (jwtTokenProvider.validateRefreshToken(token)) {
-						log.info("Refresh Token Validation - Success");
-						String accessToken = jwtTokenProvider.generateAccessToken(jwtTokenProvider.getUserEmail(token));
+                            filterChain.doFilter(request, response);
+                        } else {
+                            log.info("Access Token Validation - Fail");
 
-						response.addHeader(headerKeyAccess, typeAccess + accessToken);
+                            response.setContentType("text/html; charset=UTF-8");
+                            response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_ACCESS + FAIL_TOKEN_VALIDATE));
+                        }
+                        return;
+                    case 1:
+                        if (jwtTokenProvider.validateRefreshToken(token)) {
+                            log.info("Refresh Token Validation - Success");
+                            String accessToken = jwtTokenProvider.generateAccessToken(jwtTokenProvider.getUserEmail(token));
 
-						response.setContentType("text/html; charset=UTF-8");
-						response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_ACCESS + FAIL_TOKEN_VALIDATE));
-					}
-					return;
-				case 2:
-				default:
-					log.warn("Access/Refresh Token Validation - Fail");
-			}
-		} catch (NullPointerException ne) {
-			log.error("토큰 값이 비어있습니다. " + METHOD_NAME);
-		} catch (Exception e) {
-			log.error("사용자 인증을 확인하지 못해 인가할 수 없습니다. " + METHOD_NAME, e);
-		}
-		response.setContentType("text/html; charset=UTF-8");
-		response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.INTERNAL_SERVER_ERROR, FAIL_ACCESS + FAIL_TOKEN_VALIDATE));
-	}
+                            response.addHeader(headerKeyAccess, typeAccess + accessToken);
+
+                            response.setContentType("text/html; charset=UTF-8");
+                            response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_ACCESS + FAIL_TOKEN_VALIDATE));
+                        }
+                        return;
+                    case 2:
+                    default:
+                        log.warn("Access/Refresh Token Validation - Fail");
+                }
+            } else {
+                return;
+            }
+        } catch (NullPointerException ne) {
+            log.error("토큰 값이 비어있습니다. " + METHOD_NAME);
+        } catch (Exception e) {
+            log.error("사용자 인증을 확인하지 못해 인가할 수 없습니다. " + METHOD_NAME, e);
+        }
+        response.setContentType("text/html; charset=UTF-8");
+        response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.INTERNAL_SERVER_ERROR, FAIL_ACCESS + FAIL_TOKEN_VALIDATE));
+    }
 }
