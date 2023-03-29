@@ -11,11 +11,7 @@ interface ServeyProps {
 
 const SelectCard = (props: ServeyProps) => {
   const brand: string[] = [photo1, photo2, photo3, photo4, photo5];
-  const pickbrand = (n: number): string => {
-    return brand[n];
-  };
-  console.log(props.i);
-
+  const reason: string[] = [];
   return (
     <OutCard>
       <CardImg src={brand[props.i]}></CardImg>
@@ -26,6 +22,6 @@ const SelectCard = (props: ServeyProps) => {
 
 export default SelectCard;
 
-const OutCard = tw.div`border border-mainOrige flex flex-col items-center justify-center  py-10 px-5 mx-5`;
-const CardImg = tw.img`border border-mainOrige mb-10 bg-white`;
+const OutCard = tw.div`border border-mainOrige flex flex-col items-center justify-center  py-10 px-5 mx-5 rounded-lg`;
+const CardImg = tw.img`mb-10 bg-white`;
 const CardTitle = tw.div`text-5xl`;

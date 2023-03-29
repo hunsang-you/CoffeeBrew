@@ -2,16 +2,10 @@ import tw from 'tailwind-styled-components';
 import SelectCard from './SelectCard';
 
 const Servey1 = () => {
-  const cafe = [0, 1, 2, 3, 4];
-
   return (
     <OutDiv>
       <CardTitle>내가 자주가는 카페는?</CardTitle>
-      <Card>
-        {cafe.map((i: number) => {
-          return <SelectCard i={i} />;
-        })}
-      </Card>
+      <Card>123</Card>
       <ButDiv>
         <SerButton>이전</SerButton>
         <SerButton>다음</SerButton>
