@@ -98,6 +98,21 @@ public class RoleInterceptor implements HandlerInterceptor {
                             }
                             break Outer;
                         }
+                        if (request.getRequestURI().startsWith(itemURL)) {
+                            log.info("Item URL is public");
+                            result = true;
+                            break Outer;
+                        }
+                        if (request.getRequestURI().startsWith(reviewURL)) {
+                            log.info("Review URL is public");
+                            result = true;
+                            break Outer;
+                        }
+                        if (request.getRequestURI().startsWith(testURL)) {
+                            log.info("TEST URL is public");
+                            result = true;
+                            break Outer;
+                        }
                         log.warn("Unverified role ACCESS ... ");
                         response.setContentType("text/html; charset=UTF-8");
                         response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_UNVERIFIED_SERVER_ADDRESS));
