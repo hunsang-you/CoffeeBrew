@@ -20,9 +20,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(roleInterceptor)
 				.order(0)
-//				.addPathPatterns("/**")
-				.excludePathPatterns("/sign")
-				.excludePathPatterns("/swagger-ui.html");
+				.addPathPatterns("/**")
+				.excludePathPatterns("/api/v1/swagger-ui.html");
 
 	}
 }

@@ -19,7 +19,7 @@ public class CapsuleDetailPageResDTO {
     private String company;
     private String origin;
     private String machineType;
-    private int overall;
+    private int balance;
     private int flavor; // 얜 강도네? 원두는 향미던데
     private int acidity;
     private int bitterness;
@@ -27,8 +27,7 @@ public class CapsuleDetailPageResDTO {
     private int roasting; // int 맞아?
     private String coffeeingNote;
 
-    @Builder
-    public CapsuleDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String company, String origin, String machineType, int overall, int flavor, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
+    public CapsuleDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String company, String origin, String machineType, int balance, int flavor, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
         this.nameKo = nameKo;
         this.nameEn = nameEn;
         this.summary = summary;
@@ -38,7 +37,7 @@ public class CapsuleDetailPageResDTO {
         this.company = company;
         this.origin = origin;
         this.machineType = machineType;
-        this.overall = overall;
+        this.balance = balance;
         this.flavor = flavor;
         this.acidity = acidity;
         this.bitterness = bitterness;
@@ -47,7 +46,10 @@ public class CapsuleDetailPageResDTO {
         this.coffeeingNote = coffeeingNote;
     }
 
-    public static CapsuleDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String company, String origin, String machineType, int overall, int flavor, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
+    @Builder
+
+
+    public static CapsuleDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String company, String origin, String machineType, int balance, int flavor, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
         return CapsuleDetailPageResDTO.builder()
                 .nameKo(nameKo)
                 .nameEn(nameEn)
@@ -58,7 +60,7 @@ public class CapsuleDetailPageResDTO {
                 .company(company)
                 .origin(origin)
                 .machineType(machineType)
-                .overall(overall)
+                .balance(balance)
                 .flavor(flavor)
                 .acidity(acidity)
                 .bitterness(bitterness)

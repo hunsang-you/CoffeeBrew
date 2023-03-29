@@ -30,36 +30,56 @@ public class BeanService {
 
     @Transactional
     public BeanDetailPageResDTO getBeanDetail(Long beanId) {
-        log.info("{} - getBeanDetail", this.getClass().getName());
+        log.info(METHOD_NAME + "- getBeanDetail");
 
-        Bean bean = beanRepository.findById(beanId)
-                .orElseThrow(() -> new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND));
+        Bean bean = beanRepository.findByIdx(beanId);
+        BeanDetail beanDetail = beanDetailRepository.findByBeanIdx(bean);
+        BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
 
-        BeanDetail beanDetail = beanDetailRepository.findById(beanId)
-                .orElseThrow(() -> new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND));
+        if (bean==null || beanDetail==null || beanScore==null) {
+            throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
+        }
 
-        BeanScore beanScore = beanScoreRepository.findById(beanId)
-                .orElseThrow(() -> new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND));
+        String nameKo = bean.getNameKo();
+        String nameEn = bean.getNameEn();
+        String summary = bean.getSummary();
+        String thumbnail = bean.getThumbnail();
+        int userGrade = bean.getUserGrade();
+
+        String description = beanDetail.getDescription();
+        String origin = beanDetail.getOrigin();
+        String region = beanDetail.getRegion();
+        String rank = beanDetail.getRank();
+        String processing = beanDetail.getProcessing();
+        boolean decaffeination = beanDetail.isDecaffeination();
+
+        int balance = beanScore.getBalance();
+        int flavor = beanScore.getFlavor();
+        int acidity = beanScore.getAcidity();
+        int sweetness = beanScore.getSweetness();
+        int bitterness = beanScore.getBitterness();
+        int body = beanScore.getBody();
+        String coffeeingNote = beanScore.getCoffeeingNote();
 
         return BeanDetailPageResDTO.builder()
-                .nameKo(bean.getNameKo())
-                .nameEn(bean.getNameEn())
-                .summary(bean.getSummary())
-                .thumbnail(bean.getThumbnail())
-                .userGrade(bean.getUserGrade())
-                .description(beanDetail.getDescription())
-                .origin(beanDetail.getOrigin())
-                .region(beanDetail.getRegion())
-                .rank(beanDetail.getRank())
-                .processing(beanDetail.getProcessing())
-                .decaffeination(beanDetail.isDecaffeination())
-                .overall(beanScore.getOverall())
-                .flavor(beanScore.getFlavor())
-                .acidity(beanScore.getAcidity())
-                .sweetness(beanScore.getSweetness())
-                .bitterness(beanScore.getBitterness())
-                .body(beanScore.getBody())
-                .coffeeingNote(beanScore.getCoffeeingNote())
+                .nameKo(nameKo)
+                .nameEn(nameEn)
+                .summary(summary)
+                .thumbnail(thumbnail)
+                .userGrade(userGrade)
+                .description(description)
+                .origin(origin)
+                .region(region)
+                .rank(rank)
+                .processing(processing)
+                .decaffeination(decaffeination)
+                .balance(balance)
+                .flavor(flavor)
+                .acidity(acidity)
+                .sweetness(sweetness)
+                .bitterness(bitterness)
+                .body(body)
+                .coffeeingNote(coffeeingNote)
                 .build();
     }
 }

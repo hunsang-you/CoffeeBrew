@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -29,7 +26,7 @@ public class ItemController {
     private final BeanService beanService;
     private final CapsuleService capsuleService;
 
-    @PostMapping("/bean/{beanId}")
+    @GetMapping("/bean/{beanId}")
     @ApiOperation(value = "원두 상세 페이지", notes = "원두의 상세한 정보를 출력한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -40,7 +37,7 @@ public class ItemController {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_INQUIRE, beanService.getBeanDetail(beanId)));
     }
 
-    @PostMapping("/capsule/{capsuleId}")
+    @GetMapping("/capsule/{capsuleId}")
     @ApiOperation(value = "캡슐 상세 페이지", notes = "캡슐의 상세한 정보를 출력한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

@@ -29,8 +29,8 @@ public class BeanScore extends BaseAtTime implements Serializable {
     @JoinColumn(name = "bean_idx")
     private Bean beanIdx;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int overall; // 총점
+    @NotBlank
+    private int balance; // 밸런스
 
     @NotBlank
     private int flavor; // 맛
