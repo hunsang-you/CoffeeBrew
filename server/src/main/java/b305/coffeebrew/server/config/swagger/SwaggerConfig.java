@@ -33,7 +33,7 @@ public class SwaggerConfig {
 	public Docket allApi() {
 		String version = "v1";
 		return buildDocket("_전체_", Predicates
-				.or(PathSelectors.ant("/" + version + "/**")));
+				.or(PathSelectors.ant("/api/" + version + "/**")));
 	}
 
 	@Bean
