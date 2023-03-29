@@ -11,7 +11,7 @@ import Fade from '@mui/material/Fade';
 const GrindingDiv = tw.div`flex-row w-460 justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10 rounded-3xl drop-shadow-2xl`;
 const GrindingImg = tw.img`w-60 h-60 rounded-full mt-4 mx-auto`;
 const GrindingInfo = tw.div`mt-6 text-2xl `;
-const Question = tw.div`w-12 h-12 mx-auto cursor-pointer mt-8 `;
+const Question = tw.div`w-12 h-12 mx-auto cursor-pointer my-4 `;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -66,9 +66,7 @@ const Grinding = () => {
             <Typography
               id="GridingDescription"
               sx={{ mt: 4, textAlign: 'center' }}
-            >
-              설명
-            </Typography>
+            ></Typography>
           </Box>
         </Modal>
       </Question>
