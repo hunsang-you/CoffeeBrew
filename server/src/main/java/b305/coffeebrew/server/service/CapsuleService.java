@@ -49,7 +49,7 @@ public class CapsuleService {
                 .company(capsuleDetail.getCompany())
                 .origin(capsuleDetail.getOrigin())
                 .machineType(capsuleDetail.getMachineType())
-                .overall(capsuleScore.getOverall())
+                .balance(capsuleScore.getBalance())
                 .flavor(capsuleScore.getFlavor())
                 .acidity(capsuleScore.getAcidity())
                 .bitterness(capsuleScore.getBitterness())

@@ -30,7 +30,7 @@ public class CapsuleScore extends BaseAtTime implements Serializable {
     private Capsule capsuleIdx;
 
     @NotBlank
-    private int overall; // 총점
+    private int balance; // 밸런스
 
     @NotBlank
     private int flavor; // intensity -> flavor
