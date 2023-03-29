@@ -12,7 +12,7 @@ const Redirect = () => {
       try {
         const url = new URL(document.location.href).searchParams;
         const accessToken = url.get('accessToken');
-        dispatch(setAccessToken('Bearer' + accessToken));
+        dispatch(setAccessToken('Bearer ' + accessToken));
         // localStorage.setItem('accessToken', 'Bearer ' + accessToken);
         setTimeout(() => navigate('/', { replace: true }), 500);
       } catch (e) {
