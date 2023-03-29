@@ -53,7 +53,7 @@ public class BeanService {
                 .rank(beanDetail.getRank())
                 .processing(beanDetail.getProcessing())
                 .decaffeination(beanDetail.isDecaffeination())
-                .overall(beanScore.getOverall())
+                .balance(beanScore.getBalance())
                 .flavor(beanScore.getFlavor())
                 .acidity(beanScore.getAcidity())
                 .sweetness(beanScore.getSweetness())
