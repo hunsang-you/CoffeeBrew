@@ -22,6 +22,7 @@ export default api;
 
 export const loginAPI = {
   login: () => api.post(`/login`),
+  logout: () => api.delete(`/member`),
 };
 
 export const detailAPI = {
