@@ -47,4 +47,6 @@ public interface Msg {
     String SUCCESS_CAPSULE_INQUIRE = "캡슐 상세 페이지 조회에 성공했습니다.";
 	String FAIL_CAPSULE_INQUIRE = "캡슐 상세 페이지 조회에 실패했습니다.";
 
+    String SUCCESS_BEAN_SEARCH = "원두 검색 조회에 성공했습니다.";
+	String SUCCESS_CAPSULE_SEARCH = "캡슐 검색 조회에 성공했습니다.";
 }

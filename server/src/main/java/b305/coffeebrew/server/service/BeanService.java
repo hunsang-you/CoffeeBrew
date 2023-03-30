@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
+import b305.coffeebrew.server.dto.bean.BeanResDTO;
 import b305.coffeebrew.server.entity.Bean;
 import b305.coffeebrew.server.entity.BeanDetail;
 import b305.coffeebrew.server.entity.BeanScore;
@@ -10,11 +11,17 @@ import b305.coffeebrew.server.exception.MyPageHistoryException;
 import b305.coffeebrew.server.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -81,5 +88,10 @@ public class BeanService {
                 .body(body)
                 .coffeeingNote(coffeeingNote)
                 .build();
+    }
+
+    public Page<BeanResDTO> searchBean(String[] keywords, Pageable pageable) {
+        Page<Bean> beans = beanRepository.findBeansByKeywords(keywords, pageable);
+        return beans.map(BeanResDTO::of);
     }
 }
