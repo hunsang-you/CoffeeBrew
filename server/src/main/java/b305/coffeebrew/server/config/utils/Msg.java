@@ -35,6 +35,9 @@ public interface Msg {
 	String SUCCESS_REVIEW_REGISTER= "리뷰 등록에 성공하였습니다.";
 	String FAIL_REVIEW_REGISTER= "리뷰 등록에 실패하였습니다.";
 
+	String SUCCESS_REVIEW_GET= "리뷰 조회에 성공하였습니다.";
+	String FAIL_REVIEW_GET= "리뷰 조회에 실패하였습니다.";
+	
 	String SUCCESS_REVIEW_MOD= "리뷰 수정에 성공하였습니다.";
 	String FAIL_REVIEW_MOD= "리뷰 수정에 실패하였습니다.";
 
