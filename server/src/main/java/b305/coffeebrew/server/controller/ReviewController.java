@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/review")
 @RequiredArgsConstructor
-@Api(value = "리뷰 관련 API", tags = {"Member"})
+@Api(value = "리뷰 관련 API", tags = {"Review"})
 public class ReviewController {
 
 
@@ -41,6 +41,19 @@ public class ReviewController {
     }
 
     /**
+     * 원두 리뷰 조회
+     */
+    @GetMapping("/{itemType}/{itemIdx}")
+    @ApiOperation(value = "리뷰 조회", notes = "")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> readReview(@PathVariable String itemType , @PathVariable String itemIdx) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_GET, reviewService.readReview(itemType, itemIdx)));
+    }
+
+    /**
      * 리뷰 수정
      */
     @PutMapping("/{reviewId}")
@@ -49,7 +62,7 @@ public class ReviewController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> readReview(@PathVariable String reviewId, @RequestBody ReviewPageDTO reviewPageDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<ResponseDTO> updateReview(@PathVariable String reviewId, @RequestBody ReviewPageDTO reviewPageDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_MOD, reviewService.updateReview(reviewId, reviewPageDTO, principalDetails.getMember().getIdx())));
     }
 

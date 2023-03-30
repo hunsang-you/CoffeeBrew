@@ -9,10 +9,12 @@ import { DropDown } from './DropDown';
 import { LoginModal } from '../login/Login';
 import hypeboy from '../../assets/hypeboy.mp3';
 import MyProfile from './MyProfile';
+import ProfileDropDown from './ProfileDropDown';
 
 const Navbar = () => {
   const reduxData = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
+  const [isClick, setIsClick] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,6 +47,7 @@ const Navbar = () => {
             onClick={() => {
               navigate('/');
               setMenuDropDownOpen(false);
+              setIsClick(false);
             }}
           >
             <img src={Logo} width={60} height={60} alt="no_img" />
@@ -65,6 +68,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/intro');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -78,6 +82,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/info');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -91,6 +96,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/coffeelist');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -104,6 +110,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/survey');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -116,7 +123,11 @@ const Navbar = () => {
                 setMenuDropDownOpen(false);
               }}
             >
-              {reduxData.login === false ? <LoginModal /> : <MyProfile />}
+              {reduxData.login === false ? (
+                <LoginModal />
+              ) : (
+                <MyProfile isClick={isClick} setIsClick={setIsClick} />
+              )}
             </NDiv>
           </div>
         </div>

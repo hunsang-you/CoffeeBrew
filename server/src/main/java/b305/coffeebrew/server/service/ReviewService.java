@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -27,6 +28,12 @@ public class ReviewService {
         reviewRepository.save(reviewPageDTO.of(member));
         return member.getIdx();
     }
+
+    @Transactional
+    public List<Review> readReview(String itemType, String itemIdx) throws RuntimeException{
+        return reviewRepository.findByItemTypeAndItemIdx(itemType, Long.parseLong(itemIdx));
+    }
+
     @Transactional
     public Long updateReview(String reviewId, ReviewPageDTO reviewPageDTO, Long idx) throws RuntimeException{
         Review review = reviewRepository.findById(Long.valueOf(reviewId)).orElseThrow(() -> new ReviewNotFoundException(ErrorCode.REVIEW_NOT_FOUND));
