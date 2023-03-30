@@ -15,12 +15,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -90,7 +90,7 @@ public class BeanService {
                 .build();
     }
 
-    public Page<BeanResDTO> searchBean(String[] keywords, Pageable pageable) {
+    public Page<BeanResDTO> searchBean(String keywords, Pageable pageable) {
         Page<Bean> beans = beanRepository.findBeansByKeywords(keywords, pageable);
         return beans.map(BeanResDTO::of);
     }

@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/item")
@@ -36,7 +38,7 @@ public class ItemController {
             @ApiResponse(code = 500, message = "서버 오류"),
     })
     public ResponseEntity<ResponseDTO> searchBean(
-            @RequestParam(value = "keywords", required = false) String[] keywords,
+            @RequestParam(value = "keywords", required = false) String keywords,
             @PageableDefault(size = 9, page = 1) Pageable pageable) {
         return ResponseEntity.ok()
                 .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_SEARCH, beanService.searchBean(keywords, pageable)));
