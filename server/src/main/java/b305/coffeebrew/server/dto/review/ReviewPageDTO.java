@@ -19,9 +19,8 @@ import javax.validation.constraints.NotBlank;
 
 public class ReviewPageDTO {
     private Long member_idx;
-    private String item_type;
-    private Long item_idx;
-    private String title;
+    private String itemType;
+    private Long itemIdx;
     private String content;
     private int overall; // 총점
     private int flavor; // 맛
@@ -35,11 +34,10 @@ public class ReviewPageDTO {
     private boolean expired;
 
     @Builder
-    public ReviewPageDTO(Long member_idx, String item_type, Long item_idx, String title, String content, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeing_note, int like, boolean expired) {
+    public ReviewPageDTO(Long member_idx, String itemType, Long itemIdx, String content, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeing_note, int like, boolean expired) {
         this.member_idx = member_idx;
-        this.item_type = item_type;
-        this.item_idx = item_idx;
-        this.title = title;
+        this.itemType = itemType;
+        this.itemIdx = itemIdx;
         this.content = content;
         this.overall = overall;
         this.flavor = flavor;
@@ -53,9 +51,8 @@ public class ReviewPageDTO {
     }
     public Review of(Member member){
         return Review.builder().memberIdx(member)
-                .item_type(this.item_type)
-                .item_idx(this.item_idx)
-                .title(this.title)
+                .itemType(this.itemType)
+                .itemIdx(this.itemIdx)
                 .content(this.content)
                 .overall(this.overall)
                 .flavor(this.flavor)

@@ -34,15 +34,11 @@ public class Review extends BaseAtTime implements Serializable {
     private Member memberIdx;
 
     @NotBlank
-    private String item_type;
+    private String itemType;
 
     @NotNull
-    private Long item_idx;
+    private Long itemIdx;
 
-    @NotBlank
-    private String title;
-
-    @NotBlank
     private String content;
 
     @NotNull
@@ -78,7 +74,6 @@ public class Review extends BaseAtTime implements Serializable {
     }
 
     public void update(ReviewPageDTO reviewPageDTO){
-        this.title = reviewPageDTO.getTitle();
         this.content = reviewPageDTO.getContent();
         this.overall = reviewPageDTO.getOverall();
         this.flavor = reviewPageDTO.getFlavor();
