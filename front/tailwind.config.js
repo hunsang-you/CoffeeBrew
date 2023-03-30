@@ -24,8 +24,10 @@ module.exports = {
       textColor: {
         mainColorBrown: '#4A2919',
         mainColorOrange: '#FF9900',
+        productTextBrown: '#4A2919',
       },
       width: {
+        42: '42.82px',
         '88vw': '88vw',
         344: '344px',
         360: '360px',
@@ -46,6 +48,7 @@ module.exports = {
         600: '600px',
       },
       height: {
+        42: '42.82px',
         920: '920px',
         '10vh': '7vh',
         '90vh': '93vh',
@@ -95,6 +98,9 @@ module.exports = {
       },
       borderWidth: {
         1: '1px',
+      },
+      borderRadius: {
+        percent: '70%',
       },
     },
   },
