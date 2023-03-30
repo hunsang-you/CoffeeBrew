@@ -7,13 +7,13 @@ type objtype = {
   img?: string;
 };
 
-const Servey2 = () => {
+const Servey8 = () => {
   const qweqw: objtype[] = [
-    { title: '10대' },
-    { title: '20대' },
-    { title: '30대' },
-    { title: '40대' },
-    { title: '50대' },
+    { title: '나무의 우디한 향' },
+    { title: '감귤의 시트러스 향' },
+    { title: '허브 향' },
+    { title: '꽃향' },
+    { title: '달달한 향' },
   ];
 
   return (
@@ -28,7 +28,7 @@ const Servey2 = () => {
   );
 };
 
-export default Servey2;
+export default Servey8;
 
 const OutDiv = tw.div`w-full flex flex-col justify-center items-center`;
 const CardTitle = tw.div`text-5xl font-bold flex justify-center my-10`;

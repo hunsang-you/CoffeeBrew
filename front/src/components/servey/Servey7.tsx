@@ -7,20 +7,20 @@ type objtype = {
   img?: string;
 };
 
-const Servey2 = () => {
-  const qweqw: objtype[] = [
-    { title: '10대' },
-    { title: '20대' },
-    { title: '30대' },
-    { title: '40대' },
-    { title: '50대' },
+const Servey7 = () => {
+  const sex: objtype[] = [
+    { title: '사과, 배' },
+    { title: '체리, 복숭아' },
+    { title: '딸기, 블루베리' },
+    { title: '오렌지, 레몬' },
+    { title: '망고, 바나나' },
   ];
 
   return (
     <OutDiv>
-      <CardTitle>연령대</CardTitle>
+      <CardTitle>성별</CardTitle>
       <Card>
-        {qweqw.map((data: objtype, idx) => {
+        {sex.map((data: objtype, idx) => {
           return <SelectCard key={idx} data={data} />;
         })}
       </Card>
@@ -28,7 +28,7 @@ const Servey2 = () => {
   );
 };
 
-export default Servey2;
+export default Servey7;
 
 const OutDiv = tw.div`w-full flex flex-col justify-center items-center`;
 const CardTitle = tw.div`text-5xl font-bold flex justify-center my-10`;
