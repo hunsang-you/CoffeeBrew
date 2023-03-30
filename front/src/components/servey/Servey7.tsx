@@ -3,25 +3,43 @@ import tw from 'tailwind-styled-components';
 import SelectCard from './SelectCard';
 
 type objtype = {
+  id: number;
+  idx: number;
   title: string;
   img?: string;
 };
 
-const Servey7 = () => {
+interface PropsType {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  select: number[];
+  setSelect: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+const Servey7 = ({ page, setPage, select, setSelect }: PropsType) => {
   const sex: objtype[] = [
-    { title: '사과, 배' },
-    { title: '체리, 복숭아' },
-    { title: '딸기, 블루베리' },
-    { title: '오렌지, 레몬' },
-    { title: '망고, 바나나' },
+    { id: 6, idx: 1, title: '사과, 배' },
+    { id: 6, idx: 2, title: '체리, 복숭아' },
+    { id: 6, idx: 3, title: '딸기, 블루베리' },
+    { id: 6, idx: 4, title: '오렌지, 레몬' },
+    { id: 6, idx: 5, title: '망고, 바나나' },
   ];
 
   return (
     <OutDiv>
       <CardTitle>성별</CardTitle>
       <Card>
-        {sex.map((data: objtype, idx) => {
-          return <SelectCard key={idx} data={data} />;
+        {sex.map((data: objtype, i) => {
+          return (
+            <SelectCard
+              key={i}
+              data={data}
+              page={page}
+              setPage={setPage}
+              select={select}
+              setSelect={setSelect}
+            />
+          );
         })}
       </Card>
     </OutDiv>

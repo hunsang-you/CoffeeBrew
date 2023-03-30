@@ -3,30 +3,40 @@ import tw from 'tailwind-styled-components';
 import SelectCard from './SelectCard';
 
 type objtype = {
+  id: number;
+  idx: number;
   title: string;
   img?: string;
 };
 
 interface PropsType {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
   select: number[];
   setSelect: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const Servey1 = ({ select, setSelect }: PropsType) => {
-  const sex: objtype[] = [{ title: '남자' }, { title: '여자' }];
-  console.log(select);
+const Servey1 = ({ page, setPage, select, setSelect }: PropsType) => {
+  const sex: objtype[] = [
+    { id: 0, idx: 1, title: '남자' },
+    { id: 0, idx: 2, title: '여자' },
+  ];
+
   return (
     <OutDiv>
-      <CardTitle
-        onClick={() => {
-          setSelect([1, 1, 11, 1, 1, 1]);
-        }}
-      >
-        성별
-      </CardTitle>
+      <CardTitle>성별</CardTitle>
       <Card>
-        {sex.map((data: objtype, idx) => {
-          return <SelectCard key={idx} data={data} />;
+        {sex.map((data: objtype, i) => {
+          return (
+            <SelectCard
+              key={i}
+              data={data}
+              page={page}
+              setPage={setPage}
+              select={select}
+              setSelect={setSelect}
+            />
+          );
         })}
       </Card>
     </OutDiv>

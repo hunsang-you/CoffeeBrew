@@ -9,25 +9,43 @@ import photo4 from '../../assets/servey/2/EDIYA.png';
 import photo5 from '../../assets/servey/2/COFFEE.jpg';
 
 type objtype = {
+  id: number;
+  idx: number;
   title: string;
   img?: string;
 };
 
-const Servey4 = () => {
+interface PropsType {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  select: number[];
+  setSelect: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+const Servey4 = ({ page, setPage, select, setSelect }: PropsType) => {
   const reason: objtype[] = [
-    { title: '향' },
-    { title: '산미' },
-    { title: '단맛' },
-    { title: '쓴맛' },
-    { title: '목넘김' },
+    { id: 3, idx: 1, title: '향' },
+    { id: 3, idx: 2, title: '산미' },
+    { id: 3, idx: 3, title: '단맛' },
+    { id: 3, idx: 4, title: '쓴맛' },
+    { id: 3, idx: 5, title: '목넘김' },
   ];
 
   return (
     <OutDiv>
       <CardTitle>위에서 선택한 이유가 무엇인가요?</CardTitle>
       <Card>
-        {reason.map((data: objtype, idx) => {
-          return <SelectCard key={idx} data={data} />;
+        {reason.map((data: objtype, i) => {
+          return (
+            <SelectCard
+              key={i}
+              data={data}
+              page={page}
+              setPage={setPage}
+              select={select}
+              setSelect={setSelect}
+            />
+          );
         })}
       </Card>
     </OutDiv>

@@ -3,25 +3,43 @@ import tw from 'tailwind-styled-components';
 import SelectCard from './SelectCard';
 
 type objtype = {
+  id: number;
+  idx: number;
   title: string;
   img?: string;
 };
 
-const Servey2 = () => {
+interface PropsType {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  select: number[];
+  setSelect: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+const Servey2 = ({ page, setPage, select, setSelect }: PropsType) => {
   const qweqw: objtype[] = [
-    { title: '10대' },
-    { title: '20대' },
-    { title: '30대' },
-    { title: '40대' },
-    { title: '50대' },
+    { id: 1, idx: 1, title: '10대' },
+    { id: 1, idx: 2, title: '20대' },
+    { id: 1, idx: 3, title: '30대' },
+    { id: 1, idx: 4, title: '40대' },
+    { id: 1, idx: 5, title: '50대' },
   ];
 
   return (
     <OutDiv>
       <CardTitle>연령대</CardTitle>
       <Card>
-        {qweqw.map((data: objtype, idx) => {
-          return <SelectCard key={idx} data={data} />;
+        {qweqw.map((data: objtype, i) => {
+          return (
+            <SelectCard
+              key={i}
+              data={data}
+              page={page}
+              setPage={setPage}
+              select={select}
+              setSelect={setSelect}
+            />
+          );
         })}
       </Card>
     </OutDiv>

@@ -1,6 +1,8 @@
 import tw from 'tailwind-styled-components';
 
 type objtype = {
+  id: number;
+  idx: number;
   title: string;
   img?: string;
 };
@@ -8,13 +10,43 @@ type objtype = {
 interface ServeyProps {
   key: number;
   data: objtype;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  select: number[];
+  setSelect: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const SelectCard = (props: ServeyProps) => {
+const SelectCard = ({
+  data,
+  page,
+  setPage,
+  select,
+  setSelect,
+}: ServeyProps) => {
+  const after = () => {
+    if (1 <= page && page < 8) {
+      setPage(page + 1);
+    } else if (page === 8) {
+      console.log(select);
+    }
+  };
+
+  const click = (i: number) => {
+    const copy = [...select];
+    copy[i] = data.idx;
+    setSelect(copy);
+    after();
+    console.log(select);
+  };
+
   return (
-    <OutCard>
-      {props.data.img ? <CardImg src={props.data.img}></CardImg> : null}
-      <CardTitle>{props.data.title}</CardTitle>
+    <OutCard
+      onClick={() => {
+        click(data.id);
+      }}
+    >
+      {data.img ? <CardImg src={data.img}></CardImg> : null}
+      <CardTitle>{data.title}</CardTitle>
     </OutCard>
   );
 };

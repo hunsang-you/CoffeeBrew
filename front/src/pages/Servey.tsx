@@ -17,21 +17,18 @@ interface IsFooterType {
 }
 
 const Survey = ({ setIsFooter }: IsFooterType) => {
-  const [page, setPage] = useState<number>(2);
-  const [select, setSelect] = useState<number[]>([
-    -1, -1, -1, -1, -1, -1, -1, -1,
-  ]);
+  const [page, setPage] = useState<number>(1);
+  const [select, setSelect] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
 
   const before = () => {
     if (1 < page && page <= 8) {
       setPage(page - 1);
     }
   };
-  const after = () => {
-    if (1 <= page && page < 8) {
-      setPage(page + 1);
-    }
-  };
+
+  useEffect(() => {
+    setPage(1);
+  }, []);
 
   useEffect(() => {
     setIsFooter(true);
@@ -46,30 +43,64 @@ const Survey = ({ setIsFooter }: IsFooterType) => {
         >
           이전
         </SerButton>
-        <SerButton
-          onClick={() => {
-            after();
-          }}
-        >
-          다음
-        </SerButton>
+        <SerButton>다음</SerButton>
       </ButDiv>
       {page === 1 ? (
-        <Servey1 select={select} setSelect={setSelect} />
+        <Servey1
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 2 ? (
-        <Servey2 />
+        <Servey2
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 3 ? (
-        <Servey3 />
+        <Servey3
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 4 ? (
-        <Servey4 />
+        <Servey4
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 5 ? (
-        <Servey5 />
+        <Servey5
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 6 ? (
-        <Servey6 />
+        <Servey6
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 7 ? (
-        <Servey7 />
+        <Servey7
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : page === 8 ? (
-        <Servey8 />
+        <Servey8
+          page={page}
+          setPage={setPage}
+          select={select}
+          setSelect={setSelect}
+        />
       ) : null}
     </S.ContentContainer>
   );

@@ -7,23 +7,41 @@ import chocolatecake from '../../assets/servey/3/Chocolate Cake.jpg';
 import walnutpie from '../../assets/servey/3/Walnut Pie.jpg';
 
 type objtype = {
+  id: number;
+  idx: number;
   title: string;
   img?: string;
 };
 
-const Servey6 = () => {
+interface PropsType {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  select: number[];
+  setSelect: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+const Servey6 = ({ page, setPage, select, setSelect }: PropsType) => {
   const reason: objtype[] = [
-    { title: '과일타르트', img: fruittart },
-    { title: '초코케이크', img: chocolatecake },
-    { title: '호두파이', img: walnutpie },
+    { id: 5, idx: 1, title: '과일타르트', img: fruittart },
+    { id: 5, idx: 2, title: '초코케이크', img: chocolatecake },
+    { id: 5, idx: 3, title: '호두파이', img: walnutpie },
   ];
 
   return (
     <OutDiv>
       <CardTitle>어떤 디저트를 좋아하시나요?</CardTitle>
       <Card>
-        {reason.map((data: objtype, idx) => {
-          return <SelectCard key={idx} data={data} />;
+        {reason.map((data: objtype, i) => {
+          return (
+            <SelectCard
+              key={i}
+              data={data}
+              page={page}
+              setPage={setPage}
+              select={select}
+              setSelect={setSelect}
+            />
+          );
         })}
       </Card>
     </OutDiv>
