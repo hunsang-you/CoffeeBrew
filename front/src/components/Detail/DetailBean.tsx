@@ -103,7 +103,8 @@ const DetailBean = (): JSX.Element => {
         })
         .catch((e) => console.log(e));
     };
-  });
+    getDetailBean();
+  }, []);
 
   return (
     <DetailBg>
