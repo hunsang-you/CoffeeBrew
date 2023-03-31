@@ -91,9 +91,7 @@ const Analyze = () => {
         border: 'solid 4px #FD0F0F',
       }}
     >
-      <div style={{ scale: '130%', marginTop: '40px' }}>
-        <Chart />
-      </div>
+      <div style={{ scale: '130%', marginTop: '40px' }}>{/* <Chart /> */}</div>
       <Comment> 유저님의 선호도 분석 입니다</Comment>
       <div style={{ display: 'flex' }}>
         <div>{beanScore()}</div>
