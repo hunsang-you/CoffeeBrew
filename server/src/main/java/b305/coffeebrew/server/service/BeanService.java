@@ -11,7 +11,9 @@ import b305.coffeebrew.server.exception.MyPageHistoryException;
 import b305.coffeebrew.server.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Copy;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,9 +91,16 @@ public class BeanService {
                 .coffeeingNote(coffeeingNote)
                 .build();
     }
-
-    public Page<BeanResDTO> searchBean(String keywords, Pageable pageable) {
-        Page<Bean> beans = beanRepository.findBeansByKeywords(keywords, pageable);
-        return beans.map(BeanResDTO::of);
+    public Page<BeanResDTO> searchBeans(List<String> keywords, Pageable pageable) {
+        if (CollectionUtils.isEmpty(keywords)) {
+            return beanRepository.findAll(pageable).map(BeanResDTO::of);
+        } else {
+            Set<Bean> result = new HashSet<>();
+            for (String keyword : keywords) {
+                String processedKeyword = "%" + keyword.toLowerCase() + "%";
+                result.addAll(beanRepository.findBeansByKeyword(processedKeyword, pageable).getContent());
+            }
+            return new PageImpl<>(new ArrayList<>(result)).map(BeanResDTO::of);
+        }
     }
 }
