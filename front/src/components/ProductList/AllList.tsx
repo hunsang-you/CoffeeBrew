@@ -60,7 +60,7 @@ const AllList = () => {
         .catch((e) => console.log(e));
     };
     getLists();
-  }, [pagination]);
+  }, []);
 
   return (
     <AllListBg>
