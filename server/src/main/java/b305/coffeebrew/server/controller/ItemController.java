@@ -46,16 +46,18 @@ public class ItemController {
                 .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_SEARCH, beanService.searchBeans(keywords, pageable)));
     }
 
-//    @GetMapping("/capsule")
-//    @ApiOperation(value = "캡슐 검색 페이지", notes = "캡슐 검색 페이지를 출력한다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 404, message = "페이지 오류"),
-//            @ApiResponse(code = 500, message = "서버 오류"),
-//    })
-//    public ResponseEntity<ResponseDTO> searchCapsule(@PathVariable("capsuleId") long capsuleId) {
-//        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_SEARCH, beanService.searchCapsule(capsuleId)));
-//    }
+    @GetMapping("/capsule")
+    @ApiOperation(value = "캡슐 검색 페이지", notes = "캡슐 검색 페이지를 출력한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "페이지 오류"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> searchCapsule(
+            @RequestParam(value = "keywords", required = false) List<String> keywords,
+            @PageableDefault(size = 9, page = 1) Pageable pageable) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_SEARCH, capsuleService.searchCapsules(keywords, pageable)));
+    }
 
     @GetMapping("/bean/{beanId}")
     @ApiOperation(value = "원두 상세 페이지", notes = "원두의 상세한 정보를 출력한다.")
