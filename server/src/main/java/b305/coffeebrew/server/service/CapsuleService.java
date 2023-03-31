@@ -2,7 +2,9 @@ package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.bean.BeanResDTO;
 import b305.coffeebrew.server.dto.capsule.CapsuleDetailPageResDTO;
+import b305.coffeebrew.server.dto.capsule.CapsuleDetailResDTO;
 import b305.coffeebrew.server.dto.capsule.CapsuleResDTO;
+import b305.coffeebrew.server.dto.capsule.CapsuleScoreResDTO;
 import b305.coffeebrew.server.entity.*;
 import b305.coffeebrew.server.exception.CapsuleNotFoundException;
 import b305.coffeebrew.server.exception.ErrorCode;
@@ -47,42 +49,14 @@ public class CapsuleService {
             throw new CapsuleNotFoundException(ErrorCode.CAPSULE_NOT_FOUND);
         }
 
-        String nameKo = capsule.getNameKo();
-        String nameEn = capsule.getNameEn();
-        String summary = capsule.getSummary();
-        String thumbnail = capsule.getThumbnail();
-        int userGrade = capsule.getUserGrade();
-
-        String description = capsuleDetail.getDescription();
-        String company = capsuleDetail.getCompany();
-        String origin = capsuleDetail.getOrigin();
-        String machineType = capsuleDetail.getMachineType();
-
-        int balance = capsuleScore.getBalance();
-        int flavor = capsuleScore.getFlavor();
-        int acidity = capsuleScore.getAcidity();
-        int bitterness = capsuleScore.getBitterness();
-        int body = capsuleScore.getBody();
-        int roasting = capsuleScore.getRoasting();
-        String coffeeingNote = capsuleScore.getCoffeeingNote();
+        CapsuleResDTO capsuleResDTO = CapsuleResDTO.of(capsule);
+        CapsuleDetailResDTO capsuleDetailResDTO = CapsuleDetailResDTO.of(capsuleDetail);
+        CapsuleScoreResDTO capsuleScoreResDTO = CapsuleScoreResDTO.of(capsuleScore);
 
         return CapsuleDetailPageResDTO.builder()
-                .nameKo(nameKo)
-                .nameEn(nameEn)
-                .summary(summary)
-                .thumbnail(thumbnail)
-                .userGrade(userGrade)
-                .description(description)
-                .company(company)
-                .origin(origin)
-                .machineType(machineType)
-                .balance(balance)
-                .flavor(flavor)
-                .acidity(acidity)
-                .bitterness(bitterness)
-                .body(body)
-                .roasting(roasting)
-                .coffeeingNote(coffeeingNote)
+                .capsule(capsuleResDTO)
+                .capsuleDetail(capsuleDetailResDTO)
+                .capsuleScore(capsuleScoreResDTO)
                 .build();
     }
 
