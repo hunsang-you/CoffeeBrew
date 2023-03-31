@@ -9,8 +9,8 @@ import { exit } from 'process';
 
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
-const FilterOn = tw.div`w-20 h-10 rounded-full border-2 text-xl text-center leading-9  bg-black text-white ml-4`;
-const FilterOff = tw.div`w-20 h-10 rounded-full border-2 bg-gray-300 text-xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
+const FilterOn = tw.div`w-24 h-10 rounded-full border-2 text-2xl text-center leading-9  bg-black text-white ml-4`;
+const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
 
 const ReviewList = tw.div`w-1000 mx-auto`;
 const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
@@ -21,17 +21,26 @@ const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
 // 리뷰내 평가도 (2줄)
 const ReviewStandard = tw.div`justify-center mx-auto mt-6`;
 const ReviewStandardTop = tw.div`w-720 text-2xl mb-2 flex justify-center`;
-const ReviewStandardBottom = tw.div`w-720 text-2xl mt-2 mb-2 flex justify-center`;
+// const ReviewStandardBottom = tw.div`w-720 text-2xl mt-2 mb-2 flex justify-center`;
 const Score = tw.img`w-8`;
 const ScoreTitle = tw.div`text-xl flex justify-end  drop-shadow-2xl`;
 // 리뷰내용
 const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
-const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
-const ReviewContent = tw.div`text-left ml-4 mt-2 h-fit mb-4`;
-const ReviewCreated = tw.p`text-sm ml-10`;
+// const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
+const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto`;
+const ReviewCreated = tw.p`text-sm font-bold`;
 const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
 
 const ReviewLists = () => {
+  interface Review {
+    id: number;
+    score: {
+      [key: string]: number;
+    };
+    description: string;
+    created: string;
+  }
+
   // 리뷰 최신/추천 순 조회버튼
   const [isActive, setIsActive] = useState(true);
   const activeBtn = () => {
@@ -42,7 +51,6 @@ const ReviewLists = () => {
   const handleReviewLike = () => {
     setReviewLike(!reviewLike);
   };
-
   const RecommendRating = {
     향: 5,
     산미: 3.5,
@@ -117,53 +125,38 @@ const ReviewLists = () => {
           )}
         </ReviewFilter>
 
-        <ReviewDelete>삭제</ReviewDelete>
-        <ReviewItem>
-          <ReviewName>
-            {reviewLike ? (
-              <AiFillHeart
-                size={30}
-                onClick={handleReviewLike}
-                style={{ color: 'red', margin: 'auto' }}
-              />
-            ) : (
-              <AiOutlineHeart
-                size={30}
-                onClick={handleReviewLike}
-                style={{ color: 'gray', margin: 'auto' }}
-              />
-            )}
-            <ReviewImg src={bean} />
-            원두이름원두이름원두이름원두이름원두이름원두이름
-          </ReviewName>
-          <ReviewStandard>
-            <ReviewStandardTop>
-              <div>{beanScore()}</div>
-            </ReviewStandardTop>
+        <div>
+          <ReviewDelete>삭제</ReviewDelete>
+          <ReviewItem>
+            <ReviewName>
+              <ReviewCreated> 2023-03-23 </ReviewCreated>
+              {reviewLike ? (
+                <AiFillHeart
+                  size={30}
+                  onClick={handleReviewLike}
+                  style={{ color: 'red', margin: 'auto' }}
+                />
+              ) : (
+                <AiOutlineHeart
+                  size={30}
+                  onClick={handleReviewLike}
+                  style={{ color: 'gray', margin: 'auto' }}
+                />
+              )}
+              <ReviewImg src={bean} />
+              유저프로필과이름ㅇㅇㅇ
+            </ReviewName>
+            <ReviewStandard>
+              <ReviewStandardTop>
+                <div>{beanScore()}</div>
+              </ReviewStandardTop>
 
-            <ReviewArticle>
-              <ReviewTitle>
-                리뷰제목리뷰제목
-                <ReviewCreated> 2023-03-23 </ReviewCreated>
-              </ReviewTitle>
-              <ReviewContent>
-                리뷰내용 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운
-                향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛,
-                쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-                감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-                단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의
-                조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 단맛, 쌉쌀한
-                맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운
-                향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛,
-                단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의
-                조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과
-                과일의 단맛,감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운
-                향과 과일의 단맛,감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-                감미로운 향과
-              </ReviewContent>
-            </ReviewArticle>
-          </ReviewStandard>
-        </ReviewItem>
+              <ReviewArticle>
+                <ReviewContent>description</ReviewContent>
+              </ReviewArticle>
+            </ReviewStandard>
+          </ReviewItem>
+        </div>
         <MoreBtn>리뷰 더보기 ▼</MoreBtn>
         {/* <MoreBtn style={{ margin: '24px' }}>리뷰 접기▲</MoreBtn> */}
       </ReviewList>
