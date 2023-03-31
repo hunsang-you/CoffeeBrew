@@ -20,6 +20,7 @@ module.exports = {
         nameColor: '#9A6533',
         pinkColor: '#FF8383',
         mainOrige: '#FF9900',
+        nameTag: '#F3F3F3',
       },
       textColor: {
         mainColorBrown: '#4A2919',

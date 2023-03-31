@@ -17,7 +17,7 @@ const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
 // SideBar(맨위로이동, 최근조회)
 const SideBar = tw.div`
-  border-2 border-brownBorder ml-auto top-100 right-40 bottom-60 fixed`;
+  border-2 border-brownBorder ml-auto top-100 right-60 bottom-60 fixed`;
 // 해당 항목 이동
 const MoveTop = tw.div` h-20 border-8 border-gray-500`;
 const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
@@ -116,9 +116,6 @@ const DetailBean = (): JSX.Element => {
 
       <Line></Line>
 
-      {/* 최근조회  */}
-      <div style={{ fontSize: '20px' }}>최근 조회</div>
-      <RecentSearch />
       <MoreBtn onClick={() => navigate(-1)}> 돌아가기 </MoreBtn>
     </DetailBg>
   );

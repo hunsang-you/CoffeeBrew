@@ -1,14 +1,13 @@
 import tw from 'tailwind-styled-components';
-import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import axios from 'axios';
 
 const CreateReviewBtn = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mx-auto text-xl`;
 const CreateReviewDiv = tw.div`w-1040 h-fit flex-col mx-auto drop-shadow-2xl`;
-const SliderDiv = tw.div`flex justify-center my-2 mx-2 drop-shadow-md`;
+const SliderDiv = tw.div`flex justify-center mx-2 drop-shadow-md`;
 
 const Submit = tw.div`w-40 h-10 rounded-full bg-red-200 my-6 mx-auto`;
 
@@ -17,17 +16,9 @@ const ReviewCreate = () => {
   const handleClickOpen = () => {
     setOpenCreate(!openCreate);
     if (openCreate === false) {
-      setReviewTitle('');
       setReviewContent('');
       setScoreValue([3, 3, 3, 3, 3]);
     }
-  };
-
-  const [reviewTitle, setReviewTitle] = useState('');
-  const changeTitle = (e: any) => {
-    setReviewTitle(e.target.value);
-
-    console.log(reviewTitle);
   };
 
   const [reviewContent, setReviewContent] = useState('');
@@ -44,9 +35,13 @@ const ReviewCreate = () => {
       return (
         <SliderDiv
           key={i}
-          style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '24px' }}
+          style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            marginTop: '16px',
+          }}
         >
-          <div style={{ marginRight: '8px' }}>{item}</div>
+          <div style={{ marginLeft: 'auto', marginRight: '8px' }}>{item}</div>
           <Box width={150} key={i}>
             <Slider
               key={i}
@@ -65,7 +60,7 @@ const ReviewCreate = () => {
               }}
             />
           </Box>
-          <div style={{ marginLeft: '20px' }}>{scoreValue[i]}</div>
+          <div style={{ marginLeft: 'auto' }}>{scoreValue[i]}</div>
         </SliderDiv>
       );
     });
@@ -104,44 +99,11 @@ const ReviewCreate = () => {
                   width: '280px',
                 }}
               >
-                <div style={{ marginTop: '50%' }}>{standardItem()}</div>
+                <div style={{ marginTop: '20%' }}>{standardItem()}</div>
               </div>
             </div>
 
             <div>
-              <div
-                style={{
-                  flexDirection: 'row',
-                  maxWidth: '400',
-                  marginLeft: '12px',
-                  marginTop: '24px',
-                }}
-              >
-                <Box
-                  component="form"
-                  sx={{
-                    '& > :not(style)': { m: 2, width: '600px' },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <TextField
-                    id="outlined-basic"
-                    variant="outlined"
-                    InputProps={{
-                      style: {
-                        border: '6px solid #BCA3A3',
-                        borderRadius: '40px',
-                        boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.35)',
-                        fontSize: '20px',
-                        padding: '4px',
-                      },
-                    }}
-                    placeholder="작성할 제목을 입력하세요"
-                    onChange={changeTitle}
-                  />
-                </Box>
-              </div>
               <Box
                 component="form"
                 sx={{
@@ -152,7 +114,7 @@ const ReviewCreate = () => {
               >
                 <TextareaAutosize
                   aria-label="empty textarea"
-                  placeholder="리뷰를 작성하세요"
+                  placeholder="리뷰를 작성하세요. 입력하지 않아도 됩니다"
                   style={{
                     width: 580,
                     minHeight: 320,
@@ -178,8 +140,6 @@ const ReviewCreate = () => {
             <Submit
               onClick={() =>
                 console.log(
-                  'reviewTitle ::',
-                  reviewTitle,
                   'reviewContent ::',
                   reviewContent,
                   'score',
