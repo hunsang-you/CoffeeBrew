@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import Chart from '../Detail/Chart/Apexchart';
+import Chart from '../Detail/Chart/apexchart';
 
 import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';

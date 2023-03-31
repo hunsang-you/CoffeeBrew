@@ -2,7 +2,7 @@ import tw from 'tailwind-styled-components';
 import { useState } from 'react';
 import bean from '../../assets/bean.png';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import Chart from './Chart/Apexchart';
+import Chart from './Chart/apexchart';
 
 // 최상단 좌측
 const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
