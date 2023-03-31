@@ -11,7 +11,7 @@ interface PropsTypes {
 
 const ListDiv = tw.div`text-center my-10`;
 
-const ProductList = tw.div`flex justify-between mx-20 mb-4 `;
+const ProductList = tw.div`flex justify-between mx-20 flex-wrap `;
 const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl mb-8 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 `;
 const ProductItemT1 = tw(ProductItemT)`bg-brownBorder rounded-b-2xl`;
 const ProductItemImg = tw.img`w-32 h-48  mx-auto mt-4  `;
