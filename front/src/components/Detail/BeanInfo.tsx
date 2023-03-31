@@ -3,7 +3,11 @@ import { useState } from 'react';
 import bean from '../../assets/bean.png';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Chart from './Chart/apexchart';
+import { detailType } from './DetailBean';
 
+interface PropsType {
+  detailBean: detailType | null;
+}
 // 최상단 좌측
 const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
 const BeanImg1 = tw.img`object-cover mt-10 drop-shadow-xl`;
@@ -19,7 +23,7 @@ const BeanChart = tw.div`mt-5 mx-auto`;
 const DescRight = tw.div`w-1/2 my-6 mr-6 ml-1 bg-slate-300`;
 const Description = tw.div`h-80 mx-auto mt-4 overflow-y-auto`;
 
-const BeanInfo = () => {
+const BeanInfo = ({ detailBean }: PropsType) => {
   const [isLike, setIsLike] = useState(false);
   const handleLike = () => {
     setIsLike(!isLike);
@@ -27,6 +31,7 @@ const BeanInfo = () => {
   return (
     <BeanTop1 id="Top">
       <BeanImgBox>
+        {/* 커피이미지 컴포넌트 */}
         <BeanImg1 src={bean} alt="img" />
         <HeartImgLike>
           {isLike ? (
@@ -47,23 +52,16 @@ const BeanInfo = () => {
       {/* 최상단 우측(정보, 차트) */}
       <BeanDesc>
         <DescLeft>
-          <BeanName> 케냐 AA </BeanName>
-          <BeanCountry> 원산지 : 케냐</BeanCountry>
+          <BeanName> {detailBean?.nameKo} </BeanName>
+          <BeanCountry> 원산지 : {detailBean?.origin}</BeanCountry>
 
           <BeanChart>
-            <Chart />
+            <Chart detailBean={detailBean} />
             {/* <RadarChartExample /> */}
           </BeanChart>
         </DescLeft>
         <DescRight>
-          <Description>
-            감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-            단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-            감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-            단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화
-            감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의
-            단맛, 쌉쌀한 맛의 조화 감미로운 향과 과일의 단맛, 쌉쌀한 맛의 조화 -
-          </Description>
+          <Description>{detailBean?.description}</Description>
         </DescRight>
       </BeanDesc>
     </BeanTop1>

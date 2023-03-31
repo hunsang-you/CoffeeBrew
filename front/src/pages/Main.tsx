@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+
 import tw from 'tailwind-styled-components';
 import { Page1, Page2, Page3, Dots } from '../components/main';
 import Footer from '../components/navbarandfoot/Footer';

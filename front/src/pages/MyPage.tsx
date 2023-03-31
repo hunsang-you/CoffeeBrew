@@ -1,6 +1,7 @@
 import * as S from '../components/useageStyle';
+import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
-import MyProfile from '../components/Mypage/MyPage';
+import MyProfile from '../components/Mypage/MyProfile';
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +13,9 @@ const MyPage = ({ setIsFooter }: IsFooterType) => {
   }, [setIsFooter]);
   return (
     <S.ContentContainer>
-      <MyProfile />
+      <Routes>
+        <Route path="" element={<MyProfile />} />
+      </Routes>
     </S.ContentContainer>
   );
 };
