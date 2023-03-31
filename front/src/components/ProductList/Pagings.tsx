@@ -20,6 +20,7 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
         })
         .catch((e) => console.log(e));
     };
+    getPages();
     console.log(page);
   };
   return (
