@@ -2,6 +2,12 @@ import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import SelectCard from './SelectCard';
 
+import apple from '../../assets/servey/7/apple.jpg';
+import peachcherry from '../../assets/servey/7/peachcherry.jpg';
+import berry from '../../assets/servey/7/berry.jpg';
+import orange from '../../assets/servey/7/orange.jpg';
+import bananamango from '../../assets/servey/7/bananamango.jpg';
+
 type objtype = {
   id: number;
   idx: number;
@@ -18,16 +24,16 @@ interface PropsType {
 
 const Servey7 = ({ page, setPage, select, setSelect }: PropsType) => {
   const sex: objtype[] = [
-    { id: 6, idx: 1, title: '사과, 배' },
-    { id: 6, idx: 2, title: '체리, 복숭아' },
-    { id: 6, idx: 3, title: '딸기, 블루베리' },
-    { id: 6, idx: 4, title: '오렌지, 레몬' },
-    { id: 6, idx: 5, title: '망고, 바나나' },
+    { id: 6, idx: 1, title: '사과, 배', img: apple },
+    { id: 6, idx: 2, title: '체리, 복숭아', img: peachcherry },
+    { id: 6, idx: 3, title: '딸기, 블루베리', img: berry },
+    { id: 6, idx: 4, title: '오렌지, 레몬', img: orange },
+    { id: 6, idx: 5, title: '바나나, 망고', img: bananamango },
   ];
 
   return (
     <OutDiv>
-      <CardTitle>성별</CardTitle>
+      <CardTitle>좋아하는 과일이 무엇인가요?</CardTitle>
       <Card>
         {sex.map((data: objtype, i) => {
           return (

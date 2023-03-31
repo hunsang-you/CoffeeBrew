@@ -2,10 +2,6 @@ import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import SelectCard from './SelectCard';
 
-import fruittart from '../../assets/servey/3/Fruit Tart.jpg';
-import chocolatecake from '../../assets/servey/3/Chocolate Cake.jpg';
-import walnutpie from '../../assets/servey/3/Walnut Pie.jpg';
-
 type objtype = {
   id: number;
   idx: number;
