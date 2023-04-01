@@ -39,7 +39,7 @@ public class ItemController {
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> searchBeans(
+    public ResponseEntity<ResponseDTO> findBeans(
             @RequestParam(value = "keywords", required = false) List<String> keywords,
             @PageableDefault(size = 9, page = 1) Pageable pageable) {
         return ResponseEntity.ok()
@@ -53,7 +53,7 @@ public class ItemController {
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> searchCapsule(
+    public ResponseEntity<ResponseDTO> findCapsule(
             @RequestParam(value = "keywords", required = false) List<String> keywords,
             @PageableDefault(size = 9, page = 1) Pageable pageable) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_SEARCH, capsuleService.searchCapsules(keywords, pageable)));
@@ -66,7 +66,7 @@ public class ItemController {
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> getBeanDetail(@PathVariable("beanId") long beanId) {
+    public ResponseEntity<ResponseDTO> readBeanDetail(@PathVariable("beanId") long beanId) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_INQUIRE, beanService.getBeanDetail(beanId)));
     }
 
@@ -77,7 +77,7 @@ public class ItemController {
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> getCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
+    public ResponseEntity<ResponseDTO> readCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_INQUIRE, capsuleService.getCapsuleDetail(capsuleId)));
     }
 }
