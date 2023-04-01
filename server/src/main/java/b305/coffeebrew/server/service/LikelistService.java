@@ -1,9 +1,6 @@
 package b305.coffeebrew.server.service;
 
-import b305.coffeebrew.server.config.utils.Msg;
 import b305.coffeebrew.server.dto.likelist.LikelistResDTO;
-import b305.coffeebrew.server.entity.Bean;
-import b305.coffeebrew.server.entity.Capsule;
 import b305.coffeebrew.server.entity.Likelist;
 import b305.coffeebrew.server.entity.Member;
 import b305.coffeebrew.server.repository.BeanRepository;
@@ -14,9 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -38,6 +34,7 @@ public class LikelistService {
         Likelist likelist = likelistRepository.findByItemTypeAndMemberAndItemIdx(itemType, member, itemIdx);
         if (likelist != null) {
             likelist.setExpired(!likelist.isExpired());
+            likelist.setUpdatedDate(LocalDateTime.now()); // 업데이트된 시간 설정
             return LikelistResDTO.of(likelist);
         } else {
             Likelist newLikelist = new Likelist();
@@ -45,13 +42,14 @@ public class LikelistService {
             newLikelist.setMember(member);
             newLikelist.setItemIdx(itemIdx);
             newLikelist.setExpired(false);
+            newLikelist.setCreatedDate(LocalDateTime.now()); // 생성된 시간 설정
+            newLikelist.setUpdatedDate(LocalDateTime.now());
             Likelist savedLikelist = likelistRepository.save(newLikelist);
             return LikelistResDTO.of(savedLikelist);
         }
     }
 
-    public List<Likelist> getLikelist(String itemType, Long memberIdx, boolean expired) {
-        Member member = Member.builder().idx(memberIdx).build();
-        return likelistRepository.findByItemTypeAndMemberAndExpired(itemType, member, expired);
+    public List<Likelist> getLikelist(String itemType, Long memberIdx) {
+        return likelistRepository.findTop10ByItemTypeAndMemberIdxOrderByUpdatedDateDesc(itemType, memberIdx);
     }
 }

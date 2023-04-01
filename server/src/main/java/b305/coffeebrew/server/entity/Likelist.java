@@ -3,6 +3,7 @@ package b305.coffeebrew.server.entity;
 import b305.coffeebrew.server.config.utils.BaseAtTime;
 import b305.coffeebrew.server.config.utils.BooleanToYNConverter;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 

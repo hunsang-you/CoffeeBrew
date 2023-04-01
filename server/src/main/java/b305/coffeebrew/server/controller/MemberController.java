@@ -21,6 +21,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -70,14 +71,14 @@ public class MemberController {
     }
 
     @GetMapping("/like/toggle/{itemType}/{itemId}")
-    public ResponseEntity<LikelistResDTO> toggleLikelist(@PathVariable String itemType, @PathVariable Long itemId,
+    public ResponseEntity<ResponseDTO> toggleLikelist(@PathVariable String itemType, @PathVariable Long itemId,
                                                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(likelistService.toggleLikelist(itemType, itemId, principalDetails.getMember().getIdx()));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_LIKE_TOGGLE, likelistService.toggleLikelist(itemType, itemId, principalDetails.getMember().getIdx())));
     }
 
     @GetMapping("/like/mylist")
     public ResponseEntity<ResponseDTO> getLikelist(@RequestParam String itemType, @RequestParam(defaultValue = "false") boolean expired, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_LIKELIST_GETUSER, likelistService.getLikelist(itemType, principalDetails.getMember().getIdx(), expired).stream().map(LikelistResDTO::of).collect(Collectors.toList())));
+        return ResponseEntity.ok(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_LIKE_MYLIST, likelistService.getLikelist(itemType, principalDetails.getMember().getIdx()).stream().map(LikelistResDTO::of).collect(Collectors.toList())));
     }
 
     /**
