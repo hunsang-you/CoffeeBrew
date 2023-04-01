@@ -45,7 +45,6 @@ public class BeanDetail extends BaseAtTime implements Serializable {
     @NotBlank
     private String processing; // 가공
 
-    @NotBlank
     @Convert(converter = BooleanToYNConverter.class)
     private boolean decaffeination; // 원두 가공
 

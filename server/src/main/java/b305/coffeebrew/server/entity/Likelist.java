@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -33,12 +34,11 @@ public class Likelist extends BaseAtTime implements Serializable {
     @Column(name = "item_type")
     private String itemType; // none / bean / capsule
 
-    @NotBlank
+    @NotNull
     @Column(name = "item_idx")
     private Long itemIdx;
 
     @Convert(converter = BooleanToYNConverter.class)
-    @NotBlank
     private boolean expired;
 
     @Override

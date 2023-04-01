@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -34,11 +35,10 @@ public class VisitHistory extends BaseAtTime implements Serializable {
     @NotBlank
     private String item_type;
 
-    @NotBlank
+    @NotNull
     private Long item_idx;
 
     @Convert(converter = BooleanToYNConverter.class)
-    @NotBlank
     private boolean expired;
 
     @Override

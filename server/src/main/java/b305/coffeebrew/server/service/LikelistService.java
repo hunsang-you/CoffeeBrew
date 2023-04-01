@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.config.utils.Msg;
+import b305.coffeebrew.server.dto.likelist.LikelistResDTO;
 import b305.coffeebrew.server.entity.Bean;
 import b305.coffeebrew.server.entity.Capsule;
 import b305.coffeebrew.server.entity.Likelist;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,48 +31,22 @@ public class LikelistService {
     private final CapsuleRepository capsuleRepository;
 
     @Transactional
-    public Likelist toggleLikelist(String itemType, Long itemId, Long memberIdx) {
-        Member member = Member.builder().idx(memberIdx).build();
+    public LikelistResDTO toggleLikelist(String itemType, Long itemIdx, Long memberIdx) {
+        Member member = new Member();
+        member.setIdx(memberIdx);
 
-        // Bean의 경우
-        if (itemType.equals("bean")) {
-            Bean bean = beanRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException(Msg.FAIL_BEAN_FOUND));
-            List<Likelist> likelists = likelistRepository.findByItemTypeAndMemberAndItemIdxAndExpired(itemType, member, itemId, false);
-
-            if (likelists.isEmpty()) {
-                return likelistRepository.save(Likelist.builder()
-                        .member(member)
-                        .itemType(itemType)
-                        .itemIdx(itemId)
-                        .expired(false)
-                        .build());
-            } else {
-                Likelist likelist = likelists.get(0);
-                likelist.setExpired(!likelist.isExpired());
-                return likelist;
-            }
-        }
-        // Capsule의 경우
-        else if (itemType.equals("capsule")) {
-            Capsule capsule = capsuleRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException(Msg.FAIL_CAPSULE_FOUND));
-            List<Likelist> likelists = likelistRepository.findByItemTypeAndMemberAndItemIdxAndExpired(itemType, member, itemId, false);
-
-            if (likelists.isEmpty()) {
-                return likelistRepository.save(Likelist.builder()
-                        .member(member)
-                        .itemType(itemType)
-                        .itemIdx(itemId)
-                        .expired(false)
-                        .build());
-            } else {
-                Likelist likelist = likelists.get(0);
-                likelist.setExpired(!likelist.isExpired());
-                return likelist;
-            }
-        }
-        // itemType이 bean도 아니고 capsule도 아닌 경우
-        else {
-            throw new IllegalArgumentException(Msg.INVALID_ITEM_TYPE);
+        Likelist likelist = likelistRepository.findByItemTypeAndMemberAndItemIdx(itemType, member, itemIdx);
+        if (likelist != null) {
+            likelist.setExpired(!likelist.isExpired());
+            return LikelistResDTO.of(likelist);
+        } else {
+            Likelist newLikelist = new Likelist();
+            newLikelist.setItemType(itemType);
+            newLikelist.setMember(member);
+            newLikelist.setItemIdx(itemIdx);
+            newLikelist.setExpired(false);
+            Likelist savedLikelist = likelistRepository.save(newLikelist);
+            return LikelistResDTO.of(savedLikelist);
         }
     }
 
