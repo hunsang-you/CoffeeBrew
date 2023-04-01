@@ -1,6 +1,8 @@
 package b305.coffeebrew.server.repository;
 
 import b305.coffeebrew.server.entity.Capsule;
+import b305.coffeebrew.server.entity.Member;
+import b305.coffeebrew.server.entity.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
