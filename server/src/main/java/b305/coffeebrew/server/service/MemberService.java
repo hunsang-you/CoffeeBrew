@@ -31,8 +31,6 @@ public class MemberService {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final DecodeEncodeHandler decodeEncodeHandler;
     private final MemberRepository memberRepository;
-    private final ReviewRepository reviewRepository;
-    private final LikelistRepository likelistRepository;
 
     /**
      * 회원 정보 수정
@@ -73,36 +71,6 @@ public class MemberService {
         return member.getIdx();
     }
 
-    /**
-     * 사용자 리뷰 목록 조회
-     */
-    @Transactional
-    public Page<Review> readReview(long memberIdx, Pageable pageable) throws RuntimeException{
-        Member member = memberRepository.findById(memberIdx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        Page<Review> reviewPage = reviewRepository.findByMemberIdx(member, pageable);
-        return reviewPage;
-    }
-
-    /**
-     * 사용자 리뷰 목록 조회
-     */
-    @Transactional
-    public Page<Review> readLikeCapsule(long memberIdx, Pageable pageable) throws RuntimeException{
-        Member member = memberRepository.findById(memberIdx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        Page<Review> reviewPage = reviewRepository.findByMemberIdx(member, pageable);
-        return reviewPage;
-    }
-
-    /**
-     * 사용자 선호 원두 또는 캡슐 조회
-     */
-    @Transactional
-    public Page<Likelist> readMyPageLike(long memberIdx, String itemType, Pageable pageable) throws RuntimeException{
-        Member member = memberRepository.findById(memberIdx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        Page<Likelist> likeList = likelistRepository.findByMemberIdxAndItemType(member, itemType, pageable);
-        log.info("likeList = {}", likeList);
-        return likeList;
-    }
 
 //    @Transactional
 //    public MemPageResDTO readMyPage(Long idx) {

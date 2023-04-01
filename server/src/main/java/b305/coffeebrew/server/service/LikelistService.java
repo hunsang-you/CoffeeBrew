@@ -8,6 +8,8 @@ import b305.coffeebrew.server.repository.CapsuleRepository;
 import b305.coffeebrew.server.repository.LikelistRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,5 +53,18 @@ public class LikelistService {
 
     public List<Likelist> getLikelist(String itemType, Long memberIdx) {
         return likelistRepository.findTop10ByItemTypeAndMemberIdxOrderByUpdatedDateDesc(itemType, memberIdx);
+    }
+
+
+    /**
+     * 사용자 선호 원두 또는 캡슐 조회
+     */
+    @Transactional
+    public Page<Likelist> readMyPageLike(long memberIdx, String itemType, Pageable pageable) throws RuntimeException{
+        Member member = new Member();
+        member.setIdx(memberIdx);
+        Page<Likelist> likeList = likelistRepository.findByMemberAndItemType(member, itemType, pageable);
+        log.info("likeList = {}", likeList);
+        return likeList;
     }
 }

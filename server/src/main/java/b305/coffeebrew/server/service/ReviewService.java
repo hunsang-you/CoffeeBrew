@@ -11,6 +11,8 @@ import b305.coffeebrew.server.repository.MemberRepository;
 import b305.coffeebrew.server.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -54,5 +56,16 @@ public class ReviewService {
         review.setExpired(true);
         reviewRepository.save(review);
         return review.getIdx();
+    }
+
+    /**
+     * 사용자 리뷰 목록 조회
+     */
+    @Transactional
+    public Page<Review> readReview(long memberIdx, Pageable pageable) throws RuntimeException {
+        Member member = new Member();
+        member.setIdx(memberIdx);
+        Page<Review> reviewPage = reviewRepository.findByMemberIdx(member, pageable);
+        return reviewPage;
     }
 }

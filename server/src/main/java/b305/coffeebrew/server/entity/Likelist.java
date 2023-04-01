@@ -29,7 +29,7 @@ public class Likelist extends BaseAtTime implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
-    private Member memberIdx;
+    private Member member;
 
     @NotBlank
     @Column(name = "item_type")

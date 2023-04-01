@@ -9,6 +9,7 @@ import b305.coffeebrew.server.dto.member.mod;
 import b305.coffeebrew.server.exception.ErrorCode;
 import b305.coffeebrew.server.service.LikelistService;
 import b305.coffeebrew.server.service.MemberService;
+import b305.coffeebrew.server.service.ReviewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -37,6 +38,8 @@ public class MemberController {
 
     private final MemberService memberService;
     private final LikelistService likelistService;
+
+    private final ReviewService reviewService;
 
     /**
      * 회원 정보 수정
@@ -97,7 +100,7 @@ public class MemberController {
     })
     @GetMapping("/review")
     public ResponseEntity<ResponseDTO> readMyPageReview(@AuthenticationPrincipal PrincipalDetails principalDetails,  @PageableDefault(size = 4, page = 1) Pageable pageable) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_REVIEW, memberService.readReview(principalDetails.getMember().getIdx(), pageable)));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_REVIEW, reviewService.readReview(principalDetails.getMember().getIdx(), pageable)));
     }
 
 
@@ -111,6 +114,6 @@ public class MemberController {
     })
     @GetMapping("/like/{itemType}")
     public ResponseEntity<ResponseDTO> readMyPageLike(@PathVariable String itemType, @AuthenticationPrincipal PrincipalDetails principalDetails,  @PageableDefault(size = 9, page = 1) Pageable pageable) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_LIKE, memberService.readMyPageLike(principalDetails.getMember().getIdx(), itemType, pageable)));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_LIKE, likelistService.readMyPageLike(principalDetails.getMember().getIdx(), itemType, pageable)));
     }
 }
