@@ -86,7 +86,7 @@ public class MemberController {
     }
 
     @GetMapping("/like/mylist")
-    public ResponseEntity<ResponseDTO> getLikelist(@RequestParam String itemType, @RequestParam(defaultValue = "false") boolean expired, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<ResponseDTO> readLikelist(@RequestParam String itemType, @RequestParam(defaultValue = "false") boolean expired, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_LIKE_MYLIST, likelistService.getLikelist(itemType, principalDetails.getMember().getIdx()).stream().map(LikelistResDTO::of).collect(Collectors.toList())));
     }
 
