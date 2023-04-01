@@ -117,6 +117,30 @@ async def getUserRecom(userId: Union[int, None] = None):
         return result
 
 
+@app.get(URI_PREFIX + "/user/{userId}/review")
+async def getUserRecom(userId: Union[int, None] = None):
+    print("user_id:{}, type:{}".format(userId, type(userId)))
+
+    review_read = pd.read_csv(
+        path.join(DIR_PATH, "sql_dummy", "sql_review.csv"),
+        low_memory=False,
+        encoding="cp949",
+    )
+    review_recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", "bean_cbf_by_review_recom.csv"),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = user_cbcf_recom.get_recom_by_user(
+        1, review_read, review_recom_read, "bean"
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
+
+
 # 스케줄러에서 추천 데이터 최신화를 요청할 때 호출
 @app.get(URI_PREFIX + "/update")
 async def updateRecom():
