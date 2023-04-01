@@ -41,13 +41,18 @@ public class DecodeEncodeHandler {
 		log.info(METHOD_NAME + "- emailValid() ...");
 		try {
 			Optional<Member> member = memberRepository.findByMemberEmail(memberId);
-			if (member != null) {
-				log.info("Memeber Validate - Success");
-				if (null != member.get().getMemberEmail()) {
+			if (member.isPresent()) {
+				log.info("Member Validate - Success");
+				Member m = member.get();
+				if (m.getMemberEmail() != null) {
 					log.info("Member memberId Validate - Success");
 					return true;
-				} else log.warn("Member memberId Validate - Fail");
-			} else log.warn("Member Validate - Fail");
+				} else {
+					log.warn("Member memberId Validate - Fail");
+				}
+			} else {
+				log.warn("Member Validate - Fail");
+			}
 		} catch (Exception e) {
 			log.error("SERVER ERROR " + METHOD_NAME, e);
 		}

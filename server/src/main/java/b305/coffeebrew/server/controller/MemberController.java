@@ -3,9 +3,11 @@ package b305.coffeebrew.server.controller;
 import b305.coffeebrew.server.config.security.auth.PrincipalDetails;
 import b305.coffeebrew.server.config.utils.Msg;
 import b305.coffeebrew.server.config.utils.ResponseDTO;
+import b305.coffeebrew.server.dto.likelist.LikelistResDTO;
 import b305.coffeebrew.server.dto.member.SignModReqDTO;
 import b305.coffeebrew.server.dto.member.mod;
 import b305.coffeebrew.server.exception.ErrorCode;
+import b305.coffeebrew.server.service.LikelistService;
 import b305.coffeebrew.server.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +21,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/member")
@@ -29,6 +34,7 @@ public class MemberController {
     private static final String METHOD_NAME = MemberController.class.getName();
 
     private final MemberService memberService;
+    private final LikelistService likelistService;
 
     /**
      * 회원 정보 수정
@@ -62,6 +68,17 @@ public class MemberController {
     @ApiOperation(value="회원 탈퇴", notes = "회원 탈퇴를 진행")
     public ResponseEntity<ResponseDTO> delete(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_DELETE, memberService.deleteMember(principalDetails.getMember().getIdx())));
+    }
+
+    @GetMapping("/like/toggle/{itemType}/{itemId}")
+    public ResponseEntity<ResponseDTO> toggleLikelist(@PathVariable String itemType, @PathVariable Long itemId,
+                                                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_LIKE_TOGGLE, likelistService.toggleLikelist(itemType, itemId, principalDetails.getMember().getIdx())));
+    }
+
+    @GetMapping("/like/mylist")
+    public ResponseEntity<ResponseDTO> getLikelist(@RequestParam String itemType, @RequestParam(defaultValue = "false") boolean expired, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_LIKE_MYLIST, likelistService.getLikelist(itemType, principalDetails.getMember().getIdx()).stream().map(LikelistResDTO::of).collect(Collectors.toList())));
     }
 
     /**

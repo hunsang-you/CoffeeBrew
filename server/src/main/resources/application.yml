@@ -91,6 +91,7 @@ user:
     member: /api/v1/member
     item: /api/v1/item
     review: /api/v1/review
+    likelist: /api/v1/likelist
     test: /api/v1/test
     swagger: /api/v1/swagger-ui.html
     swagger-index: /api/v1/swagger-ui/
