@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -39,7 +40,7 @@ public class Capsule extends BaseAtTime implements Serializable {
     @NotBlank
     private String thumbnail; // 캡슐 썸네일
 
-    @NotBlank
+    @NotNull
     @Column(name = "user_grade")
     private int userGrade; // 사용자 평점
 

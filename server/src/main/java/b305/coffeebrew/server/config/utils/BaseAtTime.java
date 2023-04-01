@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.config.utils;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,7 @@ import javax.persistence.PrePersist;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @DynamicInsert
