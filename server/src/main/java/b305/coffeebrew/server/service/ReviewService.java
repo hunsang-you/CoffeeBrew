@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.service;
 
 
+import b305.coffeebrew.server.dto.review.DetailPageReviewResDTO;
 import b305.coffeebrew.server.dto.review.ReviewPageDTO;
 import b305.coffeebrew.server.entity.Member;
 import b305.coffeebrew.server.entity.Review;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -33,8 +35,13 @@ public class ReviewService {
     }
 
     @Transactional
-    public List<Review> readReview(String itemType, String itemIdx) throws RuntimeException{
-        return reviewRepository.findByItemTypeAndItemIdx(itemType, Long.parseLong(itemIdx));
+    public List<DetailPageReviewResDTO> readReview(String itemType, String itemIdx) throws RuntimeException{
+        List<Review> reviews = reviewRepository.findByItemTypeAndItemIdx(itemType, Long.parseLong(itemIdx));
+        List<DetailPageReviewResDTO> reviewDTO = new ArrayList<>();
+        for (Review review : reviews) {
+            reviewDTO.add(new DetailPageReviewResDTO(review));
+        }
+        return reviewDTO;
     }
 
     @Transactional
