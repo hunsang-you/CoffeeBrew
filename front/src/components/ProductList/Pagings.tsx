@@ -24,10 +24,10 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
   };
   return (
     <Pagination
-      activePage={pagination.number}
+      activePage={pagination.number + 1}
       itemsCountPerPage={pagination.numberOfElements}
       totalItemsCount={pagination?.totalElements}
-      pageRangeDisplayed={3}
+      pageRangeDisplayed={5}
       prevPageText={'‹'}
       nextPageText={'›'}
       onChange={handlePageChange}
