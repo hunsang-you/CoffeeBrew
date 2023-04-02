@@ -50,6 +50,7 @@ public class ReviewPageDTO {
         this.expired = expired;
     }
     public Review of(Member member){
+        log.info("service review = {}", this.itemType);
         return Review.builder().memberIdx(member)
                 .itemType(this.itemType)
                 .itemIdx(this.itemIdx)

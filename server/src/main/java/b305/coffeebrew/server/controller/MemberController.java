@@ -6,6 +6,7 @@ import b305.coffeebrew.server.config.utils.ResponseDTO;
 import b305.coffeebrew.server.dto.likelist.LikelistResDTO;
 import b305.coffeebrew.server.dto.member.SignModReqDTO;
 import b305.coffeebrew.server.dto.member.mod;
+import b305.coffeebrew.server.dto.review.ReviewPageDTO;
 import b305.coffeebrew.server.exception.ErrorCode;
 import b305.coffeebrew.server.service.LikelistService;
 import b305.coffeebrew.server.service.MemberService;
@@ -115,5 +116,42 @@ public class MemberController {
     @GetMapping("/like/{itemType}")
     public ResponseEntity<ResponseDTO> readMyPageLike(@PathVariable String itemType, @AuthenticationPrincipal PrincipalDetails principalDetails,  @PageableDefault(size = 9, page = 1) Pageable pageable) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_LIKE, likelistService.readMyPageLike(principalDetails.getMember().getIdx(), itemType, pageable)));
+    }
+
+    /**
+     * 리뷰 작성
+     */
+    @PostMapping("/review")
+    @ApiOperation(value = "리뷰 등록", notes = "")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> registReview(@RequestBody ReviewPageDTO reviewPageDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        log.info("controller review = {}", reviewPageDTO.getCoffeeing_note());
+        log.info("controller getMember = {}",  principalDetails.getMember().getIdx());
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_REGISTER, reviewService.registReview(reviewPageDTO, principalDetails.getMember().getIdx())));
+    }
+
+    /**
+     * 리뷰 수정
+     */
+    @PutMapping("/review/{reviewId}")
+    @ApiOperation(value = "리뷰 수정", notes = "리뷰 수정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> updateReview(@PathVariable String reviewId, @RequestBody ReviewPageDTO reviewPageDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_MOD, reviewService.updateReview(reviewId, reviewPageDTO, principalDetails.getMember().getIdx())));
+    }
+
+    /**
+     * 리뷰 삭제
+     */
+    @DeleteMapping("/review/{reviewId}")
+    @ApiOperation(value = "리뷰 삭제", notes = "리뷰 삭제를 진행")
+    public ResponseEntity<ResponseDTO> deleteReview(@PathVariable String reviewId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_DELETE,  reviewService.deleteReview(reviewId, principalDetails.getMember().getIdx())));
     }
 }
