@@ -9,6 +9,7 @@ import b305.coffeebrew.server.repository.LikelistRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +53,7 @@ public class LikelistService {
     }
 
     public List<Likelist> getLikelist(String itemType, Long memberIdx) {
-        return likelistRepository.findTop10ByItemTypeAndMemberIdxOrderByUpdatedDateDesc(itemType, memberIdx);
+        return likelistRepository.findTop9ByItemTypeAndMemberIdxOrderByUpdatedDateDesc(itemType, memberIdx);
     }
 
 
