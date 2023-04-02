@@ -52,7 +52,7 @@ const CoffeeCard = (props: TastProps) => {
 
 export default CoffeeCard;
 
-const OutDiv = tw.div`p-5 m-5 h-2/6 flex flex-col justify-center content-center`;
+const OutDiv = tw.div`p-5 m-5 h-2/6 flex flex-col justify-between content-center`;
 const InnerDiv = tw.div`w-full`;
 const ImgDiv = tw.img`w-full`;
 const UnderDiv = tw.div`p-3 flex flex-col justify-end`;

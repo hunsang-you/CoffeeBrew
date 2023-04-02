@@ -1,3 +1,5 @@
+import { surveyAPI } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 type objtype = {
@@ -23,10 +25,21 @@ const SelectCard = ({
   select,
   setSelect,
 }: ServeyProps) => {
+  const navigate = useNavigate();
   const after = () => {
     if (1 <= page && page < 8) {
       setPage(page + 1);
     } else if (page === 8) {
+      const postData = select;
+      surveyAPI
+        .postSurvey(postData)
+        .then((request) => {
+          console.log(request.data);
+          navigate('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

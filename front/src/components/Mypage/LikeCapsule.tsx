@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
-import bean from '../../assets/bean.png';
-import bean2 from '../../assets/bean2.png';
+import bean from '../../assets/tempImg/bean.png';
+import bean2 from '../../assets/tempImg/bean2.png';
 
 const LikeCapsuleList = () => {
   const [isLikeCheck, setIsLikeCheck] = useState(true);

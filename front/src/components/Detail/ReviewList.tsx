@@ -1,11 +1,12 @@
 import tw from 'tailwind-styled-components';
 import { useState, useEffect } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import bean from '../../assets/bean.png';
-import ratingfull from '../../assets/ratingfull.png';
-import ratinghalf from '../../assets/ratinghalf.png';
-import ratingempty from '../../assets/ratingempty.png';
-import { exit } from 'process';
+import { useParams } from 'react-router-dom';
+import bean from '../../assets/tempImg/bean.png';
+import ratingfull from '../../assets/tempImg/ratingfull.png';
+import ratinghalf from '../../assets/tempImg/ratinghalf.png';
+import ratingempty from '../../assets/tempImg/ratingempty.png';
+import { reviewAPI } from '../../api/api';
 
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
@@ -32,15 +33,6 @@ const ReviewCreated = tw.p`text-sm font-bold`;
 const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
 
 const ReviewLists = () => {
-  interface Review {
-    id: number;
-    score: {
-      [key: string]: number;
-    };
-    description: string;
-    created: string;
-  }
-
   // 리뷰 최신/추천 순 조회버튼
   const [isActive, setIsActive] = useState(true);
   const activeBtn = () => {

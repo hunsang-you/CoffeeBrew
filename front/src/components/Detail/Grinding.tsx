@@ -1,12 +1,11 @@
 import tw from 'tailwind-styled-components';
 import { useState, forwardRef } from 'react';
-import grinding2 from '../../assets/grinding2.png';
-import grindingList from '../../assets/grindingList.png';
+import grinding2 from '../../assets/tempImg/grinding2.png';
+import grindingList from '../../assets/tempImg/grindingList.png';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
 
 const GrindingDiv = tw.div`flex-row w-460 justify-center bg-gradient-to-r from-grinding1 to-grinding2 mr-10 rounded-3xl drop-shadow-2xl`;
 const GrindingImg = tw.img`w-60 h-60 rounded-full mt-4 mx-auto`;

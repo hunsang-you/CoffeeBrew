@@ -4,7 +4,7 @@ import Analyze from './Analyze';
 import BeanLike from './BeanLike';
 import MyReview from './MyReview';
 
-import dogprofile from '../../assets/dogprofile.png';
+import dogprofile from '../../assets/tempImg/dogprofile.png';
 
 const ProfileDiv = tw.div`w-1200  bg-background flex justify-between`;
 const ProfileLeft = tw.div`w-80 h-1/2 mt-20 ml-20  bg-nameTag drop-shadow-2xl justify-center rounded-t-full`;

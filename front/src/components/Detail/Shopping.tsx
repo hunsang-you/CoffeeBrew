@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import bean from '../../assets/bean.png';
+import bean from '../../assets/tempImg/bean.png';
 
 const ShopList = tw.div`flex justify-between `;
 const ShopItemT = tw.div`w-40  border-2 justify-center rounded-t-2xl`;
