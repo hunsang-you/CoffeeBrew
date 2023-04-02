@@ -28,7 +28,6 @@ const Servey3 = ({ page, setPage, select, setSelect }: PropsType) => {
     { id: 2, idx: 2, title: '투썸플레이스', img: photo2 },
     { id: 2, idx: 3, title: '파스쿠찌', img: photo3 },
     { id: 2, idx: 4, title: '이디야', img: photo4 },
-    { id: 2, idx: 5, title: '기타등등', img: photo5 },
   ];
 
   return (
