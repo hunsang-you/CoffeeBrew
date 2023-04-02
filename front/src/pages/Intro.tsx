@@ -16,7 +16,7 @@ const Intro = ({ setIsFooter }: IsFooterType) => {
     detailAPI
       .getBean(1)
       .then((request) => {
-        console.log(request.data.value);
+        console.log(request.data);
       })
       .catch((err) => console.log(err));
   }, []);
