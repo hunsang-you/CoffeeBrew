@@ -1,21 +1,22 @@
 import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
 import RecommendCard from './RecommendCard';
+import CoffeeCard from '../CoffeeCard';
 
 const Page2Carousel = () => {
   return (
     <Carousel>
       <BigDiv>
-        <RecommendCard taste={'acidity'} />
-        <RecommendCard taste={'acidity'} />
-        <RecommendCard taste={'body'} />
-        <RecommendCard taste={'flavor'} />
+        <CoffeeCard taste={'acidity'} />
+        <CoffeeCard taste={'acidity'} />
+        <CoffeeCard taste={'body'} />
+        <CoffeeCard taste={'flavor'} />
       </BigDiv>
       <BigDiv>
-        <RecommendCard taste={'bitter'} />
-        <RecommendCard taste={'body'} />
-        <RecommendCard taste={'flavor'} />
-        <RecommendCard taste={'sweetness'} />
+        <CoffeeCard taste={'bitter'} />
+        <CoffeeCard taste={'body'} />
+        <CoffeeCard taste={'flavor'} />
+        <CoffeeCard taste={'sweetness'} />
       </BigDiv>
     </Carousel>
   );

@@ -27,7 +27,7 @@ export interface detailType {
   processing: string | null;
   rank: string | null;
   region: string | null;
-  roastingPoing: string | null;
+  roastingPoint: string | null;
   summary: string | null;
   sweetness: string;
   thumbnail: string | null;
@@ -103,7 +103,8 @@ const DetailBean = (): JSX.Element => {
         })
         .catch((e) => console.log(e));
     };
-  });
+    getDetailBean();
+  }, []);
 
   return (
     <DetailBg>

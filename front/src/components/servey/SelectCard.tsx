@@ -27,7 +27,6 @@ const SelectCard = ({
     if (1 <= page && page < 8) {
       setPage(page + 1);
     } else if (page === 8) {
-      console.log(select);
     }
   };
 
@@ -36,7 +35,6 @@ const SelectCard = ({
     copy[i] = data.idx;
     setSelect(copy);
     after();
-    console.log(select);
   };
 
   return (

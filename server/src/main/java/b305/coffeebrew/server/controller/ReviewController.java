@@ -27,18 +27,6 @@ public class ReviewController {
 
 
     private final ReviewService reviewService;
-    /**
-     * 리뷰 작성
-     */
-    @PostMapping()
-    @ApiOperation(value = "리뷰 등록", notes = "")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 500, message = "서버 오류"),
-    })
-    public ResponseEntity<ResponseDTO> registReview(@RequestBody ReviewPageDTO reviewPageDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_REGISTER, reviewService.registReview(reviewPageDTO, principalDetails.getMember().getIdx())));
-    }
 
     /**
      * 원두 리뷰 조회
@@ -51,27 +39,5 @@ public class ReviewController {
     })
     public ResponseEntity<ResponseDTO> readReview(@PathVariable String itemType , @PathVariable String itemIdx) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_GET, reviewService.readReview(itemType, itemIdx)));
-    }
-
-    /**
-     * 리뷰 수정
-     */
-    @PutMapping("/{reviewId}")
-    @ApiOperation(value = "리뷰 수정", notes = "리뷰 수정")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 500, message = "서버 오류"),
-    })
-    public ResponseEntity<ResponseDTO> updateReview(@PathVariable String reviewId, @RequestBody ReviewPageDTO reviewPageDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_MOD, reviewService.updateReview(reviewId, reviewPageDTO, principalDetails.getMember().getIdx())));
-    }
-
-    /**
-     * 리뷰 삭제
-     */
-    @DeleteMapping("/{reviewId}")
-    @ApiOperation(value = "리뷰 삭제", notes = "리뷰 삭제를 진행")
-    public ResponseEntity<ResponseDTO> deleteReview(@PathVariable String reviewId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_DELETE,  reviewService.deleteReview(reviewId, principalDetails.getMember().getIdx())));
     }
 }

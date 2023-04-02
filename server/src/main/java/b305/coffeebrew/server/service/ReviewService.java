@@ -27,6 +27,7 @@ public class ReviewService {
     @Transactional
     public Long registReview(ReviewPageDTO reviewPageDTO, Long idx) throws RuntimeException{
         Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        log.info("service review = {}", member.getIdx());
         reviewRepository.save(reviewPageDTO.of(member));
         return member.getIdx();
     }

@@ -1,18 +1,24 @@
 import tw from 'tailwind-styled-components';
-import Chart from '../Detail/Chart/UserChart';
-import { Routes, Route } from 'react-router-dom';
 
+import bean from '../../assets/bean.png';
 import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';
 import ratingempty from '../../assets/ratingempty.png';
-import examtype from '../../assets/examtype.png';
 
-const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
-const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
-const Score = tw.img`w-8`;
-const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24 cursor-pointer hover:scale-110`;
+const ReviewBody = tw.div`min-h-screen flex flex-col mx-auto`;
+const ReviewItems = tw.div`flex-col mx-auto`;
+const Item = tw.div`border-y-4 border-y-brownBorder flex`;
+
+const BeanImg = tw.img`w-40 h-40 border-4 border-white bg-black rounded-full justify-center my-2 mx-4`;
+
+const DeleteBtn = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500 mt-8`;
+
+const RatingDiv = tw.div`w-400`;
+
+const Score = tw.img`w-6 `;
 const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
-const UserTypeImg = tw.div`w-48 bg-red-200 mx-auto`;
+
+const ReviewContent = tw.div`w-240 h-60 text-sm text-nameColor font-bold text-left mt-2 pl-6 ml-4  overflow-scroll break-words`;
 
 const userData = {
   향: 1,
@@ -23,21 +29,7 @@ const userData = {
   총점: 3.5,
 };
 
-const Analyze = () => {
-  const userStandard: string[] = Object.keys(userData);
-  const userScore: number[] = Object.values(userData);
-
-  // const standard = userStandard.map((data, i) => {
-  //   return data;
-  // });
-
-  // const scoreList = userScore.map((data, i) => {
-  //   // console.log(data, i);
-  //   return data;
-  // });
-  // console.log('기준', standard);
-  // console.log('scoreList', scoreList);
-
+const MyReviewItem = () => {
   const scoreArray = Object.entries(userData);
   const beanScore = () => {
     const scoreItem = [];
@@ -87,40 +79,55 @@ const Analyze = () => {
 
     return scoreItem;
   };
-
   return (
-    <AnalyzeBody
-      style={{
-        border: 'solid 4px #FD0F0F',
-      }}
-    >
-      <div style={{ scale: '130%', marginTop: '40px' }}>
-        <Chart />
-      </div>
-      <Comment> 닉네임은10글자까지님의 선호도 분석 입니다</Comment>
-      <div
-        style={{ display: 'flex', justifyContent: 'end', marginRight: '40px' }}
-      >
-        <UserTypeImg>
-          <img src={examtype} alt="user_type" />
-        </UserTypeImg>
-        <div style={{ marginTop: '50px' }}>{beanScore()}</div>
-        <div style={{ marginLeft: '16px' }}>
-          <LinkBtn
+    <ReviewBody>
+      <ReviewItems>
+        <DeleteBtn> 삭 제</DeleteBtn>
+        <Item>
+          <div
             style={{
-              backgroundColor: '#98643D',
-              paddingLeft: '20px',
-              paddingRight: '20px',
-              paddingTop: '12px',
-              paddingBottom: '12px',
+              textAlign: 'center',
+              marginLeft: '20px',
+              marginRight: '20px',
             }}
           >
-            맞춤 커피 보러 가기
-          </LinkBtn>
-        </div>
-      </div>
-    </AnalyzeBody>
+            <div style={{ marginTop: '24px', fontWeight: 'bold' }}>
+              2023-04-01
+            </div>
+            <BeanImg src={bean} />
+            <p
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                color: '#9A6533',
+                width: '200px',
+                wordBreak: 'break-word',
+                marginBottom: '16px',
+              }}
+            >
+              원두이름
+            </p>
+          </div>
+
+          <div
+            style={{
+              width: '200px',
+              height: '200px',
+              marginTop: '5%',
+            }}
+          >
+            {beanScore()}
+          </div>
+          <ReviewContent>
+            <div style={{ height: '180px' }}>
+              원두가 맛있어요 원두가 맛있어요 원두가 맛있어요 원두가 맛있어요
+              원두가 맛있어요 원두가 맛있어요
+            </div>
+          </ReviewContent>
+        </Item>
+      </ReviewItems>
+    </ReviewBody>
   );
 };
 
-export default Analyze;
+export default MyReviewItem;
