@@ -136,7 +136,7 @@ public class MemberController {
     /**
      * 리뷰 수정
      */
-    @PutMapping("/{reviewId}")
+    @PutMapping("/review/{reviewId}")
     @ApiOperation(value = "리뷰 수정", notes = "리뷰 수정")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -149,7 +149,7 @@ public class MemberController {
     /**
      * 리뷰 삭제
      */
-    @DeleteMapping("/{reviewId}")
+    @DeleteMapping("/review/{reviewId}")
     @ApiOperation(value = "리뷰 삭제", notes = "리뷰 삭제를 진행")
     public ResponseEntity<ResponseDTO> deleteReview(@PathVariable String reviewId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_DELETE,  reviewService.deleteReview(reviewId, principalDetails.getMember().getIdx())));
