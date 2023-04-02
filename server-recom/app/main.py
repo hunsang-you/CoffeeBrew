@@ -109,7 +109,7 @@ async def getUserRecom(userId: Union[int, None] = None):
     )
 
     result = user_cbcf_recom.get_recom_by_user(
-        0, like_list_read, like_recom_read, item_type="bean"
+        userId, like_list_read, like_recom_read, item_type="bean"
     )
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -133,7 +133,7 @@ async def getUserRecom(userId: Union[int, None] = None):
     )
 
     result = user_cbcf_recom.get_recom_by_user(
-        1, review_read, review_recom_read, "bean"
+        userId, review_read, review_recom_read, "bean"
     )
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
