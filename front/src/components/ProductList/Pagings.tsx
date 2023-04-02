@@ -13,7 +13,7 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
   const handlePageChange = (page: number) => {
     const getPages = async () => {
       await listAPI
-        .getBeans(`page=${page}`)
+        .getBeans(`page=${page - 1}`)
         .then((request) => {
           setPagination(request.data.value);
           console.log(request.data.value);
@@ -25,8 +25,8 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
   };
   return (
     <Pagination
-      activePage={pagination.number}
-      itemsCountPerPage={pagination.totalPages}
+      activePage={pagination.number + 1}
+      itemsCountPerPage={pagination.totalPages - 1}
       totalItemsCount={pagination?.totalElements}
       pageRangeDisplayed={5}
       prevPageText={'‹'}
