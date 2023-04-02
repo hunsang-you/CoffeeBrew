@@ -24,7 +24,7 @@ public class ProfileResDTO {
         this.snsType = snsType;
     }
 
-    public ProfileResDTO of(Member member) {
+    public static ProfileResDTO of(Member member) {
         return ProfileResDTO.builder()
                 .profileImg(member.getProfileImg())
                 .memberEmail(member.getMemberEmail())

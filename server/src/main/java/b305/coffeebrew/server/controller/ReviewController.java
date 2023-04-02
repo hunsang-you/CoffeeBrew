@@ -37,7 +37,7 @@ public class ReviewController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> readReview(@PathVariable String itemType , @PathVariable String itemIdx) {
+    public ResponseEntity<ResponseDTO> readReview(@PathVariable String itemType, @PathVariable Long itemIdx) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_REVIEW_GET, reviewService.readReview(itemType, itemIdx)));
     }
 }

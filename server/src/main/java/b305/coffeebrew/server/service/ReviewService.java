@@ -1,7 +1,9 @@
 package b305.coffeebrew.server.service;
 
 
+import b305.coffeebrew.server.dto.member.ProfileResDTO;
 import b305.coffeebrew.server.dto.review.ReviewPageDTO;
+import b305.coffeebrew.server.dto.review.ReviewResDTO;
 import b305.coffeebrew.server.entity.Member;
 import b305.coffeebrew.server.entity.Review;
 import b305.coffeebrew.server.exception.ErrorCode;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,8 +36,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public List<Review> readReview(String itemType, String itemIdx) throws RuntimeException{
-        return reviewRepository.findByItemTypeAndItemIdx(itemType, Long.parseLong(itemIdx));
+    public List<ReviewResDTO> readReview(String itemType, Long itemIdx) {
+        List<Review> reviews = reviewRepository.findByItemTypeAndItemIdx(itemType, itemIdx);
+        return reviews.stream().map(ReviewResDTO::of).collect(Collectors.toList());
     }
 
     @Transactional
