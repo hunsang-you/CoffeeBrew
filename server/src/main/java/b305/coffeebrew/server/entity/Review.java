@@ -3,6 +3,7 @@ package b305.coffeebrew.server.entity;
 import b305.coffeebrew.server.config.utils.BaseAtTime;
 import b305.coffeebrew.server.config.utils.BooleanToYNConverter;
 import b305.coffeebrew.server.dto.review.ReviewPageDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -29,6 +30,7 @@ public class Review extends BaseAtTime implements Serializable {
     private Long idx;
 
     // 회원 식별
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_idx")
     private Member memberIdx;
