@@ -21,14 +21,13 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
         .catch((e) => console.log(e));
     };
     getPages();
-    console.log(page);
   };
   return (
     <Pagination
       activePage={pagination.number + 1}
-      itemsCountPerPage={pagination.totalPages - 1}
+      itemsCountPerPage={pagination.numberOfElements}
       totalItemsCount={pagination?.totalElements}
-      pageRangeDisplayed={5}
+      pageRangeDisplayed={3}
       prevPageText={'‹'}
       nextPageText={'›'}
       onChange={handlePageChange}
