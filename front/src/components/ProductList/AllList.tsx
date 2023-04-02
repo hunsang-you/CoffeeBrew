@@ -48,11 +48,12 @@ export interface BeanType {
 
 const AllList = () => {
   const [pagination, setPagination] = useState<BeanResponseType | null>(null);
+  const [words, setWords] = useState<string[]>(['page=0']);
 
   useEffect(() => {
     const getLists = async () => {
       await listAPI
-        .getBeans('page=0')
+        .getBeans(...words)
         .then((request) => {
           console.log(request.data.value);
           setPagination(request.data.value);
