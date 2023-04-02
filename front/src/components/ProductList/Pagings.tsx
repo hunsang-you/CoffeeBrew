@@ -24,7 +24,7 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
   };
   return (
     <Pagination
-      activePage={pagination.number + 1}
+      activePage={pagination.number}
       itemsCountPerPage={pagination.numberOfElements}
       totalItemsCount={pagination?.totalElements}
       pageRangeDisplayed={3}
