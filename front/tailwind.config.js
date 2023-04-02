@@ -57,6 +57,7 @@ module.exports = {
       },
       minHeight: {
         '90vh': '93vh',
+        '1/5': '20vh',
       },
       margin: {
         '10vh': '7vh',

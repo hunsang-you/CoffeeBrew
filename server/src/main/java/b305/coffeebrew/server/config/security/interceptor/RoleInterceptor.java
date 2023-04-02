@@ -36,6 +36,7 @@ public class RoleInterceptor implements HandlerInterceptor {
     private final String memberURL;
     private final String itemURL;
     private final String reviewURL;
+//    private final String likelistURL;
     private final String testURL;
     private final String swaggerURL;
     private final String swaggerIndexURL;
@@ -48,6 +49,7 @@ public class RoleInterceptor implements HandlerInterceptor {
                            @Value(value = "${user.url.member}") String memberURL,
                            @Value(value = "${user.url.item}") String itemURL,
                            @Value(value = "${user.url.review}") String reviewURL,
+//                           @Value(value = "${user.url.likelist}") String likelistURL,
                            @Value(value = "${user.url.test}") String testURL,
                            @Value(value = "${user.url.swagger}") String swaggerURL,
                            @Value(value = "${user.url.swagger-index}") String swaggerIndexURL) {
@@ -59,6 +61,7 @@ public class RoleInterceptor implements HandlerInterceptor {
         this.memberURL = memberURL;
         this.itemURL = itemURL;
         this.reviewURL = reviewURL;
+//        this.likelistURL = likelistURL;
         this.testURL = testURL;
         this.swaggerURL = swaggerURL;
         this.swaggerIndexURL = swaggerIndexURL;
@@ -105,6 +108,18 @@ public class RoleInterceptor implements HandlerInterceptor {
                             }
                             break Outer;
                         }
+//                        if (request.getRequestURI().startsWith(likelistURL)) {
+//                            log.info("MEMBER role validate ...");
+//                            if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
+//                                log.info("MEMBER role validate - Success");
+//                                result = true;
+//                            } else {
+//                                log.warn("MEMBER role validate - Fail");
+//                                response.setContentType("text/html; charset=UTF-8");
+//                                response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
+//                            }
+//                            break Outer;
+//                        }
                         if (request.getRequestURI().startsWith(itemURL)) {
                             log.info("Item URL is public");
                             result = true;

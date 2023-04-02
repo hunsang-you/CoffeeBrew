@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 const Page1 = () => {
+  const navigate = useNavigate();
+
   return (
     <Inner>
       <ItemDiv>
@@ -8,7 +11,13 @@ const Page1 = () => {
         <TextDiv>
           내 입맛에 맞는 <br /> 원두 추천받기
         </TextDiv>
-        <MoveButton>설문조사하기</MoveButton>
+        <MoveButton
+          onClick={() => {
+            navigate('/survey');
+          }}
+        >
+          설문조사하기
+        </MoveButton>
       </ItemDiv>
     </Inner>
   );

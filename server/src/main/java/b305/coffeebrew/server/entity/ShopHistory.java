@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -39,14 +40,13 @@ public class ShopHistory extends BaseAtTime implements Serializable {
     @Column(name="shop_url")
     private String shopUrl;
 
-    @NotBlank
+    @NotNull
     private String item_type;
 
     @Convert(converter = BooleanToYNConverter.class)
-    @NotBlank
     private boolean expired;
 
-    @NotBlank
+    @NotNull
     private Long item_idx;
     @Override
     public void prePersist() {

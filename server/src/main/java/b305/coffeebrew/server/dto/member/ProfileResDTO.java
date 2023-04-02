@@ -10,19 +10,28 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProfileResDTO {
 
-	private String profileImg;
-	private String nickname;
+    private String profileImg;
+    private String memberEmail;
+    private String nickname;
+    private String hashcode;
+    private String snsType;
 
-	public ProfileResDTO(String profileImg, String nickname) {
-		this.profileImg = profileImg;
-		this.nickname = nickname;
-	}
+    public ProfileResDTO(String profileImg, String memberEmail, String nickname, String hashcode, String snsType) {
+        this.profileImg = profileImg;
+        this.memberEmail = memberEmail;
+        this.nickname = nickname;
+        this.hashcode = hashcode;
+        this.snsType = snsType;
+    }
 
-	public ProfileResDTO of(Member member) {
-		return ProfileResDTO.builder()
-				.profileImg(member.getProfileImg())
-				.nickname(member.getNickname())
-				.build();
-	}
+    public ProfileResDTO of(Member member) {
+        return ProfileResDTO.builder()
+                .profileImg(member.getProfileImg())
+                .memberEmail(member.getMemberEmail())
+                .nickname(member.getNickname())
+                .hashcode(member.getHashcode())
+                .snsType(member.getSnsType())
+                .build();
+    }
 
 }

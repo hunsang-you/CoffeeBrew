@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-
+import { detailAPI } from '../../api/api';
 import RecommendBean from './RecommendBean';
 import Grinding from './Grinding';
 import BeanInfo from './BeanInfo';
@@ -10,6 +10,29 @@ import Review from './ReviewList';
 import ReviewAll from './ReviewAll';
 import Shopping from './Shopping';
 import RecentSearch from './Recent';
+
+/**detailbean 타입설정 */
+export interface detailType {
+  acidity: number;
+  balance: number;
+  bitterness: number;
+  body: number;
+  coffeeingNote: string;
+  decaffeination: boolean;
+  description: string | null;
+  flavor: number;
+  nameEn: string;
+  nameKo: string;
+  origin: string;
+  processing: string | null;
+  rank: string | null;
+  region: string | null;
+  roastingPoing: string | null;
+  summary: string | null;
+  sweetness: string;
+  thumbnail: string | null;
+  userGrade: number | null;
+}
 
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
@@ -36,7 +59,8 @@ const BeanTop4 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;
 
 const DetailBean = (): JSX.Element => {
   const navigate = useNavigate();
-
+  const { beanId } = useParams() as { beanId: string };
+  const [detailBean, setDetailBean] = useState<detailType | null>(null);
   // 스크롤 이동
   const ScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -69,6 +93,17 @@ const DetailBean = (): JSX.Element => {
       window.scrollTo({ top: location - 80, behavior: 'smooth' });
     }
   };
+  useEffect(() => {
+    const getDetailBean = async () => {
+      await detailAPI
+        .getBean(Number(beanId))
+        .then((request) => {
+          console.log(request.data.value);
+          setDetailBean(request.data.value);
+        })
+        .catch((e) => console.log(e));
+    };
+  });
 
   return (
     <DetailBg>
@@ -79,7 +114,8 @@ const DetailBean = (): JSX.Element => {
         <MoveTop onClick={ScrollTop}>↑</MoveTop>
       </SideBar>
       {/* 첫번째 줄 (원두정보) */}
-      <BeanInfo />
+      {detailBean ? <BeanInfo detailBean={detailBean} /> : null}
+
       {/* 두번째 줄 (원두추천) */}
       <BeanTop2>
         <div ref={recbeanRef} id="Recbean">
