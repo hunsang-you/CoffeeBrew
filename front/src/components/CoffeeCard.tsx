@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 
 import Acidity from '../assets/coffeecard/acidity.svg';
@@ -11,46 +12,49 @@ interface TastProps {
 }
 
 const CoffeeCard = (props: TastProps) => {
-  const apidate: string = props.taste;
-  if (apidate === 'acidity') {
-    return (
-      <ImgDiv>
-        <img src={Acidity} />
-      </ImgDiv>
-    );
-  } else if (apidate === 'bitter') {
-    return (
-      <ImgDiv>
-        <img src={Bitter} />
-      </ImgDiv>
-    );
-  } else if (apidate === 'body') {
-    return (
-      <ImgDiv>
-        <img src={Body} />
-      </ImgDiv>
-    );
-  } else if (apidate === 'flavor') {
-    return (
-      <ImgDiv>
-        <img src={Flavor} />
-      </ImgDiv>
-    );
-  } else if (apidate === 'sweetness') {
-    return (
-      <ImgDiv>
-        <img src={Sweetness} />
-      </ImgDiv>
-    );
-  } else {
-    return (
-      <ImgDiv>
-        <img src={Sweetness} />
-      </ImgDiv>
-    );
+  const taste: string = props.taste;
+
+  let tasteImg: string = '';
+  let tasteBg: string = 'white';
+
+  if (taste === 'acidity') {
+    tasteImg = Acidity;
+    tasteBg = '#FEC200';
+  } else if (taste === 'bitter') {
+    tasteImg = Bitter;
+    tasteBg = '#ACA571';
+  } else if (taste === 'body') {
+    tasteImg = Body;
+    tasteBg = '#A33A1D';
+  } else if (taste === 'flavor') {
+    tasteImg = Flavor;
+    tasteBg = '#938EAE';
+  } else if (taste === 'sweetness') {
+    tasteImg = Sweetness;
+    tasteBg = '#DB7624';
   }
+
+  useEffect(() => {}, []);
+
+  return (
+    <OutDiv style={{ backgroundColor: tasteBg }}>
+      <InnerDiv>
+        <ImgDiv src={tasteImg} />
+      </InnerDiv>
+      <UnderDiv>
+        <UnTitle>"CoffeeBrew"</UnTitle>
+        <UnContent>원산지</UnContent>
+        <UnContent>{taste}</UnContent>
+      </UnderDiv>
+    </OutDiv>
+  );
 };
 
 export default CoffeeCard;
 
-const ImgDiv = tw.div`p-10`;
+const OutDiv = tw.div`p-5 m-5 h-2/6 flex flex-col justify-center content-center`;
+const InnerDiv = tw.div`w-full`;
+const ImgDiv = tw.img`w-full`;
+const UnderDiv = tw.div`p-3 flex flex-col justify-end`;
+const UnTitle = tw.div`w-full text-end text-2xl`;
+const UnContent = tw.div`w-full text-end text-xl`;
