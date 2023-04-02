@@ -73,11 +73,17 @@ async def getBeanInfoAll():
 async def getBeanRecom(beanId: Union[int, None] = None):
     print("id:{}, type:{}".format(beanId, type(beanId)))
 
-    df_out = recom_data.loc[recom_data["id"] == beanId].to_dict("records")
-    if not df_out:
+    bean_recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", "bean_cbf_recom.csv"),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = bean_cbf_recom.get_recom_by_bean(beanId, bean_recom_read)
+    if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
-        return JSONResponse(content=df_out)
+        return result
 
 
 # cf 기반 추천 알고리즘 호출
