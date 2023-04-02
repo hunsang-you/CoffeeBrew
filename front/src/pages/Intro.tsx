@@ -1,7 +1,6 @@
 import * as S from '../components/useageStyle';
 import { useEffect } from 'react';
 import { Fireworks } from '@fireworks-js/react';
-import { detailAPI } from '../api/api';
 import fire from '../assets/fireworks2.jpg';
 
 interface IsFooterType {
@@ -9,16 +8,12 @@ interface IsFooterType {
 }
 
 const Intro = ({ setIsFooter }: IsFooterType) => {
+  const array2 = ['keywords=케냐', 'keywords=몰루'];
   useEffect(() => {
     setIsFooter(true);
   }, [setIsFooter]);
   useEffect(() => {
-    detailAPI
-      .getBean(1)
-      .then((request) => {
-        console.log(request.data);
-      })
-      .catch((err) => console.log(err));
+    console.log(...array2);
   }, []);
   return (
     <S.ContentContainer>
