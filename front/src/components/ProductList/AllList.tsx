@@ -8,7 +8,7 @@ import Paging from './Pagings';
 import { listAPI } from '../../api/api';
 const AllListBg = tw.div`flex-col bg-background select-none`;
 
-interface BeanResponseType {
+export interface BeanResponseType {
   content: BeanType[];
   pageable: {
     sort: {
@@ -66,8 +66,9 @@ const AllList = () => {
     <AllListBg>
       <SearchBar />
       {pagination ? <CoffeeList listDatas={pagination?.content} /> : null}
-
-      <Paging />
+      {pagination ? (
+        <Paging pagination={pagination} setPagination={setPagination} />
+      ) : null}
     </AllListBg>
   );
 };

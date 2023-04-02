@@ -1,6 +1,5 @@
 import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
-import RecommendCard from './RecommendCard';
 import CoffeeCard from '../CoffeeCard';
 
 const Page2Carousel = () => {

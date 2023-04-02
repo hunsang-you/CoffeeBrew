@@ -1,7 +1,6 @@
 package b305.coffeebrew.server.service;
 
-
-import b305.coffeebrew.server.dto.member.ProfileResDTO;
+import b305.coffeebrew.server.dto.review.DetailPageReviewResDTO;
 import b305.coffeebrew.server.dto.review.ReviewPageDTO;
 import b305.coffeebrew.server.dto.review.ReviewResDTO;
 import b305.coffeebrew.server.entity.Member;
@@ -18,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
