@@ -85,11 +85,13 @@ jwt:
 
 user:
   url:
+    fastapi: https://j8b305.p.ssafy.io/recom
     client: https://j8b305.p.ssafy.io
     logout: /api/v1/logout
     admin: /api/v1/admin
     member: /api/v1/member
     item: /api/v1/item
+    recom: /api/v1/recom
     review: /api/v1/review
     likelist: /api/v1/likelist
     test: /api/v1/test
