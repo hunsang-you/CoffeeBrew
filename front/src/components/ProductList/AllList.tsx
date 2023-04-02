@@ -68,7 +68,12 @@ const AllList = () => {
       <SearchBar />
       {pagination ? <CoffeeList listDatas={pagination?.content} /> : null}
       {pagination ? (
-        <Paging pagination={pagination} setPagination={setPagination} />
+        <Paging
+          pagination={pagination}
+          setPagination={setPagination}
+          setWords={setWords}
+          words={words}
+        />
       ) : null}
     </AllListBg>
   );
