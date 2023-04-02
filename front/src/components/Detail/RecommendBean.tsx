@@ -1,13 +1,13 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
-import bean from '../../assets/bean.png';
-import bean2 from '../../assets/bean2.png';
-import grinding2 from '../../assets/grinding2.png';
-import machine1 from '../../assets/machine1.png';
+import bean from '../../assets/tempImg/bean.png';
+import bean2 from '../../assets/tempImg/bean2.png';
+import grinding2 from '../../assets/tempImg/grinding2.png';
+import machine1 from '../../assets/tempImg/machine1.png';
 import spin from '../../assets/Spin-1s-200px.gif';
-import ratingfull from '../../assets/ratingfull.png';
-import ratinghalf from '../../assets/ratinghalf.png';
-import ratingempty from '../../assets/ratingempty.png';
+import ratingfull from '../../assets/tempImg/ratingfull.png';
+import ratinghalf from '../../assets/tempImg/ratinghalf.png';
+import ratingempty from '../../assets/tempImg/ratingempty.png';
 
 // const RecboxBean = tw.div`flex justify-center w-1000  mx-auto flex-col `;
 const Body = tw.div`flex justify-center select-none w-100vw h-100vh my-10 `;

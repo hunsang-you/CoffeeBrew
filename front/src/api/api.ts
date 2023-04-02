@@ -38,8 +38,6 @@ export const listAPI = {
   getBeans: (...params: any) => getData(...params),
 };
 
-// 설문조사 페이지 /api/v1/survey
-export const surveyAPI = {
-  postSurvey: (surveyli: number[]) =>
-    api.post(`/api/v1/survey`, { surveyli: surveyli }),
+export const reviewAPI = {
+  getBeanReview: (id: number) => api.get(`review/bean/${id}`),
 };

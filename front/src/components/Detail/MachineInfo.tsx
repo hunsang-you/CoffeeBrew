@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import machine1 from '../../assets/machine1.png';
+import machine1 from '../../assets/tempImg/machine1.png';
 
 // const RecOther = tw.div`w-1040  flex justify-between `;
 const RecMachine = tw.div`flex-col w-460 justify-center bg-gradient-to-br from-recMachine1 to-recMachine2 mx-auto rounded-3xl drop-shadow-2xl`;

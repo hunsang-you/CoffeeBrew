@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 // 예시 이미지
-import bean from '../../assets/bean.png';
-import bean2 from '../../assets/bean2.png';
-import dogprofile from '../../assets/dogprofile.png';
-import grinding2 from '../../assets/grinding2.png';
+import bean from '../../assets/tempImg/bean.png';
+import bean2 from '../../assets/tempImg/bean2.png';
+import dogprofile from '../../assets/tempImg/dogprofile.png';
+import grinding2 from '../../assets/tempImg/grinding2.png';
 
 const data: object[] = [
   {

@@ -1,9 +1,9 @@
 import tw from 'tailwind-styled-components';
 
-import bean from '../../assets/bean.png';
-import ratingfull from '../../assets/ratingfull.png';
-import ratinghalf from '../../assets/ratinghalf.png';
-import ratingempty from '../../assets/ratingempty.png';
+import bean from '../../assets/tempImg/bean.png';
+import ratingfull from '../../assets/tempImg/ratingfull.png';
+import ratinghalf from '../../assets/tempImg/ratinghalf.png';
+import ratingempty from '../../assets/tempImg/ratingempty.png';
 
 const ReviewBody = tw.div`min-h-screen flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;

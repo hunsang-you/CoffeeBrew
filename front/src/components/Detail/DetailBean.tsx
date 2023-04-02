@@ -1,15 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-import { detailAPI } from '../../api/api';
+import { detailAPI, reviewAPI } from '../../api/api';
 import RecommendBean from './RecommendBean';
 import Grinding from './Grinding';
 import BeanInfo from './BeanInfo';
 import MachineInfo from './MachineInfo';
-import Review from './ReviewList';
 import ReviewAll from './ReviewAll';
 import Shopping from './Shopping';
-import RecentSearch from './Recent';
 
 /**detailbean 타입설정 */
 export interface detailType {
@@ -33,7 +31,23 @@ export interface detailType {
   thumbnail: string | null;
   userGrade: number | null;
 }
-
+export interface reviewType {
+  idx: number;
+  profile: object;
+  itemType: string;
+  itemIdx: number;
+  content: string;
+  overall: number;
+  flavor: number;
+  acidity: number;
+  sweetness: number;
+  bitterness: number;
+  body: number;
+  coffeeing_note: string;
+  like: number;
+  expired: boolean;
+  createdDate: string;
+}
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 
@@ -106,6 +120,21 @@ const DetailBean = (): JSX.Element => {
     getDetailBean();
   }, []);
 
+  const [detailReview, setDetailReview] = useState<reviewType | null>(null);
+
+  useEffect(() => {
+    const getReviewItems = async () => {
+      await reviewAPI
+        .getBeanReview(Number(beanId))
+        .then((request) => {
+          console.log(request.data.value);
+          setDetailReview(request.data.value);
+        })
+        .catch((e) => console.log(e));
+    };
+    getReviewItems();
+  }, []);
+
   return (
     <DetailBg>
       <SideBar>
@@ -133,7 +162,6 @@ const DetailBean = (): JSX.Element => {
         </div>
         <RecOther>
           <MachineInfo />
-          {/* <RecommendMachine /> */}
           <Grinding />
         </RecOther>
       </BeanTop2>
