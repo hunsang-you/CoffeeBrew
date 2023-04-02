@@ -13,7 +13,7 @@ interface PropsTypes {
 
 const Paging = ({ pagination, setPagination, setWords, words }: PropsTypes) => {
   const handlePageChange = (page: number) => {
-    const getPages = async () => {
+    const getPages = async (words: string[]) => {
       await listAPI
         .getBeans(...words)
         .then((request) => {
@@ -22,9 +22,12 @@ const Paging = ({ pagination, setPagination, setWords, words }: PropsTypes) => {
         })
         .catch((e) => console.log(e));
     };
-    setWords([`page=${page - 1}`, ...words.slice(1)]);
-    console.log(words);
-    getPages();
+    setWords((prevWords) => {
+      const newWords = [`page=${page - 1}`, ...prevWords.slice(1)];
+      getPages(newWords);
+      console.log(newWords);
+      return newWords;
+    });
   };
   return (
     <Pagination
