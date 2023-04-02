@@ -1,15 +1,13 @@
 import tw from 'tailwind-styled-components';
 import CoffeeCard from '../CoffeeCard';
-import { ReactComponent as Acidity } from '../../assets/coffeecard/body.svg';
 
 interface TastProps {
   taste: string;
 }
 
 const RecommendCard = (props: TastProps) => {
-  const cardcolor = '';
   return (
-    <OuterCard style={{ backgroundColor: cardcolor }}>
+    <OuterCard>
       <TopCard>
         <CoffeeCard taste={props.taste} />
       </TopCard>
