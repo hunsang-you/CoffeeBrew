@@ -5,20 +5,20 @@ import ratingfull from '../../assets/ratingfull.png';
 import ratinghalf from '../../assets/ratinghalf.png';
 import ratingempty from '../../assets/ratingempty.png';
 
-const ReviewBody = tw.div`bg-red-200`;
-const ReviewItems = tw.div`border-4 border-blue-800 flex-col`;
+const ReviewBody = tw.div`min-h-screen flex flex-col mx-auto`;
+const ReviewItems = tw.div`flex-col mx-auto`;
 const Item = tw.div`border-y-4 border-y-brownBorder flex`;
 
-const BeanImg = tw.img`w-40 h-40 border-4 border-white bg-black rounded-full justify-center my-6 mx-4`;
+const BeanImg = tw.img`w-40 h-40 border-4 border-white bg-black rounded-full justify-center my-2 mx-4`;
 
 const DeleteBtn = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500 mt-8`;
 
-const RatingDiv = tw.div``;
+const RatingDiv = tw.div`w-400`;
 
 const Score = tw.img`w-6 `;
 const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
 
-const BeanDescription = tw.div`bg-black text-sm text-nameColor font-bold text-left mt-2 pb-12 pl-6 pr-2s`;
+const ReviewContent = tw.div`w-240 h-60 text-sm text-nameColor font-bold text-left mt-2 pl-6 ml-4  overflow-scroll break-words`;
 
 const userData = {
   향: 1,
@@ -91,6 +91,9 @@ const MyReviewItem = () => {
               marginRight: '20px',
             }}
           >
+            <div style={{ marginTop: '24px', fontWeight: 'bold' }}>
+              2023-04-01
+            </div>
             <BeanImg src={bean} />
             <p
               style={{
@@ -99,6 +102,7 @@ const MyReviewItem = () => {
                 color: '#9A6533',
                 width: '200px',
                 wordBreak: 'break-word',
+                marginBottom: '16px',
               }}
             >
               원두이름
@@ -107,15 +111,19 @@ const MyReviewItem = () => {
 
           <div
             style={{
-              minWidth: 'fit',
-              display: 'flex',
-              flexDirection: 'column',
+              width: '200px',
+              height: '200px',
               marginTop: '5%',
             }}
           >
             {beanScore()}
           </div>
-          <BeanDescription>11111111ddddddddddddddddd1111asd</BeanDescription>
+          <ReviewContent>
+            <div style={{ height: '180px' }}>
+              원두가 맛있어요 원두가 맛있어요 원두가 맛있어요 원두가 맛있어요
+              원두가 맛있어요 원두가 맛있어요
+            </div>
+          </ReviewContent>
         </Item>
       </ReviewItems>
     </ReviewBody>

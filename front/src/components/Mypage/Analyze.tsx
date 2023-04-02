@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import Chart from '../Detail/Chart/apexchart';
+import Chart from '../Detail/Chart/UserChart';
 import { Routes, Route } from 'react-router-dom';
 
 import ratingfull from '../../assets/ratingfull.png';
@@ -10,7 +10,7 @@ import examtype from '../../assets/examtype.png';
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
 const Score = tw.img`w-8`;
-const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24`;
+const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24 cursor-pointer hover:scale-110`;
 const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
 const UserTypeImg = tw.div`w-48 bg-red-200 mx-auto`;
 
@@ -20,6 +20,7 @@ const userData = {
   쓴맛: 3,
   산미: 4,
   바디감: 4.5,
+  총점: 3.5,
 };
 
 const Analyze = () => {
