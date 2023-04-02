@@ -109,7 +109,31 @@ async def getUserRecom(userId: Union[int, None] = None):
     )
 
     result = user_cbcf_recom.get_recom_by_user(
-        0, like_list_read, like_recom_read, item_type="bean"
+        userId, like_list_read, like_recom_read, item_type="bean"
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
+
+
+@app.get(URI_PREFIX + "/user/{userId}/review")
+async def getUserRecom(userId: Union[int, None] = None):
+    print("user_id:{}, type:{}".format(userId, type(userId)))
+
+    review_read = pd.read_csv(
+        path.join(DIR_PATH, "sql_dummy", "sql_review.csv"),
+        low_memory=False,
+        encoding="cp949",
+    )
+    review_recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", "bean_cbf_by_review_recom.csv"),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = user_cbcf_recom.get_recom_by_user(
+        userId, review_read, review_recom_read, "bean"
     )
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
