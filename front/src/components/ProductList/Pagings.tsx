@@ -31,6 +31,7 @@ const Paging = ({ pagination, setPagination }: PropsTypes) => {
       prevPageText={'‹'}
       nextPageText={'›'}
       onChange={handlePageChange}
+      hideDisabled={true}
     />
   );
 };
