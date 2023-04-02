@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { useState } from 'react';
-import bean from '../../assets/bean.png';
+import bean from '../../assets/tempImg/bean.png';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Chart from './Chart/apexchart';
 import { detailType } from './DetailBean';
@@ -14,16 +14,16 @@ const BeanImg1 = tw.img`object-cover mt-10 drop-shadow-xl`;
 const HeartImgLike = tw.div`flex justify-center mt-2`;
 
 // 최상단 우측 설명
-const BeanDesc = tw.div`flex ml-6 border-4 border-brownBorder w-592 mt-10 `;
+const BeanDesc = tw.div`flex ml-6  w-592 mt-10 justify-between`;
 const BeanImgBox = tw.div`w-360`;
 const DescLeft = tw.div`w-2/3 `;
-const BeanName = tw.div`text-left mt-6 ml-6 mr-2 mb-3.5 text-2xl`;
-const BeanCountry = tw.div`text-left ml-6 text-2xl`;
+const BeanName = tw.div`text-left mt-6 ml-6 mr-2 mb-3.5 text-xl font-bold`;
+const BeanCountry = tw.div`text-left ml-6 font-bold`;
 const BeanChart = tw.div`mt-5 mx-auto`;
-const DescRight = tw.div`w-60 my-6 mr-2 ml-1 bg-slate-300`;
-const Description = tw.div`h-80 mx-auto mt-4 overflow-y-auto`;
+const DescRight = tw.div`w-60 my-6 mr-2 ml-1 `;
+const Description = tw.div`h-80 mx-auto mt-4 overflow-y-auto text-left`;
 const CoffeeingNote = tw.div`h-10 font-bold text-sm overflow-scroll break-words text-red-400`;
-const RoastingPoint = tw.div`text-left ml-6 my-2 font-bold`;
+const RoastingPoint = tw.div`text-left ml-6font-bold`;
 const Region = tw.div`w-32 h-10 mr-4 font-bold break-words overflow-scroll`;
 const Rank = tw.div`w-32 h-10 mr-4 font-bold break-words overflow-scroll`;
 
@@ -65,7 +65,7 @@ const BeanInfo = ({ detailBean }: PropsType) => {
           <BeanName> {detailBean?.nameKo} </BeanName>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <BeanCountry> 원산지 : {detailBean?.origin}</BeanCountry>
-            <Region> 지역 : 코케</Region>
+            <Region> 지역 : {detailBean?.region}</Region>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <RoastingPoint>로스팅 : {detailBean?.roastingPoint}</RoastingPoint>

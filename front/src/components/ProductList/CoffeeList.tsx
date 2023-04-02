@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bean from '../../assets/bean.png';
+import bean from '../../assets/tempImg/bean.png';
 import axios from 'axios';
 import { BeanType } from './AllList';
 

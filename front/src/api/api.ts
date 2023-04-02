@@ -37,3 +37,7 @@ const getData = (...params: any) => {
 export const listAPI = {
   getBeans: (...params: any) => getData(...params),
 };
+
+export const reviewAPI = {
+  getBeanReview: (id: number) => api.get(`review/bean/${id}`),
+};
