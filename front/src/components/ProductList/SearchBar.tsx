@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Logo from '../../assets/Coffeebrew.svg';
 import { BeanResponseType } from './AllList';
 import { listAPI } from '../../api/api';
+import { text } from 'stream/consumers';
 // 검색창
 const SearchDiv = tw.div`flex flex-col text-center `;
 const SearchBtn = tw.button`w-20 h-12 bg-black text-white rounded-full mx-4 mt-10`;
@@ -99,7 +100,8 @@ const SearchBar = ({
           newWords = [...newWords, `keywords=${keywordsNuts[i]}`];
         }
       }
-      console.log(newWords);
+      newWords = [...newWords, `keywords=${textWord}`];
+      getPages(newWords);
       return newWords;
     });
     console.log(`keywords=${keywordsFruits[3]}`);
