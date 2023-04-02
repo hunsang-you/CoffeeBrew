@@ -48,11 +48,12 @@ export interface BeanType {
 
 const AllList = () => {
   const [pagination, setPagination] = useState<BeanResponseType | null>(null);
+  const [words, setWords] = useState<string[]>(['page=0']);
 
   useEffect(() => {
     const getLists = async () => {
       await listAPI
-        .getBeans('page=0')
+        .getBeans(...words)
         .then((request) => {
           console.log(request.data.value);
           setPagination(request.data.value);
@@ -64,10 +65,20 @@ const AllList = () => {
 
   return (
     <AllListBg>
-      <SearchBar />
+      <SearchBar
+        pagination={pagination}
+        setPagination={setPagination}
+        setWords={setWords}
+        words={words}
+      />
       {pagination ? <CoffeeList listDatas={pagination?.content} /> : null}
       {pagination ? (
-        <Paging pagination={pagination} setPagination={setPagination} />
+        <Paging
+          pagination={pagination}
+          setPagination={setPagination}
+          setWords={setWords}
+          words={words}
+        />
       ) : null}
     </AllListBg>
   );

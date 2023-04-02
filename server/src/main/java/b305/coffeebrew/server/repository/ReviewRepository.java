@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+
 	List<Review> findByItemTypeAndItemIdx(String itemType, Long itemIdx);
 
 	Page<Review> findByMemberIdx(Member member, Pageable pageable);

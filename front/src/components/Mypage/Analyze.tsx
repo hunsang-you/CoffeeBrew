@@ -2,10 +2,10 @@ import tw from 'tailwind-styled-components';
 import Chart from '../Detail/Chart/UserChart';
 import { Routes, Route } from 'react-router-dom';
 
-import ratingfull from '../../assets/ratingfull.png';
-import ratinghalf from '../../assets/ratinghalf.png';
-import ratingempty from '../../assets/ratingempty.png';
-import examtype from '../../assets/examtype.png';
+import ratingfull from '../../assets/tempImg/ratingfull.png';
+import ratinghalf from '../../assets/tempImg/ratinghalf.png';
+import ratingempty from '../../assets/tempImg/ratingempty.png';
+import examtype from '../../assets/tempImg/examtype.png';
 
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import TextField from '@mui/material/TextField';
 import Logo from '../../assets/Coffeebrew.svg';
+import { BeanResponseType } from './AllList';
+import { listAPI } from '../../api/api';
 // 검색창
 const SearchDiv = tw.div`flex flex-col text-center `;
 const SearchBtn = tw.button`w-20 h-12 bg-black text-white rounded-full mx-4 mt-10`;
@@ -14,27 +16,39 @@ const CheckedKeyword = tw.button`w-20 border-4 border-nameColor bg-nameColor tex
 const KeywordTitle = tw.div`w-20 text-xl font-bold mx-auto my-auto break-words`;
 const KeywordGroup = tw.div`w-592 mx-auto border-4 border-recMachine2 rounded-2xl flex `;
 
-const SearchBar = () => {
+interface PropsTypes {
+  pagination: BeanResponseType | null;
+  setPagination: React.Dispatch<React.SetStateAction<BeanResponseType | null>>;
+  setWords: React.Dispatch<React.SetStateAction<Array<string>>>;
+  words: string[];
+}
+
+const SearchBar = ({
+  pagination,
+  setPagination,
+  setWords,
+  words,
+}: PropsTypes) => {
   interface KeywordState1 {
     [key: string]: boolean;
+    keyword0: boolean;
     keyword1: boolean;
     keyword2: boolean;
     keyword3: boolean;
     keyword4: boolean;
     keyword5: boolean;
     keyword6: boolean;
-    keyword7: boolean;
   }
 
   interface KeywordState2 {
     [key: string]: boolean;
+    keyword0: boolean;
     keyword1: boolean;
     keyword2: boolean;
     keyword3: boolean;
     keyword4: boolean;
     keyword5: boolean;
     keyword6: boolean;
-    keyword7: boolean;
   }
 
   interface MoreState {
@@ -53,34 +67,64 @@ const SearchBar = () => {
   const [textWord, setTextWord] = useState('');
   const ChangeText = (e: any) => {
     setTextWord(e.target.value);
-    console.log(textWord);
   };
   // 단어 전송
   const SendWord = (e: any) => {
     // 엔터 and 검색 버튼 클릭시 전송
-    console.log(textWord);
+    const getPages = async (words: string[]) => {
+      await listAPI
+        .getBeans(...words)
+        .then((request) => {
+          setPagination(request.data.value);
+          console.log(request.data.value);
+        })
+        .catch((e) => console.log(e));
+    };
+    setWords((prevWords) => {
+      let newWords = [`page=${0}`];
+      // isKeywordState1.map((data: any) => {
+      //   return console.log(data);
+      // });
+      const keys1 = Object.keys(isKeywordState1);
+      for (let i = 0; i < keys1.length; i++) {
+        const key = keys1[i];
+        if (isKeywordState1[key]) {
+          newWords = [...newWords, `keywords=${keywordsFruits[i]}`];
+        }
+      }
+      const keys2 = Object.keys(isKeywordState2);
+      for (let i = 0; i < keys2.length; i++) {
+        const key = keys2[i];
+        if (isKeywordState2[key]) {
+          newWords = [...newWords, `keywords=${keywordsNuts[i]}`];
+        }
+      }
+      console.log(newWords);
+      return newWords;
+    });
+    console.log(`keywords=${keywordsFruits[3]}`);
   };
 
   // 상세검색 키워드 관리
   // 키워드 on off
   const [isKeywordState1, setIsKeywordState1] = useState<KeywordState1>({
+    keyword0: false,
     keyword1: false,
     keyword2: false,
     keyword3: false,
     keyword4: false,
     keyword5: false,
     keyword6: false,
-    keyword7: false,
   });
 
   const [isKeywordState2, setIsKeywordState2] = useState<KeywordState2>({
+    keyword0: false,
     keyword1: false,
     keyword2: false,
     keyword3: false,
     keyword4: false,
     keyword5: false,
     keyword6: false,
-    keyword7: false,
   });
 
   const handleKeyword1 = (keyword: keyof KeywordState1 | string): void => {
@@ -120,24 +164,31 @@ const SearchBar = () => {
   };
 
   // 예시
-  const keywordsFruits = {
-    1: '감귤',
-    2: '사과',
-    3: '열대과일',
-    4: '베리',
-    5: '말린 과일',
-    6: '멜론',
-    7: '포도',
+  type KeywordsFruits = {
+    [key: number]: string;
   };
 
-  const keywordsNuts = {
-    1: '아몬드',
-    2: '헤이즐넛',
-    3: '땅콩',
-    4: '보리',
-    5: '호밀',
-    6: '스모키',
-    7: '맥아',
+  const keywordsFruits: KeywordsFruits = {
+    0: '감귤',
+    1: '사과',
+    2: '열대과일',
+    3: '베리',
+    4: '말린 과일',
+    5: '멜론',
+    6: '포도',
+  };
+  type KeywordsNuts = {
+    [key: number]: string;
+  };
+
+  const keywordsNuts: KeywordsNuts = {
+    0: '아몬드',
+    1: '헤이즐넛',
+    2: '땅콩',
+    3: '보리',
+    4: '호밀',
+    5: '스모키',
+    6: '맥아',
   };
 
   // 첫번째(keywordsFruits) 렌더링
@@ -263,7 +314,7 @@ const SearchBar = () => {
         <img src={Logo} alt="Logo" width={100} style={{ marginTop: '24px' }} />
         <TextField
           id="outlined-basic"
-          label="원두 혹은 원산지를 입력"
+          label="원두 이름 입력"
           variant="outlined"
           style={{ width: '500px', marginTop: '2.5rem' }}
           onChange={ChangeText}
