@@ -63,4 +63,7 @@ public interface Msg {
 	String FAIL_LIKE_TOGGLE = "좋아요 추가/토글에 실패하였습니다.";
 	String SUCCESS_LIKE_MYLIST = "나의 좋아요 리스트 호출에 성공하였습니다.";
 	String FAIL_LIKE_MYLIST = "나의 좋아요 리스트 호출에 실페하였습니다.";
+
+	String SUCCESS_BEAN_RECOM = "원두 추천 조회에 성공했습니다.";
+	String FAIL_BEAN_RECOM = "원두 추천 조회에 성공했습니다.";
 }
