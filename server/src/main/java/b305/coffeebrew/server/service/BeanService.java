@@ -7,20 +7,17 @@ import b305.coffeebrew.server.entity.BeanDetail;
 import b305.coffeebrew.server.entity.BeanScore;
 import b305.coffeebrew.server.exception.BeanNotFoundException;
 import b305.coffeebrew.server.exception.ErrorCode;
-import b305.coffeebrew.server.exception.MyPageHistoryException;
-import b305.coffeebrew.server.repository.*;
+import b305.coffeebrew.server.repository.BeanDetailRepository;
+import b305.coffeebrew.server.repository.BeanRepository;
+import b305.coffeebrew.server.repository.BeanScoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Copy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +42,7 @@ public class BeanService {
         BeanDetail beanDetail = beanDetailRepository.findByBeanIdx(bean);
         BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
 
-        if (bean==null || beanDetail==null || beanScore==null) {
+        if (bean == null || beanDetail == null || beanScore == null) {
             throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
         }
 
@@ -91,16 +88,17 @@ public class BeanService {
                 .coffeeingNote(coffeeingNote)
                 .build();
     }
+
     public Page<BeanResDTO> searchBeans(List<String> keywords, Pageable pageable) {
         if (CollectionUtils.isEmpty(keywords)) {
             return beanRepository.findAll(pageable).map(BeanResDTO::of);
         } else {
-            Set<Bean> result = new HashSet<>();
+            Set<Bean> result = new TreeSet<>(Comparator.comparing(Bean::getNameKo).thenComparing(Bean::getNameEn).thenComparing(Bean::getSummary));
             for (String keyword : keywords) {
                 String processedKeyword = "%" + keyword.toLowerCase() + "%";
                 result.addAll(beanRepository.findBeansByKeyword(processedKeyword, pageable).getContent());
             }
-            return new PageImpl<>(new ArrayList<>(result)).map(BeanResDTO::of);
+            return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(BeanResDTO::of);
         }
     }
 }
