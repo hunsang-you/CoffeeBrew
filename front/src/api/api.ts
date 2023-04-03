@@ -55,3 +55,10 @@ export const surveyAPI = {
   postSurvey: (surveyli: number[]) =>
     api.post(`/api/v1/survey`, { surveyli: surveyli }),
 };
+
+export const memberAPI = {
+  memberInfo: () => api.get(`member/profile`),
+  memberLikesBeans: () => api.get(`member/like/mylist?itemType=bean`),
+  memberLiskeCapsules: () => api.get(`member/like/mylist?itemType=capsule`),
+  memberReviews: (pages: string) => api.get(`member/review?${pages}`),
+};
