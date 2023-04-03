@@ -6,7 +6,7 @@ import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { reviewType } from './DetailBean';
-import { detailLikeAPI } from '../../api/api';
+import { detailLikeAPI, reviewAPI } from '../../api/api';
 
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
@@ -60,22 +60,9 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
   const moveReview = () => {
     if (reviewRef.current) {
       const location: number = reviewRef.current.offsetTop;
-      window.scrollTo({ top: location - 80, behavior: 'smooth' });
+      window.scrollTo({ top: location - 100, behavior: 'smooth' });
     }
   };
-
-  // 리뷰 좋아요 API
-  const { reviewId } = useParams() as { reviewId: string };
-  useEffect(() => {
-    const detailBeanLike = async () => {
-      await detailLikeAPI
-        .beanLike(Number(reviewId))
-        .then((request) => {
-          console.log('bean_like api 연결확인 ::', request.data);
-        })
-        .catch((e) => console.log(e));
-    };
-  });
 
   return (
     <div>
@@ -113,6 +100,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             단맛: data.sweetness,
             바디감: data.body,
             쓴맛: data.bitterness,
+            총점: data.overall,
           };
           const beanScore = () => {
             const scoreItem = [];
@@ -122,12 +110,12 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               // score[0] = 기준, score[1] = 점수
               // console.log(score); //  ['향', 5]
               // .5인지 판별
-              const isHalfCheck = (score[1] - Math.floor(score[1])) / 2 > 0;
+              const isHalfCheck = score[1] / 2 - Math.floor(score[1] / 2) > 0;
 
               // 점수만큼 가득찬 이미지
               const scoreRatingFull = [];
               if (Number.isInteger(score[1] / 2)) {
-                for (let k = 0; k < score[1]; k++) {
+                for (let k = 0; k < score[1] / 2; k++) {
                   scoreRatingFull.push(<Score src={ratingfull} key={k} />);
                 }
               } else {
@@ -162,7 +150,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                   {scoreRatingEmpty}
                 </ScoreTitle>,
               );
-              console.log('ReviewList : ', scoreItem);
             }
             return scoreItem;
           };
@@ -172,7 +159,14 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               <ReviewItem>
                 <ReviewName>
                   <ReviewCreated>
-                    {data.createDate ? data.createDate : '정보없음'}
+                    {data.createDate[0] +
+                      '-' +
+                      data.createDate[1] +
+                      '-' +
+                      data.createDate[2] +
+                      ' ' +
+                      data.createDate[3] +
+                      '시'}
                   </ReviewCreated>
                   {reviewLike ? (
                     <AiFillHeart
@@ -203,7 +197,13 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             </div>
           );
         })}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
           <MoreBtn
             style={{
               marginBottom: '12px',
