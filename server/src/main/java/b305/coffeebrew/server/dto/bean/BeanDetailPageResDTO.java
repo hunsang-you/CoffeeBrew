@@ -1,6 +1,6 @@
 package b305.coffeebrew.server.dto.bean;
 
-import b305.coffeebrew.server.config.utils.LinkDTO;
+import b305.coffeebrew.server.dto.naverShopping.LinkDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

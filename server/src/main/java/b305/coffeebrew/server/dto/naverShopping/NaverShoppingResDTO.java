@@ -1,4 +1,4 @@
-package b305.coffeebrew.server.config.utils;
+package b305.coffeebrew.server.dto.naverShopping;
 
 import lombok.*;
 
