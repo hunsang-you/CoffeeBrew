@@ -83,9 +83,6 @@ const SearchBar = ({
     };
     setWords((prevWords) => {
       let newWords = [`page=${0}`];
-      // isKeywordState1.map((data: any) => {
-      //   return console.log(data);
-      // });
       const keys1 = Object.keys(isKeywordState1);
       for (let i = 0; i < keys1.length; i++) {
         const key = keys1[i];
@@ -104,7 +101,6 @@ const SearchBar = ({
         newWords = [...newWords, `keywords=${textWord}`];
       }
 
-      console.log(`test1: ${newWords}`);
       getPages(newWords);
       return newWords;
     });
