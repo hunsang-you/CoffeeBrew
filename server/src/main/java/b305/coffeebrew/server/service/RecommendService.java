@@ -88,6 +88,19 @@ public class RecommendService {
         return getRecomsDetail(response);
     }
 
+    /**
+     * 스케쥴러 업데이트
+     **/
+    public void recommendUpdate() {
+        log.info("call Rest URL - " + fastapiURL);
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/update";
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+        log.info("Update response = {}", response);
+    }
+
     private List<BeanDetailPageResDTO> getRecomsDetail(HttpEntity<String> response) {
         // JSON Parsing
         ObjectMapper objectMapper = new ObjectMapper();
@@ -109,4 +122,5 @@ public class RecommendService {
 
         return beanDTOList;
     }
+
 }
