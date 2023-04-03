@@ -55,7 +55,7 @@ public class RecommendService {
         log.info(fastapiURL);
 
         // Request
-        HttpEntity<String> response = restTemplate.getForEntity(fastapiURL + "/api/recom/bean/" + String.valueOf(beanId), String.class);
+        HttpEntity<String> response = restTemplate.getForEntity(fastapiURL + "/bean/" + String.valueOf(beanId), String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
