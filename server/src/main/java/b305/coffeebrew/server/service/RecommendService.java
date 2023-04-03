@@ -42,6 +42,8 @@ public class RecommendService {
 
     private static final String METHOD_NAME = RecommendService.class.getName();
 
+
+    private final BeanService beanService;
     private final BeanRepository beanRepository;
     private final BeanDetailRepository beanDetailRepository;
     private final BeanScoreRepository beanScoreRepository;
@@ -49,7 +51,7 @@ public class RecommendService {
     @Value(value = "${user.url.fastapi}")
     public String fastapiURL;
 
-    public List<BeanResDTO> recommendBeans(long beanId) {
+    public List<BeanDetailPageResDTO> recommendBeans(long beanId) {
         log.info(METHOD_NAME + "- recommendBeans");
         RestTemplate restTemplate = new RestTemplate();
         log.info(fastapiURL);
@@ -57,22 +59,24 @@ public class RecommendService {
         // Request
         HttpEntity<String> response = restTemplate.getForEntity(fastapiURL + "/bean/" + String.valueOf(beanId), String.class);
 
+        // JSON Parsing
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 
-        List<RecomResDTO> recomResDTOList = null;
+        List<RecomResDTO> recomResDTOList;
         try {
-            recomResDTOList = objectMapper.readValue(response.getBody(),  new TypeReference<List<RecomResDTO>>() {});
+            recomResDTOList = objectMapper.readValue(response.getBody(), new TypeReference<List<RecomResDTO>>() {
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        List<BeanResDTO> beanResDTOList = new ArrayList<>();
-        for(RecomResDTO recomResDTO : recomResDTOList) {
-            log.info("testLog - " + recomResDTO.toString());
-            beanResDTOList.add(BeanResDTO.of(beanRepository.findByIdx(recomResDTO.getId())));
+        List<BeanDetailPageResDTO> beanDTOList = new ArrayList<>();
+        for (RecomResDTO recomResDTO : recomResDTOList) {
+            // log.info("recomResDTO - " + recomResDTO.toString());
+            beanDTOList.add(beanService.getBeanDetail(recomResDTO.getId()));
         }
 
-        return beanResDTOList;
+        return beanDTOList;
     }
 }
