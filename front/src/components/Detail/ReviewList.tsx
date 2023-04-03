@@ -159,13 +159,13 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               <ReviewItem>
                 <ReviewName>
                   <ReviewCreated>
-                    {data.createDate[0] +
+                    {data.createdDate[0] +
                       '-' +
-                      data.createDate[1] +
+                      data.createdDate[1] +
                       '-' +
-                      data.createDate[2] +
+                      data.createdDate[2] +
                       ' ' +
-                      data.createDate[3] +
+                      data.createdDate[3] +
                       '시'}
                   </ReviewCreated>
                   {reviewLike ? (
