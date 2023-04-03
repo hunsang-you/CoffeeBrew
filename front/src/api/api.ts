@@ -27,6 +27,7 @@ export const loginAPI = {
 
 export const detailAPI = {
   getBean: (id: number) => api.get(`/item/bean/${id}`),
+  beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
 };
 
 //가변인자 보내기
@@ -76,8 +77,4 @@ export const mainAPI = {
 export const surveyAPI = {
   postSurvey: (surveyli: number[]) =>
     api.post(`/api/v1/survey`, { surveyli: surveyli }),
-};
-
-export const detailLikeAPI = {
-  beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
 };
