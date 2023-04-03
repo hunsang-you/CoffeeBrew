@@ -77,8 +77,8 @@ const Page2Carousel = ({ rec }: strProps) => {
       try {
         const beanRes = await mainAPI.getBeanRecom(beanId);
         const capcullRes = await mainAPI.getcapcullRecom(beanId);
-        const beanData = beanRes.data;
-        const capcullData = capcullRes.data;
+        const beanData = beanRes.data.value;
+        const capcullData = capcullRes.data.value;
         setBeanRe(cutArr(beanData));
         setCapcullRe(cutArr(capcullData));
         console.log(beanData);
