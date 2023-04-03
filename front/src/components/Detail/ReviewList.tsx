@@ -194,7 +194,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                     <ReviewStandardTop>
                       <div>{beanScore()}</div>
                     </ReviewStandardTop>
-
                     <ReviewArticle>
                       <ReviewContent>{data.content}</ReviewContent>
                     </ReviewArticle>
@@ -206,6 +205,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
         ) : (
           <ReviewItem> 아직 리뷰가 없어요 </ReviewItem>
         )}
+
         <div
           style={{
             display: 'flex',

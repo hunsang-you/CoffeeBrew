@@ -2,6 +2,9 @@ package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
 import b305.coffeebrew.server.dto.bean.BeanResDTO;
+import b305.coffeebrew.server.dto.naverShopping.LinkDTO;
+import b305.coffeebrew.server.dto.naverShopping.NaverShoppingItemDTO;
+import b305.coffeebrew.server.dto.naverShopping.NaverShoppingResDTO;
 import b305.coffeebrew.server.entity.Bean;
 import b305.coffeebrew.server.entity.BeanDetail;
 import b305.coffeebrew.server.entity.BeanScore;
@@ -12,19 +15,26 @@ import b305.coffeebrew.server.repository.BeanRepository;
 import b305.coffeebrew.server.repository.BeanScoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class BeanService {
 
@@ -33,6 +43,18 @@ public class BeanService {
     private final BeanRepository beanRepository;
     private final BeanDetailRepository beanDetailRepository;
     private final BeanScoreRepository beanScoreRepository;
+    private final RestTemplate restTemplate;
+    private final String clientId;
+    private final String clientSecret;
+
+    public BeanService(BeanRepository beanRepository, BeanDetailRepository beanDetailRepository, BeanScoreRepository beanScoreRepository, RestTemplate restTemplate, @Value("${naver.shopping.client-id}") String clientId, @Value("${naver.shopping.client-secret}") String clientSecret) {
+        this.beanRepository = beanRepository;
+        this.beanDetailRepository = beanDetailRepository;
+        this.beanScoreRepository = beanScoreRepository;
+        this.restTemplate = restTemplate;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+    }
 
     @Transactional
     public BeanDetailPageResDTO getBeanDetail(Long beanId) {
@@ -68,6 +90,8 @@ public class BeanService {
         String coffeeingNote = beanScore.getCoffeeingNote();
         String roastingPoint = beanScore.getRoastingPoint();
 
+        Set<LinkDTO> linkDTOSet = searchNaverShopping(nameKo);
+
         return BeanDetailPageResDTO.builder()
                 .nameKo(nameKo)
                 .nameEn(nameEn)
@@ -88,6 +112,7 @@ public class BeanService {
                 .body(body)
                 .coffeeingNote(coffeeingNote)
                 .roastingPoint(roastingPoint)
+                .linkDTO(linkDTOSet)
                 .build();
     }
 
@@ -102,5 +127,60 @@ public class BeanService {
             }
             return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(BeanResDTO::of);
         }
+    }
+
+    public Set<LinkDTO> searchNaverShopping(String query) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Naver-Client-Id", clientId);
+        headers.add("X-Naver-Client-Secret", clientSecret);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("query", query);
+
+        log.info("naver query: {}", query);
+
+        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<NaverShoppingResDTO> response = restTemplate.exchange(
+                "https://openapi.naver.com/v1/search/shop.json?query={query}",
+                HttpMethod.GET,
+                requestEntity,
+                NaverShoppingResDTO.class,
+                params
+        );
+
+        NaverShoppingResDTO naverShoppingResponse = response.getBody();
+
+        if (naverShoppingResponse == null || naverShoppingResponse.getItems().isEmpty()) {
+            return new HashSet<>();
+        }
+
+        Set<LinkDTO> result = new LinkedHashSet<>();
+        Set<String> mallNames = new HashSet<>();
+
+        for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
+            String mallName = item.getMallName();
+            log.info("naver mallname: {}", mallName);
+
+            // 중복된 mallname이면 set에 추가하지 않음
+            if (mallNames.contains(mallName)) {
+                continue;
+            }
+
+            String link = item.getLink();
+            log.info("naver link: {}", link);
+            String image = item.getImage();
+            log.info("naver image: {}", image);
+
+            result.add(LinkDTO.of(mallName, link, image));
+            mallNames.add(mallName);
+
+            // set size가 5가 되면 수집을 멈추고 return
+            if (result.size() == 5) {
+                return result;
+            }
+        }
+
+        return result;
     }
 }

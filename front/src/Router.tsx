@@ -69,7 +69,7 @@ const Router = ({ setIsFooter }: IsFooterType) => {
         }
       />
       <Route
-        path="/coffeelist"
+        path="/coffeelist/*"
         element={
           <Suspense fallback={<Loading />}>
             <ContentContainer>

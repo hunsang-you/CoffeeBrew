@@ -1,9 +1,13 @@
 package b305.coffeebrew.server.dto.bean;
 
+import b305.coffeebrew.server.dto.naverShopping.LinkDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,8 +33,10 @@ public class BeanDetailPageResDTO {
 	private int body;
 	private String coffeeingNote;
 	private String roastingPoint;
+	private Set<LinkDTO> linkDTO = new HashSet<>(); // 기본값으로 빈 Set을 할당
+
 	@Builder
-	public BeanDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint) {
+	public BeanDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
 		this.nameKo = nameKo;
 		this.nameEn = nameEn;
 		this.summary = summary;
@@ -50,11 +56,10 @@ public class BeanDetailPageResDTO {
 		this.body = body;
 		this.coffeeingNote = coffeeingNote;
 		this.roastingPoint = roastingPoint;
+		this.linkDTO = linkDTO;
 	}
 
-
-
-	public static BeanDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint) {
+	public static BeanDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
 		return BeanDetailPageResDTO.builder()
 				.nameKo(nameKo)
 				.nameEn(nameEn)
@@ -75,6 +80,7 @@ public class BeanDetailPageResDTO {
 				.body(body)
 				.coffeeingNote(coffeeingNote)
 				.roastingPoint(roastingPoint)
+				.linkDTO(linkDTO)
 				.build();
 	}
 }
