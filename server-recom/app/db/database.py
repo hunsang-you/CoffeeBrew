@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MYSQL_URL_ENV = os.getenv("datasource")
-MYSQL_SCHEMA_ENV = os.getenv("schema")
+MYSQL_URL_ENV = "j8b305.p.ssafy.io"
+MYSQL_SCHEMA_ENV = "devdb"
 MYSQL_USERNAME_ENV = os.getenv("dbUser")
 MYSQL_PASSWORD_ENV = os.getenv("dbPwd")
 
