@@ -40,7 +40,9 @@ public enum ErrorCode {
     MYPAGE_HISTORY_ERROR(500, "거래 내역 조회 에러입니다."),
 
     BEAN_NOT_FOUND(404, "원두 정보를 찾을 수 없습니다"),
-    CAPSULE_NOT_FOUND(404, "캡슐 정보를 찾을 수 없습니다");
+    CAPSULE_NOT_FOUND(404, "캡슐 정보를 찾을 수 없습니다"),
+
+    RECOM_SERVER_ERROR(500, "추천 서버에 에러가 발생했습니다.");
 
     private final int status;
     private final String message;
