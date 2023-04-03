@@ -39,8 +39,8 @@ const CoffeeCard = ({ propsdata }: propsData) => {
   const cardTitle = propsData.region + ' ' + propsData.rank;
   const cardOrigin = propsData.origin;
   const cardNote = propsData.coffeeingNote;
-  let cardImg: string = '';
-  let cardBg: string = 'white';
+  const [cardImg, setCardImg] = useState('');
+  const [cardBg, setCardBg] = useState('white');
 
   const peakTaste = () => {
     const acidity = propsData.acidity;
@@ -54,27 +54,27 @@ const CoffeeCard = ({ propsdata }: propsData) => {
       maxIndex
     ];
     setTaste(maxVar);
+    console.log(maxVar);
+    if (maxVar === 'acidity') {
+      setCardImg(Acidity);
+      setCardBg('#FEC200');
+    } else if (maxVar === 'bitter') {
+      setCardImg(Bitter);
+      setCardBg('#ACA571');
+    } else if (maxVar === 'body') {
+      setCardImg(Body);
+      setCardBg('#A33A1D');
+    } else if (maxVar === 'flavor') {
+      setCardImg(Flavor);
+      setCardBg('#938EAE');
+    } else if (maxVar === 'sweetness') {
+      setCardImg(Sweetness);
+      setCardBg('#DB7624');
+    }
   };
   useEffect(() => {
     peakTaste();
-    if (taste === 'acidity') {
-      cardImg = Acidity;
-      cardBg = '#FEC200';
-    } else if (taste === 'bitter') {
-      cardImg = Bitter;
-      cardBg = '#ACA571';
-    } else if (taste === 'body') {
-      cardImg = Body;
-      cardBg = '#A33A1D';
-    } else if (taste === 'flavor') {
-      cardImg = Flavor;
-      cardBg = '#938EAE';
-    } else if (taste === 'sweetness') {
-      cardImg = Sweetness;
-      cardBg = '#DB7624';
-    }
   }, []);
-
   return (
     <OutDiv style={{ backgroundColor: cardBg }}>
       <InnerDiv>
@@ -83,7 +83,6 @@ const CoffeeCard = ({ propsdata }: propsData) => {
       <UnderDiv>
         <UnTitle>{cardTitle}</UnTitle>
         <UnContent>{cardOrigin}</UnContent>
-        <UnContent>{cardNote}</UnContent>
       </UnderDiv>
     </OutDiv>
   );
@@ -91,9 +90,9 @@ const CoffeeCard = ({ propsdata }: propsData) => {
 
 export default CoffeeCard;
 
-const OutDiv = tw.div`h-2/6 p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
+const OutDiv = tw.div`w-1/6 h-2/6 max-h-1/6 min-h-2/6 p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`w-full`;
 const ImgDiv = tw.img`w-full`;
 const UnderDiv = tw.div`p-3 flex flex-col justify-end`;
-const UnTitle = tw.div`w-full text-end text-2xl`;
+const UnTitle = tw.div`w-full text-end text-xl`;
 const UnContent = tw.div`w-full text-end text-xl`;
