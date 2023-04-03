@@ -43,6 +43,13 @@ export const reviewAPI = {
   getBeanReview: (id: number) => api.get(`review/bean/${id}`),
 };
 
+// 메인페이지
+export const mainAPI = {
+  getBeanRecom: (beanId: number) => api.get(`/api/v1/recom/bean/${beanId}`),
+  getcapcullRecom: (beanId: number) => api.get(`/api/v1/recom/bean/${beanId}`),
+};
+
+// 설문조사
 export const surveyAPI = {
   postSurvey: (surveyli: number[]) =>
     api.post(`/api/v1/survey`, { surveyli: surveyli }),
