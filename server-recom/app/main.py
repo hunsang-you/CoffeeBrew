@@ -18,47 +18,69 @@ from pydantic import BaseModel
 from .recom import bean_cbf_recom
 from .recom import user_cbcf_recom
 
+from sqlalchemy.orm import Session
+
+from .db import crud
+from .db import model
+
+# from .database.model.Bean import Bean, Bean_detail, Bean_score
+# from .database.model.Capsule import Capsule, Capsule_detail, Capsule_score
+# from .database.model.Member import Member
+# from .database.model.Review import Review
+# from .database.model.LikeList import LikeList
+from .db.database import engine, SessionLocal, Base
+
 DIR_PATH = path.join(".", "data")
 
-recom_data = []
+# # FastAPI lifespan
+# # FastAPI가 구동될 때 initialization 해야 할 영역을 기술
+# # yield 이후에 적히는 구문들은 FastAPI가 종료 될 때 destruction 해야 할 영역을 기술
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     # Load Data
+#     global data
+#     data = load_data()
+#     print(data)
+
+#     yield
+#     recom_data.clear()
 
 
-# bean(원두)에 관한 추천 정보 csv파일을 불러오는 메소드
-# TODO: csv가 아닌 sql을 통해서 데이터를 로드하는 코드로 수정해야함
-def load_bean_recom_data():
-    df = pd.DataFrame()
+Base.metadata.create_all(bind=engine)
 
-    with open(
-        path.join(DIR_PATH, "output", "bean_cbf_recom.csv"), encoding="UTF-8"
-    ) as f:
-        df = pd.read_csv(f)
-        print("bean_cbf_recom loaded!!")
-    return df
+# app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 
-# FastAPI lifespan
-# FastAPI가 구동될 때 initialization 해야 할 영역을 기술
-# yield 이후에 적히는 구문들은 FastAPI가 종료 될 때 destruction 해야 할 영역을 기술
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print(path.join(DIR_PATH, "output", "bean_cbf_recom.csv"))
-
-    # Load Data
-    global recom_data
-    recom_data = load_bean_recom_data()
-    print(recom_data.head(1))
-
-    yield
-    recom_data.clear()
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-app = FastAPI(lifespan=lifespan)
-
-
+# root endpoint
 @app.get("/")
 async def root():
     pass
     return {"message": "Hello FastAPI !!"}
+
+
+# db connect check
+@app.get("/db-check")
+async def checkDB(db: Session = Depends(get_db)):
+    db_check = crud.get_many(db, model.Bean)
+    return db_check
+
+
+@app.get("/db-check/{idx}")
+async def checkDB(idx: Union[int, None] = None, db: Session = Depends(get_db)):
+    db_check = crud.get_once(db, model.Bean, idx)
+    if db_check is None:
+        raise HTTPException(status_code=404, detail="DB connect check failed")
+    return db_check
 
 
 # cbf 기반 원두 추천 알고리즘 호출
@@ -153,18 +175,18 @@ async def updateRecom():
     return {"message": "call /update"}
 
 
-@app.get("/update/bean")
-async def updateBeanRecom(type: Union[str, None] = "status"):
-    global recom_data
+# @app.get("/update/bean")
+# async def updateBeanRecom(type: Union[str, None] = "status"):
+#     global recom_data
 
-    if type == "keyword":
-        bean_cbf_recom.calc_bean_recom_by_keyword(DIR_PATH)
-        recom_data = load_bean_recom_data()
-        return {"message": "update keyword-based recommendation list"}
-    else:
-        bean_cbf_recom.calc_bean_recom_by_status(DIR_PATH)
-        recom_data = load_bean_recom_data()
-        return {"message": "update status-based recommendation list"}
+#     if type == "keyword":
+#         bean_cbf_recom.calc_bean_recom_by_keyword(DIR_PATH)
+#         recom_data = load_bean_recom_data()
+#         return {"message": "update keyword-based recommendation list"}
+#     else:
+#         bean_cbf_recom.calc_bean_recom_by_status(DIR_PATH)
+#         recom_data = load_bean_recom_data()
+#         return {"message": "update status-based recommendation list"}
 
 
 if __name__ == "__main__":
