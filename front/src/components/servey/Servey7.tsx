@@ -23,7 +23,7 @@ interface PropsType {
 }
 
 const Servey7 = ({ page, setPage, select, setSelect }: PropsType) => {
-  const sex: objtype[] = [
+  const fruit: objtype[] = [
     { id: 6, idx: 1, title: '사과, 배', img: apple },
     { id: 6, idx: 2, title: '체리, 복숭아', img: peachcherry },
     { id: 6, idx: 3, title: '딸기, 블루베리', img: berry },
@@ -35,7 +35,7 @@ const Servey7 = ({ page, setPage, select, setSelect }: PropsType) => {
     <OutDiv>
       <CardTitle>좋아하는 과일이 무엇인가요?</CardTitle>
       <Card>
-        {sex.map((data: objtype, i) => {
+        {fruit.map((data: objtype, i) => {
           return (
             <SelectCard
               key={i}
