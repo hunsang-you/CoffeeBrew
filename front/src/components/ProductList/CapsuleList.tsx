@@ -1,13 +1,13 @@
 import tw from 'tailwind-styled-components';
 import { useState, useEffect } from 'react';
-import SearchBar from './SearchBar';
-import CoffeeList from './CoffeeList';
-import Paging from './Pagings';
+import CapsuleSearchBar from './CapsuleSearchBar';
+import CapsuleListShow from './CapsuleListShow';
+import CapsulePaging from './CapsulePagings';
 import { listAPI } from '../../api/api';
 const AllListBg = tw.div`flex-col bg-background select-none`;
 
-export interface BeanResponseType {
-  content: BeanType[];
+export interface CapsuleResponseType {
+  content: CapsuleType[];
   pageable: {
     sort: {
       empty: boolean;
@@ -35,7 +35,7 @@ export interface BeanResponseType {
   empty: boolean;
 }
 
-export interface BeanType {
+export interface CapsuleType {
   idx: number;
   nameKo: string;
   nameEn: string;
@@ -44,14 +44,15 @@ export interface BeanType {
   userGrade: number | null;
 }
 
-const AllList = () => {
-  const [pagination, setPagination] = useState<BeanResponseType | null>(null);
+const CapsuleList = () => {
+  const [pagination, setPagination] = useState<CapsuleResponseType | null>(
+    null,
+  );
   const [words, setWords] = useState<string[]>(['page=0']);
-
   useEffect(() => {
     const getLists = async () => {
       await listAPI
-        .getBeans(...words)
+        .getCapsules(...words)
         .then((request) => {
           console.log(request.data.value);
           setPagination(request.data.value);
@@ -62,16 +63,16 @@ const AllList = () => {
   }, []);
 
   return (
-    <AllListBg style={{ minHeight: '1300px' }}>
-      <SearchBar
+    <AllListBg>
+      <CapsuleSearchBar
         pagination={pagination}
         setPagination={setPagination}
         setWords={setWords}
         words={words}
       />
-      {pagination ? <CoffeeList listDatas={pagination?.content} /> : null}
+      {pagination ? <CapsuleListShow listDatas={pagination?.content} /> : null}
       {pagination ? (
-        <Paging
+        <CapsulePaging
           pagination={pagination}
           setPagination={setPagination}
           setWords={setWords}
@@ -82,4 +83,4 @@ const AllList = () => {
   );
 };
 
-export default AllList;
+export default CapsuleList;

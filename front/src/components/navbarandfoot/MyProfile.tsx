@@ -3,6 +3,7 @@ import highlands from '../../assets/ethiopiahighlands.webp';
 import ProfileDropDown from './ProfileDropDown';
 import { useState, useRef, useEffect } from 'react';
 import { loginAPI } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 interface isClickType {
   isClick: boolean;
@@ -11,6 +12,7 @@ interface isClickType {
 
 const MyProfile = ({ isClick, setIsClick }: isClickType) => {
   const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -39,7 +41,14 @@ const MyProfile = ({ isClick, setIsClick }: isClickType) => {
       </div>
       {isClick && (
         <ProfileDropDown setIsClick={setIsClick}>
-          <div className="mb-3 hover:text-mainColorOrange">마이페이지</div>
+          <div
+            className="mb-3 hover:text-mainColorOrange"
+            onClick={() => {
+              navigate('/mypage');
+            }}
+          >
+            마이페이지
+          </div>
           <div
             className="pb-4 hover:text-mainColorOrange"
             onClick={() => {

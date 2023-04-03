@@ -95,7 +95,7 @@ const Navbar = () => {
                   : 'text-mainColorBrown'
               }`}
               onClick={() => {
-                navigate('/coffeelist');
+                navigate('/coffeelist/bean');
                 setIsClick(false);
                 setMenuDropDownOpen(false);
               }}

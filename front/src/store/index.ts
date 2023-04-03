@@ -16,6 +16,24 @@ import {
 
 import storage from 'redux-persist/lib/storage';
 
+interface MemberInfoType {
+  hashcode: string | null;
+  memberEmail: string | null;
+  nickname: string | null;
+  profileImg: string | null;
+  snsType: string | null;
+}
+
+const memberInfoSlice = createSlice({
+  name: 'memberInfo',
+  initialState: null as MemberInfoType | null,
+  reducers: {
+    setMemberInfo: (state, action: PayloadAction<MemberInfoType | null>) => {
+      return action.payload;
+    },
+  },
+});
+
 const navBarSlice = createSlice({
   name: 'navbar',
   initialState: '',
@@ -43,6 +61,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   navbar: navBarSlice.reducer,
   login: loginSlice.reducer,
+  memberInfo: memberInfoSlice.reducer,
 }); // combineReducers를 통해 따로 rootReducer 만들어준다.
 const persistedReducer = persistReducer(persistConfig, rootReducer); // 그리고 설정해놓은 local storage
 export const store = configureStore({
@@ -61,3 +80,4 @@ export type AppDispatch = typeof store.dispatch;
 
 export const { setNavbar } = navBarSlice.actions;
 export const { setLogin } = loginSlice.actions;
+export const { setMemberInfo } = memberInfoSlice.actions;
