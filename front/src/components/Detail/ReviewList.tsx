@@ -210,7 +210,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            marginLeft: '40$',
+            marginLeft: '40%',
           }}
         >
           <MoreBtn
