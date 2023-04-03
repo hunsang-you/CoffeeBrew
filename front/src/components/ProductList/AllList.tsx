@@ -62,7 +62,7 @@ const AllList = () => {
   }, []);
 
   return (
-    <AllListBg>
+    <AllListBg style={{ minHeight: '1300px' }}>
       <SearchBar
         pagination={pagination}
         setPagination={setPagination}

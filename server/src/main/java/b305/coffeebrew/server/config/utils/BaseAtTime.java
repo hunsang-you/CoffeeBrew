@@ -30,5 +30,6 @@ public class BaseAtTime {
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 }
