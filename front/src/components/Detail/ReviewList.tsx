@@ -111,7 +111,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               // console.log(score); //  ['향', 5]
               // .5인지 판별
               const isHalfCheck = score[1] / 2 - Math.floor(score[1] / 2) > 0;
-
+              console.log(score);
               // 점수만큼 가득찬 이미지
               const scoreRatingFull = [];
               if (Number.isInteger(score[1] / 2)) {

@@ -23,7 +23,7 @@ const BeanChart = tw.div`mt-5 mx-auto`;
 const DescRight = tw.div`w-60 my-6 mr-2 ml-1 `;
 const Description = tw.div`h-80 mx-auto mt-4 overflow-y-auto text-left`;
 const CoffeeingNote = tw.div`h-10 font-bold text-sm overflow-scroll break-words text-red-400`;
-const RoastingPoint = tw.div`text-left ml-6font-bold`;
+const RoastingPoint = tw.div`text-left ml-6 font-bold`;
 const Region = tw.div`w-32 h-10 mr-4 font-bold break-words overflow-scroll`;
 const Rank = tw.div`w-32 h-10 mr-4 font-bold break-words overflow-scroll`;
 
