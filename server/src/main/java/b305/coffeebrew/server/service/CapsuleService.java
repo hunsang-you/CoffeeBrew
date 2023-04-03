@@ -1,11 +1,12 @@
 package b305.coffeebrew.server.service;
 
-import b305.coffeebrew.server.dto.bean.BeanResDTO;
 import b305.coffeebrew.server.dto.capsule.CapsuleDetailPageResDTO;
 import b305.coffeebrew.server.dto.capsule.CapsuleDetailResDTO;
 import b305.coffeebrew.server.dto.capsule.CapsuleResDTO;
 import b305.coffeebrew.server.dto.capsule.CapsuleScoreResDTO;
-import b305.coffeebrew.server.entity.*;
+import b305.coffeebrew.server.entity.Capsule;
+import b305.coffeebrew.server.entity.CapsuleDetail;
+import b305.coffeebrew.server.entity.CapsuleScore;
 import b305.coffeebrew.server.exception.CapsuleNotFoundException;
 import b305.coffeebrew.server.exception.ErrorCode;
 import b305.coffeebrew.server.repository.CapsuleDetailRepository;
@@ -20,10 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -64,7 +62,7 @@ public class CapsuleService {
         if (CollectionUtils.isEmpty(keywords)) {
             return capsuleRepository.findAll(pageable).map(CapsuleResDTO::of);
         } else {
-            Set<Capsule> result = new HashSet<>();
+            Set<Capsule> result = new TreeSet<>(Comparator.comparing(Capsule::getNameKo).thenComparing(Capsule::getNameEn).thenComparing(Capsule::getSummary));
             for (String keyword : keywords) {
                 String processedKeyword = "%" + keyword.toLowerCase() + "%";
                 result.addAll(capsuleRepository.findCapsulesByKeyword(processedKeyword, pageable).getContent());

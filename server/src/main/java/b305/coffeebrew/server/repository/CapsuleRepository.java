@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface CapsuleRepository extends JpaRepository<Capsule, Long> {
     Capsule findByIdx(Long capsuleId);
 
-    @Query("SELECT c FROM Capsule c WHERE LOWER(c.summary) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(c.nameKo) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    @Query("SELECT c FROM Capsule c WHERE LOWER(c.summary) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(c.nameKo) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(c.nameEn) LIKE LOWER(CONCAT('%', :keyword, '%')) ORDER BY c.nameKo, c.nameEn, c.summary")
     Page<Capsule> findCapsulesByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
 }
