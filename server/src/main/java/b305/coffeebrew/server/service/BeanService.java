@@ -1,5 +1,8 @@
 package b305.coffeebrew.server.service;
 
+import b305.coffeebrew.server.config.utils.LinkDTO;
+import b305.coffeebrew.server.config.utils.NaverShoppingItemDTO;
+import b305.coffeebrew.server.config.utils.NaverShoppingResDTO;
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
 import b305.coffeebrew.server.dto.bean.BeanResDTO;
 import b305.coffeebrew.server.entity.Bean;
@@ -12,12 +15,21 @@ import b305.coffeebrew.server.repository.BeanRepository;
 import b305.coffeebrew.server.repository.BeanScoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,6 +45,7 @@ public class BeanService {
     private final BeanRepository beanRepository;
     private final BeanDetailRepository beanDetailRepository;
     private final BeanScoreRepository beanScoreRepository;
+    private final RestTemplate restTemplate;
 
     @Transactional
     public BeanDetailPageResDTO getBeanDetail(Long beanId) {
@@ -68,6 +81,8 @@ public class BeanService {
         String coffeeingNote = beanScore.getCoffeeingNote();
         String roastingPoint = beanScore.getRoastingPoint();
 
+        Set<LinkDTO> linkDTOSet = searchNaverShopping(nameKo);
+
         return BeanDetailPageResDTO.builder()
                 .nameKo(nameKo)
                 .nameEn(nameEn)
@@ -102,5 +117,43 @@ public class BeanService {
             }
             return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(BeanResDTO::of);
         }
+    }
+
+    public Set<LinkDTO> searchNaverShopping(String query) {
+        HttpHeaders headers = new HttpHeaders();
+        String CLIENT_ID = "SsSyWwIzBCwnFjnX1QyQ";
+        String CLIENT_SECRET = "VjB3My35vW";
+        headers.add("X-Naver-Client-Id", CLIENT_ID);
+        headers.add("X-Naver-Client-Secret", CLIENT_SECRET);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("query", query);
+
+        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<NaverShoppingResDTO> response = restTemplate.exchange(
+                "https://openapi.naver.com/v1/search/shop.json?query={query}",
+                HttpMethod.GET,
+                requestEntity,
+                NaverShoppingResDTO.class,
+                params
+        );
+
+        NaverShoppingResDTO naverShoppingResponse = response.getBody();
+
+        if (naverShoppingResponse == null || naverShoppingResponse.getItems().isEmpty()) {
+            return new HashSet<>();
+        }
+
+        Set<LinkDTO> result = new LinkedHashSet<>();
+
+        for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
+            String mallName = item.getMallName();
+            String link = item.getLink();
+            String image = item.getImage();
+            result.add(LinkDTO.of(mallName, link, image));
+        }
+
+        return result;
     }
 }
