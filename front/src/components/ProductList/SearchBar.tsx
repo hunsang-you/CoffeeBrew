@@ -101,6 +101,7 @@ const SearchBar = ({
         }
       }
       newWords = [...newWords, `keywords=${textWord}`];
+      console.log(`test1: ${newWords}`);
       getPages(newWords);
       return newWords;
     });
