@@ -52,8 +52,8 @@ export interface reviewType {
   coffeeing_note: string;
   like: number | null;
   expired: boolean | null;
-  createdDate: Date | null;
-  updatedDate: Date | null;
+  createdDate: number[] | null;
+  updatedDate: number[] | null;
 }
 
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
