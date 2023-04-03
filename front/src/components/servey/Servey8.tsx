@@ -23,7 +23,7 @@ interface PropsType {
 }
 
 const Servey8 = ({ page, setPage, select, setSelect }: PropsType) => {
-  const qweqw: objtype[] = [
+  const perfume: objtype[] = [
     { id: 7, idx: 1, title: '우디', img: woody },
     { id: 7, idx: 2, title: '시트러스', img: cidrus },
     { id: 7, idx: 3, title: '허브', img: herb },
@@ -35,7 +35,7 @@ const Servey8 = ({ page, setPage, select, setSelect }: PropsType) => {
     <OutDiv>
       <CardTitle>좋아하는 향이 무엇인가요</CardTitle>
       <Card>
-        {qweqw.map((data: objtype, i) => {
+        {perfume.map((data: objtype, i) => {
           return (
             <SelectCard
               key={i}
