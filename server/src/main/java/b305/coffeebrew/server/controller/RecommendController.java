@@ -60,6 +60,17 @@ public class RecommendController {
                 .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByLike(userId)));
     }
 
+    @GetMapping("/user/{userId}/review/bean")
+    @ApiOperation(value = "사용자 리뷰 기반 원두 추천 페이지", notes = "같은 제품을 리뷰를 작성한 다른 사용자의 선호 원두 정보를 출력한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "페이지 오류"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> recommendBeansByReview(@PathVariable("userId") long userId) {
+        return ResponseEntity.ok()
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByReview(userId)));
+    }
 //    @GetMapping("/capsule/{capsuleId}")
 //    @ApiOperation(value = "캡슐 상세 페이지", notes = "캡슐의 상세한 정보를 출력한다.")
 //    @ApiResponses({

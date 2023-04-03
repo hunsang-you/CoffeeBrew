@@ -76,6 +76,18 @@ public class RecommendService {
         return getRecomsDetail(response);
     }
 
+    public List<BeanDetailPageResDTO> recommendBeansByReview(long userId) {
+        log.info(METHOD_NAME + " - recommendBeansByReview");
+        log.info("call Rest URL - " + fastapiURL);
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/review";
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response);
+    }
+
     private List<BeanDetailPageResDTO> getRecomsDetail(HttpEntity<String> response) {
         // JSON Parsing
         ObjectMapper objectMapper = new ObjectMapper();
