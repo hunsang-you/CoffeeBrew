@@ -100,12 +100,14 @@ const SearchBar = ({
           newWords = [...newWords, `keywords=${keywordsNuts[i]}`];
         }
       }
-      newWords = [...newWords, `keywords=${textWord}`];
+      if (textWord.length > 0) {
+        newWords = [...newWords, `keywords=${textWord}`];
+      }
+
       console.log(`test1: ${newWords}`);
       getPages(newWords);
       return newWords;
     });
-    console.log(`keywords=${keywordsFruits[3]}`);
   };
 
   // 상세검색 키워드 관리
