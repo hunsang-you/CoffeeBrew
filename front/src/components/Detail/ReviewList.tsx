@@ -6,7 +6,7 @@ import bean from '../../assets/tempImg/bean.png';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
-import { reviewAPI } from '../../api/api';
+import { reviewType } from './DetailBean';
 
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
@@ -32,7 +32,11 @@ const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2
 const ReviewCreated = tw.p`text-sm font-bold`;
 const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
 
-const ReviewLists = () => {
+interface PropsTypes {
+  detailReview?: reviewType[];
+}
+
+const ReviewLists = ({ detailReview }: PropsTypes) => {
   // 리뷰 최신/추천 순 조회버튼
   const [isActive, setIsActive] = useState(true);
   const activeBtn = () => {
@@ -43,62 +47,11 @@ const ReviewLists = () => {
   const handleReviewLike = () => {
     setReviewLike(!reviewLike);
   };
-  const RecommendRating = {
-    향: 5,
-    산미: 3.5,
-    단맛: 0.5,
-    쓴맛: 3,
-    바디감: 2,
-  };
 
-  const scoreArray = Object.entries(RecommendRating);
-  const beanScore = () => {
-    const scoreItem = [];
+  const [showNumber, setShowNumber] = useState(1);
 
-    for (let i = 0; i < scoreArray.length; i++) {
-      const score = scoreArray[i];
-      // score[0] = 기준, score[1] = 점수
-      // console.log(score); //  ['향', 5]
-      // .5인지 판별
-      const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
-
-      // 점수만큼 가득찬 이미지
-      const scoreRatingFull = [];
-      if (Number.isInteger(score[1])) {
-        for (let j = 0; j < score[1]; j++) {
-          scoreRatingFull.push(<Score src={ratingfull} key={j} />);
-        }
-      } else {
-        // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-        for (let k = 0; k < Math.floor(score[1]); k++) {
-          scoreRatingFull.push(<Score src={ratingfull} key={k} />);
-        }
-      }
-
-      // .5라면 반개 추가
-      const scoreRatingHalf = isHalfCheck ? <Score src={ratinghalf} /> : null;
-
-      const scoreRatingEmpty = [];
-      if (Number.isInteger(score[1])) {
-        for (let k = 0; k < 5 - score[1]; k++) {
-          scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
-        }
-      } else {
-        for (let k = 0; k < Math.floor(5 - score[1]); k++) {
-          scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
-        }
-      }
-
-      scoreItem.push(
-        <ScoreTitle key={i}>
-          <p style={{ marginRight: '16px', fontWeight: 'bold' }}>{score[0]}</p>
-          {scoreRatingFull} {scoreRatingHalf}
-          {scoreRatingEmpty}
-        </ScoreTitle>,
-      );
-    }
-
-    return scoreItem;
+  const showMore = () => {
+    setShowNumber(showNumber + 3);
   };
 
   return (
@@ -116,41 +69,124 @@ const ReviewLists = () => {
             <FilterOn>추천순</FilterOn>
           )}
         </ReviewFilter>
+        {showNumber > 1 ? (
+          <MoreBtn
+            style={{ margin: '24px' }}
+            onClick={() => {
+              setShowNumber(1);
+            }}
+          >
+            리뷰 접기▲
+          </MoreBtn>
+        ) : null}
+        {detailReview?.slice(0, showNumber).map((data: any, i) => {
+          const Rating = {
+            향: data.flavor,
+            산미: data.acidity,
+            단맛: data.sweetness,
+            바디감: data.body,
+            쓴맛: data.bitterness,
+          };
+          const beanScore = () => {
+            const scoreItem = [];
+            const scoreArray = Object.entries(Rating);
+            for (let j = 0; j < scoreArray.length; j++) {
+              const score = scoreArray[j];
+              // score[0] = 기준, score[1] = 점수
+              // console.log(score); //  ['향', 5]
+              // .5인지 판별
+              const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
 
-        <div>
-          <ReviewDelete>삭제</ReviewDelete>
-          <ReviewItem>
-            <ReviewName>
-              <ReviewCreated> 2023-03-23 </ReviewCreated>
-              {reviewLike ? (
-                <AiFillHeart
-                  size={30}
-                  onClick={handleReviewLike}
-                  style={{ color: 'red', margin: 'auto' }}
-                />
-              ) : (
-                <AiOutlineHeart
-                  size={30}
-                  onClick={handleReviewLike}
-                  style={{ color: 'gray', margin: 'auto' }}
-                />
-              )}
-              <ReviewImg src={bean} />
-              유저프로필과이름ㅇㅇㅇ
-            </ReviewName>
-            <ReviewStandard>
-              <ReviewStandardTop>
-                <div>{beanScore()}</div>
-              </ReviewStandardTop>
+              // 점수만큼 가득찬 이미지
+              const scoreRatingFull = [];
+              if (Number.isInteger(score[1])) {
+                for (let k = 0; k < score[1]; k++) {
+                  scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+                }
+              } else {
+                // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
+                for (let k = 0; k < Math.floor(score[1]); k++) {
+                  scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+                }
+              }
 
-              <ReviewArticle>
-                <ReviewContent>description</ReviewContent>
-              </ReviewArticle>
-            </ReviewStandard>
-          </ReviewItem>
-        </div>
-        <MoreBtn>리뷰 더보기 ▼</MoreBtn>
-        {/* <MoreBtn style={{ margin: '24px' }}>리뷰 접기▲</MoreBtn> */}
+              // .5라면 반개 추가
+              const scoreRatingHalf = isHalfCheck ? (
+                <Score src={ratinghalf} />
+              ) : null;
+
+              const scoreRatingEmpty = [];
+              if (Number.isInteger(score[1])) {
+                for (let k = 0; k < 5 - score[1]; k++) {
+                  scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
+                }
+              } else {
+                for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+                  scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
+                }
+              }
+
+              scoreItem.push(
+                <ScoreTitle key={i}>
+                  <p style={{ marginRight: '16px', fontWeight: 'bold' }}>
+                    {score[0]}
+                  </p>
+                  {scoreRatingFull} {scoreRatingHalf}
+                  {scoreRatingEmpty}
+                </ScoreTitle>,
+              );
+            }
+
+            return scoreItem;
+          };
+          return (
+            <div>
+              <ReviewDelete>삭제</ReviewDelete>
+              <ReviewItem>
+                <ReviewName>
+                  <ReviewCreated>
+                    {data.createDate ? data.createDate : '정보없음'}
+                  </ReviewCreated>
+                  {reviewLike ? (
+                    <AiFillHeart
+                      size={30}
+                      onClick={handleReviewLike}
+                      style={{ color: 'red', margin: 'auto' }}
+                    />
+                  ) : (
+                    <AiOutlineHeart
+                      size={30}
+                      onClick={handleReviewLike}
+                      style={{ color: 'gray', margin: 'auto' }}
+                    />
+                  )}
+                  <ReviewImg src={bean} />
+                  {data.profile.nickname}
+                </ReviewName>
+                <ReviewStandard>
+                  <ReviewStandardTop>
+                    <div>{beanScore()}</div>
+                  </ReviewStandardTop>
+
+                  <ReviewArticle>
+                    <ReviewContent>{data.content}</ReviewContent>
+                  </ReviewArticle>
+                </ReviewStandard>
+              </ReviewItem>
+            </div>
+          );
+        })}
+
+        <MoreBtn onClick={() => showMore()}>리뷰 더보기 ▼</MoreBtn>
+
+        <MoreBtn
+          style={{ margin: '24px' }}
+          onClick={() => {
+            setShowNumber(1);
+          }}
+        >
+          리뷰 접기▲
+        </MoreBtn>
       </ReviewList>
     </div>
   );

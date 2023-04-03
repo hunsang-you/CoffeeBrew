@@ -1,15 +1,17 @@
 import tw from 'tailwind-styled-components';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import ReviewLists from './ReviewList';
 import ReviewCreate from './ReviewCreate';
-import { reviewAPI } from '../../api/api';
+import { reviewType } from './DetailBean';
 
-const ReviewAll = () => {
+interface PropsTypes {
+  detailReview?: reviewType[];
+}
+
+const ReviewAll = ({ detailReview }: PropsTypes) => {
   return (
     <div>
       <ReviewCreate />
-      <ReviewLists />
+      <ReviewLists detailReview={detailReview} />
     </div>
   );
 };

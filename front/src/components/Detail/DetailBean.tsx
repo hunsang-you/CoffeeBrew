@@ -33,10 +33,16 @@ export interface detailType {
 }
 export interface reviewType {
   idx: number;
-  profile: object;
+  profile: {
+    profileImg: string | null;
+    memberEmail: string | null;
+    nickname: string | null;
+    hashcode: string | null;
+    snsType: string | null;
+  };
   itemType: string;
   itemIdx: number;
-  content: string;
+  content: string | null;
   overall: number;
   flavor: number;
   acidity: number;
@@ -44,10 +50,12 @@ export interface reviewType {
   bitterness: number;
   body: number;
   coffeeing_note: string;
-  like: number;
-  expired: boolean;
-  createdDate: string;
+  like: number | null;
+  expired: boolean | null;
+  createdDate: Date | null;
+  updatedDate: Date | null;
 }
+
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 
@@ -120,7 +128,7 @@ const DetailBean = (): JSX.Element => {
     getDetailBean();
   }, []);
 
-  const [detailReview, setDetailReview] = useState<reviewType | null>(null);
+  const [detailReview, setDetailReview] = useState<reviewType[] | null>(null);
 
   useEffect(() => {
     const getReviewItems = async () => {
@@ -169,7 +177,7 @@ const DetailBean = (): JSX.Element => {
       {/* 네번째 줄(리뷰) */}
       <BeanTop3 ref={reviewRef} id="Reivew">
         {/* <Review /> */}
-        <ReviewAll />
+        {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </BeanTop3>
       <Line></Line>
 
