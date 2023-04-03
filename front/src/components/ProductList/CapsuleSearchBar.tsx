@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import TextField from '@mui/material/TextField';
 import Logo from '../../assets/Coffeebrew.svg';
-import { BeanResponseType } from './AllList';
+import { CapsuleResponseType } from './CapsuleList';
 import { listAPI } from '../../api/api';
+import { text } from 'stream/consumers';
 // 검색창
 const SearchDiv = tw.div`flex flex-col text-center `;
-const SearchBtn = tw.button`w-20 h-12 bg-nameColor text-white rounded-full mx-4 mt-10 font-bold`;
-const SearchDetailBtn = tw.button`w-28 h-12 bg-grinding1 text-black rounded-xl mt-4 mx-auto font-bold`;
+const SearchBtn = tw.button`w-20 h-12 bg-black text-white rounded-full mx-4 mt-10`;
+const SearchDetailBtn = tw.button`w-20 h-12 bg-black text-white rounded-xl mt-4 mx-auto`;
 const SearchDetail = tw.div`w-720 min-h-full border-4 rounded-3xl border-y-brownBorder mx-auto mt-4 drop-shadow-lg `;
 const CheckKeyword = tw.button`w-20 border-4 border-nameColor text-black rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold `;
 const CheckedKeyword = tw.button`w-20 border-4 border-nameColor bg-nameColor text-white rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold  `;
@@ -17,13 +18,15 @@ const KeywordTitle = tw.div`w-20 text-xl font-bold mx-auto my-auto break-words`;
 const KeywordGroup = tw.div`w-592 mx-auto border-4 border-recMachine2 rounded-2xl flex `;
 
 interface PropsTypes {
-  pagination: BeanResponseType | null;
-  setPagination: React.Dispatch<React.SetStateAction<BeanResponseType | null>>;
+  pagination: CapsuleResponseType | null;
+  setPagination: React.Dispatch<
+    React.SetStateAction<CapsuleResponseType | null>
+  >;
   setWords: React.Dispatch<React.SetStateAction<Array<string>>>;
   words: string[];
 }
 
-const SearchBar = ({
+const CapsuleSearchBar = ({
   pagination,
   setPagination,
   setWords,
@@ -73,7 +76,7 @@ const SearchBar = ({
     // 엔터 and 검색 버튼 클릭시 전송
     const getPages = async (words: string[]) => {
       await listAPI
-        .getBeans(...words)
+        .getCapsules(...words)
         .then((request) => {
           setPagination(request.data.value);
           console.log(request.data.value);
@@ -169,7 +172,7 @@ const SearchBar = ({
   };
 
   const keywordsFruits: KeywordsFruits = {
-    0: '감귤',
+    0: '캡슐인가',
     1: '사과',
     2: '열대과일',
     3: '베리',
@@ -197,7 +200,7 @@ const SearchBar = ({
 
     return keywordEntries.map(([key, value]: string[]) => {
       for (let i = 0; i < Object.keys(keywordsFruits).length + 1; i++) {
-        if (isMoreState.morebtn1 === false && parseInt(key) === i && i < 4) {
+        if (isMoreState.morebtn1 === false && parseInt(key) === i && i < 5) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
               {isKeywordState1['keyword' + key] ? (
@@ -252,7 +255,7 @@ const SearchBar = ({
 
     return keywordEntries.map(([key, value]: string[]) => {
       for (let i = 0; i < Object.keys(keywordsNuts).length + 1; i++) {
-        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
+        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 5) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
               {isKeywordState2['keyword' + key] ? (
@@ -304,18 +307,26 @@ const SearchBar = ({
   return (
     <SearchDiv>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {/* <AiOutlineSearch
+          size={50}
+          style={{
+            marginRight: '16px',
+            marginTop: '2.5rem',
+          }}
+        /> */}
         <img src={Logo} alt="Logo" width={100} style={{ marginTop: '24px' }} />
         <TextField
           id="outlined-basic"
-          label="원두 이름 입력"
+          label="캡슐 이름 입력"
           variant="outlined"
-          style={{
-            width: '500px',
-            marginTop: '2.5rem',
-            // border: 'solid 4px #FF8383',
-            // borderRadius: '10px',
-          }}
+          style={{ width: '500px', marginTop: '2.5rem' }}
           onChange={ChangeText}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              // 엔터를 쳤을때도 검색
+              console.log(textWord);
+            }
+          }}
         />
         <SearchBtn onClick={SendWord}>검 색</SearchBtn>
       </div>
@@ -426,4 +437,4 @@ const SearchBar = ({
   );
 };
 
-export default SearchBar;
+export default CapsuleSearchBar;

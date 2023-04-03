@@ -1,9 +1,9 @@
 import tw from 'tailwind-styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Analyze from './Analyze';
 import BeanLike from './BeanLike';
 import MyReview from './MyReview';
-
+import { memberAPI } from '../../api/api';
 import dogprofile from '../../assets/tempImg/dogprofile.png';
 
 const ProfileDiv = tw.div`w-1200  bg-background flex justify-between`;
@@ -19,6 +19,15 @@ const UserMenuBtn = tw.button`w-fit ml-8 mb-6 text-2xl font-bold cursor-pointer 
 
 const MyProfile = () => {
   const [typeCheck, setTypeCheck] = useState([true, false, false]);
+  useEffect(() => {
+    const getInfo = async () => {
+      await memberAPI
+        .memberInfo()
+        .then((request) => console.log(request))
+        .catch((e) => console.log(e));
+    };
+    getInfo();
+  }, []);
 
   return (
     <ProfileDiv>

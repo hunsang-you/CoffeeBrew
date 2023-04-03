@@ -17,7 +17,7 @@ interface PropsType {
 }
 
 const Servey2 = ({ page, setPage, select, setSelect }: PropsType) => {
-  const qweqw: objtype[] = [
+  const sex: objtype[] = [
     { id: 1, idx: 1, title: '10대' },
     { id: 1, idx: 2, title: '20대' },
     { id: 1, idx: 3, title: '30대' },
@@ -29,7 +29,7 @@ const Servey2 = ({ page, setPage, select, setSelect }: PropsType) => {
     <OutDiv>
       <CardTitle>연령대</CardTitle>
       <Card>
-        {qweqw.map((data: objtype, i) => {
+        {sex.map((data: objtype, i) => {
           return (
             <SelectCard
               key={i}

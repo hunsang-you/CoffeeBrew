@@ -38,7 +38,6 @@ public class RoleInterceptor implements HandlerInterceptor {
     private final String recomURL;
     private final String reviewURL;
 //    private final String likelistURL;
-//    private final String testURL;
     private final String swaggerURL;
     private final String swaggerIndexURL;
 
@@ -65,7 +64,6 @@ public class RoleInterceptor implements HandlerInterceptor {
         this.recomURL = recomURL;
         this.reviewURL = reviewURL;
 //        this.likelistURL = likelistURL;
-//        this.testURL = testURL;
         this.swaggerURL = swaggerURL;
         this.swaggerIndexURL = swaggerIndexURL;
     }
@@ -138,11 +136,6 @@ public class RoleInterceptor implements HandlerInterceptor {
                             result = true;
                             break Outer;
                         }
-//                        if (request.getRequestURI().startsWith(testURL)) {
-//                            log.info("TEST URL is public");
-//                            result = true;
-//                            break Outer;
-//                        }
                         if (request.getRequestURI().startsWith(swaggerURL)) {
                             log.info("swagger URL is public");
                             result = true;
@@ -177,11 +170,6 @@ public class RoleInterceptor implements HandlerInterceptor {
                         result = true;
                         break Outer;
                     }
-//                    if (request.getRequestURI().startsWith(testURL)) {
-//                        log.info("TEST URL is public");
-//                        result = true;
-//                        break Outer;
-//                    }
                     if (request.getRequestURI().startsWith(swaggerURL)) {
                         log.info("swagger URL is public");
                         result = true;

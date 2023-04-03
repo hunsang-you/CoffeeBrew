@@ -45,7 +45,17 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
             >
               커피의역사
             </div>
-            <div className="w-dropdownlist hover:text-mainColorOrange">
+            <div
+              className={`${
+                reduxData.navbar.indexOf('bean') !== -1
+                  ? 'underline underline-offset-4'
+                  : null
+              } w-dropdownlist hover:text-mainColorOrange`}
+              onClick={() => {
+                navigate('/coffeelist/bean');
+                setMenuDropDownOpen(false);
+              }}
+            >
               원두 구경하기
             </div>
             <div className=" hover:text-mainColorOrange">
@@ -67,7 +77,19 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
             >
               커피 관련 용어
             </div>
-            <div className=" hover:text-mainColorOrange">캡슐 구경하기</div>
+            <div
+              className={`${
+                reduxData.navbar.indexOf('capsule') !== -1
+                  ? 'underline underline-offset-4'
+                  : null
+              } hover:text-mainColorOrange`}
+              onClick={() => {
+                navigate('/coffeelist/capsule');
+                setMenuDropDownOpen(false);
+              }}
+            >
+              캡슐 구경하기
+            </div>
           </div>
           <div className="flex flex-row ml-dropdown justify-between items-center my-2">
             <div className="ml-dropdown1">

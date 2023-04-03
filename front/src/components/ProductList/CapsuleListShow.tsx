@@ -1,18 +1,16 @@
 import tw from 'tailwind-styled-components';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bean from '../../assets/tempImg/bean.png';
-import axios from 'axios';
-import { BeanType } from './AllList';
+import capsule from '../../assets/tempImg/capsule.png';
+import { CapsuleType } from './CapsuleList';
 
 interface PropsTypes {
-  listDatas: BeanType[];
+  listDatas: CapsuleType[];
 }
 
 const ListDiv = tw.div`text-center my-10`;
 
-const ProductList = tw.div`flex mx-20 flex-wrap `;
-const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl my-12 ml-10 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 `;
+const ProductList = tw.div`flex justify-between mx-20 flex-wrap `;
+const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl mb-8 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 `;
 const ProductItemT1 = tw(ProductItemT)`bg-brownBorder rounded-b-2xl`;
 const ProductItemImg = tw.img`w-32 h-48  mx-auto mt-4  `;
 
@@ -21,7 +19,7 @@ const ProductItemName = tw.div`text-productTextBrown pt-4 font-bold break-words 
 const ProductItemEngName = tw.div`text-productTextBrown font-bold break-words mx-4 `;
 const ProductInfo = tw.div`h-24 text-nameColor overflow-y-auto mx-4`;
 
-const CoffeeList = ({ listDatas }: PropsTypes) => {
+const CapsuleListShow = ({ listDatas }: PropsTypes) => {
   const BackColor: string[] = [
     '#FFAA01',
     '#D4AA70',
@@ -43,7 +41,7 @@ const CoffeeList = ({ listDatas }: PropsTypes) => {
           return (
             <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
               <ProductItemImg
-                src={bean}
+                src={capsule}
                 onClick={() => navigate(`/detail/${data.idx}`)}
               />
               <ProductItemB>
@@ -59,4 +57,4 @@ const CoffeeList = ({ listDatas }: PropsTypes) => {
   );
 };
 
-export default CoffeeList;
+export default CapsuleListShow;
