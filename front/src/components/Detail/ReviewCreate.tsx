@@ -158,6 +158,7 @@ const ReviewCreate = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => {
+                  console.log(beanId, typeof beanId);
                   reviewAPI
                     .createBeanReview(
                       Number(beanId), // 원두ID
