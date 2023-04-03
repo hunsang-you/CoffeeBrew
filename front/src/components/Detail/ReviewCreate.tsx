@@ -42,7 +42,11 @@ const ReviewCreate = () => {
             marginTop: '16px',
           }}
         >
-          <div style={{ marginLeft: 'auto', marginRight: '8px' }}>{item}</div>
+          <div
+            style={{ marginLeft: 'auto', marginRight: '8px', width: '60px' }}
+          >
+            {item}
+          </div>
           <Box width={150} key={i}>
             <Slider
               key={i}
@@ -61,7 +65,9 @@ const ReviewCreate = () => {
               }}
             />
           </Box>
-          <div style={{ marginLeft: 'auto' }}>{scoreValue[i]}</div>
+          <div style={{ marginLeft: 'auto', width: '20px' }}>
+            {scoreValue[i]}
+          </div>
         </SliderDiv>
       );
     });
