@@ -29,14 +29,22 @@ export const detailAPI = {
   getBean: (id: number) => api.get(`/item/bean/${id}`),
 };
 
-//가변인자 보내기
+/**원두 리스트,검새,필터 가변인자 보내기 */
 const getData = (...params: any) => {
   const url = `/item/bean?${params.join('&')}`;
   console.log(`test2: ${url}`);
   return api.get(url);
 };
+/**캡슐 리스트, 검색, 필터 가변인자 보내기 */
+const getDataCapsule = (...params: any) => {
+  const url = `/item/capsule?${params.join('&')}`;
+  console.log(`testcap: ${url}`);
+  return api.get(url);
+};
+
 export const listAPI = {
   getBeans: (...params: any) => getData(...params),
+  getCapsules: (...params: any) => getDataCapsule(...params),
 };
 
 export const reviewAPI = {
