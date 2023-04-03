@@ -66,6 +66,7 @@ public class BeanService {
         int bitterness = beanScore.getBitterness();
         int body = beanScore.getBody();
         String coffeeingNote = beanScore.getCoffeeingNote();
+        String roastingPoint = beanScore.getRoastingPoint();
 
         return BeanDetailPageResDTO.builder()
                 .nameKo(nameKo)
@@ -86,6 +87,7 @@ public class BeanService {
                 .bitterness(bitterness)
                 .body(body)
                 .coffeeingNote(coffeeingNote)
+                .roastingPoint(roastingPoint)
                 .build();
     }
 
