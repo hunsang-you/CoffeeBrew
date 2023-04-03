@@ -41,9 +41,36 @@ export const listAPI = {
 
 export const reviewAPI = {
   getBeanReview: (id: number) => api.get(`review/bean/${id}`),
+  createBeanReview: (
+    id: number,
+    content: string,
+    overall: number,
+    flavor: number,
+    acidity: number,
+    sweetness: number,
+    bitterness: number,
+    body: number,
+  ) =>
+    api.post(`member/review`, {
+      itemType: 'bean',
+      itemidx: `${id}`,
+      content: content,
+      overall: overall,
+      flavor: flavor,
+      acidity: acidity,
+      sweetness: sweetness,
+      bitterness: bitterness,
+      body: body,
+      coffeeing_note: 'none',
+      expired: true,
+    }),
 };
 
 export const surveyAPI = {
   postSurvey: (surveyli: number[]) =>
     api.post(`/api/v1/survey`, { surveyli: surveyli }),
+};
+
+export const detailLikeAPI = {
+  beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
 };

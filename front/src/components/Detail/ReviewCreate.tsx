@@ -1,9 +1,10 @@
 import tw from 'tailwind-styled-components';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import axios from 'axios';
+import { reviewAPI } from '../../api/api';
 
 const CreateReviewBtn = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mx-auto text-xl`;
 const CreateReviewDiv = tw.div`w-1040 h-fit flex-col mx-auto drop-shadow-2xl`;
@@ -17,7 +18,7 @@ const ReviewCreate = () => {
     setOpenCreate(!openCreate);
     if (openCreate === false) {
       setReviewContent('');
-      setScoreValue([3, 3, 3, 3, 3]);
+      setScoreValue([3, 3, 3, 3, 3, 3]);
     }
   };
 
@@ -27,9 +28,9 @@ const ReviewCreate = () => {
     console.log(reviewContent);
   };
 
-  const standards = ['향', '산미', '단맛', '쓴맛', '바디감'];
+  const standards = ['향', '산미', '단맛', '쓴맛', '바디감', '평점'];
 
-  const [scoreValue, setScoreValue] = useState<number[]>([3, 3, 3, 3, 3]);
+  const [scoreValue, setScoreValue] = useState<number[]>([3, 3, 3, 3, 3, 3]);
   const standardItem = () => {
     const Item = standards.map((item: string, i: number) => {
       return (
@@ -47,6 +48,7 @@ const ReviewCreate = () => {
               key={i}
               defaultValue={3}
               max={5}
+              step={0.5}
               aria-label="Default"
               valueLabelDisplay="auto"
               onChange={(e, value) => {
@@ -66,6 +68,7 @@ const ReviewCreate = () => {
     });
     return Item;
   };
+  const { beanId } = useParams() as { beanId: string };
 
   return (
     <div>
@@ -153,6 +156,23 @@ const ReviewCreate = () => {
                   fontSize: '24px',
                   textAlign: 'center',
                   cursor: 'pointer',
+                }}
+                onClick={() => {
+                  reviewAPI
+                    .createBeanReview(
+                      Number(beanId), // 원두ID
+                      reviewContent, // 내용
+                      Number(scoreValue[5]), // 총점
+                      Number(scoreValue[0]), // 향
+                      Number(scoreValue[1]), // 산미
+                      Number(scoreValue[2]), // 단맛
+                      Number(scoreValue[3]), // 쓴맛
+                      Number(scoreValue[4]), // 바디감
+                    )
+                    .then((request) => {
+                      console.log('리뷰 전송 :', request.data);
+                    })
+                    .catch((e) => console.log(e));
                 }}
               >
                 작성 완료
