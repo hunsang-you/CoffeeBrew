@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Logo from '../../assets/Coffeebrew.svg';
 import { BeanResponseType } from './AllList';
 import { listAPI } from '../../api/api';
+import { text } from 'stream/consumers';
 // 검색창
 const SearchDiv = tw.div`flex flex-col text-center `;
 const SearchBtn = tw.button`w-20 h-12 bg-black text-white rounded-full mx-4 mt-10`;
@@ -82,9 +83,6 @@ const SearchBar = ({
     };
     setWords((prevWords) => {
       let newWords = [`page=${0}`];
-      // isKeywordState1.map((data: any) => {
-      //   return console.log(data);
-      // });
       const keys1 = Object.keys(isKeywordState1);
       for (let i = 0; i < keys1.length; i++) {
         const key = keys1[i];
@@ -99,10 +97,13 @@ const SearchBar = ({
           newWords = [...newWords, `keywords=${keywordsNuts[i]}`];
         }
       }
-      console.log(newWords);
+      if (textWord.length > 0) {
+        newWords = [...newWords, `keywords=${textWord}`];
+      }
+
+      getPages(newWords);
       return newWords;
     });
-    console.log(`keywords=${keywordsFruits[3]}`);
   };
 
   // 상세검색 키워드 관리

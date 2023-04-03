@@ -32,6 +32,7 @@ export const detailAPI = {
 //가변인자 보내기
 const getData = (...params: any) => {
   const url = `/item/bean?${params.join('&')}`;
+  console.log(`test2: ${url}`);
   return api.get(url);
 };
 export const listAPI = {
