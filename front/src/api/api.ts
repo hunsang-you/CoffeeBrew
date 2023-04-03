@@ -76,14 +76,14 @@ export const reviewAPI = {
 
 // 메인페이지
 export const mainAPI = {
-  getBeanRecom: (beanId: number) => api.get(`/api/v1/recom/bean/${beanId}`),
-  getcapcullRecom: (beanId: number) => api.get(`/api/v1/recom/bean/${beanId}`),
+  getBeanRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
+  getcapcullRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
 };
 
 // 설문조사
 export const surveyAPI = {
   postSurvey: (surveyli: number[]) =>
-    api.post(`/api/v1/survey`, { surveyli: surveyli }),
+    api.post(`survey`, { surveyli: surveyli }),
 };
 
 export const memberAPI = {
