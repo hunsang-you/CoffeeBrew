@@ -27,6 +27,7 @@ export const loginAPI = {
 
 export const detailAPI = {
   getBean: (id: number) => api.get(`/item/bean/${id}`),
+  beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
 };
 
 /**원두 리스트,검새,필터 가변인자 보내기 */

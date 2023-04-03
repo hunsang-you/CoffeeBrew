@@ -56,29 +56,6 @@ export interface reviewType {
   updatedDate: number[] | null;
 }
 
-const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
-const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
-
-const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
-// SideBar(맨위로이동, 최근조회)
-const SideBar = tw.div`
-  border-2 border-brownBorder ml-auto top-100 right-60 bottom-60 fixed`;
-// 해당 항목 이동
-const MoveTop = tw.div` h-20 border-8 border-gray-500`;
-const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-
-// 두번째 추천칸
-const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
-// 기기 및 분쇄도
-const RecOther = tw.div`w-1040  flex justify-between `;
-// 세번째 리뷰칸
-const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down`;
-const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
-// 네번째 칸(구매사이트)
-const BeanTop4 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;
-
 const DetailBean = (): JSX.Element => {
   const navigate = useNavigate();
   const { beanId } = useParams() as { beanId: string };
@@ -149,7 +126,7 @@ const DetailBean = (): JSX.Element => {
         <RecbarBean onClick={handleClick}> 원두 추천 </RecbarBean>
         <RecbarMachine onClick={handleClick2}> 기기 추천 </RecbarMachine>
         <ReviewBar onClick={handleClick3}> 리 뷰 </ReviewBar>
-        <MoveTop onClick={ScrollTop}>↑</MoveTop>
+        <MoveTop onClick={ScrollTop}>맨 위로</MoveTop>
       </SideBar>
       {/* 첫번째 줄 (원두정보) */}
       {detailBean ? <BeanInfo detailBean={detailBean} /> : null}
@@ -195,3 +172,26 @@ const DetailBean = (): JSX.Element => {
 };
 
 export default DetailBean;
+
+const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
+const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
+
+const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
+// SideBar(맨위로이동, 최근조회)
+const SideBar = tw.div`
+  border-2 border-brownBorder ml-auto top-100 right-60 bottom-60 fixed`;
+// 해당 항목 이동
+const MoveTop = tw.div` h-14 border-8 border-gray-500 text-sm`;
+const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+
+// 두번째 추천칸
+const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
+// 기기 및 분쇄도
+const RecOther = tw.div`w-1040  flex justify-between `;
+// 세번째 리뷰칸
+const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down`;
+const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
+// 네번째 칸(구매사이트)
+const BeanTop4 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;
