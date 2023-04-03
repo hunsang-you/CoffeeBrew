@@ -1,12 +1,12 @@
 import tw from 'tailwind-styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useParams } from 'react-router-dom';
-import bean from '../../assets/tempImg/bean.png';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { reviewType } from './DetailBean';
+import { detailLikeAPI } from '../../api/api';
 
 // 최신순, 추천순
 const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
@@ -15,7 +15,7 @@ const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  t
 
 const ReviewList = tw.div`w-1000 mx-auto`;
 const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
-const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder`;
+const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6`;
 const ReviewName = tw.div`text-xl  mt-12 mb-4`;
 const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
 
@@ -30,7 +30,7 @@ const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
 // const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
 const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto`;
 const ReviewCreated = tw.p`text-sm font-bold`;
-const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
+const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-5 mb-4 cursor-pointer hover:bg-slate-500`;
 
 interface PropsTypes {
   detailReview?: reviewType[];
@@ -43,20 +43,43 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
     setIsActive(!isActive);
   };
 
+  // 리뷰 좋아요 토글
   const [reviewLike, setReviewLike] = useState(false);
   const handleReviewLike = () => {
     setReviewLike(!reviewLike);
   };
 
+  // 리뷰 더보기
   const [showNumber, setShowNumber] = useState(1);
-
   const showMore = () => {
     setShowNumber(showNumber + 3);
   };
 
+  // 리뷰 접기 시 페이지 위로 올리기
+  const reviewRef = useRef<HTMLDivElement>(null);
+  const moveReview = () => {
+    if (reviewRef.current) {
+      const location: number = reviewRef.current.offsetTop;
+      window.scrollTo({ top: location - 80, behavior: 'smooth' });
+    }
+  };
+
+  // 리뷰 좋아요 API
+  const { reviewId } = useParams() as { reviewId: string };
+  useEffect(() => {
+    const detailBeanLike = async () => {
+      await detailLikeAPI
+        .beanLike(Number(reviewId))
+        .then((request) => {
+          console.log('bean_like api 연결확인 ::', request.data);
+        })
+        .catch((e) => console.log(e));
+    };
+  });
+
   return (
     <div>
-      <ReviewList>
+      <ReviewList ref={reviewRef} id="Review">
         <ReviewFilter>
           {isActive ? (
             <FilterOn>최신순</FilterOn>
@@ -71,7 +94,11 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
         </ReviewFilter>
         {showNumber > 1 ? (
           <MoreBtn
-            style={{ margin: '24px' }}
+            style={{
+              marginBottom: '12px',
+              fontWeight: 'bold',
+              backgroundColor: '#9A6533',
+            }}
             onClick={() => {
               setShowNumber(1);
             }}
@@ -95,17 +122,17 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               // score[0] = 기준, score[1] = 점수
               // console.log(score); //  ['향', 5]
               // .5인지 판별
-              const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
+              const isHalfCheck = (score[1] - Math.floor(score[1])) / 2 > 0;
 
               // 점수만큼 가득찬 이미지
               const scoreRatingFull = [];
-              if (Number.isInteger(score[1])) {
+              if (Number.isInteger(score[1] / 2)) {
                 for (let k = 0; k < score[1]; k++) {
                   scoreRatingFull.push(<Score src={ratingfull} key={k} />);
                 }
               } else {
                 // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-                for (let k = 0; k < Math.floor(score[1]); k++) {
+                for (let k = 0; k < Math.floor(score[1] / 2); k++) {
                   scoreRatingFull.push(<Score src={ratingfull} key={k} />);
                 }
               }
@@ -116,12 +143,12 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               ) : null;
 
               const scoreRatingEmpty = [];
-              if (Number.isInteger(score[1])) {
-                for (let k = 0; k < 5 - score[1]; k++) {
+              if (Number.isInteger(score[1] / 2)) {
+                for (let k = 0; k < 5 - score[1] / 2; k++) {
                   scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
                 }
               } else {
-                for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+                for (let k = 0; k < Math.floor(5 - score[1] / 2); k++) {
                   scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
                 }
               }
@@ -135,8 +162,8 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                   {scoreRatingEmpty}
                 </ScoreTitle>,
               );
+              console.log('ReviewList : ', scoreItem);
             }
-
             return scoreItem;
           };
           return (
@@ -160,7 +187,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                       style={{ color: 'gray', margin: 'auto' }}
                     />
                   )}
-                  <ReviewImg src={bean} />
+                  <ReviewImg src={data.profile.profileImg} />
                   {data.profile.nickname}
                 </ReviewName>
                 <ReviewStandard>
@@ -176,17 +203,22 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             </div>
           );
         })}
-
-        <MoreBtn onClick={() => showMore()}>리뷰 더보기 ▼</MoreBtn>
-
-        <MoreBtn
-          style={{ margin: '24px' }}
-          onClick={() => {
-            setShowNumber(1);
-          }}
-        >
-          리뷰 접기▲
-        </MoreBtn>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <MoreBtn
+            style={{
+              marginBottom: '12px',
+              fontWeight: 'bold',
+              backgroundColor: '#9A6533',
+            }}
+            onClick={() => {
+              setShowNumber(1);
+              moveReview();
+            }}
+          >
+            리뷰 접기 ▲
+          </MoreBtn>
+          <MoreBtn onClick={() => showMore()}>리뷰 더보기 ▼</MoreBtn>
+        </div>
       </ReviewList>
     </div>
   );
