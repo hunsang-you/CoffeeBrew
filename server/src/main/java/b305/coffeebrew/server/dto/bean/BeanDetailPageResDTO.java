@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -32,7 +33,7 @@ public class BeanDetailPageResDTO {
 	private int body;
 	private String coffeeingNote;
 	private String roastingPoint;
-	private Set<LinkDTO> linkDTO;
+	private Set<LinkDTO> linkDTO = new HashSet<>(); // 기본값으로 빈 Set을 할당
 
 	@Builder
 	public BeanDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
