@@ -53,7 +53,7 @@ export const reviewAPI = {
   ) =>
     api.post(`member/review`, {
       itemType: 'bean',
-      itemidx: `${id}`,
+      itemIdx: id,
       content: content,
       overall: overall,
       flavor: flavor,
