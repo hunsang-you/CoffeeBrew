@@ -30,6 +30,7 @@ export interface detailType {
   sweetness: string;
   thumbnail: string | null;
   userGrade: number | null;
+  linkDTO: linkDTOType[];
 }
 export interface reviewType {
   idx: number;
@@ -55,11 +56,17 @@ export interface reviewType {
   createdDate: number[] | null;
   updatedDate: number[] | null;
 }
+export interface linkDTOType {
+  mallName: string;
+  link: string;
+  image: string;
+}
 
 const DetailBean = (): JSX.Element => {
   const navigate = useNavigate();
   const { beanId } = useParams() as { beanId: string };
   const [detailBean, setDetailBean] = useState<detailType | null>(null);
+
   // 스크롤 이동
   const ScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -161,7 +168,9 @@ const DetailBean = (): JSX.Element => {
       {/* 다섯번째 줄(쇼핑몰링크) */}
       <BeanTop4>
         <Title> 여기서 구매해볼 수 있어요</Title>
-        <Shopping />
+        {detailBean?.linkDTO ? (
+          <Shopping linkDTO={detailBean?.linkDTO} />
+        ) : null}
       </BeanTop4>
 
       <Line></Line>
