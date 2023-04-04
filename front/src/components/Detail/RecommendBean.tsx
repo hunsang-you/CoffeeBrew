@@ -53,7 +53,9 @@ const RecommendBean = (): JSX.Element => {
   const [page, setPage] = useState(0);
   const { beanId } = useParams() as { beanId: string };
 
-  const [recommendBeanList, setRecommendBeanList] = useState<recomType[]>([]);
+  const [recommendBeanList, setRecommendBeanList] = useState<
+    recomType[] | null
+  >(null);
 
   useEffect(() => {
     const recomBean = async () => {
@@ -61,11 +63,11 @@ const RecommendBean = (): JSX.Element => {
         .recommendBean(Number(beanId))
         .then((request) => {
           console.log(request.data);
-          setRecommendBeanList(request.data);
+          setRecommendBeanList(request.data.value);
         })
         .catch((e) => console.log(e));
-      recomBean();
     };
+    recomBean();
   }, []);
   // 캐러셀 이미지 넣을 곳
   const images = useRef([
@@ -73,6 +75,7 @@ const RecommendBean = (): JSX.Element => {
       src: [bean, bean2, grinding2, machine1, spin],
     },
   ]);
+
   const [current, setCurrent] = useState(0);
   const [style, setStyle] = useState({
     marginLeft: `-${current}00%`,
@@ -126,8 +129,8 @@ const RecommendBean = (): JSX.Element => {
         </Position>
         <div style={{ display: 'flex', position: 'relative' }}>
           <Btn onClick={() => moveSlide(-1)}>&lt;</Btn>
+          {/* carousel 출력 */}
           <Slide>
-            {/* carousel 출력 */}
             {recommendBeanList
               ? recommendBeanList?.map((data, i) => {
                   const RecommendRating = {
@@ -147,19 +150,20 @@ const RecommendBean = (): JSX.Element => {
                       // score[0] = 기준, score[1] = 점수
                       // console.log(score); //  ['향', 5]
                       // .5인지 판별
-                      const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
+                      const isHalfCheck =
+                        score[1] / 2 - Math.floor(score[1] / 2) > 0;
 
                       // 점수만큼 가득찬 이미지
                       const scoreRatingFull = [];
-                      if (Number.isInteger(score[1])) {
-                        for (let j = 0; j < score[1]; j++) {
+                      if (Number.isInteger(score[1] / 2)) {
+                        for (let j = 0; j < score[1] / 2; j++) {
                           scoreRatingFull.push(
                             <Score src={ratingfull} key={j} />,
                           );
                         }
                       } else {
                         // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-                        for (let k = 0; k < Math.floor(score[1]); k++) {
+                        for (let k = 0; k < Math.floor(score[1] / 2); k++) {
                           scoreRatingFull.push(
                             <Score src={ratingfull} key={k} />,
                           );
@@ -172,14 +176,14 @@ const RecommendBean = (): JSX.Element => {
                       ) : null;
 
                       const scoreRatingEmpty = [];
-                      if (Number.isInteger(score[1])) {
-                        for (let k = 0; k < 5 - score[1]; k++) {
+                      if (Number.isInteger(score[1] / 2)) {
+                        for (let k = 0; k < 5 - score[1] / 2; k++) {
                           scoreRatingEmpty.push(
                             <Score src={ratingempty} key={k} />,
                           );
                         }
                       } else {
-                        for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+                        for (let k = 0; k < Math.floor(5 - score[1] / 2); k++) {
                           scoreRatingEmpty.push(
                             <Score src={ratingempty} key={k} />,
                           );
@@ -203,7 +207,12 @@ const RecommendBean = (): JSX.Element => {
                   };
 
                   return (
-                    <div style={{ width: '640px', fontSize: '32px' }}>
+                    <div
+                      style={{ width: '640px', fontSize: '32px' }}
+                      onClick={() => {
+                        console.log(data);
+                      }}
+                    >
                       <div className="flexBox" style={style}>
                         <div
                           key={i}
@@ -211,14 +220,12 @@ const RecommendBean = (): JSX.Element => {
                         >
                           <Img
                             key={i}
-                            style={{ backgroundImage: `${data.thumbnail}` }}
-                          />
-                          <div
-                            style={{
-                              marginLeft: '16px',
-                              width: '450px',
+                            style={{ backgroundImage: `${bean}` }}
+                            onClick={() => {
+                              console.log(data);
                             }}
-                          >
+                          />
+                          <div style={{ marginLeft: '16px', width: '450px' }}>
                             <div
                               style={{
                                 wordBreak: 'break-word',
