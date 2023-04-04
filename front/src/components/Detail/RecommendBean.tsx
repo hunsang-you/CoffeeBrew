@@ -66,8 +66,9 @@ const RecommendBean = (): JSX.Element => {
           setRecommendBeanList(request.data);
         })
         .catch((e) => console.log(e));
+      recomBean();
     };
-  });
+  }, []);
   // 캐러셀 이미지 넣을 곳
   const images = useRef([
     {
