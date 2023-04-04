@@ -46,19 +46,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
 
   return (
     <div>
-      <ReviewList ref={reviewRef} id="Review" style={{ maxHeight: '1000x' }}>
-        <ReviewFilter>
-          {isActive ? (
-            <FilterOn>최신순</FilterOn>
-          ) : (
-            <FilterOff onClick={activeBtn}>최신순</FilterOff>
-          )}
-          {isActive ? (
-            <FilterOff onClick={activeBtn}>추천순</FilterOff>
-          ) : (
-            <FilterOn>추천순</FilterOn>
-          )}
-        </ReviewFilter>
+      <ReviewList>
         {showNumber > 1 ? (
           <MoreBtn
             style={{
@@ -169,19 +157,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                         data.createdDate[3] +
                         '시'}
                     </ReviewCreated>
-                    {reviewLike ? (
-                      <AiFillHeart
-                        size={30}
-                        onClick={handleReviewLike}
-                        style={{ color: 'red', margin: 'auto' }}
-                      />
-                    ) : (
-                      <AiOutlineHeart
-                        size={30}
-                        onClick={handleReviewLike}
-                        style={{ color: 'gray', margin: 'auto' }}
-                      />
-                    )}
+
                     <ReviewImg src={data.profile.profileImg} />
                     {data.profile.nickname}
                   </ReviewName>
@@ -234,13 +210,13 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
 export default ReviewLists;
 
 // 최신순, 추천순
-const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
-const FilterOn = tw.div`w-24 h-10 rounded-full border-2 text-2xl text-center leading-9  bg-black text-white ml-4`;
-const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
+// const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
+// const FilterOn = tw.div`w-24 h-10 rounded-full border-2 text-2xl text-center leading-9  bg-black text-white ml-4`;
+// const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
 
 const ReviewList = tw.div`w-1000 mx-auto`;
 const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
-const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6 overflow-y-auto`;
+const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6 `;
 const ReviewName = tw.div`text-xl  mt-12 mb-4`;
 const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
 
