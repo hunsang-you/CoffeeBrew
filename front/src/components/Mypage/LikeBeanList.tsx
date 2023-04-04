@@ -20,6 +20,7 @@ interface like {
 const LikeBeanList = () => {
   const [isLikeCheck, setIsLikeCheck] = useState(true);
   const [likeBeans, setLikeBeans] = useState<detailType[]>([]);
+  const [likesList, setLikesList] = useState<number>(200);
   const [beanIdx, setBeanIdx] = useState<number[]>([]);
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const LikeBeanList = () => {
     const getLikesBean = async () => {
       await memberAPI.memberLikesBeans().then((request) => {
         const likes = request.data.value;
+        setLikesList(likes.length);
         if (likes.length > 0) {
           likes.map((like: like) => {
             if (like.itemType === 'bean') {
@@ -55,7 +57,7 @@ const LikeBeanList = () => {
   return (
     <div>
       <List>
-        {likeBeans.length > 0 ? (
+        {likeBeans.length == likesList ? (
           likeBeans.map((bean: detailType, i: number) => {
             return (
               <CardBody>
