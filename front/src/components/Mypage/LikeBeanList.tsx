@@ -59,6 +59,8 @@ const LikeBeanList = () => {
           //       .catch((e) => console.log(e));
           //   }
           // });
+        } else {
+          setLikeBeans([]);
         }
       });
     };
