@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import Analyze from './Analyze';
 import BeanLike from './BeanLike';
 import MyReview from './MyReview';
-import { memberAPI } from '../../api/api';
+import { memberAPI, loginAPI } from '../../api/api';
 import dogprofile from '../../assets/tempImg/dogprofile.png';
+import Swal from 'sweetalert2';
 
 const ProfileDiv = tw.div`w-1200  bg-background flex justify-between`;
 const ProfileLeft = tw.div`w-80 h-1/2 mt-20 ml-20  bg-nameTag drop-shadow-2xl justify-center rounded-t-full`;
@@ -93,14 +94,54 @@ const MyProfile = () => {
             ·Menu·
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <UserMenuBtn onClick={() => console.log('로그아웃')}>
+            <UserMenuBtn
+              onClick={() => {
+                loginAPI
+                  .logout()
+                  .then((request) => {
+                    window.localStorage.clear();
+                    window.location.replace('/');
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+              }}
+            >
               로그아웃
             </UserMenuBtn>
             <UserMenuBtn
               style={{ color: 'red' }}
-              onClick={() => console.log('탈퇴 alert창')}
+              onClick={() =>
+                Swal.fire({
+                  title: '회원탈퇴 하시겠습니까?',
+                  text: '모든 정보가 삭제 됩니다.',
+                  icon: 'warning',
+                  showCancelButton: false,
+                  confirmButtonColor: '#d33',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '네 탈퇴하겠습니다.',
+                })
+                  .then((result) => {
+                    if (result.isConfirmed) {
+                      Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success',
+                      );
+                    }
+                  })
+                  .then((result) => {
+                    loginAPI
+                      .withdraw()
+                      .then((request) => {
+                        window.localStorage.clear();
+                        window.location.replace('/');
+                      })
+                      .catch((e) => console.log(e));
+                  })
+              }
             >
-              회원 탈퇴
+              회원탈퇴
             </UserMenuBtn>
           </div>
         </UserInfo>

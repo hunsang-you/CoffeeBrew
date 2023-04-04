@@ -24,7 +24,9 @@ export const loginAPI = {
   /**카카오 로그인 */
   login: () => api.post(`/login`),
   /**로그아웃 */
-  logout: () => api.delete(`/member`),
+  logout: () => api.get(`/logout`),
+  /**회원탈퇴 */
+  withdraw: () => api.delete(`/member`),
 };
 
 export const detailAPI = {
