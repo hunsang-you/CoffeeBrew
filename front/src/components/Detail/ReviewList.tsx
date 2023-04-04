@@ -46,7 +46,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
 
   return (
     <div>
-      <ReviewList ref={reviewRef} id="Review">
+      <ReviewList ref={reviewRef} id="Review" style={{ maxHeight: '1000x' }}>
         <ReviewFilter>
           {isActive ? (
             <FilterOn>최신순</FilterOn>
@@ -145,6 +145,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                         reviewAPI
                           .deleteReview(Number(data.idx))
                           .then((request) => {
+                            location.reload();
                             console.log('리뷰삭제', request.data);
                           })
                           .catch((e) => console.log(e));
@@ -240,7 +241,7 @@ const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  t
 
 const ReviewList = tw.div`w-1000 mx-auto`;
 const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
-const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6`;
+const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6 overflow-y-auto`;
 const ReviewName = tw.div`text-xl  mt-12 mb-4`;
 const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
 
