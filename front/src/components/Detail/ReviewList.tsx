@@ -13,8 +13,8 @@ import { reviewAPI } from '../../api/api';
 interface PropsTypes {
   detailReview?: reviewType[];
 }
-const reduxData = useSelector((state: RootState) => state);
 const ReviewLists = ({ detailReview }: PropsTypes) => {
+  const reduxData = useSelector((state: RootState) => state);
   // 리뷰 최신/추천 순 조회버튼
   const [isActive, setIsActive] = useState(true);
   const activeBtn = () => {
@@ -92,7 +92,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                 // console.log(score); //  ['향', 5]
                 // .5인지 판별
                 const isHalfCheck = score[1] / 2 - Math.floor(score[1] / 2) > 0;
-                console.log(score);
+
                 // 점수만큼 가득찬 이미지
                 const scoreRatingFull = [];
                 if (Number.isInteger(score[1] / 2)) {
