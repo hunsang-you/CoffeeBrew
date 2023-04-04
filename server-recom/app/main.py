@@ -123,10 +123,19 @@ async def getAgeRecom(ageRange: Union[str, None] = None):
         return result
 
 
-@app.get("/gender")
-async def getGenderRecom():
-    pass
-    return {"message": "call /gender"}
+@app.get("/gender/{gender}")
+async def getGenderRecom(gender: Union[str, None] = None):
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", "like_recom_by_gender.csv"),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = user_recom.get_recom_by_gender(gender, recom_read)
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
 
 
 # cf 기반 추천 알고리즘 호출
