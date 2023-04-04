@@ -33,9 +33,9 @@ interface recomType {
   body: number;
   balance: number;
   usergrade: number;
-  coffeeingNote: string | null;
+  coffeeingNote: string;
   decaffeination: boolean;
-  description: string | null;
+  description: string;
   linkDTO: null;
   nameEn: string;
   nameKo: string;
@@ -53,9 +53,7 @@ const RecommendBean = (): JSX.Element => {
   const [page, setPage] = useState(0);
   const { beanId } = useParams() as { beanId: string };
 
-  const [recommendBeanList, setRecommendBeanList] = useState<
-    recomType[] | null
-  >(null);
+  const [recommendBeanList, setRecommendBeanList] = useState<recomType[]>([]);
 
   useEffect(() => {
     const recomBean = async () => {
