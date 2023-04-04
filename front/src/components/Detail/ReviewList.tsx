@@ -11,7 +11,7 @@ import { RootState } from '../../store';
 import { reviewAPI } from '../../api/api';
 
 interface PropsTypes {
-  detailReview?: reviewType[];
+  detailReview?: reviewType[] | null;
 }
 const ReviewLists = ({ detailReview }: PropsTypes) => {
   const reduxData = useSelector((state: RootState) => state);
