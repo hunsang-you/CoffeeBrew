@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -67,7 +68,7 @@ public class CapsuleService {
                 String processedKeyword = "%" + keyword.toLowerCase() + "%";
                 result.addAll(capsuleRepository.findCapsulesByKeyword(processedKeyword, pageable).getContent());
             }
-            return new PageImpl<>(new ArrayList<>(result)).map(CapsuleResDTO::of);
+            return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(CapsuleResDTO::of);
         }
     }
 }
