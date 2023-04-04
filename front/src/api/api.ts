@@ -100,7 +100,16 @@ export const mainAPI = {
 export const surveyAPI = {
   /**설문조사 결과 전송 */
   postSurvey: (surveyli: number[]) =>
-    api.post(`survey`, { surveyli: surveyli }),
+    api.post(`survey`, {
+      param1: surveyli[0],
+      param2: surveyli[1],
+      param3: surveyli[2],
+      param4: surveyli[3],
+      param5: surveyli[4],
+      param6: surveyli[5],
+      param7: surveyli[6],
+      param8: surveyli[7],
+    }),
 };
 
 export const memberAPI = {
