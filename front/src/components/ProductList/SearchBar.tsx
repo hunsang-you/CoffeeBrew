@@ -220,7 +220,7 @@ const SearchBar = ({
         } else if (
           isMoreState.morebtn1 === true &&
           parseInt(key) === i &&
-          i > 0
+          i >= 0
         ) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
@@ -275,7 +275,7 @@ const SearchBar = ({
         } else if (
           isMoreState.morebtn2 === true &&
           parseInt(key) === i &&
-          i > 0
+          i >= 0
         ) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
