@@ -26,7 +26,11 @@ const MyProfile = () => {
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
       await memberAPI
-        .memberReviews('page=1')
+        .memberReviews('page=0')
+        .then((request) => console.log(request))
+        .catch((e) => console.log(e));
+      await memberAPI
+        .memberLikesBeans()
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
     };
