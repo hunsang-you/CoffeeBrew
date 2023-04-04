@@ -28,9 +28,10 @@ public class SurveyResDTO {
     private int sweetness; // 단맛
     private int bitterness; // 쓴맛
     private int body; // 바디감
+    private String coffeeing_note; // 커핑노트
 
     @Builder
-    public SurveyResDTO(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired, int flavor, int acidity, int sweetness, int bitterness, int body) {
+    public SurveyResDTO(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeing_note) {
         this.resultCode = resultCode;
         this.resultType = resultType;
         this.param1 = param1;
@@ -47,9 +48,10 @@ public class SurveyResDTO {
         this.sweetness = sweetness;
         this.bitterness = bitterness;
         this.body = body;
+        this.coffeeing_note = coffeeing_note;
     }
 
-    public static SurveyResDTO of(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired, int flavor, int acidity, int sweetness, int bitterness, int body) {
+    public static SurveyResDTO of(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeing_note) {
         return SurveyResDTO.builder()
                 .resultCode(resultCode)
                 .resultType(resultType)
@@ -67,6 +69,7 @@ public class SurveyResDTO {
                 .sweetness(sweetness)
                 .bitterness(bitterness)
                 .body(body)
+                .coffeeing_note(coffeeing_note)
                 .build();
     }
 }

@@ -69,4 +69,10 @@ public class Member extends BaseAtTime implements Serializable {
         return this;
     }
 
+    public Member updateAgeAndGender(String ageRange, String gender) {
+        this.ageRange = ageRange;
+        this.gender = gender;
+        return this;
+    }
+
 }

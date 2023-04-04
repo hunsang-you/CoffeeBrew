@@ -21,6 +21,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying(clearAutomatically = true)
     int updateMember(@Param("profileImg") String profileImg, @Param("nickname") String nickname, @Param("idx") long idx);
 
+    @Query("update Member m set m.ageRange = :ageRange, m.gender = :gender where m.idx= :idx")
+    @Modifying(clearAutomatically = true)
+    int updateMemberAgeAndGender(@Param("ageRange") String ageRange, @Param("gender") String gender, @Param("idx") long idx);
+
     @Query("select m.idx from Member m where m.memberEmail like :memberEmail")
     Optional<Long> findIdxByMemberEmail(String memberEmail);
 }

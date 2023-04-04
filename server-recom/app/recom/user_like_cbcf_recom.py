@@ -1,7 +1,5 @@
 import os
 import os.path as path
-import json
-import random
 import numpy as np
 import pandas as pd
 
@@ -152,16 +150,3 @@ def recommendation_list_by_id(target_id, matrix, items, k=10):
     recom_list = [dict(id=id, title=title) for id, title in zip(recom_id, recom_title)]
 
     return recom_list
-
-
-def get_recom_by_bean(itemIdx, matrix, k=5):
-    try:
-        recom_list = matrix.set_index("idx").loc[itemIdx]["recommendation"]
-        recom_list = json.loads(recom_list.replace("'", '"'))
-        recom_list = [dict(t) for t in {tuple(d.items()) for d in recom_list}]
-
-    except:
-        print(itemIdx)
-        print(recom_list)
-
-    return recom_list[:k]
