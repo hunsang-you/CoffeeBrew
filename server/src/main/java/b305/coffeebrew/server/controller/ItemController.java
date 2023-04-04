@@ -3,9 +3,11 @@ package b305.coffeebrew.server.controller;
 import b305.coffeebrew.server.config.utils.Msg;
 import b305.coffeebrew.server.config.utils.ResponseDTO;
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
+import b305.coffeebrew.server.dto.capsule.CapsuleDetailPageResDTO;
 import b305.coffeebrew.server.dto.naverShopping.LinkDTO;
 import b305.coffeebrew.server.service.BeanService;
 import b305.coffeebrew.server.service.CapsuleService;
+import b305.coffeebrew.server.service.NaverService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,6 +35,7 @@ public class ItemController {
 
     private final BeanService beanService;
     private final CapsuleService capsuleService;
+    private final NaverService naverService;
 
     @GetMapping("/bean")
     @ApiOperation(value = "원두 검색 페이지", notes = "원두의 상세한 정보를 출력한다.")
@@ -70,7 +73,7 @@ public class ItemController {
     })
     public ResponseEntity<ResponseDTO> readBeanDetail(@PathVariable("beanId") long beanId) {
         BeanDetailPageResDTO beanDetailPageResDTO = beanService.getBeanDetail(beanId);
-        Set<LinkDTO> naverLinks = beanService.searchNaverShopping(beanDetailPageResDTO.getNameKo(),beanDetailPageResDTO.getNameEn());
+        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(beanDetailPageResDTO.getNameKo(), beanDetailPageResDTO.getNameEn());
         if (naverLinks != null) {
             if (beanDetailPageResDTO.getLinkDTO() == null) {
                 beanDetailPageResDTO.setLinkDTO(new HashSet<>());
@@ -88,6 +91,14 @@ public class ItemController {
             @ApiResponse(code = 500, message = "서버 오류"),
     })
     public ResponseEntity<ResponseDTO> readCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_INQUIRE, capsuleService.getCapsuleDetail(capsuleId)));
+        CapsuleDetailPageResDTO capsuleDetailPageResDTO = capsuleService.getCapsuleDetail(capsuleId);
+        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(capsuleDetailPageResDTO.getCapsule().getNameKo(), capsuleDetailPageResDTO.getCapsule().getNameEn());
+        if (naverLinks != null) {
+            if (capsuleDetailPageResDTO.getLinkDTO() == null) {
+                capsuleDetailPageResDTO.setLinkDTO(new HashSet<>());
+            }
+            capsuleDetailPageResDTO.getLinkDTO().addAll(naverLinks);
+        }
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_INQUIRE, capsuleDetailPageResDTO));
     }
 }
