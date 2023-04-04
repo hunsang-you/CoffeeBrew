@@ -70,4 +70,6 @@ public interface Msg {
 	String SUCCESS_SURVEY_REGIST = "설문 작성에 성공하였습니다.";
 	String FAIL_SURVEY_REGIST = "설문 작성에 실패하였습니다.";
 
+    String SUCCESS_SURVEY_FOUND = "설문 조회에 성공하였습니다.";
+	String FAIL_SURVEY_FOUND = "설문 조회에 실패하였습니다.";
 }
