@@ -6,6 +6,8 @@ import json
 import numpy as np
 import pandas as pd
 
+from .util.logging_time import logging_time
+
 from typing import Union
 
 import uvicorn
@@ -15,7 +17,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from .recom import bean_cbf_recom
+from .recom import item_recom_cbf
 from .recom import user_recom, user_cbcf_recom
 
 from sqlalchemy.orm import Session
@@ -23,11 +25,6 @@ from sqlalchemy.orm import Session
 from .db import crud
 from .db import model
 
-# from .database.model.Bean import Bean, Bean_detail, Bean_score
-# from .database.model.Capsule import Capsule, Capsule_detail, Capsule_score
-# from .database.model.Member import Member
-# from .database.model.Review import Review
-# from .database.model.LikeList import LikeList
 from .db.database import engine, SessionLocal, Base
 
 DIR_PATH = path.join(".", "data")
@@ -83,13 +80,8 @@ async def checkDB(idx: Union[int, None] = None, db: Session = Depends(get_db)):
     return db_check
 
 
-# cbf 기반 원두 추천 알고리즘 호출
-@app.get("/bean")
-async def getBeanInfoAll():
-    pass
-    return {"message": "call /bean"}
-
-
+# cbf 기반 추천 알고리즘
+# 원두 스테이터스 기반 추천 알고리즘
 @app.get("/bean/{beanId}")
 async def getBeanRecom(beanId: Union[int, None] = None):
     print("id:{}, type:{}".format(beanId, type(beanId)))
@@ -100,7 +92,7 @@ async def getBeanRecom(beanId: Union[int, None] = None):
         encoding="utf-8",
     )
 
-    result = bean_cbf_recom.get_recom_by_bean(beanId, bean_recom_read)
+    result = item_recom_cbf.get_recom_by_bean(beanId, bean_recom_read)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -108,6 +100,7 @@ async def getBeanRecom(beanId: Union[int, None] = None):
 
 
 # 통계 기반 추천 알고리즘
+# 사용자 연령대 기반 제품 추천
 @app.get("/age/{ageRange}")
 async def getAgeRecom(ageRange: Union[str, None] = None):
     recom_read = pd.read_csv(
@@ -123,6 +116,7 @@ async def getAgeRecom(ageRange: Union[str, None] = None):
         return result
 
 
+# 사용자 성별 기반 제품 추천
 @app.get("/gender/{gender}")
 async def getGenderRecom(gender: Union[str, None] = None):
     recom_read = pd.read_csv(
@@ -139,19 +133,15 @@ async def getGenderRecom(gender: Union[str, None] = None):
 
 
 # cf 기반 추천 알고리즘 호출
-@app.get("/user")
-async def getUserInfoAll():
-    pass
-    return {"message": "call /user"}
-
-
-@app.get("/user/{userId}")
+# 사용자 설문 결과 기반 제품 추천
+@app.get("/user/{userId}/bean")
 async def getUserRecom(userId: Union[int, None] = None):
     pass
     return {"message": f"call /user/{userId}"}
 
 
-@app.get("/user/{userId}/like")
+# 사용자 좋아요 기반 제품 추천
+@app.get("/user/{userId}/like/bean")
 async def getUserRecom(userId: Union[int, None] = None):
     print("user_id:{}, type:{}".format(userId, type(userId)))
 
@@ -175,7 +165,8 @@ async def getUserRecom(userId: Union[int, None] = None):
         return result
 
 
-@app.get("/user/{userId}/review")
+# 사용자 리뷰 기반 제품 추천
+@app.get("/user/{userId}/review/bean")
 async def getUserRecom(userId: Union[int, None] = None):
     print("user_id:{}, type:{}".format(userId, type(userId)))
 
@@ -206,18 +197,10 @@ async def updateRecom():
     return {"message": "call /update"}
 
 
-# @app.get("/update/bean")
-# async def updateBeanRecom(type: Union[str, None] = "status"):
-#     global recom_data
-
-#     if type == "keyword":
-#         bean_cbf_recom.calc_bean_recom_by_keyword(DIR_PATH)
-#         recom_data = load_bean_recom_data()
-#         return {"message": "update keyword-based recommendation list"}
-#     else:
-#         bean_cbf_recom.calc_bean_recom_by_status(DIR_PATH)
-#         recom_data = load_bean_recom_data()
-#         return {"message": "update status-based recommendation list"}
+@app.get("/update/bean/cbf")
+async def updateBeanRecom(db: Session = Depends(get_db)):
+    item_recom_cbf.calc_bean_recom(db, DIR_PATH)
+    return {"message": "update status-based recommendation list"}
 
 
 if __name__ == "__main__":
