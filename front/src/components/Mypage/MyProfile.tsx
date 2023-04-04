@@ -6,6 +6,8 @@ import MyReview from './MyReview';
 import { memberAPI, loginAPI } from '../../api/api';
 import dogprofile from '../../assets/tempImg/dogprofile.png';
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 const ProfileDiv = tw.div`w-1200  bg-background flex justify-between`;
 const ProfileLeft = tw.div`w-80 h-1/2 mt-20 ml-20  bg-nameTag drop-shadow-2xl justify-center rounded-t-full`;
@@ -20,6 +22,7 @@ const UserMenuBtn = tw.button`w-fit ml-8 mb-6 text-2xl font-bold cursor-pointer 
 
 const MyProfile = () => {
   const [typeCheck, setTypeCheck] = useState([true, false, false]);
+  const reduxData = useSelector((state: RootState) => state);
   useEffect(() => {
     const getInfo = async () => {
       await memberAPI
@@ -42,7 +45,11 @@ const MyProfile = () => {
     <ProfileDiv>
       <ProfileLeft>
         <UserImg>
-          <img src={dogprofile} />
+          {reduxData.memberInfo == null || reduxData.memberInfo == undefined ? (
+            <img src={dogprofile} />
+          ) : (
+            <img src={reduxData.memberInfo.profileImg || ''} />
+          )}
         </UserImg>
         <UserInfo>
           <div
@@ -66,7 +73,10 @@ const MyProfile = () => {
                 fontStyle: 'italic',
               }}
             >
-              닉네임은10글자까지 <span style={{ fontSize: '20px' }}>님</span>
+              {reduxData.memberInfo != null
+                ? reduxData.memberInfo.nickname
+                : null}{' '}
+              <span style={{ fontSize: '20px' }}>님</span>
             </p>
           </div>
         </UserInfo>
