@@ -6,8 +6,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { memberAPI, detailAPI } from '../../api/api';
 import { detailType } from '../Detail/DetailBean';
 // 예시 이미지
-import bean from '../../assets/tempImg/bean.png';
-import bean2 from '../../assets/tempImg/bean2.png';
+import bean2 from '../../assets/tempImg/bean.png';
 import dogprofile from '../../assets/tempImg/dogprofile.png';
 import grinding2 from '../../assets/tempImg/grinding2.png';
 
@@ -20,7 +19,9 @@ interface like {
 
 const LikeBeanList = () => {
   const [isLikeCheck, setIsLikeCheck] = useState(true);
-  const [likeBeans, setLikeBeans] = useState<detailType | null>(null);
+  const [likeBeans, setLikeBeans] = useState<detailType[]>([]);
+  const [beanIdx, setBeanIdx] = useState<number[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getLikesBean = async () => {
@@ -29,10 +30,14 @@ const LikeBeanList = () => {
         if (likes.length > 0) {
           likes.map((like: like) => {
             if (like.itemType === 'bean') {
+              let tempIdxArr = beanIdx;
+              setBeanIdx([...tempIdxArr, like.itemIdx]);
               detailAPI
                 .getBean(Number(like.itemIdx))
                 .then((request) => {
                   console.log(request.data);
+                  let temp = likeBeans;
+                  setLikeBeans([...temp, request.data.value]);
                 })
                 .catch((e) => console.log(e));
             }
@@ -50,51 +55,68 @@ const LikeBeanList = () => {
   return (
     <div>
       <List>
-        <CardBody>
-          <BeanImg src={bean} alt="bean" />
-          <CardContent style={{ backgroundColor: '#FFF0CE' }}>
-            <div
-              style={{
-                wordBreak: 'break-word',
-                overflow: 'scroll',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              <BeanName>원두 이름원두</BeanName>
-              <BeanCountry>원산지 : 에티오피아</BeanCountry>
-              <BeanDescription>
-                이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는
-              </BeanDescription>
-            </div>
-          </CardContent>
-          <FixedDiv
-            style={{
-              bottom: 0,
-              backgroundColor: 'rgb(0, 0, 0, 0.7)',
-            }}
-          >
-            {isLikeCheck ? (
-              <AiFillHeart
-                size={42}
-                style={{
-                  color: 'red',
-                  marginLeft: '8px',
-                  paddingTop: '8px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleLike()}
-              />
-            ) : null}
-            {isLikeCheck ? null : (
-              <AiOutlineHeart
-                size={42}
-                style={{ color: 'gray', marginLeft: '8px', paddingTop: '8px' }}
-                onClick={() => handleLike()}
-              />
-            )}
-            <LinkBtn> 상세보기 </LinkBtn>
-          </FixedDiv>
-        </CardBody>
+        {likeBeans.length > 0 ? (
+          likeBeans.map((bean: detailType, i: number) => {
+            return (
+              <CardBody>
+                <BeanImg src={bean2} alt="bean" />
+                <CardContent style={{ backgroundColor: '#FFF0CE' }}>
+                  <div
+                    style={{
+                      wordBreak: 'break-word',
+                      overflow: 'scroll',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    <BeanName>{bean.nameKo}</BeanName>
+                    <BeanCountry>원산지 : {bean.origin}</BeanCountry>
+                    <BeanDescription>{bean.description}</BeanDescription>
+                  </div>
+                </CardContent>
+                <FixedDiv
+                  style={{
+                    bottom: 0,
+                    backgroundColor: 'rgb(0, 0, 0, 0.7)',
+                  }}
+                >
+                  {isLikeCheck ? (
+                    <AiFillHeart
+                      size={42}
+                      style={{
+                        color: 'red',
+                        marginLeft: '8px',
+                        paddingTop: '8px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleLike()}
+                    />
+                  ) : null}
+                  {isLikeCheck ? null : (
+                    <AiOutlineHeart
+                      size={42}
+                      style={{
+                        color: 'gray',
+                        marginLeft: '8px',
+                        paddingTop: '8px',
+                      }}
+                      onClick={() => handleLike()}
+                    />
+                  )}
+                  <LinkBtn
+                    onClick={() => {
+                      navigate(`/detail/${beanIdx[i]}`);
+                    }}
+                  >
+                    {' '}
+                    상세보기{' '}
+                  </LinkBtn>
+                </FixedDiv>
+              </CardBody>
+            );
+          })
+        ) : (
+          <div>좋아요한 원두가 없습니다.</div>
+        )}
       </List>
     </div>
   );
