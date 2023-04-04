@@ -127,67 +127,67 @@ public class BeanService {
         }
     }
 
-    public Set<LinkDTO> searchNaverShopping(String nameKo, String nameEn) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Naver-Client-Id", clientId);
-        headers.add("X-Naver-Client-Secret", clientSecret);
-
-        String query = nameKo;
-        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
-        ResponseEntity<NaverShoppingResDTO> response = restTemplate.exchange(
-                "https://openapi.naver.com/v1/search/shop.json?query={query}",
-                HttpMethod.GET,
-                requestEntity,
-                NaverShoppingResDTO.class,
-                query
-        );
-        NaverShoppingResDTO naverShoppingResponse = response.getBody();
-        Set<LinkDTO> result = new LinkedHashSet<>();
-
-        if (naverShoppingResponse != null && !naverShoppingResponse.getItems().isEmpty()) {
-            for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
-                String mallName = item.getMallName();
-                String link = item.getLink();
-                String image = item.getImage();
-
-                if (!result.contains(LinkDTO.of(mallName, link, image))) {
-                    result.add(LinkDTO.of(mallName, link, image));
-                }
-
-                if (result.size() >= 5) {
-                    return result;
-                }
-            }
-        }
-
-        if (result.size() < 5 && StringUtils.isNotBlank(nameEn)) {
-            query = nameEn;
-            response = restTemplate.exchange(
-                    "https://openapi.naver.com/v1/search/shop.json?query={query}",
-                    HttpMethod.GET,
-                    requestEntity,
-                    NaverShoppingResDTO.class,
-                    query
-            );
-            naverShoppingResponse = response.getBody();
-
-            if (naverShoppingResponse != null && !naverShoppingResponse.getItems().isEmpty()) {
-                for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
-                    String mallName = item.getMallName();
-                    String link = item.getLink();
-                    String image = item.getImage();
-
-                    if (!result.contains(LinkDTO.of(mallName, link, image))) {
-                        result.add(LinkDTO.of(mallName, link, image));
-                    }
-
-                    if (result.size() >= 5) {
-                        return result;
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
+//    public Set<LinkDTO> searchNaverShopping(String nameKo, String nameEn) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("X-Naver-Client-Id", clientId);
+//        headers.add("X-Naver-Client-Secret", clientSecret);
+//
+//        String query = nameKo;
+//        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+//        ResponseEntity<NaverShoppingResDTO> response = restTemplate.exchange(
+//                "https://openapi.naver.com/v1/search/shop.json?query={query}",
+//                HttpMethod.GET,
+//                requestEntity,
+//                NaverShoppingResDTO.class,
+//                query
+//        );
+//        NaverShoppingResDTO naverShoppingResponse = response.getBody();
+//        Set<LinkDTO> result = new LinkedHashSet<>();
+//
+//        if (naverShoppingResponse != null && !naverShoppingResponse.getItems().isEmpty()) {
+//            for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
+//                String mallName = item.getMallName();
+//                String link = item.getLink();
+//                String image = item.getImage();
+//
+//                if (!result.contains(LinkDTO.of(mallName, link, image))) {
+//                    result.add(LinkDTO.of(mallName, link, image));
+//                }
+//
+//                if (result.size() >= 5) {
+//                    return result;
+//                }
+//            }
+//        }
+//
+//        if (result.size() < 5 && StringUtils.isNotBlank(nameEn)) {
+//            query = nameEn;
+//            response = restTemplate.exchange(
+//                    "https://openapi.naver.com/v1/search/shop.json?query={query}",
+//                    HttpMethod.GET,
+//                    requestEntity,
+//                    NaverShoppingResDTO.class,
+//                    query
+//            );
+//            naverShoppingResponse = response.getBody();
+//
+//            if (naverShoppingResponse != null && !naverShoppingResponse.getItems().isEmpty()) {
+//                for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
+//                    String mallName = item.getMallName();
+//                    String link = item.getLink();
+//                    String image = item.getImage();
+//
+//                    if (!result.contains(LinkDTO.of(mallName, link, image))) {
+//                        result.add(LinkDTO.of(mallName, link, image));
+//                    }
+//
+//                    if (result.size() >= 5) {
+//                        return result;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
 }

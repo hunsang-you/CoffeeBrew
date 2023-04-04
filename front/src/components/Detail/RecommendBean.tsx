@@ -1,5 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import bean from '../../assets/tempImg/bean.png';
 import bean2 from '../../assets/tempImg/bean2.png';
 import grinding2 from '../../assets/tempImg/grinding2.png';
@@ -8,6 +9,7 @@ import spin from '../../assets/Spin-1s-200px.gif';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
+import { detailAPI } from '../../api/api';
 
 // const RecboxBean = tw.div`flex justify-center w-1000  mx-auto flex-col `;
 const Body = tw.div`flex justify-center select-none w-100vw h-100vh my-10 `;
@@ -26,7 +28,22 @@ const Score = tw.img`w-8`;
 const RecommendBean = (): JSX.Element => {
   // 캐러셀 페이지 순서 확인
   const [page, setPage] = useState(0);
+  const { beanId } = useParams() as { beanId: string };
 
+  const [recommendBeanList, setRecommendBeanList] = useState([]);
+
+  useEffect(() => {
+    const recomBean = async () => {
+      await detailAPI
+        .recommendBean(Number(beanId))
+        .then((request) => {
+          console.log(request.data);
+          setRecommendBeanList(request.data.value);
+        })
+        .catch((e) => console.log(e));
+    };
+  });
+  console.log(recommendBeanList);
   // 캐러셀 이미지 넣을 곳
   const images = useRef([
     {

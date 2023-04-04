@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-	List<Review> findByItemTypeAndItemIdx(String itemType, Long itemIdx);
+	List<Review> findByItemTypeAndItemIdxAndExpiredIsFalse(String itemType, Long itemIdx);
 
-	Page<Review> findByMemberIdx(Member member, Pageable pageable);
+	Page<Review> findByMemberIdxAndExpiredIsFalse(Member member, Pageable pageable);
 }

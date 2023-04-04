@@ -57,7 +57,8 @@ public class ReviewResDTO {
                         review.getMemberIdx().getMemberEmail(),
                         review.getMemberIdx().getNickname(),
                         review.getMemberIdx().getHashcode(),
-                        review.getMemberIdx().getSnsType()))
+                        review.getMemberIdx().getSnsType(),
+                        review.getMemberIdx().getAgeRange()))
                 .itemType(review.getItemType())
                 .itemIdx(review.getItemIdx())
                 .content(review.getContent())
