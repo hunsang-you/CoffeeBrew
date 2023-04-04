@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import Analyze from './Analyze';
 import BeanLike from './BeanLike';
 import MyReview from './MyReview';
-import { memberAPI } from '../../api/api';
+import { memberAPI, loginAPI } from '../../api/api';
 import dogprofile from '../../assets/tempImg/dogprofile.png';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 const ProfileDiv = tw.div`w-1200  bg-background flex justify-between`;
 const ProfileLeft = tw.div`w-80 h-1/2 mt-20 ml-20  bg-nameTag drop-shadow-2xl justify-center rounded-t-full`;
@@ -13,16 +16,25 @@ const TypeBar = tw.div`w-720 h-12 flex justify-center text-center relative `;
 const TypeBtnOff = tw.div`w-60 h-7  rounded-t-2xl text-white font-bold cursor-pointer absolute bottom-0 ml-0 `;
 const TypeBtnOn = tw.div`w-60 h-12  rounded-t-2xl text-white font-bold text-xl cursor-pointer absolute bottom-0 ml-0 drop-shadow-2xl `;
 
-const UserImg = tw.div`w-64 h-64 border-8 border-white bg-slate-600 mx-auto rounded-full text-center`;
+const UserImg = tw.div`w-64 h-64 border-8 border-white bg-slate-600 mx-auto rounded-percent overflow-hidden text-center`;
 const UserInfo = tw.div`w-64 mt-6 border-2  rounded-xl bg-navColor  mx-auto`;
 const UserMenuBtn = tw.button`w-fit ml-8 mb-6 text-2xl font-bold cursor-pointer hover:scale-110 duration-300`;
 
 const MyProfile = () => {
   const [typeCheck, setTypeCheck] = useState([true, false, false]);
+  const reduxData = useSelector((state: RootState) => state);
   useEffect(() => {
     const getInfo = async () => {
       await memberAPI
         .memberInfo()
+        .then((request) => console.log(request))
+        .catch((e) => console.log(e));
+      await memberAPI
+        .memberReviews('page=0')
+        .then((request) => console.log(request))
+        .catch((e) => console.log(e));
+      await memberAPI
+        .memberLikesBeans()
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
     };
@@ -33,7 +45,14 @@ const MyProfile = () => {
     <ProfileDiv>
       <ProfileLeft>
         <UserImg>
-          <img src={dogprofile} />
+          <img
+            src={
+              reduxData.memberInfo == null
+                ? dogprofile
+                : reduxData.memberInfo.profileImg || ''
+            }
+            className="w-full h-full object-cover"
+          />
         </UserImg>
         <UserInfo>
           <div
@@ -57,7 +76,10 @@ const MyProfile = () => {
                 fontStyle: 'italic',
               }}
             >
-              닉네임은10글자까지 <span style={{ fontSize: '20px' }}>님</span>
+              {reduxData.memberInfo != null
+                ? reduxData.memberInfo.nickname
+                : null}{' '}
+              <span style={{ fontSize: '20px' }}>님</span>
             </p>
           </div>
         </UserInfo>
@@ -85,14 +107,46 @@ const MyProfile = () => {
             ·Menu·
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <UserMenuBtn onClick={() => console.log('로그아웃')}>
+            <UserMenuBtn
+              onClick={() => {
+                loginAPI
+                  .logout()
+                  .then((request) => {
+                    window.localStorage.clear();
+                    window.location.replace('/');
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+              }}
+            >
               로그아웃
             </UserMenuBtn>
             <UserMenuBtn
               style={{ color: 'red' }}
-              onClick={() => console.log('탈퇴 alert창')}
+              onClick={() =>
+                Swal.fire({
+                  title: '회원탈퇴 하시겠습니까?',
+                  text: '모든 정보가 삭제 됩니다.',
+                  icon: 'warning',
+                  showCancelButton: false,
+                  confirmButtonColor: '#d33',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '네 탈퇴하겠습니다.',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    loginAPI
+                      .withdraw()
+                      .then((request) => {
+                        window.localStorage.clear();
+                        window.location.replace('/');
+                      })
+                      .catch((e) => console.log(e));
+                  }
+                })
+              }
             >
-              회원 탈퇴
+              회원탈퇴
             </UserMenuBtn>
           </div>
         </UserInfo>

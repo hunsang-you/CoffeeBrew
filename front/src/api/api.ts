@@ -21,12 +21,18 @@ api.interceptors.request.use(function (config) {
 export default api;
 
 export const loginAPI = {
+  /**카카오 로그인 */
   login: () => api.post(`/login`),
-  logout: () => api.delete(`/member`),
+  /**로그아웃 */
+  logout: () => api.get(`/logout`),
+  /**회원탈퇴 */
+  withdraw: () => api.delete(`/member`),
 };
 
 export const detailAPI = {
+  /**원두 상세 조회 */
   getBean: (id: number) => api.get(`/item/bean/${id}`),
+  /**원두 좋아요 조회 */
   beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
   recommendBean: (id: number) => api.get(`recom/bean/${id}`),
 };
@@ -45,12 +51,16 @@ const getDataCapsule = (...params: any) => {
 };
 
 export const listAPI = {
+  /**원두 리스트 조회 */
   getBeans: (...params: any) => getData(...params),
+  /**캡슐 리스트 조회 */
   getCapsules: (...params: any) => getDataCapsule(...params),
 };
 
 export const reviewAPI = {
+  /**원두에 대한 리뷰 불러오기 */
   getBeanReview: (id: number) => api.get(`review/bean/${id}`),
+  /**리뷰작성 */
   createBeanReview: (
     id: number,
     content: string,
@@ -74,27 +84,36 @@ export const reviewAPI = {
       coffeeing_note: 'none',
       expired: true,
     }),
+  /**리뷰 삭제 */
   deleteReview: (id: number) => api.delete(`member/review/${id}`),
 };
 
 // 메인페이지
 export const mainAPI = {
+  /**추천 원두 조회 */
   getBeanRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
+  /**추천 캡슐 조회 */
   getcapcullRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
 };
 
 // 설문조사
 export const surveyAPI = {
+  /**설문조사 결과 전송 */
   postSurvey: (surveyli: number[]) =>
     api.post(`survey`, { surveyli: surveyli }),
 };
 
 export const memberAPI = {
+  /** 사용자 프로필 조회 */
   memberInfo: () => api.get(`member/profile`),
+  /**사용자 원두 좋아요 조회 */
   memberLikesBeans: () => api.get(`member/like/mylist?itemType=bean`),
+  /**사용자 캡슐 좋아요 조회 */
   memberLiskeCapsules: () => api.get(`member/like/mylist?itemType=capsule`),
+  /**사용자 리뷰 쓴거 조회 */
   memberReviews: (pages: string) => api.get(`member/review?${pages}`),
 };
 export const detailLikeAPI = {
+  /**사용자 원두 좋아요 */
   beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
 };
