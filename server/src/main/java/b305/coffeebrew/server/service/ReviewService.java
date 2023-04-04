@@ -3,11 +3,15 @@ package b305.coffeebrew.server.service;
 import b305.coffeebrew.server.dto.review.DetailPageReviewResDTO;
 import b305.coffeebrew.server.dto.review.ReviewPageDTO;
 import b305.coffeebrew.server.dto.review.ReviewResDTO;
+import b305.coffeebrew.server.entity.Bean;
+import b305.coffeebrew.server.entity.Capsule;
 import b305.coffeebrew.server.entity.Member;
 import b305.coffeebrew.server.entity.Review;
 import b305.coffeebrew.server.exception.ErrorCode;
 import b305.coffeebrew.server.exception.MemberNotFoundException;
 import b305.coffeebrew.server.exception.ReviewNotFoundException;
+import b305.coffeebrew.server.repository.BeanRepository;
+import b305.coffeebrew.server.repository.CapsuleRepository;
 import b305.coffeebrew.server.repository.MemberRepository;
 import b305.coffeebrew.server.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,6 +30,8 @@ import java.util.stream.Collectors;
 public class ReviewService {
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final BeanRepository beanRepository;
+    private final CapsuleRepository capsuleRepository;
     @Transactional
     public Long registReview(ReviewPageDTO reviewPageDTO, Long idx) throws RuntimeException{
         Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
@@ -74,4 +79,67 @@ public class ReviewService {
         log.info("reviewPage = {}", reviewPage);
         return reviewPage;
     }
+
+    /**
+     * 시간마다 원두 유저 데이터 갱신
+     */
+    @Transactional
+    public void updateUserGradeFromReviews(String itemType) {
+
+        List<Review> beanReviews = reviewRepository.findByItemType(itemType);
+        Map<Long, List<Integer>> overallMap = new HashMap<>();
+
+        // 각 원두의 전체 총점과 리뷰 수를 계산합니다.
+        for (Review review : beanReviews) {
+            Long beanIdx = review.getItemIdx();
+            int overall = review.getOverall();
+
+            List<Integer> overallList = overallMap.get(beanIdx);
+            if (overallList == null) {
+                overallList = new ArrayList<>();
+                overallMap.put(beanIdx, overallList);
+            }
+            overallList.add(overall);
+        }
+        //bean
+        if ("bean".equals(itemType)){
+            // 각 원두의 사용자 평점(userGrade)을 계산하고 업데이트합니다.
+            for (Long beanIdx : overallMap.keySet()) {
+                List<Integer> overallList = overallMap.get(beanIdx);
+                int overallSum = 0;
+                for (int overall : overallList) {
+                    overallSum += overall;
+                }
+                double overallAvg = (double) overallSum / overallList.size();
+                int userGrade = (int) Math.round(overallAvg);
+
+                Optional<Bean> optionalBean = beanRepository.findById(beanIdx);
+                if (optionalBean.isPresent()) {
+                    Bean bean = optionalBean.get();
+                    bean.setUserGrade(userGrade);
+                    beanRepository.save(bean);
+                }
+            }
+        }else{//capsule
+            // 각 원두의 사용자 평점(userGrade)을 계산하고 업데이트합니다.
+            for (Long beanIdx : overallMap.keySet()) {
+                List<Integer> overallList = overallMap.get(beanIdx);
+                int overallSum = 0;
+                for (int overall : overallList) {
+                    overallSum += overall;
+                }
+                double overallAvg = (double) overallSum / overallList.size();
+                int userGrade = (int) Math.round(overallAvg);
+
+                Optional<Capsule> optionalCapsule = capsuleRepository.findById(beanIdx);
+                if (optionalCapsule.isPresent()) {
+                    Capsule capsule = optionalCapsule.get();
+                    capsule.setUserGrade(userGrade);
+                    capsuleRepository.save(capsule);
+                }
+            }
+        }
+
+    }
+
 }
