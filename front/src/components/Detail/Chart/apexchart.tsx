@@ -14,22 +14,21 @@ const Chart = ({ detailBean }: PropsTypes) => {
     '산미',
     '바디감',
     '쓴맛',
-    '평점',
   ]);
 
   useEffect(() => {
+    const data = [
+      detailBean && detailBean.flavor / 2,
+      detailBean && detailBean.sweetness / 2,
+      detailBean && detailBean.acidity / 2,
+      detailBean && detailBean.body / 2,
+      detailBean && detailBean.bitterness / 2,
+    ];
     const options = {
       series: [
         {
           name: 'coffee',
-          data: [
-            detailBean?.flavor,
-            detailBean?.sweetness,
-            detailBean?.acidity,
-            detailBean?.body,
-            detailBean?.bitterness,
-            detailBean?.userGrade,
-          ],
+          data,
         },
       ],
 
@@ -87,7 +86,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '단맛', '산미', '바디감', '쓴맛', '평점'],
+        categories: ['향', '단맛', '산미', '바디감', '쓴맛'],
         labels: {
           show: true,
           formatter: (subject: string) => {
