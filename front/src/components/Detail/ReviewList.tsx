@@ -211,9 +211,8 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               리뷰 접기 ▲
             </MoreBtn>
           ) : null}
-          {showNumber === detailReview?.length ? (
-            <MoreBtn onClick={() => showMore()}>리뷰 더보기 ▼</MoreBtn>
-          ) : null}
+
+          <MoreBtn onClick={() => showMore()}>리뷰 더보기 ▼</MoreBtn>
         </div>
       </ReviewList>
     </div>
