@@ -29,7 +29,7 @@ export interface detailType {
   region: string | null;
   roastingPoint: string | null;
   summary: string | null;
-  sweetness: string;
+  sweetness: number;
   thumbnail: string | null;
   userGrade: number | null;
   linkDTO: linkDTOType[];
@@ -150,7 +150,7 @@ const DetailBean = (): JSX.Element => {
       </BeanTop2>
 
       {/* 세번째 줄(머신 / 분쇄도)*/}
-      <BeanTop2>
+      {/* <BeanTop2>
         <div ref={recotherRef}>
           <Title id="RecOther">이렇게 먹어볼까요?</Title>
         </div>
@@ -158,7 +158,7 @@ const DetailBean = (): JSX.Element => {
           <MachineInfo />
           <Grinding />
         </RecOther>
-      </BeanTop2>
+      </BeanTop2> */}
 
       {/* 네번째 줄(리뷰) */}
       <BeanTop3 ref={reviewRef} id="Reivew">
