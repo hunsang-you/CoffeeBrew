@@ -9,7 +9,7 @@ import MachineInfo from './MachineInfo';
 import ReviewAll from './ReviewAll';
 import Shopping from './Shopping';
 
-import RecommendCarousel from './RecommendCarousel';
+// import RecommendCarousel from './RecommendCarousel';
 
 /**detailbean 타입설정 */
 export interface detailType {
@@ -146,8 +146,7 @@ const DetailBean = (): JSX.Element => {
           <Title onClick={handleClick}>이런 원두는 어떠세요?</Title>
         </div>
         {/* 캐러셀 부분 */}
-        {/* <RecommendBean /> */}
-        <RecommendCarousel />
+        <RecommendBean />
       </BeanTop2>
 
       {/* 세번째 줄(머신 / 분쇄도)*/}
