@@ -29,7 +29,7 @@ function App() {
       };
       getMemberInfo();
     } else {
-      dispatch(setLogin(true));
+      dispatch(setLogin(false));
       dispatch(setMemberInfo(null));
     }
   }, [reduxData.login]);
