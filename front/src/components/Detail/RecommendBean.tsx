@@ -53,7 +53,9 @@ const RecommendBean = (): JSX.Element => {
   const [page, setPage] = useState(0);
   const { beanId } = useParams() as { beanId: string };
 
-  const [recommendBeanList, setRecommendBeanList] = useState<recomType[]>([]);
+  const [recommendBeanList, setRecommendBeanList] = useState<
+    recomType[] | null
+  >(null);
 
   useEffect(() => {
     const recomBean = async () => {
@@ -61,11 +63,11 @@ const RecommendBean = (): JSX.Element => {
         .recommendBean(Number(beanId))
         .then((request) => {
           console.log(request.data);
-          setRecommendBeanList(request.data);
+          setRecommendBeanList(request.data.value);
         })
         .catch((e) => console.log(e));
-      recomBean();
     };
+    recomBean();
   }, []);
   // 캐러셀 이미지 넣을 곳
   const images = useRef([
@@ -127,81 +129,83 @@ const RecommendBean = (): JSX.Element => {
         <div style={{ display: 'flex', position: 'relative' }}>
           <Btn onClick={() => moveSlide(-1)}>&lt;</Btn>
           {/* carousel 출력 */}
+          <Slide>
+            {recommendBeanList
+              ? recommendBeanList?.map((data, i) => {
+                  const RecommendRating = {
+                    향: data.flavor,
+                    산미: data.acidity,
+                    단맛: data.sweetness,
+                    쓴맛: data.bitterness,
+                    바디감: data.body,
+                  };
 
-          {recommendBeanList
-            ? recommendBeanList?.map((data, i) => {
-                const RecommendRating = {
-                  향: data.flavor,
-                  산미: data.acidity,
-                  단맛: data.sweetness,
-                  쓴맛: data.bitterness,
-                  바디감: data.body,
-                };
+                  const scoreArray = Object.entries(RecommendRating);
+                  const beanScore = () => {
+                    const scoreItem = [];
 
-                const scoreArray = Object.entries(RecommendRating);
-                const beanScore = () => {
-                  const scoreItem = [];
+                    for (let i = 0; i < scoreArray.length; i++) {
+                      const score = scoreArray[i];
+                      // score[0] = 기준, score[1] = 점수
+                      // console.log(score); //  ['향', 5]
+                      // .5인지 판별
+                      const isHalfCheck =
+                        score[1] / 2 - Math.floor(score[1] / 2) > 0;
 
-                  for (let i = 0; i < scoreArray.length; i++) {
-                    const score = scoreArray[i];
-                    // score[0] = 기준, score[1] = 점수
-                    // console.log(score); //  ['향', 5]
-                    // .5인지 판별
-                    const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
-
-                    // 점수만큼 가득찬 이미지
-                    const scoreRatingFull = [];
-                    if (Number.isInteger(score[1])) {
-                      for (let j = 0; j < score[1]; j++) {
-                        scoreRatingFull.push(
-                          <Score src={ratingfull} key={j} />,
-                        );
+                      // 점수만큼 가득찬 이미지
+                      const scoreRatingFull = [];
+                      if (Number.isInteger(score[1] / 2)) {
+                        for (let j = 0; j < score[1] / 2; j++) {
+                          scoreRatingFull.push(
+                            <Score src={ratingfull} key={j} />,
+                          );
+                        }
+                      } else {
+                        // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
+                        for (let k = 0; k < Math.floor(score[1] / 2); k++) {
+                          scoreRatingFull.push(
+                            <Score src={ratingfull} key={k} />,
+                          );
+                        }
                       }
-                    } else {
-                      // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-                      for (let k = 0; k < Math.floor(score[1]); k++) {
-                        scoreRatingFull.push(
-                          <Score src={ratingfull} key={k} />,
-                        );
+
+                      // .5라면 반개 추가
+                      const scoreRatingHalf = isHalfCheck ? (
+                        <Score src={ratinghalf} />
+                      ) : null;
+
+                      const scoreRatingEmpty = [];
+                      if (Number.isInteger(score[1] / 2)) {
+                        for (let k = 0; k < 5 - score[1] / 2; k++) {
+                          scoreRatingEmpty.push(
+                            <Score src={ratingempty} key={k} />,
+                          );
+                        }
+                      } else {
+                        for (let k = 0; k < Math.floor(5 - score[1] / 2); k++) {
+                          scoreRatingEmpty.push(
+                            <Score src={ratingempty} key={k} />,
+                          );
+                        }
                       }
+
+                      scoreItem.push(
+                        <ScoreTitle key={i}>
+                          <p
+                            style={{ marginRight: '16px', fontWeight: 'bold' }}
+                          >
+                            {score[0]}
+                          </p>
+                          {scoreRatingFull} {scoreRatingHalf}
+                          {scoreRatingEmpty}
+                        </ScoreTitle>,
+                      );
                     }
 
-                    // .5라면 반개 추가
-                    const scoreRatingHalf = isHalfCheck ? (
-                      <Score src={ratinghalf} />
-                    ) : null;
+                    return scoreItem;
+                  };
 
-                    const scoreRatingEmpty = [];
-                    if (Number.isInteger(score[1])) {
-                      for (let k = 0; k < 5 - score[1]; k++) {
-                        scoreRatingEmpty.push(
-                          <Score src={ratingempty} key={k} />,
-                        );
-                      }
-                    } else {
-                      for (let k = 0; k < Math.floor(5 - score[1]); k++) {
-                        scoreRatingEmpty.push(
-                          <Score src={ratingempty} key={k} />,
-                        );
-                      }
-                    }
-
-                    scoreItem.push(
-                      <ScoreTitle key={i}>
-                        <p style={{ marginRight: '16px', fontWeight: 'bold' }}>
-                          {score[0]}
-                        </p>
-                        {scoreRatingFull} {scoreRatingHalf}
-                        {scoreRatingEmpty}
-                      </ScoreTitle>,
-                    );
-                  }
-
-                  return scoreItem;
-                };
-
-                return (
-                  <Slide onClick={() => console.log(data)}>
+                  return (
                     <div
                       style={{ width: '640px', fontSize: '32px' }}
                       onClick={() => {
@@ -215,7 +219,10 @@ const RecommendBean = (): JSX.Element => {
                         >
                           <Img
                             key={i}
-                            style={{ backgroundImage: `${data.thumbnail}` }}
+                            style={{ backgroundImage: `${bean}` }}
+                            onClick={() => {
+                              console.log(data);
+                            }}
                           />
                           <div style={{ marginLeft: '16px', width: '450px' }}>
                             <div
@@ -241,11 +248,10 @@ const RecommendBean = (): JSX.Element => {
                         </div>
                       </div>
                     </div>
-                  </Slide>
-                );
-              })
-            : null}
-
+                  );
+                })
+              : null}
+          </Slide>
           <Btn onClick={() => moveSlide(1)}>&gt;</Btn>
         </div>
       </Container>
