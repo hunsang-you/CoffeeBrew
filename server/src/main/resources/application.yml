@@ -99,6 +99,7 @@ user:
     recom: /api/v1/recom
     review: /api/v1/review
     likelist: /api/v1/likelist
+    survey: /api/v1/survey
     test: /api/v1/test
     swagger: /api/v1/swagger-ui.html
     swagger-index: /api/v1/swagger-ui/
