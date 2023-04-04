@@ -42,7 +42,7 @@ public class ReviewService {
 
     @Transactional
     public List<ReviewResDTO> readReview(String itemType, Long itemIdx) {
-        List<Review> reviews = reviewRepository.findByItemTypeAndItemIdxAndExpiredIsFalse(itemType, itemIdx);
+        List<Review> reviews = reviewRepository.findByItemTypeAndItemIdxAndExpiredIsFalseOrderByCreatedDateDesc(itemType, itemIdx);
         return reviews.stream().map(ReviewResDTO::of).collect(Collectors.toList());
     }
 
