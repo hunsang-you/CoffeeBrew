@@ -16,7 +16,7 @@ const TypeBar = tw.div`w-720 h-12 flex justify-center text-center relative `;
 const TypeBtnOff = tw.div`w-60 h-7  rounded-t-2xl text-white font-bold cursor-pointer absolute bottom-0 ml-0 `;
 const TypeBtnOn = tw.div`w-60 h-12  rounded-t-2xl text-white font-bold text-xl cursor-pointer absolute bottom-0 ml-0 drop-shadow-2xl `;
 
-const UserImg = tw.div`w-64 h-64 border-8 border-white bg-slate-600 mx-auto rounded-full text-center`;
+const UserImg = tw.div`w-64 h-64 border-8 border-white bg-slate-600 mx-auto rounded-percent overflow-hidden text-center`;
 const UserInfo = tw.div`w-64 mt-6 border-2  rounded-xl bg-navColor  mx-auto`;
 const UserMenuBtn = tw.button`w-fit ml-8 mb-6 text-2xl font-bold cursor-pointer hover:scale-110 duration-300`;
 
@@ -45,11 +45,14 @@ const MyProfile = () => {
     <ProfileDiv>
       <ProfileLeft>
         <UserImg>
-          {reduxData.memberInfo == null || reduxData.memberInfo == undefined ? (
-            <img src={dogprofile} />
-          ) : (
-            <img src={reduxData.memberInfo.profileImg || ''} />
-          )}
+          <img
+            src={
+              reduxData.memberInfo == null
+                ? dogprofile
+                : reduxData.memberInfo.profileImg || ''
+            }
+            className="w-full h-full object-cover"
+          />
         </UserImg>
         <UserInfo>
           <div
