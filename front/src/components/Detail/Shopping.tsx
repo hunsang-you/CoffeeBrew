@@ -1,5 +1,4 @@
 import tw from 'tailwind-styled-components';
-import bean from '../../assets/tempImg/bean.png';
 import { linkDTOType } from './DetailBean';
 
 interface PropsTypes {
@@ -16,7 +15,9 @@ const Shopping = ({ linkDTO }: PropsTypes) => {
               <ShopItemImg src={data.image} />
               <ShopItemB>
                 <ShopItemName>{data?.mallName}</ShopItemName>
-                <LinkBtn>이동</LinkBtn>
+                <LinkBtn onClick={() => (window.location.href = data.link)}>
+                  이동
+                </LinkBtn>
               </ShopItemB>
             </ShopItemT1>
           </div>
