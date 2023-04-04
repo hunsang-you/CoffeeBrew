@@ -42,6 +42,7 @@ const RecommendBean = (): JSX.Element => {
         })
         .catch((e) => console.log(e));
     };
+    recomBean();
   });
   console.log(recommendBeanList);
   // 캐러셀 이미지 넣을 곳
