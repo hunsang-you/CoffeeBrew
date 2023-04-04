@@ -81,4 +81,28 @@ public class RecommendController {
 //    public ResponseEntity<ResponseDTO> readCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
 //        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_INQUIRE, capsuleService.getCapsuleDetail(capsuleId)));
 //    }
+
+    @GetMapping("/age/{ageRange}/bean")
+    @ApiOperation(value = "연령대 기반 원두 추천 페이지", notes = "연령대에 따른 선호 원두 정보를 출력한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "페이지 오류"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> recommendBeansByAge(@PathVariable("ageRange") String ageRange) {
+        return ResponseEntity.ok()
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByAge(ageRange)));
+    }
+
+    @GetMapping("/gender/{gender}/bean")
+    @ApiOperation(value = "성별 기반 원두 추천 페이지", notes = "성별에 따른 선호 원두 정보를 출력한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "페이지 오류"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> recommendBeansByGender(@PathVariable("gender") String gender) {
+        return ResponseEntity.ok()
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByGender(gender)));
+    }
 }
