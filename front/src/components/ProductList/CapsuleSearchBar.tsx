@@ -8,8 +8,8 @@ import { listAPI } from '../../api/api';
 import { text } from 'stream/consumers';
 // 검색창
 const SearchDiv = tw.div`flex flex-col text-center `;
-const SearchBtn = tw.button`w-20 h-12 bg-black text-white rounded-full mx-4 mt-10`;
-const SearchDetailBtn = tw.button`w-20 h-12 bg-black text-white rounded-xl mt-4 mx-auto`;
+const SearchBtn = tw.button`w-20 h-12 bg-nameColor text-white rounded-full mx-4 mt-10 font-bold`;
+const SearchDetailBtn = tw.button`w-28 h-12 bg-grinding1 text-black rounded-xl mt-4 mx-auto font-bold`;
 const SearchDetail = tw.div`w-720 min-h-full border-4 rounded-3xl border-y-brownBorder mx-auto mt-4 drop-shadow-lg `;
 const CheckKeyword = tw.button`w-20 border-4 border-nameColor text-black rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold `;
 const CheckedKeyword = tw.button`w-20 border-4 border-nameColor bg-nameColor text-white rounded-2xl ml-4 mr-4 mt-2 mb-2 font-bold  `;
@@ -200,7 +200,7 @@ const CapsuleSearchBar = ({
 
     return keywordEntries.map(([key, value]: string[]) => {
       for (let i = 0; i < Object.keys(keywordsFruits).length + 1; i++) {
-        if (isMoreState.morebtn1 === false && parseInt(key) === i && i < 5) {
+        if (isMoreState.morebtn1 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
               {isKeywordState1['keyword' + key] ? (
@@ -223,7 +223,7 @@ const CapsuleSearchBar = ({
         } else if (
           isMoreState.morebtn1 === true &&
           parseInt(key) === i &&
-          i > 0
+          i >= 0
         ) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
@@ -255,7 +255,7 @@ const CapsuleSearchBar = ({
 
     return keywordEntries.map(([key, value]: string[]) => {
       for (let i = 0; i < Object.keys(keywordsNuts).length + 1; i++) {
-        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 5) {
+        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
               {isKeywordState2['keyword' + key] ? (
@@ -278,7 +278,7 @@ const CapsuleSearchBar = ({
         } else if (
           isMoreState.morebtn2 === true &&
           parseInt(key) === i &&
-          i > 0
+          i >= 0
         ) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>

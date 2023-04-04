@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from .recom import bean_cbf_recom
-from .recom import user_cbcf_recom
+from .recom import user_recom, user_cbcf_recom
 
 from sqlalchemy.orm import Session
 
@@ -101,6 +101,37 @@ async def getBeanRecom(beanId: Union[int, None] = None):
     )
 
     result = bean_cbf_recom.get_recom_by_bean(beanId, bean_recom_read)
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
+
+
+# 통계 기반 추천 알고리즘
+@app.get("/age/{ageRange}")
+async def getAgeRecom(ageRange: Union[str, None] = None):
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", "like_recom_by_age.csv"),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = user_recom.get_recom_by_age(ageRange, recom_read)
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
+
+
+@app.get("/gender/{gender}")
+async def getGenderRecom(gender: Union[str, None] = None):
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", "like_recom_by_gender.csv"),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = user_recom.get_recom_by_gender(gender, recom_read)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:

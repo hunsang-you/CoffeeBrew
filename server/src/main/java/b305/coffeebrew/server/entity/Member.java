@@ -48,6 +48,7 @@ public class Member extends BaseAtTime implements Serializable {
     private String gender; // 사용자 nickname
 
     @Column(name = "age_range")
+    @ColumnDefault("'20~29'")
     private String  ageRange; // 사용자 나잇대
 
     @ColumnDefault("'ROLE_MEMBER'")

@@ -119,12 +119,12 @@ public class MemberController {
     })
     @GetMapping("/review")
     public ResponseEntity<ResponseDTO> readMyPageReview(@AuthenticationPrincipal PrincipalDetails principalDetails,  @PageableDefault(size = 4, page = 1) Pageable pageable) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_REVIEW, reviewService.readReview(principalDetails.getMember().getIdx(), pageable)));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_REVIEW, reviewService.readMyPageReview(principalDetails.getMember().getIdx(), pageable)));
     }
 
 
     /**
-     * 사용자 선호 원두 또는 캡슐 조회li
+     * 사용자 선호 원두 또는 캡슐 조회
      */
     @ApiOperation(value="사용자 리뷰 목록 조회", notes = "좋아요한 원두 조회")
     @ApiResponses({
