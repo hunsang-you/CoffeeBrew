@@ -88,6 +88,30 @@ public class RecommendService {
         return getRecomsDetail(response);
     }
 
+    public List<BeanDetailPageResDTO> recommendBeansByAge(String ageRange) {
+        log.info(METHOD_NAME + " - recommendBeansByAge");
+        log.info("call Rest URL - " + fastapiURL);
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/age/" + String.valueOf(ageRange);
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response);
+    }
+
+    public List<BeanDetailPageResDTO> recommendBeansByGender(String gender) {
+        log.info(METHOD_NAME + " - recommendBeansByGender");
+        log.info("call Rest URL - " + fastapiURL);
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/gender/" + String.valueOf(gender);
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response);
+    }
+
     /**
      * 스케쥴러 업데이트
      **/
