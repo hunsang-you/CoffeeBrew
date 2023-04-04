@@ -145,17 +145,19 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                 <ReviewItem>
                   <ReviewName>
                     <ReviewCreated>
-                      {data.createdDate[0] +
-                        '년' +
-                        ' ' +
-                        data.createdDate[1] +
-                        '월' +
-                        ' ' +
-                        data.createdDate[2] +
-                        '일' +
-                        ' ' +
-                        data.createdDate[3] +
-                        '시'}
+                      {data.createdDate
+                        ? data.createdDate[0] +
+                          '년' +
+                          ' ' +
+                          data.createdDate[1] +
+                          '월' +
+                          ' ' +
+                          data.createdDate[2] +
+                          '일' +
+                          ' ' +
+                          data.createdDate[3] +
+                          '시'
+                        : null}
                     </ReviewCreated>
 
                     <ReviewImg src={data.profile.profileImg} />
