@@ -53,7 +53,9 @@ const RecommendBean = (): JSX.Element => {
   const [page, setPage] = useState(0);
   const { beanId } = useParams() as { beanId: string };
 
-  const [recommendBeanList, setRecommendBeanList] = useState<recomType[]>([]);
+  const [recommendBeanList, setRecommendBeanList] = useState<
+    recomType[] | null
+  >(null);
 
   useEffect(() => {
     const recomBean = async () => {
