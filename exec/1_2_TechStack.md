@@ -11,7 +11,6 @@
 > 8009|FastApi Docker Container
 > 8081|SpringBoot Docker Container
 > 8082|Jenkins Docker Container
-> 8443|Openvidu Docker Container
 
 ### ssl 인증서 발급
 
@@ -105,6 +104,8 @@
 > sudo apt-get update
 >
 > $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+> dpkg -s libc6 | grep Arch
+> sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 >
 > ```
 >
@@ -169,216 +170,246 @@
 > ```
 >
 > ```
-> # jenkins 이미지 가져오기
-> docker-compose -d --build
->
-> # jenkins 구성하는 docker-compose
-> version: "3"
->
-> services:
->   jenkins:
->     container_name: jenkins
->     image: jenkins/jenkins:lts
->     user: root
->     volumes:
->       - /jenkins:/var/jenkins_home
->       - /var/run/docker.sock:/var/run/docker.sock
->     ports:
->       - 8082:8080
->     environment:
->       - TZ=Asia/Seoul
->     privileged: true
->     restart: "unless-stopped"
+> # jenkins 구성하는 docker-compose.yml
+>version: "3"
+>  
+>services:
+>  jenkins:
+>    container_name: jenkins
+>    image: jenkins/jenkins:lts
+>    user: root
+>    volumes:
+>      - /jenkins:/var/jenkins_home
+>      - /var/run/docker.sock:/var/run/docker.sock
+>    ports:
+>      - 8082:8080
+>    environment:
+>      - TZ=Asia/Seoul
+>    privileged: true
+>    restart: "unless-stopped"
 > ```
+>```
+> # mysql 구성하는 docker-compose.yml
+>version: "3"
+>  
+>services:
+>  mysql:
+>    image: mysql:8.0
+>    container_name: mysql
+>    ports:
+>      - 3306:3306 # HOST:CONTAINER
+>    environment:
+>      - MYSQL_ROOT_PASSWORD=@xmrghkB305
+>      - TZ=Asia/Seoul
+>    command:
+>      - --character-set-server=utf8mb4
+>      - --collation-server=utf8mb4_unicode_ci
+>    volumes:
+>      - ./data:/var/lib/mysql
+>```
+>```
+>> # server(backend) 구성하는 docker-compose.yml
+>version: "3"
+>services:
+>  api:
+>    build:
+>      context: ./server
+>      dockerfile: Dockerfile
+>    volumes:
+>      - /jenkins/workspace/b305_coffeebrew_server:/var/jenkins_home/workspace/b305_coffeebrew_server
+>      - /var/run/docker.sock:/var/run/docker.sock
+>      - /etc/localtime:/etc/localtime:ro
+>      - /usr/share/zoneinfo/Asia/Seoul:/etc/timezone:ro
+>      - /logs:/logs
+>    environment:
+>      - SOURCECODE_JENKINS_CREDENTIAL_ID=donghun
+>      - SOURCE_CODE_URL=https://lab.ssafy.com/s08-bigdata-recom-sub2/S08P22B305.git
+>      - RELEASE_BRANCH=release-server
+>      - datasource=j8b305.p.ssafy.io
+>      - dbUser=${dbUser}
+>      - dbPwd=${dbPwd}
+>      - jwt_secret_key=${jwt_secret_key}
+>      - rest_api_key=${rest_api_key}
+>      - client_secret_key=${client_secret_key}
+>      - redisPwd=${redisPwd}
+>      - clientId=${clientId}
+>      - clientSecret=${clientSecret}
+>      - schema=devdb
+>    ports:
+>      - "8081:8081"
+>    networks:
+>      - web
 >
-> 여기서 부터 여기서부터 여기서부터 여기서부터
+>networks:
+>        web:
+>                external: true
+>```
 >
-> - Mysql 도커 이미지 설치 및 컨테이너 실행 및 설정
+>```
+> # client(frontend) 구성하는 docker-compose.yml
 >
-> ```
-> # mysql 이미지 가져오기
-> docker pull mysql
+>version: "3"
+>services:
+>        client:
+>                build:
+>                        context: ./front
+>                        dockerfile: Dockerfile
+>                volumes:
+>                        - /jenkins/workspace/b305_coffeebrew_client:/var/jenkins_home/workspace/b305_coffeebrew_b305
+>                        - /var/run/docker.sock:/var/run/docker.sock
+>                environment:
+>                        TZ: "Asia/Seoul"
+>                ports:
+>                        - 3000:3000
+>                networks:
+>                        - web
 >
-> # mysql 컨테이너 실행
-> docker run -d -p 3306:3306 mysql [옵션은 자유롭게]
-> ```
+>networks:
+>        web:
+>                external: true
+>```
 >
-> - frontend 폴더의 Dockerfile 을 이용하여 도커 이미지 생성 및 컨테이너 실행
+>```
+> # recom(추천 서버) 구성하는 docker-composer.yml
 >
-> ```
-> # git repo 가져오기
-> git pull [주소]
+>version: '3'
+>services:
+>  recom:
+>    build:
+>      context: .
+>      dockerfile: Dockerfile
+>    volumes:
+>      - /jenkins/workspace/b305_coffeebrew_recom_server:/recom
+>    ports:
+>      - 8009:8009
+>    environment:
+>      dbUser: ${dbUser}
+>      dbPwd: ${dbPwd}
+>```
+>```
+> # 각 환경변수의 값은 Jenkinsfile의 credential Secret text에 설정
+> ![image](/uploads/f4954ad830ad3a8cb8c4be7cdbc1cb8b/image.png)
+>```
+>```
+> # jenkins frontend pipeline
 >
-> # React 빌드
-> npm install -g yarn
-> yarn install
-> yarn build
->
-> # Docker 이미지 생성
-> docker build [이미지 이름]
->
-> # Docker Container 실행
-> docker run -d [이미지 이름]
-> ```
->
-> - backend 폴더의 Dockerfile 을 이용하여 도커 이미지 생성 및 컨테이너 실행
->
-> ```
-> # git repo 가져오기
-> git pull [주소]
->
-> # SpringBoot 빌드
-> gradlew build
->
-> # SpringBoot 이미지 생성
-> docker build [이미지 이름]
->
-> # Docker Container 실행
-> docker run -d [이미지 이름]
-> ```
->
-> - jenkins frontend pipeline
->
-> ```pipeline
 > pipeline {
 >    agent any
->    tools {
->       nodejs "nodejs"
+>    options {
+>        timeout(time: 1, unit: 'HOURS')
+>    }
+>    environment {
+>        SOURCECODE_JENKINS_CREDENTIAL_ID = 'donghun'
+>        SOURCE_CODE_URL = 'https://lab.ssafy.com/s08-bigdata-recom-sub2/S08P22B305.git'
+>        RELEASE_BRANCH = 'release-client'
 >    }
 >    stages {
->        stage('Pull') {
+>
+>        stage('clone') {
 >            steps {
-> 				script{
-> 				  git branch: 'front-end', credentialsId: 'jaeuk', url: 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B207'
-> 				}
+>                git url: "$SOURCE_CODE_URL",
+>                    branch: "$RELEASE_BRANCH",
+>                    credentialsId: "$SOURCECODE_JENKINS_CREDENTIAL_ID"
+>                sh "ls -al"
 >            }
->        }
->        stage('React Build') {
->          steps {
->            script {
->              script {
->                sh 'npm install -g yarn'
->                sh 'yarn --cwd ./frontend install --network-timeout 100000'
->                sh 'yarn --cwd ./frontend build'
->              }
->            }
->          }
 >        }
 >
->        stage('Build') {
->          steps {
->            script {
->              sh 'docker build -t basepage/nginx ./frontend/'
->            }
->          }
->        }
->           stage('Deploy') {
+>        stage('frontend dockerizing') {
 >            steps {
->              script {
->                sh 'docker stop nginx'
->                sh 'docker rm nginx'
->                sh 'docker run -d --name nginx -p 3000:80 -u root basepage/nginx'
->              }
->           }
->       }
+>                sh "pwd"
+>                sh "docker build -t front ./front"
+>            }
+>        }
+>
+>		stage('Deploy') {
+>            steps{
+>                sh "pwd"
+>                sh "docker-compose --file /var/jenkins_home/workspace/docker-compose-client.yml up -d --build"
+>                sh "docker-compose ps"
+>            }
+>            post {
+>                success {
+>                    echo "docker-compose success"
+>                }
+>
+>                failure {
+>                    echo "docker-compose failed"
+>                }
+>            }		
+>        }
 >    }
-> }
+>}
+>
 > ```
+> ```
+> # jenkins backend pipeline
 >
-> - jenkins backend pipeline
->
-> ```pipeline
-> pipeline {
->   agent any
->   tools {
->       gradle "gradle7.6"
->   }
+>pipeline {
+>    agent any
+>    options {
+>        timeout(time: 1, unit: 'HOURS')
+>    }
+>    environment {
+>        SOURCECODE_JENKINS_CREDENTIAL_ID = 'donghun'
+>        SOURCE_CODE_URL = 'https://lab.ssafy.com/s08-bigdata-recom-sub2/S08P22B305.git'
+>        RELEASE_BRANCH = 'release-client'
+>    }
 >    stages {
->        stage('Pull') {
+>
+>        stage('clone') {
 >            steps {
-> 				script{
-> 				  git branch: 'back-end', credentialsId: 'jaeuk', url: 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B207'
-> 				 }
+>                git url: "$SOURCE_CODE_URL",
+>                    branch: "$RELEASE_BRANCH",
+>                    credentialsId: "$SOURCECODE_JENKINS_CREDENTIAL_ID"
+>                sh "ls -al"
 >            }
->        }
->         stage('React Build') {
->           steps {
->               script {
->                   dir('backend') {
->                       sh 'chmod +x ./gradlew'
->                       sh './gradlew build'
->                   }
->               }
->           }
 >        }
 >
->        stage('Build') {
->          steps {
->            script {
->              sh 'docker build -t basepage/nginx ./frontend/'
->            }
->          }
->        }
->        stage('Deploy') {
+>        stage('frontend dockerizing') {
 >            steps {
->              script {
->                sh 'docker stop nginx'
->                sh 'docker rm nginx'
->                sh 'docker run -d --name nginx -p 3000:80 -u root basepage/nginx'
->             }
->           }
->       }
+>                sh "pwd"
+>                sh "docker build -t front ./front"
+>            }
+>        }
+>
+>		stage('Deploy') {
+>            steps{
+>                sh "pwd"
+>                sh "docker-compose --file /var/jenkins_home/workspace/docker-compose-client.yml up -d --build"
+>                sh "docker-compose ps"
+>            }
+>            post {
+>                success {
+>                    echo "docker-compose success"
+>                }
+>
+>                failure {
+>                    echo "docker-compose failed"
+>                }
+>            }		
+>        }
 >    }
-> }
+>}
+>
 > ```
->
-> - Frontend
->   > - DockerFile
->
-> ```dockerfile
-> ## Dockerfile(client)
-> # nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용합니다.
-> FROM nginx:latest
-> # root 에 app 폴더를 생성
-> RUN mkdir /app
-> # work dir 고정
-> WORKDIR /app
-> # work dir 에 dist 폴더 생성 /app/dist
-> RUN mkdir ./dist
-> # host pc의 현재경로의 dist 폴더를 workdir 의 dist 폴더로 복사
-> ADD ./dist ./dist
-> # nginx 의 default.conf 를 삭제
-> RUN rm /etc/nginx/conf.d/default.conf
-> # host pc 의 default.conf 를 아래 경로에 복사
-> COPY ./nginx.conf /etc/nginx/conf.d
-> # 80 포트 오픈
-> EXPOSE 80
-> # container 실행 시 자동으로 실행할 command. nginx 시작함
-> CMD ["nginx", "-g", "daemon off;"]
 > ```
+> # Frontend Dockerfile
 >
-> > - nginx.conf
-> >
-> > ```conf
-> > server {
-> >    listen       80;
-> >    listen  [::]:80;
-> >    server_name  i8b207.p.ssafy.io;
-> >
-> >    location / {
-> >        root    /app/dist;
-> >        index   index.html;
-> >        try_files $uri $uri/ /index.html;
-> >    }
-> > }
-> > ```
+>FROM node:16.18.0
+>WORKDIR /front
+>COPY ./package*.json /front
+>COPY / /front
+>RUN npm install
+>RUN npm install -g serve@14.2.0
+>EXPOSE 3000
+>RUN npm run build
+>CMD ["npx", "serve", "-s", "build"]
+>```
+>```
+> # Backend Dockerfile
 >
-> - Backend DockerFile
->   > - DockerFile
->   >
->   > ```Dockerfile
->   > FROM    openjdk:11
->   > ARG     JAR_FILE=build/libs/backend-0.0.1-SNAPSHOT.jar
->   > COPY    ${JAR_FILE} app.jar
->   > ENTRYPOINT ["java", "-jar", "app.jar"]
->   > ```
+>FROM openjdk:11
+>COPY build/libs/server-0.0.1-SNAPSHOT.jar /app/server.jar
+>WORKDIR /app
+>ENTRYPOINT ["java", "-jar", "-Duser.timezone=Asia/Seoul", "server.jar"]
+>```
