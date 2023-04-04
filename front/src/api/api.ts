@@ -94,6 +94,8 @@ export const mainAPI = {
   getBeanRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
   /**추천 캡슐 조회 */
   getcapcullRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
+  /** 연령대별 추천 */
+  getAgeRecom: (ageRange: string) => api.get(`recom/age/${ageRange}/bean`),
 };
 
 // 설문조사

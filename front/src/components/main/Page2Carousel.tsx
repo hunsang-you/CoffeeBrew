@@ -247,15 +247,12 @@ const Page2Carousel = ({ rec }: strProps) => {
   return (
     <Carousel>
       <BigDiv>
-        {rec === 'bean'
-          ? beanRe.map((data: propsData, i) => {
-              return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
-            })
-          : rec === 'capcull'
-          ? capcullRe.map((data: propsData, i) => {
-              return <CoffeeCard key={i} rec={'capcull'} propsdata={data} />;
-            })
-          : null}
+        {beanRe.map((data: propsData, i) => {
+          return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+        })}
+        {capcullRe.map((data: propsData, i) => {
+          return <CoffeeCard key={i} rec={'capcull'} propsdata={data} />;
+        })}
       </BigDiv>
       <BigDiv>
         {rec === 'bean'
