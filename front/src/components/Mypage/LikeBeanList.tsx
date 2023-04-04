@@ -20,7 +20,6 @@ interface like {
 const LikeBeanList = () => {
   const [isLikeCheck, setIsLikeCheck] = useState(true);
   const [likeBeans, setLikeBeans] = useState<detailType[]>([]);
-  const [likesList, setLikesList] = useState<number>(200);
   const [beanIdx, setBeanIdx] = useState<number[]>([]);
   const navigate = useNavigate();
 
@@ -28,22 +27,38 @@ const LikeBeanList = () => {
     const getLikesBean = async () => {
       await memberAPI.memberLikesBeans().then((request) => {
         const likes = request.data.value;
-        setLikesList(likes.length);
         if (likes.length > 0) {
-          likes.map((like: like) => {
-            if (like.itemType === 'bean') {
-              let tempIdxArr = beanIdx;
-              setBeanIdx([...tempIdxArr, like.itemIdx]);
-              detailAPI
-                .getBean(Number(like.itemIdx))
-                .then((request) => {
-                  console.log(request.data);
-                  let temp = likeBeans;
-                  setLikeBeans([...temp, request.data.value]);
-                })
-                .catch((e) => console.log(e));
-            }
-          });
+          const beanLikes = likes.filter(
+            (like: like) => like.itemType === 'bean',
+          );
+          const beanLikesIdx = beanLikes.map((like: like) => like.itemIdx);
+          Promise.all(
+            beanLikesIdx.map((beanIdx: number) => {
+              return detailAPI.getBean(Number(beanIdx)).then((request) => {
+                return request.data.value;
+              });
+            }),
+          )
+            .then((likedBeans) => {
+              console.log(likedBeans);
+              setLikeBeans([...likedBeans]);
+              setBeanIdx([...beanLikesIdx]);
+            })
+            .catch((e) => console.log(e));
+          // likes.map((like: like) => {
+          //   if (like.itemType === 'bean') {
+          //     let tempIdxArr = beanIdx;
+          //     setBeanIdx([...tempIdxArr, like.itemIdx]);
+          //     detailAPI
+          //       .getBean(Number(like.itemIdx))
+          //       .then((request) => {
+          //         console.log(request.data);
+          //         let temp = likeBeans;
+          //         setLikeBeans([...temp, request.data.value]);
+          //       })
+          //       .catch((e) => console.log(e));
+          //   }
+          // });
         }
       });
     };
@@ -57,7 +72,7 @@ const LikeBeanList = () => {
   return (
     <div>
       <List>
-        {likeBeans.length == likesList ? (
+        {likeBeans.length > 0 ? (
           likeBeans.map((bean: detailType, i: number) => {
             return (
               <CardBody>
