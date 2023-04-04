@@ -70,7 +70,8 @@ public class ReviewService {
     public Page<Review> readReview(long memberIdx, Pageable pageable) throws RuntimeException {
         Member member = new Member();
         member.setIdx(memberIdx);
-        Page<Review> reviewPage = reviewRepository.findByMemberIdx(member, pageable);
+        Page<Review> reviewPage = reviewRepository.findByMemberIdxAndExpiredIsFalse(member, pageable);
+
         return reviewPage;
     }
 }
