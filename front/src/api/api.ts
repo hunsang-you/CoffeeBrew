@@ -34,6 +34,7 @@ export const detailAPI = {
   getBean: (id: number) => api.get(`/item/bean/${id}`),
   /**원두 좋아요 조회 */
   beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
+  recommendBean: (id: number) => api.get(`recom/bean/${id}`),
 };
 
 /**원두 리스트,검새,필터 가변인자 보내기 */
