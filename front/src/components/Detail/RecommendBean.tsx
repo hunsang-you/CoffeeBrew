@@ -126,84 +126,88 @@ const RecommendBean = (): JSX.Element => {
         </Position>
         <div style={{ display: 'flex', position: 'relative' }}>
           <Btn onClick={() => moveSlide(-1)}>&lt;</Btn>
-          <Slide>
-            {/* carousel 출력 */}
-            {recommendBeanList
-              ? recommendBeanList?.map((data, i) => {
-                  const RecommendRating = {
-                    향: data.flavor,
-                    산미: data.acidity,
-                    단맛: data.sweetness,
-                    쓴맛: data.bitterness,
-                    바디감: data.body,
-                  };
+          {/* carousel 출력 */}
 
-                  const scoreArray = Object.entries(RecommendRating);
-                  const beanScore = () => {
-                    const scoreItem = [];
+          {recommendBeanList
+            ? recommendBeanList?.map((data, i) => {
+                const RecommendRating = {
+                  향: data.flavor,
+                  산미: data.acidity,
+                  단맛: data.sweetness,
+                  쓴맛: data.bitterness,
+                  바디감: data.body,
+                };
 
-                    for (let i = 0; i < scoreArray.length; i++) {
-                      const score = scoreArray[i];
-                      // score[0] = 기준, score[1] = 점수
-                      // console.log(score); //  ['향', 5]
-                      // .5인지 판별
-                      const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
+                const scoreArray = Object.entries(RecommendRating);
+                const beanScore = () => {
+                  const scoreItem = [];
 
-                      // 점수만큼 가득찬 이미지
-                      const scoreRatingFull = [];
-                      if (Number.isInteger(score[1])) {
-                        for (let j = 0; j < score[1]; j++) {
-                          scoreRatingFull.push(
-                            <Score src={ratingfull} key={j} />,
-                          );
-                        }
-                      } else {
-                        // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-                        for (let k = 0; k < Math.floor(score[1]); k++) {
-                          scoreRatingFull.push(
-                            <Score src={ratingfull} key={k} />,
-                          );
-                        }
+                  for (let i = 0; i < scoreArray.length; i++) {
+                    const score = scoreArray[i];
+                    // score[0] = 기준, score[1] = 점수
+                    // console.log(score); //  ['향', 5]
+                    // .5인지 판별
+                    const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
+
+                    // 점수만큼 가득찬 이미지
+                    const scoreRatingFull = [];
+                    if (Number.isInteger(score[1])) {
+                      for (let j = 0; j < score[1]; j++) {
+                        scoreRatingFull.push(
+                          <Score src={ratingfull} key={j} />,
+                        );
                       }
-
-                      // .5라면 반개 추가
-                      const scoreRatingHalf = isHalfCheck ? (
-                        <Score src={ratinghalf} />
-                      ) : null;
-
-                      const scoreRatingEmpty = [];
-                      if (Number.isInteger(score[1])) {
-                        for (let k = 0; k < 5 - score[1]; k++) {
-                          scoreRatingEmpty.push(
-                            <Score src={ratingempty} key={k} />,
-                          );
-                        }
-                      } else {
-                        for (let k = 0; k < Math.floor(5 - score[1]); k++) {
-                          scoreRatingEmpty.push(
-                            <Score src={ratingempty} key={k} />,
-                          );
-                        }
+                    } else {
+                      // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
+                      for (let k = 0; k < Math.floor(score[1]); k++) {
+                        scoreRatingFull.push(
+                          <Score src={ratingfull} key={k} />,
+                        );
                       }
-
-                      scoreItem.push(
-                        <ScoreTitle key={i}>
-                          <p
-                            style={{ marginRight: '16px', fontWeight: 'bold' }}
-                          >
-                            {score[0]}
-                          </p>
-                          {scoreRatingFull} {scoreRatingHalf}
-                          {scoreRatingEmpty}
-                        </ScoreTitle>,
-                      );
                     }
 
-                    return scoreItem;
-                  };
+                    // .5라면 반개 추가
+                    const scoreRatingHalf = isHalfCheck ? (
+                      <Score src={ratinghalf} />
+                    ) : null;
 
-                  return (
-                    <div style={{ width: '640px', fontSize: '32px' }}>
+                    const scoreRatingEmpty = [];
+                    if (Number.isInteger(score[1])) {
+                      for (let k = 0; k < 5 - score[1]; k++) {
+                        scoreRatingEmpty.push(
+                          <Score src={ratingempty} key={k} />,
+                        );
+                      }
+                    } else {
+                      for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+                        scoreRatingEmpty.push(
+                          <Score src={ratingempty} key={k} />,
+                        );
+                      }
+                    }
+
+                    scoreItem.push(
+                      <ScoreTitle key={i}>
+                        <p style={{ marginRight: '16px', fontWeight: 'bold' }}>
+                          {score[0]}
+                        </p>
+                        {scoreRatingFull} {scoreRatingHalf}
+                        {scoreRatingEmpty}
+                      </ScoreTitle>,
+                    );
+                  }
+
+                  return scoreItem;
+                };
+
+                return (
+                  <Slide onClick={() => console.log(data)}>
+                    <div
+                      style={{ width: '640px', fontSize: '32px' }}
+                      onClick={() => {
+                        console.log(data);
+                      }}
+                    >
                       <div className="flexBox" style={style}>
                         <div
                           key={i}
@@ -213,12 +217,7 @@ const RecommendBean = (): JSX.Element => {
                             key={i}
                             style={{ backgroundImage: `${data.thumbnail}` }}
                           />
-                          <div
-                            style={{
-                              marginLeft: '16px',
-                              width: '450px',
-                            }}
-                          >
+                          <div style={{ marginLeft: '16px', width: '450px' }}>
                             <div
                               style={{
                                 wordBreak: 'break-word',
@@ -242,10 +241,11 @@ const RecommendBean = (): JSX.Element => {
                         </div>
                       </div>
                     </div>
-                  );
-                })
-              : null}
-          </Slide>
+                  </Slide>
+                );
+              })
+            : null}
+
           <Btn onClick={() => moveSlide(1)}>&gt;</Btn>
         </div>
       </Container>
