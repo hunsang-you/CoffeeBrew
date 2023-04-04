@@ -13,8 +13,9 @@ import { reviewAPI } from '../../api/api';
 interface PropsTypes {
   detailReview?: reviewType[];
 }
-const reduxData = useSelector((state: RootState) => state);
+
 const ReviewLists = ({ detailReview }: PropsTypes) => {
+  const reduxData = useSelector((state: RootState) => state);
   // 리뷰 최신/추천 순 조회버튼
   const [isActive, setIsActive] = useState(true);
   const activeBtn = () => {
