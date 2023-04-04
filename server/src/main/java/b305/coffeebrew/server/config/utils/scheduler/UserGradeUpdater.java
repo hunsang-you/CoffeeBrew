@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 public class UserGradeUpdater {
 	private static final String METHOD_NAME = UserGradeUpdater.class.getName();
 	private final ReviewService reviewService;
-	@Scheduled(cron = "0 */1 * * * *")
-//	@Scheduled(cron = "0 0 */1 * * *") //매 시간 1시간 마다 실행 되도록
+//	@Scheduled(cron = "0 */1 * * * *")
+	@Scheduled(cron = "0 0 */1 * * *") //매 시간 1시간 마다 실행 되도록
 	public void updateData() {
 		log.info(METHOD_NAME + " - usergarde update");
 		reviewService.updateUserGradeFromReviews("bean");
