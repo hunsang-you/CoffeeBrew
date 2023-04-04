@@ -44,6 +44,14 @@ public class Survey extends BaseAtTime implements Serializable {
     private int param7;
     private int param8;
 
+    private int flavor; // 향미
+    private int acidity; // 산미
+    private int sweetness; // 단맛
+    private int bitterness; // 쓴맛
+    private int body; // 바디감
+
+    private String coffeeing_note; // 커핑노트(향 상세)
+
     @Convert(converter = BooleanToYNConverter.class)
     private boolean expired;
 

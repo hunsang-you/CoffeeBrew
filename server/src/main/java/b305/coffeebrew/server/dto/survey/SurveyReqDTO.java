@@ -31,10 +31,9 @@ public class SurveyReqDTO {
         this.param6 = param6;
         this.param7 = param7;
         this.param8 = param8;
-        this.expired = expired;
     }
 
-    public static SurveyReqDTO of(int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired) {
+    public static SurveyReqDTO of(int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8) {
         return SurveyReqDTO.builder()
                 .param1(param1)
                 .param2(param2)
@@ -44,7 +43,6 @@ public class SurveyReqDTO {
                 .param6(param6)
                 .param7(param7)
                 .param8(param8)
-                .expired(expired)
                 .build();
     }
 }
