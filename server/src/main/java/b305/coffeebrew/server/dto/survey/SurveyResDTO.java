@@ -23,9 +23,14 @@ public class SurveyResDTO {
     private int param7;
     private int param8;
     private boolean expired;
+    private int flavor; // 향미
+    private int acidity; // 산미
+    private int sweetness; // 단맛
+    private int bitterness; // 쓴맛
+    private int body; // 바디감
 
     @Builder
-    public SurveyResDTO(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired) {
+    public SurveyResDTO(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired, int flavor, int acidity, int sweetness, int bitterness, int body) {
         this.resultCode = resultCode;
         this.resultType = resultType;
         this.param1 = param1;
@@ -37,9 +42,14 @@ public class SurveyResDTO {
         this.param7 = param7;
         this.param8 = param8;
         this.expired = expired;
+        this.flavor = flavor;
+        this.acidity = acidity;
+        this.sweetness = sweetness;
+        this.bitterness = bitterness;
+        this.body = body;
     }
 
-    public static SurveyResDTO of(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired) {
+    public static SurveyResDTO of(String resultCode, String resultType, int param1, int param2, int param3, int param4, int param5, int param6, int param7, int param8, boolean expired, int flavor, int acidity, int sweetness, int bitterness, int body) {
         return SurveyResDTO.builder()
                 .resultCode(resultCode)
                 .resultType(resultType)
@@ -52,6 +62,11 @@ public class SurveyResDTO {
                 .param7(param7)
                 .param8(param8)
                 .expired(expired)
+                .flavor(flavor)
+                .acidity(acidity)
+                .sweetness(sweetness)
+                .bitterness(bitterness)
+                .body(body)
                 .build();
     }
 }

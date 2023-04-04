@@ -75,7 +75,7 @@ public class RoleInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info(METHOD_NAME + "- preHandle() ...");
         boolean result = false;
-        log.info("SIbar request URL = {} url 위치입니다.", request.getRequestURI());
+        log.info("request URL = {} url 위치입니다.", request.getRequestURI());
         try {
             TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
             String token = tokenResDTO.getToken();
@@ -104,7 +104,6 @@ public class RoleInterceptor implements HandlerInterceptor {
                             log.info("MEMBER role validate ...");
                             if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
                                 log.info("MEMBER role validate - Success");
-                                log.info("씨발");
                                 result = true;
                             } else {
                                 log.warn("MEMBER role validate - Fail");

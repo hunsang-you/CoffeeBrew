@@ -47,10 +47,28 @@ public class SurveyService {
                 .param7(surveyReqDTO.getParam7())
                 .param8(surveyReqDTO.getParam8())
                 .expired(false)
+                .flavor(0)
+                .acidity(0)
+                .sweetness(0)
+                .bitterness(0)
+                .body(0)
                 .memberIdx(member)
                 .build();
-        return SurveyResDTO.of("", "", surveyRepository.save(survey).getParam1(),
-                survey.getParam2(), survey.getParam3(), survey.getParam4(), survey.getParam5(), survey.getParam6(),
-                survey.getParam7(), survey.getParam8(), survey.isExpired());
+        return SurveyResDTO.builder()
+                .param1(survey.getParam1())
+                .param2(survey.getParam2())
+                .param3(survey.getParam3())
+                .param4(survey.getParam4())
+                .param5(survey.getParam5())
+                .param6(survey.getParam6())
+                .param7(survey.getParam7())
+                .param8(survey.getParam8())
+                .expired(survey.isExpired())
+                .flavor(survey.getFlavor())
+                .acidity(survey.getAcidity())
+                .sweetness(survey.getSweetness())
+                .bitterness(survey.getBitterness())
+                .body(survey.getBody())
+                .build();
     }
 }
