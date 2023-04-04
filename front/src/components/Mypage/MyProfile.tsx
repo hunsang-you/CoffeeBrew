@@ -25,6 +25,10 @@ const MyProfile = () => {
         .memberInfo()
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
+      await memberAPI
+        .memberReviews('pages=1')
+        .then((request) => console.log(request))
+        .catch((e) => console.log(e));
     };
     getInfo();
   }, []);
