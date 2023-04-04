@@ -37,7 +37,7 @@ public class ReviewService {
 
     @Transactional
     public List<ReviewResDTO> readReview(String itemType, Long itemIdx) {
-        List<Review> reviews = reviewRepository.findByItemTypeAndItemIdx(itemType, itemIdx);
+        List<Review> reviews = reviewRepository.findByItemTypeAndItemIdxAndExpiredIsFalse(itemType, itemIdx);
         return reviews.stream().map(ReviewResDTO::of).collect(Collectors.toList());
     }
 
@@ -67,11 +67,11 @@ public class ReviewService {
      * 사용자 리뷰 목록 조회
      */
     @Transactional
-    public Page<Review> readReview(long memberIdx, Pageable pageable) throws RuntimeException {
+    public Page<Review> readMyPageReview(long memberIdx, Pageable pageable) throws RuntimeException {
         Member member = new Member();
         member.setIdx(memberIdx);
         Page<Review> reviewPage = reviewRepository.findByMemberIdxAndExpiredIsFalse(member, pageable);
-
+        log.info("reviewPage = {}", reviewPage);
         return reviewPage;
     }
 }

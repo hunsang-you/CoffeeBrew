@@ -15,13 +15,15 @@ public class ProfileResDTO {
     private String nickname;
     private String hashcode;
     private String snsType;
+    private String ageRange;
 
-    public ProfileResDTO(String profileImg, String memberEmail, String nickname, String hashcode, String snsType) {
+    public ProfileResDTO(String profileImg, String memberEmail, String nickname, String hashcode, String snsType, String ageRange) {
         this.profileImg = profileImg;
         this.memberEmail = memberEmail;
         this.nickname = nickname;
         this.hashcode = hashcode;
         this.snsType = snsType;
+        this.ageRange = ageRange;
     }
 
     public static ProfileResDTO of(Member member) {
@@ -29,6 +31,7 @@ public class ProfileResDTO {
                 .profileImg(member.getProfileImg())
                 .memberEmail(member.getMemberEmail())
                 .nickname(member.getNickname())
+                .ageRange(member.getAgeRange())
                 .hashcode(member.getHashcode())
                 .snsType(member.getSnsType())
                 .build();
