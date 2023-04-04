@@ -6,31 +6,8 @@ import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { reviewType } from './DetailBean';
-import { reviewAPI } from '../../api/api';
-
-// 최신순, 추천순
-const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
-const FilterOn = tw.div`w-24 h-10 rounded-full border-2 text-2xl text-center leading-9  bg-black text-white ml-4`;
-const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
-
-const ReviewList = tw.div`w-1000 mx-auto`;
-const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
-const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6`;
-const ReviewName = tw.div`text-xl  mt-12 mb-4`;
-const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
-
-// 리뷰내 평가도 (2줄)
-const ReviewStandard = tw.div`justify-center mx-auto mt-6`;
-const ReviewStandardTop = tw.div`w-720 text-2xl mb-2 flex justify-center`;
-// const ReviewStandardBottom = tw.div`w-720 text-2xl mt-2 mb-2 flex justify-center`;
-const Score = tw.img`w-8`;
-const ScoreTitle = tw.div`text-xl flex justify-end  drop-shadow-2xl`;
-// 리뷰내용
-const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
-// const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
-const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto`;
-const ReviewCreated = tw.p`text-sm font-bold`;
-const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-5 mb-4 cursor-pointer hover:bg-slate-500`;
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 interface PropsTypes {
   detailReview?: reviewType[];
@@ -63,6 +40,8 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
       window.scrollTo({ top: location - 100, behavior: 'smooth' });
     }
   };
+
+  const memberInfo = useSelector<RootState>((state) => state.memberInfo);
 
   // 내 리뷰 삭제
 
@@ -158,7 +137,11 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             };
             return (
               <div>
-                <ReviewDelete>삭제</ReviewDelete>
+                {
+                  <ReviewDelete onClick={() => console.log(memberInfo)}>
+                    삭제
+                  </ReviewDelete>
+                }
                 <ReviewItem>
                   <ReviewName>
                     <ReviewCreated>
@@ -213,19 +196,22 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             marginLeft: '40%',
           }}
         >
-          <MoreBtn
-            style={{
-              marginBottom: '12px',
-              fontWeight: 'bold',
-              backgroundColor: '#9A6533',
-            }}
-            onClick={() => {
-              setShowNumber(1);
-              moveReview();
-            }}
-          >
-            리뷰 접기 ▲
-          </MoreBtn>
+          {showNumber > 1 ? (
+            <MoreBtn
+              style={{
+                marginBottom: '12px',
+                fontWeight: 'bold',
+                backgroundColor: '#9A6533',
+              }}
+              onClick={() => {
+                setShowNumber(1);
+                moveReview();
+              }}
+            >
+              리뷰 접기 ▲
+            </MoreBtn>
+          ) : null}
+
           <MoreBtn onClick={() => showMore()}>리뷰 더보기 ▼</MoreBtn>
         </div>
       </ReviewList>
@@ -234,3 +220,27 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
 };
 
 export default ReviewLists;
+
+// 최신순, 추천순
+const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
+const FilterOn = tw.div`w-24 h-10 rounded-full border-2 text-2xl text-center leading-9  bg-black text-white ml-4`;
+const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
+
+const ReviewList = tw.div`w-1000 mx-auto`;
+const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
+const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6`;
+const ReviewName = tw.div`text-xl  mt-12 mb-4`;
+const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
+
+// 리뷰내 평가도 (2줄)
+const ReviewStandard = tw.div`justify-center mx-auto mt-6`;
+const ReviewStandardTop = tw.div`w-720 text-2xl mb-2 flex justify-center`;
+// const ReviewStandardBottom = tw.div`w-720 text-2xl mt-2 mb-2 flex justify-center`;
+const Score = tw.img`w-8`;
+const ScoreTitle = tw.div`text-xl flex justify-end  drop-shadow-2xl`;
+// 리뷰내용
+const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
+// const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
+const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto`;
+const ReviewCreated = tw.p`text-sm font-bold`;
+const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-5 mb-4 cursor-pointer hover:bg-slate-500`;
