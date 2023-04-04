@@ -1,17 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
+import { detailType } from '../DetailBean';
 
-type ChartProps = {};
+interface PropsTypes {
+  detailBean: detailType | null;
+}
 
-const Chart: React.FC<ChartProps> = () => {
+const Chart = ({ detailBean }: PropsTypes) => {
   const chartRef = useRef<HTMLDivElement>(null);
+  const [categories, setCategories] = useState([
+    '향',
+    '단맛',
+    '산미',
+    '바디감',
+    '쓴맛',
+    '평점',
+  ]);
 
   useEffect(() => {
     const options = {
       series: [
         {
           name: 'coffee',
-          data: [5, 4, 3, 2, 1],
+          data: [
+            detailBean?.flavor,
+            detailBean?.sweetness,
+            detailBean?.acidity,
+            detailBean?.body,
+            detailBean?.bitterness,
+            detailBean?.userGrade,
+          ],
         },
       ],
 
@@ -51,7 +69,17 @@ const Chart: React.FC<ChartProps> = () => {
           polygons: {
             strokeColors: '#FFFFFF',
             fill: {
-              colors: ['#D7DADC', '#D9D9D9'],
+              colors: [
+                '#B1662F',
+                '#B1662F',
+                '#CC651A',
+                '#CC651A',
+                '#FB8C3B',
+                '#FB8C3B',
+                '#E48642',
+                '#E48642',
+                '#F8B584',
+              ],
             },
           },
         },
@@ -59,13 +87,14 @@ const Chart: React.FC<ChartProps> = () => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '맛', '산미', '밸런스', '바디감'],
+        categories: ['향', '단맛', '산미', '바디감', '쓴맛', '평점'],
         labels: {
           show: true,
-          formatter: (subject: string, score: number) => {
-            // 각 항목의 점수가 들어갈 예정
-            score = 1;
-            return subject + `(${score})`;
+          formatter: (subject: string) => {
+            const index = categories.indexOf(subject);
+            if (index >= 0) {
+              return subject + `(${options.series[0].data[index]})`;
+            }
           },
           //   rotate: -45,
           //   formatter: (value, index) => {

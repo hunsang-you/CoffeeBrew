@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -29,32 +30,31 @@ public class BeanScore extends BaseAtTime implements Serializable {
     @JoinColumn(name = "bean_idx")
     private Bean beanIdx;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int overall; // 총점
+    @NotNull
+    private int balance; // 밸런스
 
-    @NotBlank
-    private int aroma; // 향
-
-    @NotBlank
+    @NotNull
     private int flavor; // 맛
 
-    @NotBlank
+    @NotNull
     private int acidity; // 산미
 
-    @NotBlank
+    @NotNull
+    private int sweetness; // 단맛
+
+    @NotNull
+    private int bitterness; // 쓴맛
+
+    @NotNull
     private int body; // 바디감
 
     @NotBlank
-    private int balance; // 밸런스
+    @Column(name = "coffeeing_note")
+    private String coffeeingNote;
 
     @NotBlank
-    private int after; // 후미
-
-    @NotBlank
-    private String aroma_note; // 향 상세
-
-    @NotBlank
-    private String flavor_note; // 맛 상세
+    @Column(name = "roasting_point")
+    private String roastingPoint;
 
     @Override
     public void prePersist() {

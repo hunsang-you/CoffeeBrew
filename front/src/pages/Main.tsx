@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+
 import tw from 'tailwind-styled-components';
 import { Page1, Page2, Page3, Dots } from '../components/main';
 import Footer from '../components/navbarandfoot/Footer';
@@ -138,6 +139,7 @@ const Main = ({ setIsFooter }: IsFooterType) => {
   return (
     <Outer ref={outerDivRef}>
       <Dots scrollIndex={scrollIndex} pushIndex={pushIndex} />
+      <img src="./qweqwe" alt="" />
       <Page1 />
       <Page2 />
       <Page3 />
@@ -148,4 +150,4 @@ const Main = ({ setIsFooter }: IsFooterType) => {
 
 export default Main;
 
-const Outer = tw.div`h-screen overflow-y-auto`;
+const Outer = tw.div`h-screen overflow-y-auto select-none`;

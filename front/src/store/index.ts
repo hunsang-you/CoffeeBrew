@@ -16,6 +16,24 @@ import {
 
 import storage from 'redux-persist/lib/storage';
 
+interface MemberInfoType {
+  hashcode: string | null;
+  memberEmail: string | null;
+  nickname: string | null;
+  profileImg: string | null;
+  snsType: string | null;
+}
+
+const memberInfoSlice = createSlice({
+  name: 'memberInfo',
+  initialState: null as MemberInfoType | null,
+  reducers: {
+    setMemberInfo: (state, action: PayloadAction<MemberInfoType | null>) => {
+      return action.payload;
+    },
+  },
+});
+
 const navBarSlice = createSlice({
   name: 'navbar',
   initialState: '',
@@ -25,14 +43,26 @@ const navBarSlice = createSlice({
     },
   },
 });
+const loginSlice = createSlice({
+  name: 'login',
+  initialState: false,
+  reducers: {
+    setLogin: (state, action: PayloadAction<boolean>) => {
+      return action.payload;
+    },
+  },
+});
 
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['navbar'],
 };
 
-const rootReducer = combineReducers({ navbar: navBarSlice.reducer }); // combineReducers를 통해 따로 rootReducer 만들어준다.
+const rootReducer = combineReducers({
+  navbar: navBarSlice.reducer,
+  login: loginSlice.reducer,
+  memberInfo: memberInfoSlice.reducer,
+}); // combineReducers를 통해 따로 rootReducer 만들어준다.
 const persistedReducer = persistReducer(persistConfig, rootReducer); // 그리고 설정해놓은 local storage
 export const store = configureStore({
   reducer: persistedReducer,
@@ -49,3 +79,5 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const { setNavbar } = navBarSlice.actions;
+export const { setLogin } = loginSlice.actions;
+export const { setMemberInfo } = memberInfoSlice.actions;

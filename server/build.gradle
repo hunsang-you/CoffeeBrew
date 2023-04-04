@@ -43,6 +43,7 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	implementation "org.springdoc:springdoc-openapi-ui:1.6.3"
 	implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.32'
 }
 

@@ -9,6 +9,7 @@ const Info = lazy(() => import('./pages/Info'));
 const MyPage = lazy(() => import('./pages/MyPage'));
 const ProductList = lazy(() => import('./pages/ProductList'));
 const Survey = lazy(() => import('./pages/Servey'));
+const Redirect = lazy(() => import('./pages/Redirect'));
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,7 +29,7 @@ const Router = ({ setIsFooter }: IsFooterType) => {
         }
       />
       <Route
-        path="/detail"
+        path="/detail/:beanId"
         element={
           <Suspense fallback={<Loading />}>
             <ContentContainer>
@@ -41,7 +42,7 @@ const Router = ({ setIsFooter }: IsFooterType) => {
         path="/info/*"
         element={
           <Suspense fallback={<Loading />}>
-            <ContentContainer>
+            <ContentContainer className="bg-wordimg">
               <Info setIsFooter={setIsFooter} />
             </ContentContainer>
           </Suspense>
@@ -68,7 +69,7 @@ const Router = ({ setIsFooter }: IsFooterType) => {
         }
       />
       <Route
-        path="/coffeelist"
+        path="/coffeelist/*"
         element={
           <Suspense fallback={<Loading />}>
             <ContentContainer>
@@ -84,6 +85,14 @@ const Router = ({ setIsFooter }: IsFooterType) => {
             <ContentContainer>
               <Intro setIsFooter={setIsFooter} />
             </ContentContainer>
+          </Suspense>
+        }
+      />
+      <Route
+        path="/redirect"
+        element={
+          <Suspense fallback={<Loading />}>
+            <Redirect />
           </Suspense>
         }
       />

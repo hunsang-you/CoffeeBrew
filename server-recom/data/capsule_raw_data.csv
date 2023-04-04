@@ -1,0 +1,24 @@
+id,thumbnail,user_grade,title,coffeeing_note,company,flavor,bitterness,acidity,body,roasting_point,machine_type
+1,?,0,Amaretti,Almond Biscuit,Nespresso,?,3,3,3,3,original
+2,?,0,Bukeela ka Ethiopia*,Fruity / floral,Nespresso,3,1,2,1,1,original
+3,?,0,Caf? Istanbul,"Intense, spicy",Nespresso,10,?,?,?,?,original
+4,?,0,Caramelito*,Caramel,Nespresso,6,3,3,3,3,original
+5,?,0,Ciocattino*,Chocolate,Nespresso,6,3,3,3,3,original
+6,?,0,Dharkan*,Bitter Cocoa / Cereals,Nespresso,11,5,1,4,5,original
+7,?,0,Duls?o do Brasil*,Sweet cereals,Nespresso,4,2,2,2,2,original
+8,?,0,Envivo Lungo*,Woody,Nespresso,9,4,1,4,4,original
+9,?,0,Forest Almond Flavor,"Vanilla, almond and fruit",Nespresso,?,3,3,3,3,original
+10,?,0,Forest Black,"Woody, spicy",Nespresso,7,3,2,3,3,original
+11,?,0,Forest Fruit,"Woody, spicy",Nespresso,6,3,3,3,3,original
+12,?,0,Fortissio Lungo*,Sweet cereal / malty toasted,Nespresso,8,3,2,3,4,original
+13,?,0,Indriya*,Spicy,Nespresso,10,4,3,4,4,original
+14,?,0,Infinitely Espresso,Fruity & cereal,Nespresso,?,3,3,3,3,original
+15,?,0,Infinitely Fruity Raspberry,Raspberry & cereal,Nespresso,?,3,3,2,2,original
+16,?,0,Infinitely Gourmet Hazelnut,Hazelnut,Nespresso,?,3,3,2,2,original
+17,?,0,Linizio Lungo*,Cereal,Nespresso,4,1,1,2,2,original
+18,?,0,Paris Black,"Syrup, spicy, woody",Nespresso,9,5,1,4,4,original
+19,?,0,Rosabaya de Colombia*,Fruity-winey,Nespresso,6,3,5,3,3,original
+20,?,0,Torta Di Nocciole,Hazelnut Cake,Nespresso,?,3,3,3,3,original
+21,?,0,Vanilio*,Vanilla,Nespresso,6,3,3,3,3,original
+22,?,0,Vivalto Lungo*,Floral / roasted,Nespresso,4,2,2,2,3,original
+23,?,0,Vivalto Lungo Decaffeinato*,Fruity / floral,Nespresso,4,2,2,2,3,original

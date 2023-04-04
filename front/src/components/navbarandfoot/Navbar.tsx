@@ -2,20 +2,24 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setNavbar, AppDispatch } from '../../store';
-
 import { useOnHoverOutside } from '../../hooks/useOnHoverOutside';
 import Logo from '../../assets/Coffeebrew.svg';
 import tw from 'tailwind-styled-components';
 import { DropDown } from './DropDown';
 import { LoginModal } from '../login/Login';
+import hypeboy from '../../assets/hypeboy.mp3';
+import MyProfile from './MyProfile';
+import ProfileDropDown from './ProfileDropDown';
 
 const Navbar = () => {
   const reduxData = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
+  const [isClick, setIsClick] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isMenuDropDownOpen, setMenuDropDownOpen] = useState(false);
+  const [isPlay, setIsPlay] = useState(false);
 
   useEffect(() => {
     dispatch(setNavbar(location.pathname));
@@ -23,7 +27,13 @@ const Navbar = () => {
   const closeHoverMenu = () => {
     setMenuDropDownOpen(false);
   };
+
   useOnHoverOutside(dropdownRef, closeHoverMenu); //full dropdwon hovering
+  const playMusic = () => {
+    const audio = new Audio(hypeboy);
+    audio.loop = true;
+    audio.play();
+  };
   return (
     <div
       className=""
@@ -37,9 +47,17 @@ const Navbar = () => {
             onClick={() => {
               navigate('/');
               setMenuDropDownOpen(false);
+              setIsClick(false);
             }}
           >
-            <img src={Logo} width={60} height={52} alt="no_img" />
+            <img src={Logo} width={60} height={60} alt="no_img" />
+            <button
+              onClick={() => {
+                playMusic();
+              }}
+            >
+              음악재생
+            </button>
           </NDiv>
           <div className="flex flex-row w-2/3 justify-between">
             <NDiv
@@ -50,6 +68,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/intro');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -63,6 +82,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/info');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -75,7 +95,8 @@ const Navbar = () => {
                   : 'text-mainColorBrown'
               }`}
               onClick={() => {
-                navigate('/coffeelist');
+                navigate('/coffeelist/bean');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -89,6 +110,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 navigate('/survey');
+                setIsClick(false);
                 setMenuDropDownOpen(false);
               }}
             >
@@ -101,7 +123,11 @@ const Navbar = () => {
                 setMenuDropDownOpen(false);
               }}
             >
-              <LoginModal />
+              {reduxData.login === false ? (
+                <LoginModal />
+              ) : (
+                <MyProfile isClick={isClick} setIsClick={setIsClick} />
+              )}
             </NDiv>
           </div>
         </div>

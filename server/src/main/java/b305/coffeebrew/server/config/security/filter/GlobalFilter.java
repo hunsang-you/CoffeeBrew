@@ -4,7 +4,7 @@ import b305.coffeebrew.server.config.jwt.JwtTokenProvider;
 import b305.coffeebrew.server.config.security.auth.PrincipalDetailService;
 import b305.coffeebrew.server.config.security.handler.UserLogoutHandler;
 import b305.coffeebrew.server.config.security.handler.UserLogoutSuccessHandler;
-import b305.coffeebrew.server.repository.TokenRepository;
+import b305.coffeebrew.server.config.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -47,11 +47,13 @@ public class GlobalFilter {
 	private String sessionId;
 	@Value(value = "${user.cookie.credential}")
 	private boolean cookieConfig;
+	@Value(value = "${user.url.member}")
+	private String memberURL;
 
 	private final UserAuthenticationManager userAuthenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final PrincipalDetailService principalDetailService;
-	private final TokenRepository tokenRepository;
+	private final RedisUtil redisUtil;
 
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -69,7 +71,7 @@ public class GlobalFilter {
 	}
 
 	public UserAuthenticationFilter authenticationFilter() {
-		UserAuthenticationFilter userAuthenticationFilter = new UserAuthenticationFilter(userAuthenticationManager, jwtTokenProvider, tokenRepository);
+		UserAuthenticationFilter userAuthenticationFilter = new UserAuthenticationFilter(userAuthenticationManager, jwtTokenProvider, redisUtil);
 		userAuthenticationFilter.setHeaderKeyAccess(headerAccess);
 		userAuthenticationFilter.setTypeAccess(typeAccess);
 
@@ -77,7 +79,7 @@ public class GlobalFilter {
 	}
 
 	public JwtTokenAuthorizationFilter authorizationFilter() {
-		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService);
+		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService, memberURL);
 		jwtTokenAuthorizationFilter.setHeaderKeyAccess(headerAccess);
 		jwtTokenAuthorizationFilter.setTypeAccess(typeAccess);
 

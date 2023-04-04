@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -29,32 +30,27 @@ public class CapsuleScore extends BaseAtTime implements Serializable {
     @JoinColumn(name = "capsule_idx")
     private Capsule capsuleIdx;
 
-    @NotBlank
-    private int overall; // 총점
-
-    @NotBlank
-    private int aroma; // 향
-
-    @NotBlank
-    private int flavor; // 맛
-
-    @NotBlank
-    private int acidity; // 산미
-
-    @NotBlank
-    private int body; // 바디감
-
-    @NotBlank
+    @NotNull
     private int balance; // 밸런스
 
-    @NotBlank
-    private int after; // 후미
+    @NotNull
+    private int flavor; // intensity -> flavor
+
+    @NotNull
+    private int acidity; // 산미
+
+    @NotNull
+    private int bitterness; // 쓴맛
+
+    @NotNull
+    private int body; // 바디감
+
+    @NotNull
+    private int roasting; // 로스팅. 근데 int 맞냐?
 
     @NotBlank
-    private String aroma_note; // 향 상세
-
-    @NotBlank
-    private String flavor_note; // 맛 상세
+    @Column(name = "coffeeing_note")
+    private String coffeeingNote; // 맛 상세
 
     @Override
     public void prePersist() {
