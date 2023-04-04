@@ -63,7 +63,7 @@ const CapsuleList = () => {
   }, []);
 
   return (
-    <AllListBg>
+    <AllListBg style={{ minHeight: '1300px' }}>
       <CapsuleSearchBar
         pagination={pagination}
         setPagination={setPagination}
