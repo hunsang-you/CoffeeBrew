@@ -63,7 +63,7 @@ const LikeBeanList = () => {
       });
     };
     getLikesBean();
-  }, []);
+  }, [isLikeCheck]);
 
   const handleLike = () => {
     setIsLikeCheck(!isLikeCheck);
@@ -96,19 +96,26 @@ const LikeBeanList = () => {
                     backgroundColor: 'rgb(0, 0, 0, 0.7)',
                   }}
                 >
-                  {isLikeCheck ? (
-                    <AiFillHeart
-                      size={42}
-                      style={{
-                        color: 'red',
-                        marginLeft: '8px',
-                        paddingTop: '8px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleLike()}
-                    />
-                  ) : null}
-                  {isLikeCheck ? null : (
+                  <AiFillHeart
+                    size={42}
+                    style={{
+                      color: 'red',
+                      marginLeft: '8px',
+                      paddingTop: '8px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      detailAPI
+                        .beanLike(Number(beanIdx[i]))
+                        .then((request) => {
+                          console.log('좋아요 해제');
+                          handleLike();
+                        })
+                        .catch((e) => console.log(e));
+                    }}
+                  />
+
+                  {/* {isLikeCheck ? null : (
                     <AiOutlineHeart
                       size={42}
                       style={{
@@ -118,7 +125,7 @@ const LikeBeanList = () => {
                       }}
                       onClick={() => handleLike()}
                     />
-                  )}
+                  )} */}
                   <LinkBtn
                     onClick={() => {
                       navigate(`/detail/${beanIdx[i]}`);
