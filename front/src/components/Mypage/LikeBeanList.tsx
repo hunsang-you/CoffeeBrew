@@ -1,118 +1,47 @@
 import tw from 'tailwind-styled-components/';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { memberAPI, detailAPI } from '../../api/api';
+import { detailType } from '../Detail/DetailBean';
 // 예시 이미지
 import bean from '../../assets/tempImg/bean.png';
 import bean2 from '../../assets/tempImg/bean2.png';
 import dogprofile from '../../assets/tempImg/dogprofile.png';
 import grinding2 from '../../assets/tempImg/grinding2.png';
 
-const data: object[] = [
-  {
-    id: 1,
-    img: { bean },
-    name: '원두1',
-    country: '에티오피아',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 2,
-    img: { bean2 },
-    name: '원두2',
-    country: '케냐',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 3,
-    img: { dogprofile },
-    name: '개',
-    country: '한국',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 4,
-    img: { grinding2 },
-    name: '분쇄',
-    country: '파푸아뉴기니',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 5,
-    img: { bean },
-    name: '원두1',
-    country: '에티오피아',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 6,
-    img: { bean2 },
-    name: '원두2',
-    country: '케냐',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 7,
-    img: { dogprofile },
-    name: '개',
-    country: '한국',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 8,
-    img: { grinding2 },
-    name: '분쇄',
-    country: '파푸아뉴기니',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 9,
-    img: { bean2 },
-    name: '원두2',
-    country: '케냐',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 10,
-    img: { dogprofile },
-    name: '개',
-    country: '한국',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-  {
-    id: 11,
-    img: { grinding2 },
-    name: '분쇄',
-    country: '파푸아뉴기니',
-    like: true,
-    description:
-      '이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는이 원두는 영국에서 넘어왔으며 지구를 7바퀴 돌아이 원두는',
-  },
-];
+interface like {
+  idx: number;
+  itemType: string;
+  itemIdx: number;
+  expired: boolean;
+}
 
 const LikeBeanList = () => {
   const [isLikeCheck, setIsLikeCheck] = useState(true);
+  const [likeBeans, setLikeBeans] = useState<detailType | null>(null);
+
+  useEffect(() => {
+    const getLikesBean = async () => {
+      await memberAPI.memberLikesBeans().then((request) => {
+        const likes = request.data.value;
+        if (likes.length > 0) {
+          likes.map((like: like) => {
+            if (like.itemType === 'bean') {
+              detailAPI
+                .getBean(Number(like.itemIdx))
+                .then((request) => {
+                  console.log(request.data);
+                })
+                .catch((e) => console.log(e));
+            }
+          });
+        }
+      });
+    };
+    getLikesBean();
+  }, []);
 
   const handleLike = () => {
     setIsLikeCheck(!isLikeCheck);

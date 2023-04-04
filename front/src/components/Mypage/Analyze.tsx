@@ -1,7 +1,8 @@
 import tw from 'tailwind-styled-components';
 import Chart from '../Detail/Chart/UserChart';
 import { Routes, Route } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
@@ -24,6 +25,7 @@ const userData = {
 };
 
 const Analyze = () => {
+  const reduxData = useSelector((state: RootState) => state);
   const userStandard: string[] = Object.keys(userData);
   const userScore: number[] = Object.values(userData);
 
@@ -97,7 +99,10 @@ const Analyze = () => {
       <div style={{ scale: '130%', marginTop: '40px' }}>
         <Chart />
       </div>
-      <Comment> 닉네임은10글자까지님의 선호도 분석 입니다</Comment>
+      <Comment>
+        {' '}
+        {reduxData.memberInfo?.nickname}님의 선호도 분석 입니다
+      </Comment>
       <div
         style={{ display: 'flex', justifyContent: 'end', marginRight: '40px' }}
       >
