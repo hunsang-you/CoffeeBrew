@@ -4,6 +4,7 @@ import bean from '../../assets/tempImg/bean.png';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
+import { ReviewType } from './MyReview';
 
 const ReviewBody = tw.div`min-h-screen flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;
@@ -29,8 +30,13 @@ const userData = {
   총점: 3.5,
 };
 
-const MyReviewItem = () => {
+interface PropsTypes {
+  reviewsData: ReviewType[];
+}
+
+const MyReviewItem = ({ reviewsData }: PropsTypes) => {
   const scoreArray = Object.entries(userData);
+  console.log(reviewsData[0]);
   const beanScore = () => {
     const scoreItem = [];
 
