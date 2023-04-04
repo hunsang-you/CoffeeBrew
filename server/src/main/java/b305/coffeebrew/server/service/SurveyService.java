@@ -6,6 +6,7 @@ import b305.coffeebrew.server.entity.Member;
 import b305.coffeebrew.server.entity.Survey;
 import b305.coffeebrew.server.exception.ErrorCode;
 import b305.coffeebrew.server.exception.MemberNotFoundException;
+import b305.coffeebrew.server.exception.SurveyNotFoundException;
 import b305.coffeebrew.server.repository.MemberRepository;
 import b305.coffeebrew.server.repository.SurveyRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,7 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    public SurveyResDTO registSurvey(SurveyReqDTO surveyReqDTO, Long memberId) {
-
+    public String registSurvey(SurveyReqDTO surveyReqDTO, Long memberId) {
         log.info("memberId: {}", memberId);
         Optional<Member> memberOptional = memberRepository.findById(memberId);
         if (memberOptional.isEmpty()) {
@@ -37,6 +37,9 @@ public class SurveyService {
 
         Member member = memberOptional.get();
         log.info("MemberEmail: {}", member.getMemberEmail());
+        Optional<Survey> existingSurveyOptional = surveyRepository.findByMemberIdx(member);
+        existingSurveyOptional.ifPresent(surveyRepository::delete);
+
         Survey survey = Survey.builder()
                 .param1(surveyReqDTO.getParam1())
                 .param2(surveyReqDTO.getParam2())
@@ -54,7 +57,21 @@ public class SurveyService {
                 .body(0)
                 .memberIdx(member)
                 .build();
+        surveyRepository.save(survey);
+        return "SUCCESS";
+    }
+
+    public SurveyResDTO readMySurvey(Long memberId) {
+        log.info("memberId: {}", memberId);
+        Optional<Member> memberOptional = memberRepository.findById(memberId);
+        Member member = memberOptional.orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Survey survey = surveyRepository.findByMemberIdx(member)
+                .orElseThrow(() -> new SurveyNotFoundException(ErrorCode.SURVEY_NOT_FOUND));
+
         return SurveyResDTO.builder()
+                .resultCode(survey.getResultCode())
+                .resultType(survey.getResultType())
                 .param1(survey.getParam1())
                 .param2(survey.getParam2())
                 .param3(survey.getParam3())

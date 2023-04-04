@@ -186,4 +186,15 @@ public class MemberController {
     public ResponseEntity<ResponseDTO> registSurvey(@RequestBody SurveyReqDTO surveyReqDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_SURVEY_REGIST, surveyService.registSurvey(surveyReqDTO, principalDetails.getMember().getIdx())));
     }
+
+    @ApiOperation(value = "설문 조회", notes = "설문을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "페이지 오류"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    @GetMapping("/analysis")
+    public ResponseEntity<ResponseDTO> readMyPageAnalysis(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_SURVEY_FOUND, surveyService.readMySurvey(principalDetails.getMember().getIdx())));
+    }
 }
