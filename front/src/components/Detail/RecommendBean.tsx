@@ -75,6 +75,7 @@ const RecommendBean = (): JSX.Element => {
       src: [bean, bean2, grinding2, machine1, spin],
     },
   ]);
+
   const [current, setCurrent] = useState(0);
   const [style, setStyle] = useState({
     marginLeft: `-${current}00%`,
