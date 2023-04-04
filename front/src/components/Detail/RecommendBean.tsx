@@ -216,7 +216,10 @@ const RecommendBean = (): JSX.Element => {
                         >
                           <Img
                             key={i}
-                            style={{ backgroundImage: `${data.thumbnail}` }}
+                            style={{ backgroundImage: `${bean}` }}
+                            onClick={() => {
+                              console.log(data);
+                            }}
                           />
                           <div style={{ marginLeft: '16px', width: '450px' }}>
                             <div
