@@ -8,11 +8,12 @@ import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { reviewType } from './DetailBean';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import { reviewAPI } from '../../api/api';
 
 interface PropsTypes {
   detailReview?: reviewType[];
 }
-
+const reduxData = useSelector((state: RootState) => state);
 const ReviewLists = ({ detailReview }: PropsTypes) => {
   // 리뷰 최신/추천 순 조회버튼
   const [isActive, setIsActive] = useState(true);
@@ -40,8 +41,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
       window.scrollTo({ top: location - 100, behavior: 'smooth' });
     }
   };
-
-  const memberInfo = useSelector<RootState>((state) => state.memberInfo);
 
   // 내 리뷰 삭제
 
@@ -137,11 +136,24 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             };
             return (
               <div>
-                {
-                  <ReviewDelete onClick={() => console.log(memberInfo)}>
+                {data.profile.hashcode === reduxData.memberInfo?.hashcode ? (
+                  <ReviewDelete
+                    onClick={() => {
+                      if (
+                        data.profile.hashcode === reduxData.memberInfo?.hashcode
+                      ) {
+                        reviewAPI
+                          .deleteReview(Number(data.idx))
+                          .then((request) => {
+                            console.log('리뷰삭제', request.data);
+                          })
+                          .catch((e) => console.log(e));
+                      }
+                    }}
+                  >
                     삭제
                   </ReviewDelete>
-                }
+                ) : null}
                 <ReviewItem>
                   <ReviewName>
                     <ReviewCreated>

@@ -73,6 +73,7 @@ export const reviewAPI = {
       coffeeing_note: 'none',
       expired: true,
     }),
+  deleteReview: (id: number) => api.delete(`member/review/${id}`),
 };
 
 // 메인페이지
