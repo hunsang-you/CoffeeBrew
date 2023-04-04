@@ -26,7 +26,7 @@ const MyProfile = () => {
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
       await memberAPI
-        .memberReviews('pages=1')
+        .memberReviews('pages=0')
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
     };
