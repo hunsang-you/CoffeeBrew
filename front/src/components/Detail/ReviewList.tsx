@@ -145,7 +145,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                         reviewAPI
                           .deleteReview(Number(data.idx))
                           .then((request) => {
-                            location.reload();
                             console.log('리뷰삭제', request.data);
                           })
                           .catch((e) => console.log(e));
