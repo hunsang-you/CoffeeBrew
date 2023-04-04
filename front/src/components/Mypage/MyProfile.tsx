@@ -120,17 +120,8 @@ const MyProfile = () => {
                   confirmButtonColor: '#d33',
                   cancelButtonColor: '#d33',
                   confirmButtonText: '네 탈퇴하겠습니다.',
-                })
-                  .then((result) => {
-                    if (result.isConfirmed) {
-                      Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success',
-                      );
-                    }
-                  })
-                  .then((result) => {
+                }).then((result) => {
+                  if (result.isConfirmed) {
                     loginAPI
                       .withdraw()
                       .then((request) => {
@@ -138,7 +129,8 @@ const MyProfile = () => {
                         window.location.replace('/');
                       })
                       .catch((e) => console.log(e));
-                  })
+                  }
+                })
               }
             >
               회원탈퇴
