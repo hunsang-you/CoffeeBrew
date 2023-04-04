@@ -64,6 +64,12 @@ public interface Msg {
 	String SUCCESS_LIKE_MYLIST = "나의 좋아요 리스트 호출에 성공하였습니다.";
 	String FAIL_LIKE_MYLIST = "나의 좋아요 리스트 호출에 실페하였습니다.";
 
-	String SUCCESS_BEAN_RECOM = "원두 추천 조회에 성공했습니다.";
-	String FAIL_BEAN_RECOM = "원두 추천 조회에 성공했습니다.";
+	String SUCCESS_BEAN_RECOM = "원두 추천 조회에 성공하였습니다.";
+	String FAIL_BEAN_RECOM = "원두 추천 조회에 성공하였습니다.";
+
+	String SUCCESS_SURVEY_REGIST = "설문 작성에 성공하였습니다.";
+	String FAIL_SURVEY_REGIST = "설문 작성에 실패하였습니다.";
+
+    String SUCCESS_SURVEY_FOUND = "설문 조회에 성공하였습니다.";
+	String FAIL_SURVEY_FOUND = "설문 조회에 실패하였습니다.";
 }

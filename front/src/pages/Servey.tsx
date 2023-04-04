@@ -1,4 +1,6 @@
 import * as S from '../components/useageStyle';
+import { surveyAPI } from '../api/api';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {
   Servey1,
@@ -17,12 +19,28 @@ interface IsFooterType {
 }
 
 const Survey = ({ setIsFooter }: IsFooterType) => {
+  const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const [select, setSelect] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
 
   const before = () => {
     if (1 < page && page <= 8) {
       setPage(page - 1);
+    }
+  };
+
+  const serPost = () => {
+    if (page === 8) {
+      const postData = select;
+      surveyAPI
+        .postSurvey(postData)
+        .then((request) => {
+          console.log(request.data);
+          navigate('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -43,7 +61,15 @@ const Survey = ({ setIsFooter }: IsFooterType) => {
         >
           이전
         </SerButton>
-        <SerButton>다음</SerButton>
+        {page === 8 ? (
+          <SerButton
+            onClick={() => {
+              serPost();
+            }}
+          >
+            결과 보내기
+          </SerButton>
+        ) : null}
       </ButDiv>
       {page === 1 ? (
         <Servey1
@@ -109,4 +135,4 @@ const Survey = ({ setIsFooter }: IsFooterType) => {
 export default Survey;
 
 const ButDiv = tw.div`w-full flex justify-between my-10`;
-const SerButton = tw.button`text-3xl border mx-5 border-mainOrige py-3 px-5 rounded-lg`;
+const SerButton = tw.button`text-3xl border mx-5 border-mainOrige hover:bg-mainOrige hover:text-white py-3 px-5 rounded-lg`;
