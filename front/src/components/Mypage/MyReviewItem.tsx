@@ -31,12 +31,12 @@ const userData = {
 };
 
 interface PropsTypes {
-  reviewsData: ReviewType[];
+  reviewData: ReviewType;
 }
 
-const MyReviewItem = ({ reviewsData }: PropsTypes) => {
+const MyReviewItem = ({ reviewData }: PropsTypes) => {
+  console.log(reviewData);
   const scoreArray = Object.entries(userData);
-  console.log(reviewsData[0]);
   const beanScore = () => {
     const scoreItem = [];
 

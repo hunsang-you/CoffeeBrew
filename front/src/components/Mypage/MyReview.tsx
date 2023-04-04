@@ -80,13 +80,15 @@ const MyReview = () => {
       });
     };
     getMemberReviews();
-  });
+  }, []);
 
   return (
     <MyReviewBody style={{ border: 'solid 4px #06AACE' }}>
-      {memberReviews ? (
-        <MyReviewItem reviewsData={memberReviews.content} />
-      ) : null}
+      {memberReviews
+        ? memberReviews.content.map((data, i) => {
+            return <MyReviewItem reviewData={data} />;
+          })
+        : null}
     </MyReviewBody>
   );
 };
