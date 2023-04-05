@@ -6,6 +6,11 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Chart from './CapsuleChart';
 import { CapsuleDetailType } from './DetailCapsule';
 import { detailAPI } from '../../api/api';
+import acidityCapsule from '../../assets/detailImg/acidityCapsule.svg';
+import flavorCapsule from '../../assets/detailImg/flavorCapsule.svg';
+import bodyCapsule from '../../assets/detailImg/bodyCapsule.svg';
+import bitterCapsule from '../../assets/detailImg/bitterCapsule.svg';
+import roastingCapsule from '../../assets/detailImg/roastingCapsule.svg';
 
 interface PropsType {
   detailCapsule: CapsuleDetailType | null;
@@ -21,11 +26,40 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
   };
 
   const { capsuleId } = useParams() as { capsuleId: string };
+  // 캡슐 이미지(sweetness => roasting)
+  const [capsuleImg, setCapsuleImg] = useState('');
+  const capsuleTaste = () => {
+    const acidity = detailCapsule?.capsuleScore.acidity;
+    const bitter = detailCapsule?.capsuleScore.bitterness;
+    const body = detailCapsule?.capsuleScore.body;
+    const flavor = detailCapsule?.capsuleScore.flavor;
+    const roasting = detailCapsule?.capsuleScore.roasting;
+    const values: any[] = [acidity, bitter, body, flavor, roasting];
+    const maxIndex: number = values.indexOf(Math.max(...values));
+    const maxVar = Object.keys({ acidity, bitter, body, flavor, roasting })[
+      maxIndex
+    ];
+    if (maxVar === 'acidity') {
+      setCapsuleImg(acidityCapsule);
+    } else if (maxVar === 'bitter') {
+      setCapsuleImg(bitterCapsule);
+    } else if (maxVar === 'body') {
+      setCapsuleImg(bodyCapsule);
+    } else if (maxVar === 'flavor') {
+      setCapsuleImg(flavorCapsule);
+    } else if (maxVar === 'roasting') {
+      setCapsuleImg(roastingCapsule);
+    }
+  };
+
+  useEffect(() => {
+    capsuleTaste();
+  }, []);
 
   return (
     <CapsuleTop1 id="Top">
       <CapsuleImgBox>
-        <CapsuleImg1 src={Capsule} alt="img" />
+        <CapsuleImg1 src={capsuleImg} alt="img" />
         <HeartImgLike>
           {isLike ? (
             <AiFillHeart
@@ -61,16 +95,13 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
       <CapsuleDesc>
         <DescLeft>
           <CapsuleName>
-            {' '}
-            {detailCapsule?.capsuleDetail.capsule.nameKo}{' '}
+            {detailCapsule?.capsuleDetail.capsule.nameKo}
           </CapsuleName>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <CapsuleCountry>
-              {' '}
               회사 : {detailCapsule?.capsuleDetail.company}
             </CapsuleCountry>
             <Region>
-              {' '}
               머신타입 : {detailCapsule?.capsuleDetail.machineType}
             </Region>
           </div>
@@ -92,7 +123,7 @@ export default CapsuleInfo;
 
 // 최상단 좌측
 const CapsuleTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
-const CapsuleImg1 = tw.img`object-cover mt-10 drop-shadow-xl`;
+const CapsuleImg1 = tw.img`w-60 mx-auto mt-10 drop-shadow-xl`;
 const HeartImgLike = tw.div`flex justify-center mt-2`;
 
 // 최상단 우측 설명

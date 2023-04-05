@@ -3,6 +3,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import bean from '../../assets/tempImg/bean.png';
 import { detailAPI } from '../../api/api';
+import acidityImg from '../../assets/detailImg/acidityBean.svg';
+import bitterImg from '../../assets/detailImg/bitterBean.svg';
+import sweetImg from '../../assets/detailImg/sweetBean.svg';
+import flavorImg from '../../assets/detailImg/flavorBean.svg';
+import bodyImg from '../../assets/detailImg/bodyBean.svg';
 
 interface recomType {
   flavor: number;
@@ -58,9 +63,38 @@ const RecommendBean = (): JSX.Element => {
     <ListDiv>
       <RecomList>
         {recommendBeanList?.map((data, i) => {
+          const [cardImg, setCardImg] = useState('');
+          const beanTaste = () => {
+            const acidity = data?.acidity;
+            const bitter = data?.bitterness;
+            const body = data?.body;
+            const flavor = data?.flavor;
+            const sweetness = data?.sweetness;
+            const values: any[] = [acidity, bitter, body, flavor, sweetness];
+            const maxIndex: number = values.indexOf(Math.max(...values));
+            const maxVar = Object.keys({
+              acidity,
+              bitter,
+              body,
+              flavor,
+              sweetness,
+            })[maxIndex];
+            if (maxVar === 'acidity') {
+              setCardImg(acidityImg);
+            } else if (maxVar === 'bitter') {
+              setCardImg(bitterImg);
+            } else if (maxVar === 'body') {
+              setCardImg(bodyImg);
+            } else if (maxVar === 'flavor') {
+              setCardImg(flavorImg);
+            } else if (maxVar === 'sweetness') {
+              setCardImg(sweetImg);
+            }
+          };
+          beanTaste();
           return (
             <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-              <RecomItemImg src={bean} />
+              <RecomItemImg src={cardImg} />
               <RecomItemB>
                 <RecomItemName>{data.nameKo}</RecomItemName>
                 <RecomInfo>

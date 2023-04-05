@@ -4,6 +4,11 @@ import { useParams } from 'react-router-dom';
 import capsule from '../../assets/tempImg/capsule.png';
 import { detailAPI } from '../../api/api';
 import { CapsuleDetailType } from './DetailCapsule';
+import acidityCapsuleImg from '../../assets/detailImg/acidityCapsule.svg';
+import flavorCapsuleImg from '../../assets/detailImg/flavorCapsule.svg';
+import bodyCapsuleImg from '../../assets/detailImg/bodyCapsule.svg';
+import bitterCapsuleImg from '../../assets/detailImg/bitterCapsule.svg';
+import roastingCapsuleImg from '../../assets/detailImg/roastingCapsule.svg';
 
 const RecommendCapsule = () => {
   const { capsuleId } = useParams() as { capsuleId: string };
@@ -34,9 +39,38 @@ const RecommendCapsule = () => {
       <RecomList>
         {recommendCapsuleList
           ? recommendCapsuleList?.map((data, i) => {
+              const [recomCapsuleImg, setRecomCapsuleImg] = useState('');
+              const beanTaste = () => {
+                const acidity = data?.capsuleScore.acidity;
+                const bitter = data?.capsuleScore.bitterness;
+                const body = data?.capsuleScore.body;
+                const flavor = data?.capsuleScore.flavor;
+                const roasting = data?.capsuleScore.roasting;
+                const values: any[] = [acidity, bitter, body, flavor, roasting];
+                const maxIndex: number = values.indexOf(Math.max(...values));
+                const maxVar = Object.keys({
+                  acidity,
+                  bitter,
+                  body,
+                  flavor,
+                  roasting,
+                })[maxIndex];
+                if (maxVar === 'acidity') {
+                  setRecomCapsuleImg(acidityCapsuleImg);
+                } else if (maxVar === 'bitter') {
+                  setRecomCapsuleImg(bitterCapsuleImg);
+                } else if (maxVar === 'body') {
+                  setRecomCapsuleImg(bodyCapsuleImg);
+                } else if (maxVar === 'flavor') {
+                  setRecomCapsuleImg(flavorCapsuleImg);
+                } else if (maxVar === 'roasting') {
+                  setRecomCapsuleImg(roastingCapsuleImg);
+                }
+              };
+              beanTaste();
               return (
                 <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-                  <RecomItemImg src={capsule} />
+                  <RecomItemImg src={recomCapsuleImg} />
                   <RecomItemB>
                     <RecomItemName>{data.capsule.nameKo}</RecomItemName>
                     <RecomInfo>
