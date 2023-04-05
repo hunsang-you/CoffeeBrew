@@ -1,14 +1,11 @@
 import tw from 'tailwind-styled-components/';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart } from 'react-icons/ai';
 import { memberAPI, detailAPI } from '../../api/api';
 import { detailType } from '../Detail/DetailBean';
 // 예시 이미지
 import bean2 from '../../assets/tempImg/bean.png';
-import dogprofile from '../../assets/tempImg/dogprofile.png';
-import grinding2 from '../../assets/tempImg/grinding2.png';
 
 interface like {
   idx: number;
@@ -129,7 +126,7 @@ const LikeBeanList = () => {
                   )} */}
                 <LinkBtn
                   onClick={() => {
-                    navigate(`/detail/${beanIdx[i]}`);
+                    navigate(`/detail/bean/${beanIdx[i]}`);
                   }}
                 >
                   상세보기
