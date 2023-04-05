@@ -44,7 +44,7 @@ const BeanLike = () => {
           </SelectBtn>
         )}
       </SelectTypeBar>
-      <div style={{ flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {isTypeCheck ? <LikeBeanList /> : null}
       </div>
       <div>{isTypeCheck ? null : <LikeCapsuleList />}</div>
