@@ -28,5 +28,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("select m.idx from Member m where m.memberEmail like :memberEmail")
     Optional<Long> findIdxByMemberEmail(String memberEmail);
 
-    Optional<Member> findByMemberIdxAndExpiredFalse(long memberIdx);
+    Optional<Member> findByIdxAndExpiredFalse(long memberIdx);
 }
