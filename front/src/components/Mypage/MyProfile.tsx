@@ -216,11 +216,7 @@ const MyProfile = () => {
             </TypeBtnOff>
           )}
         </TypeBar>
-        {typeCheck[0] === true && survey ? (
-          <Analyze survey={survey} />
-        ) : (
-          <NoAnalyze />
-        )}
+        {typeCheck[0] === true && survey ? <Analyze survey={survey} /> : null}
         {typeCheck[1] === true ? <BeanLike /> : null}
         {typeCheck[2] === true ? <MyReview /> : null}
       </ProfileRight>
