@@ -237,6 +237,6 @@ const ScoreTitle = tw.div`text-xl flex justify-end  drop-shadow-2xl`;
 // 리뷰내용
 const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
 // const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
-const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto overflow-y-scroll`;
+const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto`;
 const ReviewCreated = tw.p`text-sm font-bold`;
 const MoreBtn = tw.button`w-40 h-10 bg-review text-white rounded-full mt-5 mb-4 cursor-pointer hover:bg-slate-500 hover:scale-105`;
