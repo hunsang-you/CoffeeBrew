@@ -92,7 +92,7 @@ public class ItemController {
     })
     public ResponseEntity<ResponseDTO> readCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
         CapsuleDetailPageResDTO capsuleDetailPageResDTO = capsuleService.getCapsuleDetail(capsuleId);
-        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(capsuleDetailPageResDTO.getCapsule().getNameKo(), capsuleDetailPageResDTO.getCapsule().getNameEn());
+        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(capsuleDetailPageResDTO.getCapsule().getNameKo() + " 캡슐", capsuleDetailPageResDTO.getCapsule().getNameEn() + " capsule");
         if (naverLinks != null) {
             if (capsuleDetailPageResDTO.getLinkDTO() == null) {
                 capsuleDetailPageResDTO.setLinkDTO(new HashSet<>());

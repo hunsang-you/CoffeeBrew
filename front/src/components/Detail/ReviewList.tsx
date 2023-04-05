@@ -45,7 +45,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
   // 내 리뷰 삭제
 
   return (
-    <div>
+    <div ref={reviewRef}>
       <ReviewList>
         {showNumber > 1 ? (
           <MoreBtn
