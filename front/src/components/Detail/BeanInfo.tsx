@@ -52,6 +52,9 @@ const BeanInfo = ({ detailBean }: PropsType) => {
     }
   };
 
+  useEffect(() => {
+    beanTaste();
+  }, []);
   return (
     <BeanTop1 id="Top">
       <BeanImgBox>
