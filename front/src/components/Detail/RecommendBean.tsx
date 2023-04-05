@@ -85,7 +85,7 @@ const RecommendBean = (): JSX.Element => {
 export default RecommendBean;
 const ListDiv = tw.div` text-center`;
 
-const RecomList = tw.div` flex  mb-4 `;
+const RecomList = tw.div` flex mx-auto mb-4 `;
 const RecomItemT = tw.div`w-44 h-320 justify-center rounded-t-2xl my-12 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 ml-2 mr-2 `;
 const RecomItemT1 = tw(RecomItemT)`bg-brownBorder rounded-b-2xl`;
 const RecomItemImg = tw.img`w-20 h-32  mx-auto mt-4  `;
