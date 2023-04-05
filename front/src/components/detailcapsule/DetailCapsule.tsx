@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { detailAPI, reviewAPI } from '../../api/api';
 import CapsuleInfo from './CapsuleInfo';
 import RecommendCapsule from './RecommendBean';
+import ReviewAll from './ReviewAll';
 
 //**DetailCapsule 타입설정 */
 interface Capsule {
@@ -100,7 +101,17 @@ const DetailCapsule = () => {
         })
         .catch((e) => console.log(e));
     };
+    const getReviewItems = async () => {
+      await reviewAPI
+        .getCapsuleReview(Number(capsuleId))
+        .then((request) => {
+          console.log(request.data.value);
+          setDetailReview(request.data.value);
+        })
+        .catch((e) => console.log(e));
+    };
     getDetailCapsule();
+    getReviewItems();
   }, []);
 
   return (
@@ -123,6 +134,9 @@ const DetailCapsule = () => {
         </div>
         <RecommendCapsule />
       </CapsuleTop2>
+      <CapsuleTop3 style={{ marginTop: '40px' }}>
+        {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
+      </CapsuleTop3>
     </DetailBg>
   );
 };

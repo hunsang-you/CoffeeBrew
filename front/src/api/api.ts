@@ -66,6 +66,8 @@ export const listAPI = {
 
 export const reviewAPI = {
   /**원두에 대한 리뷰 불러오기 */
+  getCapsuleReview: (id: number) => api.get(`review/capsule/${id}`),
+  /**캡슐에 대한 리뷰 불러오기 */
   getBeanReview: (id: number) => api.get(`review/bean/${id}`),
   /**리뷰작성 */
   createBeanReview: (
