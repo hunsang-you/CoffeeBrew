@@ -61,122 +61,129 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
             리뷰 접기▲
           </MoreBtn>
         ) : null}
-        {detailReview ? (
-          detailReview?.slice(0, showNumber).map((data: any, i) => {
-            const Rating = {
-              향: data.flavor,
-              산미: data.acidity,
-              단맛: data.sweetness,
-              바디감: data.body,
-              쓴맛: data.bitterness,
-              총점: data.overall,
-            };
-            const beanScore = () => {
-              const scoreItem = [];
-              const scoreArray = Object.entries(Rating);
-              for (let j = 0; j < scoreArray.length; j++) {
-                const score = scoreArray[j];
-                // score[0] = 기준, score[1] = 점수
-                // console.log(score); //  ['향', 5]
-                // .5인지 판별
-                const isHalfCheck = score[1] / 2 - Math.floor(score[1] / 2) > 0;
+        <div style={{ overflowY: 'scroll' }}>
+          {detailReview ? (
+            detailReview?.slice(0, showNumber).map((data: any, i) => {
+              const Rating = {
+                향: data.flavor,
+                산미: data.acidity,
+                단맛: data.sweetness,
+                바디감: data.body,
+                쓴맛: data.bitterness,
+                총점: data.overall,
+              };
+              const beanScore = () => {
+                const scoreItem = [];
+                const scoreArray = Object.entries(Rating);
+                for (let j = 0; j < scoreArray.length; j++) {
+                  const score = scoreArray[j];
+                  // score[0] = 기준, score[1] = 점수
+                  // console.log(score); //  ['향', 5]
+                  // .5인지 판별
+                  const isHalfCheck =
+                    score[1] / 2 - Math.floor(score[1] / 2) > 0;
 
-                // 점수만큼 가득찬 이미지
-                const scoreRatingFull = [];
-                if (Number.isInteger(score[1] / 2)) {
-                  for (let k = 0; k < score[1] / 2; k++) {
-                    scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+                  // 점수만큼 가득찬 이미지
+                  const scoreRatingFull = [];
+                  if (Number.isInteger(score[1] / 2)) {
+                    for (let k = 0; k < score[1] / 2; k++) {
+                      scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+                    }
+                  } else {
+                    // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
+                    for (let k = 0; k < Math.floor(score[1] / 2); k++) {
+                      scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+                    }
                   }
-                } else {
-                  // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-                  for (let k = 0; k < Math.floor(score[1] / 2); k++) {
-                    scoreRatingFull.push(<Score src={ratingfull} key={k} />);
+
+                  // .5라면 반개 추가
+                  const scoreRatingHalf = isHalfCheck ? (
+                    <Score src={ratinghalf} />
+                  ) : null;
+
+                  const scoreRatingEmpty = [];
+                  if (Number.isInteger(score[1] / 2)) {
+                    for (let k = 0; k < 5 - score[1] / 2; k++) {
+                      scoreRatingEmpty.push(
+                        <Score src={ratingempty} key={k} />,
+                      );
+                    }
+                  } else {
+                    for (let k = 0; k < Math.floor(5 - score[1] / 2); k++) {
+                      scoreRatingEmpty.push(
+                        <Score src={ratingempty} key={k} />,
+                      );
+                    }
                   }
+
+                  scoreItem.push(
+                    <ScoreTitle key={i}>
+                      <p style={{ marginRight: '16px', fontWeight: 'bold' }}>
+                        {score[0]}
+                      </p>
+                      {scoreRatingFull} {scoreRatingHalf}
+                      {scoreRatingEmpty}
+                    </ScoreTitle>,
+                  );
                 }
+                return scoreItem;
+              };
+              return (
+                <div>
+                  {data.profile.hashcode === reduxData.memberInfo?.hashcode ? (
+                    <ReviewDelete
+                      onClick={() => {
+                        if (
+                          data.profile.hashcode ===
+                          reduxData.memberInfo?.hashcode
+                        ) {
+                          reviewAPI
+                            .deleteReview(Number(data.idx))
+                            .then((request) => {
+                              console.log('리뷰삭제', request.data);
+                            })
+                            .catch((e) => console.log(e));
+                        }
+                      }}
+                    >
+                      삭제
+                    </ReviewDelete>
+                  ) : null}
+                  <ReviewItem>
+                    <ReviewName>
+                      <ReviewCreated>
+                        {data.createdDate[0] +
+                          '년' +
+                          ' ' +
+                          data.createdDate[1] +
+                          '월' +
+                          ' ' +
+                          data.createdDate[2] +
+                          '일' +
+                          ' ' +
+                          data.createdDate[3] +
+                          '시'}
+                      </ReviewCreated>
 
-                // .5라면 반개 추가
-                const scoreRatingHalf = isHalfCheck ? (
-                  <Score src={ratinghalf} />
-                ) : null;
-
-                const scoreRatingEmpty = [];
-                if (Number.isInteger(score[1] / 2)) {
-                  for (let k = 0; k < 5 - score[1] / 2; k++) {
-                    scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
-                  }
-                } else {
-                  for (let k = 0; k < Math.floor(5 - score[1] / 2); k++) {
-                    scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
-                  }
-                }
-
-                scoreItem.push(
-                  <ScoreTitle key={i}>
-                    <p style={{ marginRight: '16px', fontWeight: 'bold' }}>
-                      {score[0]}
-                    </p>
-                    {scoreRatingFull} {scoreRatingHalf}
-                    {scoreRatingEmpty}
-                  </ScoreTitle>,
-                );
-              }
-              return scoreItem;
-            };
-            return (
-              <div style={{ overflowY: 'scroll' }}>
-                {data.profile.hashcode === reduxData.memberInfo?.hashcode ? (
-                  <ReviewDelete
-                    onClick={() => {
-                      if (
-                        data.profile.hashcode === reduxData.memberInfo?.hashcode
-                      ) {
-                        reviewAPI
-                          .deleteReview(Number(data.idx))
-                          .then((request) => {
-                            console.log('리뷰삭제', request.data);
-                          })
-                          .catch((e) => console.log(e));
-                      }
-                    }}
-                  >
-                    삭제
-                  </ReviewDelete>
-                ) : null}
-                <ReviewItem>
-                  <ReviewName>
-                    <ReviewCreated>
-                      {data.createdDate[0] +
-                        '년' +
-                        ' ' +
-                        data.createdDate[1] +
-                        '월' +
-                        ' ' +
-                        data.createdDate[2] +
-                        '일' +
-                        ' ' +
-                        data.createdDate[3] +
-                        '시'}
-                    </ReviewCreated>
-
-                    <ReviewImg src={data.profile.profileImg} />
-                    {data.profile.nickname}
-                  </ReviewName>
-                  <ReviewStandard>
-                    <ReviewStandardTop>
-                      <div>{beanScore()}</div>
-                    </ReviewStandardTop>
-                    <ReviewArticle>
-                      <ReviewContent>{data.content}</ReviewContent>
-                    </ReviewArticle>
-                  </ReviewStandard>
-                </ReviewItem>
-              </div>
-            );
-          })
-        ) : (
-          <ReviewItem> 아직 리뷰가 없어요 </ReviewItem>
-        )}
-
+                      <ReviewImg src={data.profile.profileImg} />
+                      {data.profile.nickname}
+                    </ReviewName>
+                    <ReviewStandard>
+                      <ReviewStandardTop>
+                        <div>{beanScore()}</div>
+                      </ReviewStandardTop>
+                      <ReviewArticle>
+                        <ReviewContent>{data.content}</ReviewContent>
+                      </ReviewArticle>
+                    </ReviewStandard>
+                  </ReviewItem>
+                </div>
+              );
+            })
+          ) : (
+            <ReviewItem> 아직 리뷰가 없어요 </ReviewItem>
+          )}
+        </div>
         <div
           style={{
             display: 'flex',
