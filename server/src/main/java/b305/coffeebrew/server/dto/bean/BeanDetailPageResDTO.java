@@ -13,6 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class BeanDetailPageResDTO {
+	private long idx;
 
 	private String nameKo;
 	private String nameEn;
@@ -36,7 +37,8 @@ public class BeanDetailPageResDTO {
 	private Set<LinkDTO> linkDTO = new HashSet<>(); // 기본값으로 빈 Set을 할당
 
 	@Builder
-	public BeanDetailPageResDTO(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
+	public BeanDetailPageResDTO(long idx, String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
+		this.idx = idx;
 		this.nameKo = nameKo;
 		this.nameEn = nameEn;
 		this.summary = summary;
@@ -59,8 +61,9 @@ public class BeanDetailPageResDTO {
 		this.linkDTO = linkDTO;
 	}
 
-	public static BeanDetailPageResDTO of(String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
+	public static BeanDetailPageResDTO of(long idx, String nameKo, String nameEn, String summary, String thumbnail, int userGrade, String description, String origin, String region, String rank, String processing, boolean decaffeination, int balance, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeingNote, String roastingPoint, Set<LinkDTO> linkDTO) {
 		return BeanDetailPageResDTO.builder()
+				.idx(idx)
 				.nameKo(nameKo)
 				.nameEn(nameEn)
 				.summary(summary)
