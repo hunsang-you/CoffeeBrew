@@ -34,7 +34,7 @@ export interface ReviewPageType {
 
 export interface ReviewType {
   itemType: string;
-  itemIdx: number;
+  itemName: string;
   content: string | null;
   overall: number;
   flavor: number;
@@ -47,24 +47,23 @@ export interface ReviewType {
   expired: boolean | null;
   createdDate: number[] | null;
   updatedDate: number[] | null;
-  idx: number;
-  memberIdx: memberType;
+  member_idx: number;
 }
 
-export interface memberType {
-  ageRange: string | null;
-  createdDate: number[] | null;
-  updatedDate: number[] | null;
-  expired: boolean | null;
-  gender: string | null;
-  profileImg: string;
-  memberEmail: string;
-  nickname: string;
-  hashcode: string;
-  snsType: string;
-  role: string | null;
-  idx: number | null;
-}
+// export interface memberType {
+//   ageRange: string | null;
+//   createdDate: number[] | null;
+//   updatedDate: number[] | null;
+//   expired: boolean | null;
+//   gender: string | null;
+//   profileImg: string;
+//   memberEmail: string;
+//   nickname: string;
+//   hashcode: string;
+//   snsType: string;
+//   role: string | null;
+//   idx: number | null;
+// }
 
 const MyReviewBody = tw.div`rounded-b-lg text-center  mb-4`;
 const MyReview = () => {

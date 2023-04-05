@@ -115,7 +115,7 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
                   '시'
                 : null}
             </div>
-            <BeanImg src={reviewData.memberIdx.profileImg} />
+            <BeanImg src={bean} alt="no_img" />
             <p
               style={{
                 fontSize: '20px',
