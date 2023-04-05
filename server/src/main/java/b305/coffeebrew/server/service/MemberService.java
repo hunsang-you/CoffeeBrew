@@ -85,7 +85,7 @@ public class MemberService {
     @Transactional
     public Long deleteMember(long memberIdx) throws RuntimeException {
         String reqURL = "https://kapi.kakao.com/v1/user/unlink";
-        Optional<Member> member = memberRepository.findByMemberIdxAndExpiredFalse(memberIdx);
+        Optional<Member> member = memberRepository.findByIdxAndExpiredFalse(memberIdx);
         if (member.isPresent()) {
             // expired가 false인 회원이 존재하는 경우
             member.get().setExpired(true);
@@ -104,25 +104,4 @@ public class MemberService {
             throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
         }
     }
-
-
-//    @Transactional
-//    public MemPageResDTO readMyPage(Long idx) {
-//        log.info(METHOD_NAME + "- readMyPage");
-//
-//        Optional<Coin> optionalCoin = coinRepository.findById(idx);
-//        if (!optionalCoin.isPresent()) {
-//            throw new MyPageHistoryException(ErrorCode.MYPAGE_HISTORY_ERROR);
-//        }
-//
-//        Integer myCoin = optionalCoin.get().getCoin();
-//        List<MemPageDealDTO> reqList = dealRepository.findAllMyReqHistory(idx);
-//        List<MemPageDealDTO> resList = dealRepository.findAllMyResHistory(idx);
-//
-//        return MemPageResDTO.builder()
-//                .coin(myCoin)
-//                .memPageDealDTOReqList(reqList != null ? reqList : Collections.emptyList())
-//                .memPageDealDTOResList(resList != null ? resList : Collections.emptyList())
-//                .build();
-//    }
 }
