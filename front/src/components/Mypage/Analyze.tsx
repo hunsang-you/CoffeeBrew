@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import Chart from '../Detail/Chart/UserChart';
+import Chart from './UserChart';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -92,7 +92,7 @@ const Analyze = ({ survey }: PropsTypes) => {
       }}
     >
       <div style={{ scale: '130%', marginTop: '40px' }}>
-        <Chart />
+        <Chart survey={survey} />
       </div>
       <Comment>
         {' '}

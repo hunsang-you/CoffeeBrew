@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
+import { SurveyType } from './MyProfile';
 
-type ChartProps = {};
+interface PropsTypes {
+  survey: SurveyType;
+}
 
-const Chart: React.FC<ChartProps> = () => {
+const Chart = ({ survey }: PropsTypes) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState([
     '향',
@@ -11,15 +14,21 @@ const Chart: React.FC<ChartProps> = () => {
     '산미',
     '바디감',
     '쓴맛',
-    '총점',
   ]);
 
   useEffect(() => {
+    const data = [
+      survey.flavor / 2,
+      survey.sweetness / 2,
+      survey.acidity / 2,
+      survey.body / 2,
+      survey.bitterness / 2,
+    ];
     const options = {
       series: [
         {
           name: 'coffee',
-          data: [1, 4, 3.5, 4, 1, 3],
+          data,
         },
       ],
 
@@ -70,7 +79,7 @@ const Chart: React.FC<ChartProps> = () => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '단맛', '산미', '바디감', '쓴맛', '총점'],
+        categories: ['향', '단맛', '산미', '바디감', '쓴맛'],
         labels: {
           show: true,
           formatter: (subject: string) => {
@@ -86,7 +95,7 @@ const Chart: React.FC<ChartProps> = () => {
       yaxis: {
         // show -> true시 y축에 기준 표시, style로 조정
         show: false,
-        max: 6,
+        max: 5,
       },
       // mousehover시 툴팁생김
       tooltip: {
