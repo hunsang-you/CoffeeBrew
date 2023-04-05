@@ -105,14 +105,16 @@ const Analyze = ({ survey }: PropsTypes) => {
             </div>
           </div>
         </div>
+        <LinkBtn
+          onClick={() => {
+            Navigate('/coffeeList');
+          }}
+        >
+          <div style={{ marginTop: '16px' }}>
+            나랑 잘맞는 커피를 찾아볼까요?
+          </div>
+        </LinkBtn>
       </div>
-      <LinkBtn
-        onClick={() => {
-          Navigate('/coffeeList');
-        }}
-      >
-        <div style={{ marginTop: '16px' }}>나랑 잘맞는 커피를 찾아볼까요?</div>
-      </LinkBtn>
     </AnalyzeBody>
   );
 };
