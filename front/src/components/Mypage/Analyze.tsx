@@ -22,17 +22,17 @@ const Analyze = ({ survey }: PropsTypes) => {
   const reduxData = useSelector((state: RootState) => state);
   const Navigate = useNavigate();
 
-  const typeIndex = survey.resultCode.slice(0);
+  const typeIndex = Number(survey.resultCode.slice(0, 1));
   const dataImg = () => {
-    if (survey.resultCode.slice(0) === '1') {
+    if (survey.resultCode.slice(0, 1) === '1') {
       return <img src={flavorImg} />;
-    } else if (survey.resultCode.slice(0) === '2') {
+    } else if (survey.resultCode.slice(0, 1) === '2') {
       return <img src={acidityImg} />;
-    } else if (survey.resultCode.slice(0) === '3') {
+    } else if (survey.resultCode.slice(0, 1) === '3') {
       return <img src={sweetImg} />;
-    } else if (survey.resultCode.slice(0) === '4') {
+    } else if (survey.resultCode.slice(0, 1) === '4') {
       return <img src={bitterImg} />;
-    } else if (survey.resultCode.slice(0) === '5') {
+    } else if (survey.resultCode.slice(0, 1) === '5') {
       return <img src={bodyImg} />;
     }
   };
@@ -91,12 +91,13 @@ const Analyze = ({ survey }: PropsTypes) => {
             </div>
             <div
               style={{
-                fontSize: '20px',
+                fontSize: '24px',
                 fontWeight: 'bold',
                 textAlign: 'center',
+                marginTop: '40px',
               }}
             >
-              <p style={{ fontSize: '16px' }}>당신의 키워드는..</p>
+              <p style={{ fontSize: '20px' }}>당신의 키워드는..</p>
               <p style={{ color: colorList[Number(typeIndex)] }}>
                 {survey.coffeeing_note}
               </p>
