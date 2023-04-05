@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 import { CapsuleReviewType } from './DetailCapsule';
 import ReviewLists from './ReviewList';
-
+import ReviewCreate from './ReviewCreate';
 interface PropsTypes {
   detailReview?: CapsuleReviewType[];
 }
@@ -9,7 +9,7 @@ interface PropsTypes {
 const ReviewAll = ({ detailReview }: PropsTypes) => {
   return (
     <div>
-      {/* <ReviewCreate /> */}
+      <ReviewCreate />
       <ReviewLists detailReview={detailReview} />
     </div>
   );
