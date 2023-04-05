@@ -122,7 +122,7 @@ export const memberAPI = {
   /**사용자 리뷰 쓴거 조회 */
   memberReviews: (pages: string) => api.get(`member/review?${pages}`),
   /**사용자 성향 분석 조회 */
-  memberSurvey: () => api.get(`/member/profile`),
+  memberSurvey: () => api.get(`/member/analysis`),
 };
 export const detailLikeAPI = {
   /**사용자 원두 좋아요 */
