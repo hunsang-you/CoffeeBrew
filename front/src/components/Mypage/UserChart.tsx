@@ -95,6 +95,7 @@ const Chart = ({ survey }: PropsTypes) => {
       yaxis: {
         // show -> true시 y축에 기준 표시, style로 조정
         show: false,
+        max: 6,
       },
       // mousehover시 툴팁생김
       tooltip: {
