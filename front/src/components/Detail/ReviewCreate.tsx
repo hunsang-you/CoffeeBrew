@@ -175,6 +175,7 @@ const ReviewCreate = () => {
                       Number(scoreValue[4]), // 바디감
                     )
                     .then((request) => {
+                      window.location.reload();
                       console.log('리뷰 전송 :', request.data);
                     })
                     .catch((e) => console.log(e));

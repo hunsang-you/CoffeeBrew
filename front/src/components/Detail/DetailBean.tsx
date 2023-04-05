@@ -161,7 +161,7 @@ const DetailBean = (): JSX.Element => {
       </BeanTop2> */}
 
       {/* 네번째 줄(리뷰) */}
-      <BeanTop3 style={{ marginTop: '100px' }}>
+      <BeanTop3 style={{ marginTop: '40px' }}>
         {/* <Review /> */}
         {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </BeanTop3>
