@@ -1,11 +1,16 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import tw from 'tailwind-styled-components';
 import Page2Carousel from './Page2Carousel';
+import Page2Non from './Page2Non';
 
 const Page2 = () => {
+  const reduxData = useSelector((state: RootState) => state);
+
   return (
     <Inner>
       <CarouselDiv>
-        <Page2Carousel />
+        {reduxData.login ? <Page2Carousel /> : <Page2Non />}
       </CarouselDiv>
     </Inner>
   );
