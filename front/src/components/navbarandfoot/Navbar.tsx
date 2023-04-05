@@ -140,6 +140,6 @@ const Navbar = () => {
 };
 
 const NavBa = tw.div`fixed top-0 h-10vh w-screen flex bg-navColor z-50`;
-const NDiv = tw.div` flex justify-center items-center text-base cursor-default hover:text-mainColorOrange font-bold`;
+const NDiv = tw.div` flex justify-center items-center text-base cursor-default hover:text-mainColorOrange font-bold active:shadow-sm active:relative active:top-1`;
 
 export default Navbar;

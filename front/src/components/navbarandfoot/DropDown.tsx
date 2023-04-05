@@ -22,7 +22,7 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                 reduxData.navbar.indexOf('intro') !== -1
                   ? 'underline underline-offset-4'
                   : null
-              } w-dropdownbrew hover:text-mainColorOrange`}
+              } w-dropdownbrew hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
               onClick={() => {
                 navigate('/intro');
                 setMenuDropDownOpen(false);
@@ -37,7 +37,7 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                 reduxData.navbar.indexOf('map') === -1
                   ? 'underline underline-offset-4'
                   : null
-              } w-dropdownstory hover:text-mainColorOrange`}
+              } w-dropdownstory hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
               onClick={() => {
                 navigate('/info');
                 setMenuDropDownOpen(false);
@@ -50,7 +50,7 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                 reduxData.navbar.indexOf('bean') !== -1
                   ? 'underline underline-offset-4'
                   : null
-              } w-dropdownlist hover:text-mainColorOrange`}
+              } w-dropdownlist hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
               onClick={() => {
                 navigate('/coffeelist/bean');
                 setMenuDropDownOpen(false);
@@ -58,7 +58,17 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
             >
               원두 구경하기
             </div>
-            <div className=" hover:text-mainColorOrange">
+            <div
+              className={`${
+                reduxData.navbar.indexOf('survey') !== -1
+                  ? 'underline underline-offset-4'
+                  : null
+              }  hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
+              onClick={() => {
+                navigate('/survey');
+                setMenuDropDownOpen(false);
+              }}
+            >
               내게 맞는 원두 찾기
             </div>
           </div>
@@ -69,7 +79,7 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                 reduxData.navbar.indexOf('word') !== -1
                   ? 'underline underline-offset-4'
                   : null
-              } w-dropdownstory ml-dropdown1 hover:text-mainColorOrange`}
+              } w-dropdownstory ml-dropdown1 hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
               onClick={() => {
                 navigate('/info/word');
                 setMenuDropDownOpen(false);
@@ -82,7 +92,7 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                 reduxData.navbar.indexOf('capsule') !== -1
                   ? 'underline underline-offset-4'
                   : null
-              } hover:text-mainColorOrange`}
+              } hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
               onClick={() => {
                 navigate('/coffeelist/capsule');
                 setMenuDropDownOpen(false);
@@ -99,7 +109,7 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                   reduxData.navbar.indexOf('map') !== -1
                     ? 'underline underline-offset-4'
                     : null
-                } hover:text-mainColorOrange`}
+                } hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
                 onClick={() => {
                   navigate('/info/map');
                   setMenuDropDownOpen(false);
