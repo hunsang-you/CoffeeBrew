@@ -15,4 +15,6 @@ public interface BeanRepository extends JpaRepository<Bean, Long> {
 
     @Query("SELECT b FROM Bean b WHERE LOWER(b.summary) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(b.nameKo) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(b.nameEn) LIKE LOWER(CONCAT('%', :keyword, '%')) ORDER BY b.nameKo ASC, b.nameEn ASC, b.summary ASC")
     Page<Bean> findBeansByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+
 }
