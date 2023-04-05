@@ -77,7 +77,7 @@ public class ReviewService {
     public Page<MyPageReviewResDTO> readMyPageReview(long memberIdx, Pageable pageable) throws RuntimeException {
         Member member = new Member();
         member.setIdx(memberIdx);
-        Page<Review> reviews = reviewRepository.findByMemberIdxAndExpiredIsFalseOOrderByCreatedDateDesc(member, pageable);
+        Page<Review> reviews = reviewRepository.findByMemberIdxAndExpiredIsFalseOrderByCreatedDateDesc(member, pageable);
         List<MyPageReviewResDTO> myPageReviewResDTOs = new ArrayList<>();
         String itemType = reviews.getContent().get(0).getItemType();
         for (Review review : reviews) {
