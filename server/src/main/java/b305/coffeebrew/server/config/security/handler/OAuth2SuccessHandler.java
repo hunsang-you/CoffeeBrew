@@ -37,7 +37,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		log.info("DB 등록 확인");
 
 		String userEmail = (String) oAuth2User.getAttribute("email");
-		Optional<Member> member = memberRepository.findByMemberEmail(userEmail);
+		Optional<Member> member = memberRepository.findByMemberEmailAndExpiredIsFalse(userEmail);
 
 		// 등록되지 않은 회원일 경우 회원가입
 		if (member.isEmpty()) {

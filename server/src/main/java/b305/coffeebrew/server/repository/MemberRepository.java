@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 //    Member findByMemberEmail(String memberEmail);
-    Optional<Member> findByMemberEmail(String memberEmail); // 이미 email을 통해 생성된 사용자인지 체크
+    Optional<Member> findByMemberEmailAndExpiredIsFalse(String memberEmail); // 이미 email을 통해 생성된 사용자인지 체크
     @Query("SELECT m FROM Member m WHERE m.idx = :idx")
     List<Member> findMyProfile(@Param("idx") long idx);
 
@@ -27,4 +27,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m.idx from Member m where m.memberEmail like :memberEmail")
     Optional<Long> findIdxByMemberEmail(String memberEmail);
+
+    Optional<Member> findByIdxAndExpiredFalse(long memberIdx);
 }

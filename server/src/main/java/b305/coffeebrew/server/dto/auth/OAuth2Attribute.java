@@ -15,6 +15,7 @@ import java.util.Map;
 public class OAuth2Attribute {
     private Map<String,Object> attributes;
     private String attributeKey;
+    private Long kakaoId;
     private String email;
     private String name;
     private String ageRange;
@@ -39,6 +40,7 @@ public class OAuth2Attribute {
         Map<String,Object> kakaoProfile = (Map<String,Object>) kakaoAccount.get("profile");
         log.debug("{}",kakaoProfile.values());
         return OAuth2Attribute.builder()
+                .kakaoId((Long) kakaoProfile.get("id"))
                 .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
                 .picture((String) kakaoProfile.get("profile_image_url"))

@@ -27,7 +27,7 @@ public class DecodeEncodeHandler {
 
 	public String roleValid(String memberId) {
 		log.info(METHOD_NAME + "- roleValid() ...");
-		Optional<Member> optionalMember = memberRepository.findByMemberEmail(memberId);
+		Optional<Member> optionalMember = memberRepository.findByMemberEmailAndExpiredIsFalse(memberId);
 		if (optionalMember.isPresent()) {
 			log.info("Member memberId Validate - Success");
 			return optionalMember.get().getRole();
@@ -40,7 +40,7 @@ public class DecodeEncodeHandler {
 	public boolean memberIdValid(String memberId) {
 		log.info(METHOD_NAME + "- emailValid() ...");
 		try {
-			Optional<Member> member = memberRepository.findByMemberEmail(memberId);
+			Optional<Member> member = memberRepository.findByMemberEmailAndExpiredIsFalse(memberId);
 			if (member.isPresent()) {
 				log.info("Member Validate - Success");
 				Member m = member.get();
