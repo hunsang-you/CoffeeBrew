@@ -129,7 +129,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                 return scoreItem;
               };
               return (
-                <div>
+                <div style={{ overflow: 'scroll' }}>
                   {data.profile.hashcode === reduxData.memberInfo?.hashcode ? (
                     <ReviewDelete
                       onClick={() => {
