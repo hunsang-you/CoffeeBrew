@@ -6,7 +6,7 @@ import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { ReviewType } from './MyReview';
 
-const ReviewBody = tw.div`min-h-screen flex flex-col mx-auto`;
+const ReviewBody = tw.div` flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;
 const Item = tw.div`border-y-4 border-y-brownBorder flex`;
 
