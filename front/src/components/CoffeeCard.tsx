@@ -139,7 +139,7 @@ const CoffeeCard = ({ rec, propsdata }: propsData) => {
 
 export default CoffeeCard;
 
-const OutDiv = tw.div`w-1/6 h-1/6 p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
+const OutDiv = tw.div`w-full h-full p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
 const UnderDiv = tw.div`p-3 flex flex-col justify-end`;
