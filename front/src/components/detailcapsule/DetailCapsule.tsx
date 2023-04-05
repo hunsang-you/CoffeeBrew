@@ -134,6 +134,7 @@ const DetailCapsule = () => {
         </div>
         <RecommendCapsule />
       </CapsuleTop2>
+      {/* 리뷰관련 */}
       <CapsuleTop3 style={{ marginTop: '40px' }}>
         {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </CapsuleTop3>

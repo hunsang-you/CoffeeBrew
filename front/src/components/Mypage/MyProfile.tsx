@@ -56,7 +56,10 @@ const MyProfile = () => {
         .catch((e) => console.log(e));
       await memberAPI
         .memberSurvey()
-        .then((request) => setSurvey(request.data.value))
+        .then((request) => {
+          console.log(request.data);
+          setSurvey(request.data.value);
+        })
         .catch((e) => console.log(e));
     };
     getInfo();

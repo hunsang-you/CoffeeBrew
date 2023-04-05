@@ -2,6 +2,7 @@ import tw from 'tailwind-styled-components';
 import MyReviewItem from './MyReviewItem';
 import { memberAPI } from '../../api/api';
 import { useEffect, useState } from 'react';
+import ReviewPaging from './MyReviewPaging';
 
 export interface ReviewPageType {
   content: ReviewType[];
@@ -70,6 +71,7 @@ const MyReview = () => {
   const [memberReviews, setMemberReviews] = useState<ReviewPageType | null>(
     null,
   );
+  const [reviewPage, setReviewPage] = useState<string>('page=0');
 
   useEffect(() => {
     const getMemberReviews = async () => {
@@ -88,6 +90,14 @@ const MyReview = () => {
             return <MyReviewItem reviewData={data} />;
           })
         : null}
+      {memberReviews ? (
+        <ReviewPaging
+          pagination={memberReviews}
+          setPagination={setMemberReviews}
+          setReviewPage={setReviewPage}
+          reviewPage={reviewPage}
+        />
+      ) : null}
     </MyReviewBody>
   );
 };
