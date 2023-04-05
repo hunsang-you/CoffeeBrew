@@ -14,6 +14,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
     '산미',
     '바디감',
     '쓴맛',
+    '총점',
   ]);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
       detailBean && detailBean.acidity / 2,
       detailBean && detailBean.body / 2,
       detailBean && detailBean.bitterness / 2,
+      detailBean && detailBean.userGrade / 2,
     ];
     const options = {
       series: [
@@ -68,17 +70,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
           polygons: {
             strokeColors: '#FFFFFF',
             fill: {
-              colors: [
-                '#B1662F',
-                '#B1662F',
-                '#CC651A',
-                '#CC651A',
-                '#FB8C3B',
-                '#FB8C3B',
-                '#E48642',
-                '#E48642',
-                '#F8B584',
-              ],
+              colors: ['#B1662F', '#CC651A', '#FB8C3B', '#E48642', '#F8B584'],
             },
           },
         },
@@ -86,7 +78,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '단맛', '산미', '바디감', '쓴맛'],
+        categories: ['향', '단맛', '산미', '바디감', '쓴맛', ' 총점'],
         labels: {
           show: true,
           formatter: (subject: string) => {
