@@ -135,7 +135,7 @@ const DetailBean = (): JSX.Element => {
         {/* <RecbarBean onClick={handleClick}> 원두 추천 </RecbarBean>
         <RecbarMachine onClick={handleClick2}> 기기 추천 </RecbarMachine>
         <ReviewBar onClick={handleClick3}> 리 뷰 </ReviewBar> */}
-        <MoveTop onClick={ScrollTop}>맨 위로</MoveTop>
+        <MoveTop onClick={ScrollTop}>↑</MoveTop>
       </SideBar>
       {/* 첫번째 줄 (원두정보) */}
       {detailBean ? <BeanInfo detailBean={detailBean} /> : null}
@@ -161,7 +161,7 @@ const DetailBean = (): JSX.Element => {
       </BeanTop2> */}
 
       {/* 네번째 줄(리뷰) */}
-      <BeanTop3 style={{ maxHeight: '1000px' }}>
+      <BeanTop3 style={{ maxHeight: '600px', marginTop: '200px' }}>
         {/* <Review /> */}
         {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </BeanTop3>
@@ -190,12 +190,12 @@ const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
 // SideBar(맨위로이동, 최근조회)
 const SideBar = tw.div`
-  border-2 border-brownBorder ml-auto top-100 right-60 bottom-60 fixed`;
+border-4 border-brownBorder ml-auto top-100 right-60 bottom-40 fixed rounded-full drop-shadow-2xl`;
 // 해당 항목 이동
-const MoveTop = tw.div` h-14 border-8 border-gray-500 text-sm`;
-const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+const MoveTop = tw.div` h-10 text-3xl font-bold drop-shadow-2xl hover:bg-brownBorder hover:scale-105 hover:text-white`;
+// const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+// const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+// const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
 
 // 두번째 추천칸
 const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
