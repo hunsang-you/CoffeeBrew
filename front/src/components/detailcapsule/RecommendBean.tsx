@@ -1,46 +1,22 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import bean from '../../assets/tempImg/bean.png';
+import capsule from '../../assets/tempImg/capsule.png';
 import { detailAPI } from '../../api/api';
+import { CapsuleDetailType } from './DetailCapsule';
 
-interface recomType {
-  flavor: number;
-  acidity: number;
-  sweetness: number;
-  bitterness: number;
-  body: number;
-  balance: number;
-  usergrade: number;
-  coffeeingNote: string;
-  decaffeination: boolean;
-  description: string;
-  linkDTO: null;
-  nameEn: string;
-  nameKo: string;
-  origin: string;
-  processing: string;
-  rank: string;
-  region: string;
-  roastingPoint: string;
-  summary: string;
-  thumbnail: string;
-}
-
-const RecommendBean = (): JSX.Element => {
-  const { beanId } = useParams() as { beanId: string };
-
-  const [recommendBeanList, setRecommendBeanList] = useState<
-    recomType[] | null
+const RecommendCapsule = () => {
+  const { capsuleId } = useParams() as { capsuleId: string };
+  const [recommendCapsuleList, setRecommendCapsuleList] = useState<
+    CapsuleDetailType[] | null
   >(null);
-
   useEffect(() => {
     const recomBean = async () => {
       await detailAPI
-        .recommendBean(Number(beanId))
+        .recommendCapsule(Number(capsuleId))
         .then((request) => {
           console.log(request.data);
-          setRecommendBeanList(request.data.value);
+          setRecommendCapsuleList(request.data.value);
         })
         .catch((e) => console.log(e));
     };
@@ -53,29 +29,30 @@ const RecommendBean = (): JSX.Element => {
     '#F6842B',
     '#D3BD94',
   ];
-
   return (
     <ListDiv>
       <RecomList>
-        {recommendBeanList?.map((data, i) => {
-          return (
-            <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-              <RecomItemImg src={bean} />
-              <RecomItemB>
-                <RecomItemName>{data.nameKo}</RecomItemName>
-                <RecomInfo>
-                  <div>{data.summary}</div>
-                </RecomInfo>
-              </RecomItemB>
-            </RecomItemT1>
-          );
-        })}
+        {recommendCapsuleList
+          ? recommendCapsuleList?.map((data, i) => {
+              return (
+                <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
+                  <RecomItemImg src={capsule} />
+                  <RecomItemB>
+                    <RecomItemName>{data.capsule.nameKo}</RecomItemName>
+                    <RecomInfo>
+                      <div>{data.capsule.summary}</div>
+                    </RecomInfo>
+                  </RecomItemB>
+                </RecomItemT1>
+              );
+            })
+          : null}
       </RecomList>
     </ListDiv>
   );
 };
 
-export default RecommendBean;
+export default RecommendCapsule;
 const ListDiv = tw.div` text-center`;
 
 const RecomList = tw.div` flex mx-auto mb-4 `;

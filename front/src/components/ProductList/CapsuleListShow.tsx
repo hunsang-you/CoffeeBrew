@@ -30,7 +30,7 @@ const CapsuleListShow = ({ listDatas }: PropsTypes) => {
             <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
               <ProductItemImg
                 src={capsule}
-                onClick={() => navigate(`/detail/${data.idx}`)}
+                onClick={() => navigate(`/detail/capsule/${data.idx}`)}
               />
               <ProductItemB>
                 <ProductItemName>{data.nameKo}</ProductItemName>
