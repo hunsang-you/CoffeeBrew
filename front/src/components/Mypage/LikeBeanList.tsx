@@ -73,7 +73,7 @@ const LikeBeanList = () => {
   };
 
   return (
-    <List>
+    <List style={{ display: 'flex', flexWrap: 'wrap' }}>
       {likeBeans.length > 0 ? (
         likeBeans.map((bean: detailType, i: number) => {
           return (
