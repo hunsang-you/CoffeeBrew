@@ -89,7 +89,7 @@ module.exports = {
         wordimg: "url('./assets/wordbg.png')",
       },
       spacing: {
-        47: '47%',
+        47: '46%',
         '1/10': '10%',
       },
       backgroundColor: {

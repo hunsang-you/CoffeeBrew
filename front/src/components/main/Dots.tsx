@@ -46,7 +46,7 @@ const Dots = ({ scrollIndex, pushIndex }: DotsProps) => {
 
 export default Dots;
 
+const DotsDiv = tw.div`fixed left-47 top-1/10 z-30 `;
+const DotsInner = tw.div`flex justify-between items-center bg-black p-1 rounded-xl`;
 const DotDivOringe = tw.div`w-16 h-4 mx-1 border-solid rounded-full duration-1000 bg-mainOrige	`;
 const DotDivW = tw.div`w-4 h-4 mx-1 border-solid rounded-full duration-1000 bg-white`;
-const DotsDiv = tw.div`fixed left-47 top-1/10 z-30`;
-const DotsInner = tw.div`flex justify-between items-center w-2.5 h-2.5`;

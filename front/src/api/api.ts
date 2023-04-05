@@ -100,6 +100,8 @@ export const reviewAPI = {
 
 // 메인페이지
 export const mainAPI = {
+  /** 비회원 추천 */
+  getNonRecom: (itemType: string | null) => api.get(`recom/item/${itemType}`),
   /** 연령대별 추천 */
   getAgeRecom: (ageRange: string | null, type: string | null) =>
     api.get(`recom/age/${ageRange}/${type}`),

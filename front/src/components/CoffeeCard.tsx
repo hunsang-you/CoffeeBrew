@@ -43,10 +43,14 @@ const CoffeeCard = ({ rec, propsdata }: propsData) => {
   console.log(propsdata);
   const propsData: CoffeeItem = propsdata;
   const [taste, setTaste] = useState('');
-  const cardName = propsData.nameKo;
   const cardTitle = propsData.origin + ' ' + propsData.rank;
-  const cardRegion = propsData.region;
-  const cardNote = propsData.coffeeingNote;
+  const splitArr = (str: string) => {
+    return str.split(',').slice(0, 2);
+  };
+  const cardNote: string[] | null =
+    typeof propsData.coffeeingNote === 'string'
+      ? splitArr(propsData.coffeeingNote)
+      : null;
   const [cardImg, setCardImg] = useState('');
   const [cardBg, setCardBg] = useState('white');
 
@@ -131,9 +135,8 @@ const CoffeeCard = ({ rec, propsdata }: propsData) => {
       </InnerDiv>
       <UnderDiv>
         <UnTitle>{cardTitle}</UnTitle>
-        {/* <UnTitle>{cardTitle}</UnTitle> */}
-        <UnContent>{taste}</UnContent>
         <UnContent>{cardNote}</UnContent>
+        <UnContent>{taste}</UnContent>
       </UnderDiv>
     </OutDiv>
   );
@@ -144,6 +147,6 @@ export default CoffeeCard;
 const OutDiv = tw.div`w-full p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
-const UnderDiv = tw.div`h-36 p-3 flex flex-col justify-center`;
+const UnderDiv = tw.div`h-28 p-2 flex flex-col justify-center`;
 const UnTitle = tw.div`w-full text-end text-xl font-bold`;
-const UnContent = tw.div`w-full text-center text-xl`;
+const UnContent = tw.div`w-full text-end text-xl`;

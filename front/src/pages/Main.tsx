@@ -1,4 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { memberAPI } from '../api/api';
 
 import tw from 'tailwind-styled-components';
 import { Page1, Page2, Page3, Dots } from '../components/main';
@@ -9,7 +12,9 @@ interface IsFooterType {
 }
 
 const Main = ({ setIsFooter }: IsFooterType) => {
+  const reduxData = useSelector((state: RootState) => state);
   const outerDivRef = useRef<HTMLDivElement>(null);
+  const [survey, setSurvey] = useState<boolean>(false);
   // const [pageN, setPageN] = useState<Number>(0);
   const [scrollIndex, setScrollIndex] = useState(1);
 
@@ -44,6 +49,23 @@ const Main = ({ setIsFooter }: IsFooterType) => {
   useEffect(() => {
     setIsFooter(false);
   }, [setIsFooter]);
+
+  useEffect(() => {
+    const getInfo = async () => {
+      await memberAPI
+        .memberSurvey()
+        .then((request) => {
+          if (request.data.value.param1) {
+            setSurvey(true);
+          } else {
+            setSurvey(false);
+          }
+          setSurvey(request.data.value);
+        })
+        .catch((e) => console.log(e));
+    };
+    getInfo();
+  }, []);
 
   useEffect(() => {
     const wheelHandler = (event: React.WheelEvent<HTMLDivElement>) => {
@@ -127,7 +149,6 @@ const Main = ({ setIsFooter }: IsFooterType) => {
         }
       }
     };
-
     const outerDivRefCurrent: any = outerDivRef.current;
     outerDivRefCurrent?.addEventListener('wheel', wheelHandler);
     // if (outerDivRefCurrent){}
@@ -140,9 +161,19 @@ const Main = ({ setIsFooter }: IsFooterType) => {
     <Outer ref={outerDivRef}>
       <Dots scrollIndex={scrollIndex} pushIndex={pushIndex} />
       <img src="./qweqwe" alt="" />
-      <Page1 />
-      <Page2 />
-      <Page3 />
+      {survey === false ? (
+        <>
+          <Page1 />
+          <Page2 />
+          <Page3 />
+        </>
+      ) : (
+        <>
+          <Page2 />
+          <Page3 />
+          <Page1 />
+        </>
+      )}
       <Footer />
     </Outer>
   );
