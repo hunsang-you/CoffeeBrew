@@ -12,8 +12,10 @@ import b305.coffeebrew.server.repository.LikelistRepository;
 import b305.coffeebrew.server.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final RedisUtil redisUtil;
+    @Value("${spring.security.oauth2.client.registration.kakao.admin-key}")
+    private String admin_key;
 
     /**
      * 회원 정보 수정
@@ -80,12 +84,20 @@ public class MemberService {
      */
     @Transactional
     public Long deleteMember(long memberIdx) throws RuntimeException {
+        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
         Optional<Member> member = memberRepository.findByMemberIdxAndExpiredFalse(memberIdx);
         if (member.isPresent()) {
             // expired가 false인 회원이 존재하는 경우
             member.get().setExpired(true);
             memberRepository.save(member.get());
             redisUtil.deleteData(member.get().getMemberEmail());
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "KakaoAK " + admin_key);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> response = restTemplate.exchange(reqURL, HttpMethod.POST, entity, String.class);
+            int responseCode = response.getStatusCodeValue();
+            System.out.println("responseCode : " + responseCode);
             return memberIdx;
         } else {
             // expired가 false인 회원이 존재하지 않는 경우
