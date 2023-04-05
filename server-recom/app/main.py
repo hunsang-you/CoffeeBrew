@@ -86,6 +86,37 @@ async def checkDBByIdx(idx: Union[int, None] = None, db: Session = Depends(get_d
 
 
 # cbf 기반 추천 알고리즘
+# 전체 사용자 기준 추천 알고리즘(비회원용)
+@app.get("/item/{itemType}")
+async def getItemRecom(
+    itemType: Union[str, None] = None, itemId: Union[int, None] = None
+):
+    print("Call - {}...".format(getItemRecom.__name__))
+    print("itemType:{}".format(itemType))
+
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "item_recom_bean.csv"
+    elif itemType == "capsule":
+        read_file = "item_recom_capsule.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, read_file),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = item_recom_cbf.get_recom_by_item(
+        np.random.randint(recom_read.shape[0]), recom_read, k=8
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
+
+
 # 스테이터스 기반 추천 알고리즘
 @app.get("/item/{itemType}/{itemId}")
 async def getItemRecom(
@@ -103,12 +134,12 @@ async def getItemRecom(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", read_file),
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
 
-    result = item_recom_cbf.get_recom_by_item(itemId, recom_read)
+    result = item_recom_cbf.get_recom_by_item(itemId, recom_read, k=5)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -286,8 +317,8 @@ async def getUserRecomByReview(
 
 
 # 스케줄러에서 추천 데이터 최신화를 요청할 때 호출
-@app.get("/update")
 @logging_time
+@app.get("/update")
 async def updateRecom(db: Session = Depends(get_db)):
     print("Call - {}...".format(updateRecom.__name__))
 
@@ -297,8 +328,8 @@ async def updateRecom(db: Session = Depends(get_db)):
     return {"message": "update all recommendations"}
 
 
-@app.get("/update/{itemType}")
 @logging_time
+@app.get("/update/{itemType}")
 async def updateRecomByItem(
     itemType: Union[str, None] = None, db: Session = Depends(get_db)
 ):
@@ -306,9 +337,9 @@ async def updateRecomByItem(
     print("itemType:{}".format(itemType))
 
     if itemType == "bean":
-        item_recom_cbf.calc_bean_recom(db, DIR_PATH)
+        item_recom_cbf.calc_recom_bean(db, DIR_PATH)
     elif itemType == "capsule":
-        pass
+        item_recom_cbf.calc_recom_capsule(db, DIR_PATH)
     else:
         raise HTTPException(status_code=400, detail="Invalid input value")
 
@@ -326,7 +357,7 @@ async def updateRecomByCategory(
     print("itemType:{}, category:{}".format(itemType, category))
 
     if itemType == "bean":
-        item_recom_cbf.calc_bean_recom(db, DIR_PATH)
+        item_recom_cbf.calc_recom_bean(db, DIR_PATH)
     elif itemType == "capsule":
         pass
     else:
