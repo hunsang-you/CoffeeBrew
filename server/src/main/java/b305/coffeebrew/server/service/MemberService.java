@@ -42,6 +42,21 @@ public class MemberService {
     }
 
     /**
+     * 회원 정보 수정(연령대와 성별 수정)
+     * survey param1(성별), param2(연령대) 값을 사용
+     */
+    @Transactional
+    public String updateAgeAndGender(String ageRange, String gender, long idx) throws RuntimeException {
+
+        Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        member.updateAgeAndGender(ageRange, gender);
+        memberRepository.updateMember(ageRange, gender, idx);
+
+        return member.getMemberEmail();
+    }
+
+    /**
      * 회원 프로필 조회
      */
     @Transactional
