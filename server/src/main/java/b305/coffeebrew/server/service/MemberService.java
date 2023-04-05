@@ -70,12 +70,9 @@ public class MemberService {
      * 회원 탈퇴
      */
     @Transactional
-    public Long deleteMember(long memberIdx) throws RuntimeException {
+    public void deleteMember(long memberIdx) throws RuntimeException {
         Member member = memberRepository.findById(memberIdx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        // 사옹자 expired로 변경
-        member.setExpired(true);
-        memberRepository.save(member);
-        return member.getIdx();
+        memberRepository.delete(member);
     }
 
 
