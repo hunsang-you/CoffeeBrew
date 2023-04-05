@@ -24,13 +24,17 @@ public class SignModReqDTO {
 	@Pattern(regexp = "(?i)\\.(jpg|jpeg|png)$", message = "이미지 파일만 업로드 가능합니다.", groups = {mod.class})
 	private String profileImg;
 
+	@NotEmpty(message = "빈 값은 허용되지 않습니다.", groups = {mod.class})
+	private Long kakaoId;
+
 	@Builder
-	public SignModReqDTO(String nickname, String profileImg) {
+	public SignModReqDTO(String nickname, String profileImg, Long kakaoId) {
 		this.nickname = nickname;
 		this.profileImg = profileImg;
+		this.kakaoId = kakaoId;
 	}
 
-	public Member of(String nickname, String profileImg) {
-		return Member.builder().nickname(nickname).profileImg(profileImg).build();
+	public Member of(String nickname, String profileImg, Long kakaoId) {
+		return Member.builder().nickname(nickname).profileImg(profileImg).kakaoId(kakaoId).build();
 	}
 }
