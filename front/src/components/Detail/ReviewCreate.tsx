@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
@@ -13,6 +13,14 @@ const SliderDiv = tw.div`flex justify-center mx-2 drop-shadow-md`;
 const Submit = tw.div`w-40 h-10 rounded-full bg-red-200 my-6 mx-auto`;
 
 const ReviewCreate = () => {
+  const reviewRef = useRef<HTMLDivElement>(null);
+  const moveReview = () => {
+    if (reviewRef.current) {
+      const location: number = reviewRef.current.offsetTop;
+      window.scrollTo({ top: location - 100, behavior: 'smooth' });
+    }
+  };
+
   const [openCreate, setOpenCreate] = useState(false);
   const handleClickOpen = () => {
     setOpenCreate(!openCreate);
@@ -177,6 +185,7 @@ const ReviewCreate = () => {
                     .then((request) => {
                       window.location.reload();
                       console.log('리뷰 전송 :', request.data);
+                      moveReview();
                     })
                     .catch((e) => console.log(e));
                 }}
