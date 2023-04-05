@@ -63,7 +63,6 @@ public class SurveyService {
 
         // 설문 결과에 따른 성별, 연령대 수정
         memberService.updateAgeAndGender(ageRange, gender, memberId);
-        memberRepository.updateMemberAgeAndGender(ageRange, gender, memberId);
 
         // 스테이터스
         int[] status = {0, 0, 0, 0, 0};
