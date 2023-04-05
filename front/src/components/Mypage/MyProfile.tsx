@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
-const ProfileDiv = tw.div`w-1200 min-h-screen  bg-background flex justify-between`;
+const ProfileDiv = tw.div`w-1200   bg-background flex justify-between`;
 const ProfileLeft = tw.div`w-80 mt-20 ml-20  bg-nameTag drop-shadow-2xl justify-center rounded-t-full`;
 const ProfileRight = tw.div`w-720 flex-col mt-20 ml-8 mr-20  `;
 const TypeBar = tw.div`w-720 h-12 flex justify-center text-center relative `;
@@ -63,7 +63,7 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <ProfileDiv style={{ minHeight: '800px', height: '100vh' }}>
+    <ProfileDiv style={{ minHeight: '100vh' }}>
       <ProfileLeft style={{ maxHeight: '680px' }}>
         <UserImg>
           <img
