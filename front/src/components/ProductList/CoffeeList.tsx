@@ -30,7 +30,7 @@ const CoffeeList = ({ listDatas }: PropsTypes) => {
             <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
               <ProductItemImg
                 src={bean}
-                onClick={() => navigate(`/detail/${data.idx}`)}
+                onClick={() => navigate(`/detail/bean/${data.idx}`)}
               />
               <ProductItemB>
                 <ProductItemName>{data.nameKo}</ProductItemName>

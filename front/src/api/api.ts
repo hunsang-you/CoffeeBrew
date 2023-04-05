@@ -34,7 +34,14 @@ export const detailAPI = {
   getBean: (id: number) => api.get(`/item/bean/${id}`),
   /**원두 좋아요 조회 */
   beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
-  recommendBean: (id: number) => api.get(`recom/bean/${id}`),
+  /**원두 아이템 기반 추천 */
+  recommendBean: (id: number) => api.get(`recom/item/bean/${id}`),
+  /**캡슐 상세 조회 */
+  getCapsule: (id: number) => api.get(`/item/capsule/${id}`),
+  /**캡슐 좋아요 */
+  capsuleLike: (id: number) => api.get(`member/like/toggle/capsule/${id}`),
+  /**캡슐 아이템 기반 추천 */
+  recommendCapsule: (id: number) => api.get(`recom/item/capsule/${id}`),
 };
 
 /**원두 리스트,검새,필터 가변인자 보내기 */
