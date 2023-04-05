@@ -55,7 +55,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 				oAuth2Attribute.getAttributes(), "email");
 	}
 	private Member saveOrUpdate(OAuth2Attribute attributes) {
-		Member member = memberRepository.findByMemberEmail(attributes.getEmail())
+		Member member = memberRepository.findByMemberEmailAAndExpiredIsFalse(attributes.getEmail())
 				.map(entity -> entity.update(new SignModReqDTO(attributes.getName(), attributes.getPicture())))
 				.orElse(attributes.toEntity());
 		member.setExpired(false);
