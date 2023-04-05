@@ -22,6 +22,7 @@ interface MemberInfoType {
   nickname: string | null;
   profileImg: string | null;
   snsType: string | null;
+  ageRange: string | null;
 }
 
 const memberInfoSlice = createSlice({
