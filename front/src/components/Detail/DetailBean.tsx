@@ -161,7 +161,7 @@ const DetailBean = (): JSX.Element => {
       </BeanTop2> */}
 
       {/* 네번째 줄(리뷰) */}
-      <BeanTop3 style={{ maxHeight: '600px' }}>
+      <BeanTop3 style={{ maxHeight: '600px', marginTop: '200px' }}>
         {/* <Review /> */}
         {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </BeanTop3>
@@ -192,7 +192,7 @@ const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
 const SideBar = tw.div`
 border-4 border-brownBorder ml-auto top-100 right-60 bottom-40 fixed rounded-full drop-shadow-2xl`;
 // 해당 항목 이동
-const MoveTop = tw.div` h-10 text-3xl`;
+const MoveTop = tw.div` h-10 text-3xl font-bold drop-shadow-2xl hover:bg-brownBorder hover:scale-105 hover:text-white`;
 // const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
 // const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
 // const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
