@@ -91,8 +91,8 @@ public class SurveyService {
 
         // 커핑 노트
         String coffeeing_note = params6_note[surveyReqDTO.getParam6()];
-        coffeeing_note = params7_note[surveyReqDTO.getParam7()].length() > 0 ? coffeeing_note + ", " + params7_note[surveyReqDTO.getParam7()].length() : coffeeing_note;
-        coffeeing_note = params8_note[surveyReqDTO.getParam8()].length() > 0 ? coffeeing_note + ", " + params8_note[surveyReqDTO.getParam8()].length() : coffeeing_note;
+        coffeeing_note = params7_note[surveyReqDTO.getParam7()].length() > 0 ? coffeeing_note + ", " + params7_note[surveyReqDTO.getParam7()] : coffeeing_note;
+        coffeeing_note = params8_note[surveyReqDTO.getParam8()].length() > 0 ? coffeeing_note + ", " + params8_note[surveyReqDTO.getParam8()] : coffeeing_note;
 
         Optional<Survey> existingSurveyOptional = surveyRepository.findByMemberIdx(member);
         existingSurveyOptional.ifPresent(surveyRepository::delete);
