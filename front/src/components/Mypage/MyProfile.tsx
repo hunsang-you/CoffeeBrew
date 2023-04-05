@@ -34,7 +34,7 @@ const MyProfile = () => {
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
       await memberAPI
-        .memberLikesBeans()
+        .memberSurvey()
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
     };
