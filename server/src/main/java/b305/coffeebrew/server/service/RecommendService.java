@@ -52,61 +52,78 @@ public class RecommendService {
     @Value(value = "${user.url.fastapi}")
     private String fastapiURL;
 
-    public List<BeanDetailPageResDTO> recommendBeansByItem(long beanId) {
-        log.info(METHOD_NAME + " - recommendBeansByItem");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<BeanDetailPageResDTO> itemRecommend(String itemType, long itemId) {
+        log.info(METHOD_NAME + " - itemRecommend");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/bean/" + String.valueOf(beanId);
+        String requestURL = fastapiURL + "/item/" + itemType + "/" + String.valueOf(itemId);
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
         return getRecomsDetail(response);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByLike(long userId) {
-        log.info(METHOD_NAME + " - recommendBeansByLike");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<BeanDetailPageResDTO> userRecommend(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommend");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/like";
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType;
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
         return getRecomsDetail(response);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByReview(long userId) {
-        log.info(METHOD_NAME + " - recommendBeansByReview");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<BeanDetailPageResDTO> userRecommendLikeSurvey(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommendLikeSurvey");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/review";
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType + "/survey";
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
         return getRecomsDetail(response);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByAge(String ageRange) {
-        log.info(METHOD_NAME + " - recommendBeansByAge");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<BeanDetailPageResDTO> userRecommendByLike(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommendByLike");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/age/" + String.valueOf(ageRange);
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType + "/like";
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
         return getRecomsDetail(response);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByGender(String gender) {
-        log.info(METHOD_NAME + " - recommendBeansByGender");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<BeanDetailPageResDTO> userRecommendByReview(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommendByReview");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/gender/" + String.valueOf(gender);
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType + "/review";
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response);
+    }
+
+    public List<BeanDetailPageResDTO> recommendByAge(String ageRange, String itemType) {
+        log.info(METHOD_NAME + " - recommendByAge");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/age/" + String.valueOf(ageRange) + "/" + itemType;
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response);
+    }
+
+    public List<BeanDetailPageResDTO> recommendByGender(String gender, String itemType) {
+        log.info(METHOD_NAME + " - recommendByGender");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/gender/" + String.valueOf(gender) + "/" + itemType;
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
         return getRecomsDetail(response);
