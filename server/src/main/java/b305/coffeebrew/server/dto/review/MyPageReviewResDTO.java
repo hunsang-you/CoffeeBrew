@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Slf4j
 @NoArgsConstructor
 public class MyPageReviewResDTO {
+	private Long idx;
 	private Long member_idx;
 	private String itemName;
 	private String itemType;
@@ -36,7 +37,8 @@ public class MyPageReviewResDTO {
 
 
 	@Builder
-	public MyPageReviewResDTO(Long member_idx, String itemName,String itemType, String content, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeing_note, int like, boolean expired,LocalDateTime createdDate, LocalDateTime updatedDate) {
+	public MyPageReviewResDTO(Long idx, Long member_idx, String itemName,String itemType, String content, int overall, int flavor, int acidity, int sweetness, int bitterness, int body, String coffeeing_note, int like, boolean expired,LocalDateTime createdDate, LocalDateTime updatedDate) {
+		this.idx = idx;
 		this.member_idx = member_idx;
 		this.itemName = itemName;
 		this.itemType = itemType;
@@ -55,6 +57,7 @@ public class MyPageReviewResDTO {
 	}
 	public static MyPageReviewResDTO of(Review review, String itemName){
 		return MyPageReviewResDTO.builder()
+				.idx(review.getIdx())
 				.member_idx(review.getMemberIdx().getIdx())
 				.itemName(itemName)
 				.itemType(review.getItemType())
