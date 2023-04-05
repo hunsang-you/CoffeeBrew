@@ -73,51 +73,50 @@ const LikeBeanList = () => {
   };
 
   return (
-    <div>
-      <List>
-        {likeBeans.length > 0 ? (
-          likeBeans.map((bean: detailType, i: number) => {
-            return (
-              <CardBody>
-                <BeanImg src={bean2} alt="bean" />
-                <CardContent style={{ backgroundColor: '#FFF0CE' }}>
-                  <div
-                    style={{
-                      wordBreak: 'break-word',
-                      overflow: 'scroll',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    <BeanName>{bean.nameKo}</BeanName>
-                    <BeanCountry>원산지 : {bean.origin}</BeanCountry>
-                    <BeanDescription>{bean.description}</BeanDescription>
-                  </div>
-                </CardContent>
-                <FixedDiv
+    <List style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {likeBeans.length > 0 ? (
+        likeBeans.map((bean: detailType, i: number) => {
+          return (
+            <CardBody>
+              <BeanImg src={bean2} alt="bean" />
+              <CardContent style={{ backgroundColor: '#FFF0CE' }}>
+                <div
                   style={{
-                    bottom: 0,
-                    backgroundColor: 'rgb(0, 0, 0, 0.7)',
+                    wordBreak: 'break-word',
+                    overflow: 'scroll',
+                    textOverflow: 'ellipsis',
                   }}
                 >
-                  <AiFillHeart
-                    size={42}
-                    style={{
-                      color: 'red',
-                      marginLeft: '8px',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => {
-                      detailAPI
-                        .beanLike(Number(beanIdx[i]))
-                        .then((request) => {
-                          console.log('좋아요 해제');
-                          handleLike();
-                        })
-                        .catch((e) => console.log(e));
-                    }}
-                  />
+                  <BeanName>{bean.nameKo}</BeanName>
+                  <BeanCountry>원산지 : {bean.origin}</BeanCountry>
+                  <BeanDescription>{bean.description}</BeanDescription>
+                </div>
+              </CardContent>
+              <FixedDiv
+                style={{
+                  bottom: 0,
+                  backgroundColor: 'rgb(0, 0, 0, 0.7)',
+                }}
+              >
+                <AiFillHeart
+                  size={42}
+                  style={{
+                    color: 'red',
+                    marginLeft: '8px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    detailAPI
+                      .beanLike(Number(beanIdx[i]))
+                      .then((request) => {
+                        console.log('좋아요 해제');
+                        handleLike();
+                      })
+                      .catch((e) => console.log(e));
+                  }}
+                />
 
-                  {/* {isLikeCheck ? null : (
+                {/* {isLikeCheck ? null : (
                     <AiOutlineHeart
                       size={42}
                       style={{
@@ -128,29 +127,28 @@ const LikeBeanList = () => {
                       onClick={() => handleLike()}
                     />
                   )} */}
-                  <LinkBtn
-                    onClick={() => {
-                      navigate(`/detail/${beanIdx[i]}`);
-                    }}
-                  >
-                    상세보기
-                  </LinkBtn>
-                </FixedDiv>
-              </CardBody>
-            );
-          })
-        ) : (
-          <div>좋아요한 원두가 없습니다.</div>
-        )}
-      </List>
-    </div>
+                <LinkBtn
+                  onClick={() => {
+                    navigate(`/detail/${beanIdx[i]}`);
+                  }}
+                >
+                  상세보기
+                </LinkBtn>
+              </FixedDiv>
+            </CardBody>
+          );
+        })
+      ) : (
+        <div>좋아요한 원두가 없습니다.</div>
+      )}
+    </List>
   );
 };
 
 export default LikeBeanList;
 
-const List = tw.div`flex max-w-fit mb-10 justify-evenly mt-4 select-none break-words`;
-const CardBody = tw.div`w-52 mx-3 flex-col relative`;
+const List = tw.div`flex max-w-fit mb-10 mt-4 select-none break-words`;
+const CardBody = tw.div`w-52 mx-3 my-4 flex-col relative`;
 const BeanImg = tw.img`w-48 h-48 rounded-full mb-2 ml-4`;
 const CardContent = tw.div`w-56 h-36 rounded-t-xl rounded-b-md overflow-scroll text-ellipsis `;
 const BeanName = tw.div`pt-3 pb-2 text-fotColor font-bold text-left px-4`;

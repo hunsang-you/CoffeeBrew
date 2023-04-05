@@ -90,13 +90,9 @@ export const reviewAPI = {
 
 // 메인페이지
 export const mainAPI = {
-  /**추천 원두 조회 */
-  getBeanRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
-  /**추천 캡슐 조회 */
-  getcapcullRecom: (beanId: number) => api.get(`recom/bean/${beanId}`),
   /** 연령대별 추천 */
-  getAgeRecom: (ageRange: string | null) =>
-    api.get(`recom/age/${ageRange}/bean`),
+  getAgeRecom: (ageRange: string | null, type: string | null) =>
+    api.get(`recom/age/${ageRange}/${type}`),
 };
 
 // 설문조사

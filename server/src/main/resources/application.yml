@@ -53,6 +53,7 @@ spring:
           kakao:
             client-id: ${rest_api_key}
             client-secret: ${client_secret_key}
+            admin_key: ${admin_key}
             redirect-uri: https://j8b305.p.ssafy.io/api/v1/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
