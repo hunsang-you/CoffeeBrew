@@ -81,7 +81,7 @@ module.exports = {
           },
         },
       },
-      animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
+      animation: { 'fade-in-up': 'fade-in-up 0.5s ease-out' },
       backgroundImage: {
         mainBg1: "url('./assets/mainImg/bg1.png')",
         mainBg2: "url('./assets/mainImg/bg02.png')",
