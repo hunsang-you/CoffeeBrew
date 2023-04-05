@@ -99,9 +99,8 @@ def recommendation_list_by_id(target_id, matrix, items, k=10):
         target_idx = matrix.index.get_indexer([target_id])
         recom_idx = (
             matrix.iloc[:, target_idx]
-            .sort_values(by=matrix.iloc[:, target_idx].columns[0], ascending=False)[
-                1 : k + 1
-            ]
+            .sort_values(by=matrix.iloc[:, target_idx].columns[0], ascending=False)
+            .drop(target_id)[:k]
             .index
         )
 
@@ -120,7 +119,7 @@ def recommendation_list_by_id(target_id, matrix, items, k=10):
 
 
 # 추천 결과가 저장된 json에서 값을 읽어오는 메소드
-def get_recom_by_bean(itemIdx, matrix, k=5):
+def get_recom_by_item(itemIdx, matrix, k=5):
     try:
         recom_list = matrix.set_index("idx").loc[itemIdx]["recommendation"]
         recom_list = json.loads(recom_list.replace("'", '"'))
