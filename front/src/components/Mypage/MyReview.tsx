@@ -82,7 +82,7 @@ const MyReview = () => {
   }, []);
 
   return (
-    <MyReviewBody style={{ border: 'solid 4px #06AACE' }}>
+    <MyReviewBody style={{ border: 'solid 4px #06AACE', minHeight: '630px' }}>
       {memberReviews
         ? memberReviews.content.map((data, i) => {
             return <MyReviewItem reviewData={data} />;
