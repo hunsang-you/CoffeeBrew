@@ -72,6 +72,7 @@ export const reviewAPI = {
   /**리뷰작성 */
   createBeanReview: (
     id: number,
+    Type: string,
     content: string,
     overall: number,
     flavor: number,
@@ -81,7 +82,7 @@ export const reviewAPI = {
     body: number,
   ) =>
     api.post(`member/review`, {
-      itemType: 'bean',
+      itemType: Type,
       itemIdx: id,
       content: content,
       overall: overall,

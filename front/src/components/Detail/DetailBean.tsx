@@ -122,18 +122,6 @@ const DetailBean = (): JSX.Element => {
         {/* 캐러셀 부분 */}
         <RecommendBean />
       </BeanTop2>
-
-      {/* 세번째 줄(머신 / 분쇄도)*/}
-      {/* <BeanTop2>
-        <div ref={recotherRef}>
-          <Title id="RecOther">이렇게 먹어볼까요?</Title>
-        </div>
-        <RecOther>
-          <MachineInfo />
-          <Grinding />
-        </RecOther>
-      </BeanTop2> */}
-
       {/* 네번째 줄(리뷰) */}
       <BeanTop3 style={{ marginTop: '40px' }}>
         {/* <Review /> */}
