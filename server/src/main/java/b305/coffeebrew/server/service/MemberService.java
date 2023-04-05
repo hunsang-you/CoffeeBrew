@@ -51,7 +51,7 @@ public class MemberService {
         Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         member.updateAgeAndGender(ageRange, gender);
-        memberRepository.updateMember(ageRange, gender, idx);
+        memberRepository.updateMemberAgeAndGender(ageRange, gender, idx);
 
         return member.getMemberEmail();
     }
