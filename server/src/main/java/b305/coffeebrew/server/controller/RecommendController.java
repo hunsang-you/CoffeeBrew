@@ -26,6 +26,18 @@ public class RecommendController {
     private static final String METHOD_NAME = RecommendController.class.getName();
     private final RecommendService recommendService;
 
+    @GetMapping("/item/{itemType}")
+    @ApiOperation(value = "아이템 기반 추천 목록(비로그인용 디스플레이)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "페이지 오류"),
+            @ApiResponse(code = 500, message = "서버 오류"),
+    })
+    public ResponseEntity<ResponseDTO> itemRecommend(@PathVariable("itemType") String itemType) {
+        return ResponseEntity.ok()
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ITEM_RECOM, recommendService.itemRecommend(itemType)));
+    }
+
     @GetMapping("/item/{itemType}/{itemId}")
     @ApiOperation(value = "아이템 기반 추천 목록")
     @ApiResponses({
