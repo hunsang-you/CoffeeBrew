@@ -123,7 +123,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
               return scoreItem;
             };
             return (
-              <div>
+              <div style={{ overflow: 'scroll' }}>
                 {data.profile.hashcode === reduxData.memberInfo?.hashcode ? (
                   <ReviewDelete
                     onClick={() => {
@@ -216,7 +216,7 @@ export default ReviewLists;
 
 const ReviewList = tw.div`w-1000 mx-auto`;
 const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;
-const ReviewItem = tw.div`flex w-1000 border-y-4 border-brownBorder mb-6 `;
+const ReviewItem = tw.div`flex w-1000 border-t-4 border-brownBorder mb-6 `;
 const ReviewName = tw.div`text-xl  mt-12 mb-4`;
 const ReviewImg = tw.img`w-60 h-60 rounded-full mb-4 mx-auto`;
 
@@ -231,4 +231,4 @@ const ReviewArticle = tw.div`w-720 border-t-4 border-gray-500 `;
 // const ReviewTitle = tw.div`text-left text-2xl text-gray-600 ml-4 mt-4 mb-auto mr-auto`;
 const ReviewContent = tw.div`text-left ml-4 mt-4 h-fit text-gray-600 mb-4 text-2xl mr-auto`;
 const ReviewCreated = tw.p`text-sm font-bold`;
-const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-5 mb-4 cursor-pointer hover:bg-slate-500`;
+const MoreBtn = tw.button`w-40 h-10 bg-review text-white rounded-full mt-5 mb-4 cursor-pointer hover:bg-slate-500 hover:scale-105`;
