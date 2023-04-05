@@ -5,6 +5,7 @@ import { RootState } from '../../store';
 import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
+import CoffeeCapSule from '../CoffeeCapSule';
 
 type CoffeeItem = {
   nameKo?: string;
@@ -27,6 +28,31 @@ type CoffeeItem = {
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
 };
+
+interface Capsule {
+  idx: number | null;
+  nameEn: string | null;
+  nameKo: string | null;
+  summary: string | null;
+  thumbnail: string | null;
+  userGrade: number | null;
+}
+
+interface CapsuleScore {
+  idx: number | null;
+  acidity: number | null;
+  balance: number | null;
+  bitterness: number | null;
+  body: number | null;
+  coffeeingNote: string | null;
+  flavor: number | null;
+  roasting: number | null;
+  capsule: Capsule;
+}
+
+interface CapsuleData {
+  capsuleScore: CapsuleScore;
+}
 
 interface propsData {
   [index: number]: CoffeeItem;
@@ -131,12 +157,12 @@ const Page2Carousel = () => {
         <PageTitle>{usernick}님의 추천원두</PageTitle>
         <InDiv>
           {beanMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+            return <CoffeeCard key={i} rec={'bean'} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
           {capsule.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
+            return <CoffeeCard key={i} rec={'capsule'} beanData={data} />;
           })}
         </InDiv>
       </BigDiv>
@@ -144,12 +170,12 @@ const Page2Carousel = () => {
         <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
         <InDiv>
           {ageMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+            return <CoffeeCard key={i} rec={'bean'} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
           {ageCapsule.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
+            return <CoffeeCard key={i} rec={'capsule'} beanData={data} />;
           })}
         </InDiv>
       </BigDiv>
