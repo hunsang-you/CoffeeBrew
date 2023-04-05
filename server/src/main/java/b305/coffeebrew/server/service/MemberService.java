@@ -90,21 +90,25 @@ public class MemberService {
             member.get().setExpired(true);
             memberRepository.save(member.get());
             redisUtil.deleteData(member.get().getMemberEmail());
-            RestTemplate restTemplate = new RestTemplate();
 
-            // 파라미터 생성
-            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            params.add("target_id_type", "user_id");  // target_id_type 추가
-            params.add("target_id", "LongType");  // target_id 추가
+            RestTemplate restTemplate = new RestTemplate();
 
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "KakaoAK " + admin_key);
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            ResponseEntity<String> response = restTemplate.exchange(reqURL, HttpMethod.POST, entity, String.class);
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            params.add("target_id_type", "user_id");
+            params.add("target_id", String.valueOf(member.get().getKakaoId()));
+
+            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+            ResponseEntity<String> response = restTemplate.postForEntity(reqURL, request, String.class);
             int responseCode = response.getStatusCodeValue();
-            System.out.println("responseCode : " + responseCode);
+            if (responseCode != 200) {
+                // 에러 처리
+                throw new RuntimeException("Failed to delete member: " + response.getBody());
+            }
             return memberIdx;
         } else {
             // expired가 false인 회원이 존재하지 않는 경우
