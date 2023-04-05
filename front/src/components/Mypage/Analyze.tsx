@@ -12,7 +12,7 @@ import bodyImg from '../../assets/tempImg/BodyImg.jpg';
 
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
-const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24 cursor-pointer hover:scale-110`;
+const LinkBtn = tw.div`w-344 h-16 my-8 mx-auto border-2 bg-brownBorder text-white font-bold text-xl rounded-3xl drop-shadow-2xl cursor-pointer hover:scale-110`;
 
 interface PropsTypes {
   survey: SurveyType;
@@ -105,16 +105,14 @@ const Analyze = ({ survey }: PropsTypes) => {
             </div>
           </div>
         </div>
-        <LinkBtn
-          onClick={() => {
-            Navigate('/coffeeList');
-          }}
-        >
-          <div style={{ marginTop: '16px' }}>
-            나랑 잘맞는 커피를 찾아볼까요?
-          </div>
-        </LinkBtn>
       </div>
+      <LinkBtn
+        onClick={() => {
+          Navigate('/coffeeList');
+        }}
+      >
+        <div style={{ marginTop: '16px' }}>나랑 잘맞는 커피를 찾아볼까요?</div>
+      </LinkBtn>
     </AnalyzeBody>
   );
 };
