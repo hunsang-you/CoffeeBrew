@@ -97,7 +97,9 @@ const Analyze = ({ survey }: PropsTypes) => {
               }}
             >
               <p style={{ fontSize: '16px' }}>당신의 키워드는..</p>
-              <p> {survey.coffeeing_note} </p>
+              <p style={{ color: colorList[Number(typeIndex)] }}>
+                {survey.coffeeing_note}
+              </p>
               <p>입니다</p>
             </div>
           </div>
