@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { detailAPI, reviewAPI } from '../../api/api';
 import CapsuleInfo from './CapsuleInfo';
+import RecommendCapsule from './RecommendBean';
 
 //**DetailCapsule 타입설정 */
 interface Capsule {
@@ -45,7 +46,7 @@ export interface CapsuleDetailType {
   capsule: Capsule;
   capsuleDetail: CapsuleDetail;
   capsuleScore: CapsuleScore;
-  linkDTO: LinkDTO[];
+  linkDTO: LinkDTO[] | null;
 }
 /** 캡슐리뷰 타입설정 */
 export interface CapsuleReviewType {
@@ -113,7 +114,15 @@ const DetailCapsule = () => {
           ↑
         </MoveTop>
       </SideBar>
+      {/* 캡슐정보 */}
       {detailCapsule ? <CapsuleInfo detailCapsule={detailCapsule} /> : null}
+      {/* 캡슐추천 */}
+      <CapsuleTop2>
+        <div>
+          <Title>이런 캡슐은 어떠세요?</Title>
+        </div>
+        <RecommendCapsule />
+      </CapsuleTop2>
     </DetailBg>
   );
 };

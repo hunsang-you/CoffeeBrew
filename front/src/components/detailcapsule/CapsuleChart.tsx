@@ -10,11 +10,11 @@ const Chart = ({ detailCapsuleScore }: PropsTypes) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState([
     '향',
-    '단맛',
+    '로스팅',
     '산미',
     '바디감',
     '쓴맛',
-    '평점',
+    '밸런스',
   ]);
 
   useEffect(() => {
