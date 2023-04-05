@@ -4,11 +4,15 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { SurveyType } from './MyProfile';
 import { useNavigate } from 'react-router-dom';
+import flavorImg from '../../assets/tempImg/flavorImg.webp';
+import sweetImg from '../../assets/tempImg/sweetImg.jpg';
+import bitterImg from '../../assets/tempImg/bitterImg.jpg';
+import acidityImg from '../../assets/tempImg/acidityImg.jpg';
+import bodyImg from '../../assets/tempImg/BodyImg.jpg';
 
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
 const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24 cursor-pointer hover:scale-110`;
-const UserTypeImg = tw.div`w-48 bg-red-200 mx-auto`;
 
 interface PropsTypes {
   survey: SurveyType;
@@ -18,6 +22,21 @@ const Analyze = ({ survey }: PropsTypes) => {
   const reduxData = useSelector((state: RootState) => state);
   const Navigate = useNavigate();
 
+  const typeIndex = survey.resultCode.slice(0);
+  const dataImg = () => {
+    if (survey.resultCode.slice(0) === '1') {
+      return <img src={flavorImg} />;
+    } else if (survey.resultCode.slice(0) === '2') {
+      return <img src={acidityImg} />;
+    } else if (survey.resultCode.slice(0) === '3') {
+      return <img src={sweetImg} />;
+    } else if (survey.resultCode.slice(0) === '4') {
+      return <img src={bitterImg} />;
+    } else if (survey.resultCode.slice(0) === '5') {
+      return <img src={bodyImg} />;
+    }
+  };
+  const colorList = ['#03C846', '#06AACE', '#9A6533', '#D4AA70', '#CBAC97'];
   return (
     <AnalyzeBody
       style={{
@@ -42,29 +61,46 @@ const Analyze = ({ survey }: PropsTypes) => {
         >
           <div
             style={{
-              border: 'solid 2px black',
               width: '250px',
               height: '250px',
               marginRight: '40px',
+              marginLeft: '20px',
             }}
           >
-            이미지 때려박기
+            {dataImg()}
           </div>
-          <div style={{ border: 'solid 2px black', marginLeft: '40px' }}>
+          <div style={{ marginLeft: '20px' }}>
             <div
               style={{
-                border: 'solid 2px black',
                 fontSize: '24px',
                 fontWeight: 'bold',
               }}
             >
-              <p style={{ fontSize: '20px', fontWeight: 'bold' }}>
+              <p
+                style={{
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                }}
+              >
                 당신의 취향은...
               </p>
-              {survey.resultType}!
+              <p style={{ color: colorList[Number(typeIndex)] }}>
+                {survey.resultType}!
+              </p>
             </div>
-            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
-              당신의 키워드 {survey.coffeeing_note}
+            <div
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}
+            >
+              <p style={{ fontSize: '16px' }}>당신의 키워드는..</p>
+              <p style={{ color: colorList[Number(typeIndex)] }}>
+                {survey.coffeeing_note}
+              </p>
+              <p>입니다</p>
             </div>
           </div>
         </div>
