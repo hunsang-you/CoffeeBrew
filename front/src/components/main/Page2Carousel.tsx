@@ -328,7 +328,7 @@ const Page2Carousel = () => {
       await mainAPI
         .getAgeRecom(age)
         .then((request) => {
-          const data = request.data;
+          const data = request.data.value;
           console.log(data);
           setAgeMain(data);
         })

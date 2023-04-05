@@ -103,7 +103,16 @@ export const mainAPI = {
 export const surveyAPI = {
   /**설문조사 결과 전송 */
   postSurvey: (surveyli: number[]) =>
-    api.post(`survey`, { surveyli: surveyli }),
+    api.post(`member/survey`, {
+      param1: surveyli[0],
+      param2: surveyli[1],
+      param3: surveyli[2],
+      param4: surveyli[3],
+      param5: surveyli[4],
+      param6: surveyli[5],
+      param7: surveyli[6],
+      param8: surveyli[7],
+    }),
 };
 
 export const memberAPI = {
@@ -115,6 +124,8 @@ export const memberAPI = {
   memberLiskeCapsules: () => api.get(`member/like/mylist?itemType=capsule`),
   /**사용자 리뷰 쓴거 조회 */
   memberReviews: (pages: string) => api.get(`member/review?${pages}`),
+  /**사용자 성향 분석 조회 */
+  memberSurvey: () => api.get(`/member/analysis`),
 };
 export const detailLikeAPI = {
   /**사용자 원두 좋아요 */
