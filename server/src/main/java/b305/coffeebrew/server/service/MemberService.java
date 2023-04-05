@@ -13,12 +13,11 @@ import b305.coffeebrew.server.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -92,9 +91,17 @@ public class MemberService {
             memberRepository.save(member.get());
             redisUtil.deleteData(member.get().getMemberEmail());
             RestTemplate restTemplate = new RestTemplate();
+
+            // 파라미터 생성
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            params.add("target_id_type", "user_id");  // target_id_type 추가
+            params.add("target_id", "LongType");  // target_id 추가
+
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "KakaoAK " + admin_key);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             HttpEntity<String> entity = new HttpEntity<>(headers);
+
             ResponseEntity<String> response = restTemplate.exchange(reqURL, HttpMethod.POST, entity, String.class);
             int responseCode = response.getStatusCodeValue();
             System.out.println("responseCode : " + responseCode);
