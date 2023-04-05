@@ -140,182 +140,36 @@ const Page2Carousel = () => {
       roastingPoint: '',
     },
   ]);
-  const [capcull, setCapcull] = useState();
-  const [ageCapcull, setAgeCapcull] = useState();
-  const [beanRe, setBeanRe] = useState([
+  const [capsule, setCapsule] = useState([
     {
-      nameKo: '인도네시아 수마트라 G1 웻헐드 (중배전)',
-      nameEn: '인도네시아 수마트라 G1 웻헐드 (중배전)',
-      summary: '아이템 요약 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '인도네시아',
-      region: '수마트라',
-      rank: 'G1',
-      processing: '웻헐드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 7,
-      acidity: 4,
-      sweetness: 6,
-      bitterness: 8,
-      body: 8,
-      coffeeingNote: '오크나무, 견과류, 밀크초코',
-      roastingPoint: '중배전',
-    },
-    {
-      nameKo: '과테말라 우에우에테낭고 SHB 워시드 디카페인 (강배전)',
-      nameEn: '과테말라 우에우에테낭고 SHB 워시드 디카페인 (강배전)',
-      summary: '아이템 o 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '과테말라',
-      region: '우에우에테낭고',
-      rank: 'SHB',
-      processing: '워시드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 6,
-      acidity: 5,
-      sweetness: 7,
-      bitterness: 7,
-      body: 7,
-      coffeeingNote: '블랙커런트, 땅콩, 갈색설탕',
-      roastingPoint: '강배전',
-    },
-    {
-      nameKo: '베트남 베트남 G1 워시드 (중배전)',
-      nameEn: '베트남 베트남 G1 워시드 (중배전)',
-      summary: '아이템 요약 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '베트남',
-      region: '베트남',
-      rank: 'G1',
-      processing: '워시드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 6,
-      acidity: 2,
-      sweetness: 6,
-      bitterness: 6,
-      body: 6,
-      coffeeingNote: '아몬드, 토스트, 보리',
-      roastingPoint: '중배전',
-      linkDTO: [],
-    },
-    {
-      nameKo: '인도 치크마갈루르 AA 워시드 (중배전)',
-      nameEn: '인도 치크마갈루르 AA 워시드 (중배전)',
-      summary: '아이템 요약 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '인도',
-      region: '치크마갈루르',
-      rank: 'AA',
-      processing: '워시드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 6,
-      acidity: 4,
-      sweetness: 6,
-      bitterness: 6,
-      body: 7,
-      coffeeingNote: '스카치캔디, 밀크초코, 마카다미아',
-      roastingPoint: '중배전',
-      linkDTO: [],
+      origin: '',
+      region: '',
+      rank: '',
+      processing: '',
+      balance: 0,
+      flavor: 0,
+      acidity: 0,
+      sweetness: 0,
+      bitterness: 0,
+      body: 0,
+      coffeeingNote: '',
+      roastingPoint: '',
     },
   ]);
-  const [capcullRe, setCapcullRe] = useState([
+  const [ageCapsule, setAgeCapsule] = useState([
     {
-      nameKo: '인도네시아 수마트라 G1 웻헐드 (중배전)',
-      nameEn: '인도네시아 수마트라 G1 웻헐드 (중배전)',
-      summary: '아이템 요약 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '인도네시아',
-      region: '수마트라',
-      rank: 'G1',
-      processing: '웻헐드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 7,
-      acidity: 4,
-      sweetness: 6,
-      bitterness: 8,
-      body: 8,
-      coffeeingNote: '오크나무, 견과류, 밀크초코',
-      roastingPoint: '중배전',
-    },
-    {
-      nameKo: '과테말라 우에우에테낭고 SHB 워시드 디카페인 (강배전)',
-      nameEn: '과테말라 우에우에테낭고 SHB 워시드 디카페인 (강배전)',
-      summary: '아이템 o 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '과테말라',
-      region: '우에우에테낭고',
-      rank: 'SHB',
-      processing: '워시드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 6,
-      acidity: 5,
-      sweetness: 7,
-      bitterness: 7,
-      body: 7,
-      coffeeingNote: '블랙커런트, 땅콩, 갈색설탕',
-      roastingPoint: '강배전',
-    },
-    {
-      nameKo: '베트남 베트남 G1 워시드 (중배전)',
-      nameEn: '베트남 베트남 G1 워시드 (중배전)',
-      summary: '아이템 요약 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '베트남',
-      region: '베트남',
-      rank: 'G1',
-      processing: '워시드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 6,
-      acidity: 2,
-      sweetness: 6,
-      bitterness: 6,
-      body: 6,
-      coffeeingNote: '아몬드, 토스트, 보리',
-      roastingPoint: '중배전',
-      linkDTO: [],
-    },
-    {
-      nameKo: '인도 치크마갈루르 AA 워시드 (중배전)',
-      nameEn: '인도 치크마갈루르 AA 워시드 (중배전)',
-      summary: '아이템 요약 영역 입니다!!!',
-      thumbnail: 'default_bean.png',
-      userGrade: 0,
-      description: '상세 내용 입니다!!!',
-      origin: '인도',
-      region: '치크마갈루르',
-      rank: 'AA',
-      processing: '워시드',
-      decaffeination: false,
-      balance: 5,
-      flavor: 6,
-      acidity: 4,
-      sweetness: 6,
-      bitterness: 6,
-      body: 7,
-      coffeeingNote: '스카치캔디, 밀크초코, 마카다미아',
-      roastingPoint: '중배전',
-      linkDTO: [],
+      origin: '',
+      region: '',
+      rank: '',
+      processing: '',
+      balance: 0,
+      flavor: 0,
+      acidity: 0,
+      sweetness: 0,
+      bitterness: 0,
+      body: 0,
+      coffeeingNote: '',
+      roastingPoint: '',
     },
   ]);
 
@@ -324,20 +178,24 @@ const Page2Carousel = () => {
   };
 
   useEffect(() => {
-    const getData = async (age: any) => {
+    const getData = async (age: any, type: any) => {
       await mainAPI
-        .getAgeRecom(age)
+        .getAgeRecom(age, type)
         .then((request) => {
           const data = request.data.value;
-          console.log(data);
-          setAgeMain(data);
+          console.log(cutArr(data));
+          if (type === 'bean') {
+            setAgeMain(cutArr(data));
+          } else if (type === 'capsule') {
+            setAgeCapsule(cutArr(data));
+          }
         })
         .catch((e) => console.log(e));
     };
-    getData(userage);
+    getData(userage, 'bean');
+    getData(userage, 'capsule');
   }, []);
 
-  useEffect(() => {});
   return (
     <Carousel>
       <BigDiv>
@@ -347,8 +205,8 @@ const Page2Carousel = () => {
           })}
         </InDiv>
         <InDiv>
-          {capcullRe.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capcull'} propsdata={data} />;
+          {beanMain.map((data: propsData, i) => {
+            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
           })}
         </InDiv>
       </BigDiv>
@@ -359,8 +217,8 @@ const Page2Carousel = () => {
           })}
         </InDiv>
         <InDiv>
-          {capcullRe.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capcull'} propsdata={data} />;
+          {ageCapsule.map((data: propsData, i) => {
+            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
           })}
         </InDiv>
       </BigDiv>

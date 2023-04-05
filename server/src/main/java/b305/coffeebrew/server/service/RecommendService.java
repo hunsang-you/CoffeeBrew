@@ -2,6 +2,7 @@ package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
 import b305.coffeebrew.server.dto.bean.BeanResDTO;
+import b305.coffeebrew.server.dto.capsule.CapsuleDetailPageResDTO;
 import b305.coffeebrew.server.dto.recommend.RecomResDTO;
 import b305.coffeebrew.server.entity.Bean;
 import b305.coffeebrew.server.entity.BeanDetail;
@@ -45,6 +46,7 @@ public class RecommendService {
 
 
     private final BeanService beanService;
+    private final CapsuleService capsuleService;
     private final BeanRepository beanRepository;
     private final BeanDetailRepository beanDetailRepository;
     private final BeanScoreRepository beanScoreRepository;
@@ -52,64 +54,92 @@ public class RecommendService {
     @Value(value = "${user.url.fastapi}")
     private String fastapiURL;
 
-    public List<BeanDetailPageResDTO> recommendBeansByItem(long beanId) {
-        log.info(METHOD_NAME + " - recommendBeansByItem");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<?> itemRecommend(String itemType) {
+        log.info(METHOD_NAME + " - itemRecommend(no Login)");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/bean/" + String.valueOf(beanId);
+        String requestURL = fastapiURL + "/item/" + itemType;
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
-        return getRecomsDetail(response);
+        return getRecomsDetail(response, itemType);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByLike(long userId) {
-        log.info(METHOD_NAME + " - recommendBeansByLike");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<?> itemRecommend(String itemType, long itemId) {
+        log.info(METHOD_NAME + " - itemRecommend");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/like";
+        String requestURL = fastapiURL + "/item/" + itemType + "/" + String.valueOf(itemId);
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
-        return getRecomsDetail(response);
+        return getRecomsDetail(response, itemType);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByReview(long userId) {
-        log.info(METHOD_NAME + " - recommendBeansByReview");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<?> userRecommend(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommend");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/review";
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType;
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
-        return getRecomsDetail(response);
+        return getRecomsDetail(response, itemType);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByAge(String ageRange) {
-        log.info(METHOD_NAME + " - recommendBeansByAge");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<?> userRecommendLikeSurvey(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommendLikeSurvey");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/age/" + String.valueOf(ageRange);
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType + "/survey";
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
-        return getRecomsDetail(response);
+        return getRecomsDetail(response, itemType);
     }
 
-    public List<BeanDetailPageResDTO> recommendBeansByGender(String gender) {
-        log.info(METHOD_NAME + " - recommendBeansByGender");
-        log.info("call Rest URL - " + fastapiURL);
+    public List<?> userRecommendByLike(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommendByLike");
         RestTemplate restTemplate = new RestTemplate();
 
         // Request
-        String requestURL = fastapiURL + "/gender/" + String.valueOf(gender);
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType + "/like";
         HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
 
-        return getRecomsDetail(response);
+        return getRecomsDetail(response, itemType);
+    }
+
+    public List<?> userRecommendByReview(long userId, String itemType) {
+        log.info(METHOD_NAME + " - userRecommendByReview");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/user/" + String.valueOf(userId) + "/" + itemType + "/review";
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response, itemType);
+    }
+
+    public List<?> recommendByAge(String ageRange, String itemType) {
+        log.info(METHOD_NAME + " - recommendByAge");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/age/" + String.valueOf(ageRange) + "/" + itemType;
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response, itemType);
+    }
+
+    public List<?> recommendByGender(String gender, String itemType) {
+        log.info(METHOD_NAME + " - recommendByGender");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/gender/" + String.valueOf(gender) + "/" + itemType;
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response, itemType);
     }
 
     /**
@@ -125,7 +155,7 @@ public class RecommendService {
         log.info("Update response = {}", response);
     }
 
-    private List<BeanDetailPageResDTO> getRecomsDetail(HttpEntity<String> response) {
+    private List<?> getRecomsDetail(HttpEntity<String> response, String itemType) {
         // JSON Parsing
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
@@ -138,13 +168,22 @@ public class RecommendService {
             throw new CoffeebrewServerException(ErrorCode.RECOM_SERVER_ERROR);
         }
 
-        List<BeanDetailPageResDTO> beanDTOList = new ArrayList<>();
-        for (RecomResDTO recomResDTO : recomResDTOList) {
-            // log.info("recomResDTO - " + recomResDTO.toString());
-            beanDTOList.add(beanService.getBeanDetail(recomResDTO.getId()));
+        switch (itemType) {
+            case "bean":
+                List<BeanDetailPageResDTO> beanDTOList = new ArrayList<>();
+                for (RecomResDTO recomResDTO : recomResDTOList) {
+                    beanDTOList.add(beanService.getBeanDetail(recomResDTO.getId()));
+                }
+                return beanDTOList;
+            case "capsule":
+                List<CapsuleDetailPageResDTO> capsuleDTOList = new ArrayList<>();
+                for (RecomResDTO recomResDTO : recomResDTOList) {
+                    capsuleDTOList.add(capsuleService.getCapsuleDetail(recomResDTO.getId()));
+                }
+                return capsuleDTOList;
+            default:
+                return new ArrayList<>();
         }
-
-        return beanDTOList;
     }
 
 }
