@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import Chart from '../Detail/Chart/UserChart';
+import Chart from './UserChart';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -89,10 +89,11 @@ const Analyze = ({ survey }: PropsTypes) => {
     <AnalyzeBody
       style={{
         border: 'solid 4px #FD0F0F',
+        minHeight: '630px',
       }}
     >
       <div style={{ scale: '130%', marginTop: '40px' }}>
-        <Chart />
+        <Chart survey={survey} />
       </div>
       <Comment>
         {' '}
@@ -102,10 +103,10 @@ const Analyze = ({ survey }: PropsTypes) => {
         style={{ display: 'flex', justifyContent: 'end', marginRight: '40px' }}
       >
         <UserTypeImg>
-          <img src={examtype} alt="user_type" />
+          {/* <img src={examtype} alt="user_type" /> */}
         </UserTypeImg>
         <div style={{ marginTop: '50px' }}>{survey.coffeeing_note}</div>
-        <div style={{ marginLeft: '16px' }}>
+        {/* <div style={{ marginLeft: '16px' }}>
           <LinkBtn
             style={{
               backgroundColor: '#98643D',
@@ -117,7 +118,7 @@ const Analyze = ({ survey }: PropsTypes) => {
           >
             맞춤 커피 보러 가기
           </LinkBtn>
-        </div>
+        </div> */}
       </div>
     </AnalyzeBody>
   );

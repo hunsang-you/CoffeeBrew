@@ -187,10 +187,10 @@ export default DetailBean;
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 
-const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
+const DetailBg = tw.div`flex-col text-center bg-background w-1200 select-none `;
 // SideBar(맨위로이동, 최근조회)
-const SideBar = tw.div`w-10 h-10
-border-4 border-brownBorder ml-auto top-100 right-60 bottom-40 fixed rounded-full  hover:bg-brownBorder hover:scale-105 hover:text-white`;
+const SideBar = tw.div`w-10 h-10 
+border-4 border-brownBorder ml-auto top-100 bottom-40 right-20 rounded-full  hover:bg-brownBorder hover:scale-105 hover:text-white fixed`;
 // 해당 항목 이동
 const MoveTop = tw.div` h-10 text-3xl font-bold `;
 // const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;

@@ -12,13 +12,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -28,81 +24,53 @@ import java.util.List;
 public class RecommendController {
 
     private static final String METHOD_NAME = RecommendController.class.getName();
-
-    private final BeanService beanService;
-    private final CapsuleService capsuleService;
-
-    private final MemberService memberService;
-
     private final RecommendService recommendService;
 
-    @GetMapping("/bean/{beanId}")
-    @ApiOperation(value = "원두 추천 페이지", notes = "해당 원두와 유사한 원두 정보를 출력한다.")
+    @GetMapping("/item/{itemType}")
+    @ApiOperation(value = "아이템 기반 추천 목록(비로그인용 디스플레이)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> recommendBeansByItem(@PathVariable("beanId") long beanId) {
+    public ResponseEntity<ResponseDTO> itemRecommend(@PathVariable("itemType") String itemType) {
         return ResponseEntity.ok()
-                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByItem(beanId)));
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ITEM_RECOM, recommendService.itemRecommend(itemType)));
     }
 
-    @GetMapping("/user/{userId}/like/bean")
-    @ApiOperation(value = "사용자 좋아요 기반 원두 추천 페이지", notes = "같은 제품의 좋아요를 누른 다른 사용자의 선호 원두 정보를 출력한다.")
+    @GetMapping("/item/{itemType}/{itemId}")
+    @ApiOperation(value = "아이템 기반 추천 목록")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> recommendBeansByLike(@PathVariable("userId") long userId) {
+    public ResponseEntity<ResponseDTO> itemRecommend(@PathVariable("itemType") String itemType, @PathVariable("itemId") long itemId) {
         return ResponseEntity.ok()
-                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByLike(userId)));
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ITEM_RECOM, recommendService.itemRecommend(itemType, itemId)));
     }
 
-    @GetMapping("/user/{userId}/review/bean")
-    @ApiOperation(value = "사용자 리뷰 기반 원두 추천 페이지", notes = "같은 제품을 리뷰를 작성한 다른 사용자의 선호 원두 정보를 출력한다.")
+    @GetMapping("/age/{ageRange}/{itemType}")
+    @ApiOperation(value = "연령대 기반 추천 목록")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> recommendBeansByReview(@PathVariable("userId") long userId) {
+    public ResponseEntity<ResponseDTO> recommendByAge(@PathVariable("ageRange") String ageRange, @PathVariable("itemType") String itemType) {
         return ResponseEntity.ok()
-                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByReview(userId)));
-    }
-//    @GetMapping("/capsule/{capsuleId}")
-//    @ApiOperation(value = "캡슐 상세 페이지", notes = "캡슐의 상세한 정보를 출력한다.")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 404, message = "페이지 오류"),
-//            @ApiResponse(code = 500, message = "서버 오류"),
-//    })
-//    public ResponseEntity<ResponseDTO> readCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
-//        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CAPSULE_INQUIRE, capsuleService.getCapsuleDetail(capsuleId)));
-//    }
-
-    @GetMapping("/age/{ageRange}/bean")
-    @ApiOperation(value = "연령대 기반 원두 추천 페이지", notes = "연령대에 따른 선호 원두 정보를 출력한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 404, message = "페이지 오류"),
-            @ApiResponse(code = 500, message = "서버 오류"),
-    })
-    public ResponseEntity<ResponseDTO> recommendBeansByAge(@PathVariable("ageRange") String ageRange) {
-        return ResponseEntity.ok()
-                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByAge(ageRange)));
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ITEM_RECOM, recommendService.recommendByAge(ageRange, itemType)));
     }
 
-    @GetMapping("/gender/{gender}/bean")
-    @ApiOperation(value = "성별 기반 원두 추천 페이지", notes = "성별에 따른 선호 원두 정보를 출력한다.")
+    @GetMapping("/gender/{gender}/{itemType}")
+    @ApiOperation(value = "성별 기반 원두 추천 목록")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "페이지 오류"),
             @ApiResponse(code = 500, message = "서버 오류"),
     })
-    public ResponseEntity<ResponseDTO> recommendBeansByGender(@PathVariable("gender") String gender) {
+    public ResponseEntity<ResponseDTO> recommendByGender(@PathVariable("gender") String gender, @PathVariable("itemType") String itemType) {
         return ResponseEntity.ok()
-                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_BEAN_RECOM, recommendService.recommendBeansByGender(gender)));
+                .body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ITEM_RECOM, recommendService.recommendByGender(gender, itemType)));
     }
 }
