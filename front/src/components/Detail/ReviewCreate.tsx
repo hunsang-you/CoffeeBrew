@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { reviewAPI } from '../../api/api';
 
-const CreateReviewBtn = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mx-auto text-xl`;
+const CreateReviewBtn = tw.button`w-32 h-10 bg-nameColor text-white rounded-full mx-auto text-xl mb-4`;
 const CreateReviewDiv = tw.div`w-1040 h-fit flex-col mx-auto drop-shadow-2xl`;
 const SliderDiv = tw.div`flex justify-center mx-2 drop-shadow-md`;
 
