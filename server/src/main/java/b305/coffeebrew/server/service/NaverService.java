@@ -38,6 +38,7 @@ public class NaverService {
         headers.add("X-Naver-Client-Secret", clientSecret);
 
         String query = nameKo;
+        log.info(query);
         HttpEntity<?> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<NaverShoppingResDTO> response = restTemplate.exchange(
                 "https://openapi.naver.com/v1/search/shop.json?query={query}",
@@ -67,6 +68,7 @@ public class NaverService {
 
         if (result.size() < 5 && StringUtils.isNotBlank(nameEn)) {
             query = nameEn;
+            log.info(query);
             response = restTemplate.exchange(
                     "https://openapi.naver.com/v1/search/shop.json?query={query}",
                     HttpMethod.GET,

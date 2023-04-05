@@ -14,7 +14,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
     '산미',
     '바디감',
     '쓴맛',
-    '총점',
+    '평점',
   ]);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '단맛', '산미', '바디감', '쓴맛', ' 총점'],
+        categories: ['향', '단맛', '산미', '바디감', '쓴맛', ' 평점'],
         labels: {
           show: true,
           formatter: (subject: string) => {
