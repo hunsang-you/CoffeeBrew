@@ -1,19 +1,13 @@
 import tw from 'tailwind-styled-components';
 import Chart from './UserChart';
-import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import ratingfull from '../../assets/tempImg/ratingfull.png';
-import ratinghalf from '../../assets/tempImg/ratinghalf.png';
-import ratingempty from '../../assets/tempImg/ratingempty.png';
-import examtype from '../../assets/tempImg/examtype.png';
 import { SurveyType } from './MyProfile';
+import { useNavigate } from 'react-router-dom';
 
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
-const Score = tw.img`w-8`;
 const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24 cursor-pointer hover:scale-110`;
-const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
 const UserTypeImg = tw.div`w-48 bg-red-200 mx-auto`;
 
 interface PropsTypes {
@@ -22,6 +16,7 @@ interface PropsTypes {
 
 const Analyze = ({ survey }: PropsTypes) => {
   const reduxData = useSelector((state: RootState) => state);
+  const Navigate = useNavigate();
 
   return (
     <AnalyzeBody
@@ -35,13 +30,52 @@ const Analyze = ({ survey }: PropsTypes) => {
       </div>
       <Comment>{reduxData.memberInfo?.nickname}님의 선호도 분석 입니다</Comment>
       <div
-        style={{ display: 'flex', justifyContent: 'end', marginRight: '40px' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       >
-        <UserTypeImg>
-          {/* <img src={examtype} alt="user_type" /> */}
-        </UserTypeImg>
-        <div style={{ marginTop: '50px' }}>{survey.coffeeing_note}</div>
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          <div
+            style={{
+              border: 'solid 2px black',
+              width: '250px',
+              height: '250px',
+              marginRight: '40px',
+            }}
+          >
+            이미지 때려박기
+          </div>
+          <div style={{ border: 'solid 2px black', marginLeft: '40px' }}>
+            <div
+              style={{
+                border: 'solid 2px black',
+                fontSize: '24px',
+                fontWeight: 'bold',
+              }}
+            >
+              <p style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                당신의 취향은...
+              </p>
+              {survey.resultType}!
+            </div>
+            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+              당신의 키워드 {survey.coffeeing_note}
+            </div>
+          </div>
+        </div>
       </div>
+      <LinkBtn
+        onClick={() => {
+          Navigate('/coffeeList');
+        }}
+      >
+        <div style={{ marginTop: '16px' }}>나랑 잘맞는 커피를 찾아볼까요?</div>
+      </LinkBtn>
     </AnalyzeBody>
   );
 };

@@ -49,9 +49,6 @@ public class BeanService {
         this.beanRepository = beanRepository;
         this.beanDetailRepository = beanDetailRepository;
         this.beanScoreRepository = beanScoreRepository;
-        this.restTemplate = restTemplate;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
     }
 
     @Transactional
