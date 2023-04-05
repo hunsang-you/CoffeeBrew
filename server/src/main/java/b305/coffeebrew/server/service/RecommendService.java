@@ -54,6 +54,17 @@ public class RecommendService {
     @Value(value = "${user.url.fastapi}")
     private String fastapiURL;
 
+    public List<?> itemRecommend(String itemType) {
+        log.info(METHOD_NAME + " - itemRecommend(no Login)");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Request
+        String requestURL = fastapiURL + "/item/" + itemType;
+        HttpEntity<String> response = restTemplate.getForEntity(requestURL, String.class);
+
+        return getRecomsDetail(response, itemType);
+    }
+
     public List<?> itemRecommend(String itemType, long itemId) {
         log.info(METHOD_NAME + " - itemRecommend");
         RestTemplate restTemplate = new RestTemplate();
