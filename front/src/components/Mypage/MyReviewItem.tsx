@@ -20,16 +20,7 @@ const RatingDiv = tw.div`w-400`;
 const Score = tw.img`w-6 `;
 const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
 
-const ReviewContent = tw.div`w-240 h-60 text-sm text-nameColor font-bold text-left mt-2 pl-6 ml-4  overflow-scroll break-words`;
-
-const userData = {
-  향: 1,
-  단맛: 2,
-  쓴맛: 3,
-  산미: 4,
-  바디감: 4.5,
-  총점: 3.5,
-};
+const ReviewContent = tw.div`w-240 h-48 text-sm text-nameColor font-bold text-left my-auto pl-6 ml-4  overflow-scroll break-words`;
 
 interface PropsTypes {
   reviewData: ReviewType;
@@ -141,7 +132,7 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
             {beanScore()}
           </div>
           <ReviewContent>
-            <div style={{ height: '180px' }}>{reviewData.content}</div>
+            <div style={{ height: '160px' }}>{reviewData.content}</div>
           </ReviewContent>
         </Item>
       </ReviewItems>

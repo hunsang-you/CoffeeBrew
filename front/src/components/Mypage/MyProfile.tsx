@@ -1,6 +1,7 @@
 import tw from 'tailwind-styled-components';
 import { useState, useEffect } from 'react';
 import Analyze from './Analyze';
+import NoAnalyze from './NoAnalyze';
 import BeanLike from './BeanLike';
 import MyReview from './MyReview';
 import { memberAPI, loginAPI } from '../../api/api';
@@ -215,7 +216,11 @@ const MyProfile = () => {
             </TypeBtnOff>
           )}
         </TypeBar>
-        {typeCheck[0] === true && survey ? <Analyze survey={survey} /> : null}
+        {typeCheck[0] === true && survey ? (
+          <Analyze survey={survey} />
+        ) : (
+          <NoAnalyze />
+        )}
         {typeCheck[1] === true ? <BeanLike /> : null}
         {typeCheck[2] === true ? <MyReview /> : null}
       </ProfileRight>
