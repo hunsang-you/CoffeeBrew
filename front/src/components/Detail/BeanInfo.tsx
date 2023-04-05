@@ -121,7 +121,7 @@ export default BeanInfo;
 
 // 최상단 좌측
 const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
-const BeanImg1 = tw.img`object-cover mt-10 drop-shadow-xl`;
+const BeanImg1 = tw.img`w-60 mx-auto mt-10 drop-shadow-xl`;
 const HeartImgLike = tw.div`flex justify-center mt-2`;
 
 // 최상단 우측 설명
