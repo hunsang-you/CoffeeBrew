@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { mainAPI } from '../../api/api';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
@@ -33,8 +31,6 @@ interface propsData {
 }
 
 const Page2Non = () => {
-  const reudxData = useSelector((state: RootState) => state);
-  const userage = reudxData.memberInfo?.ageRange;
   const [nonBean, setNonBean] = useState([
     {
       origin: '',
@@ -73,9 +69,9 @@ const Page2Non = () => {
   };
 
   useEffect(() => {
-    const getData = async (age: any, type: any) => {
+    const getData = async (type: any) => {
       await mainAPI
-        .getAgeRecom(age, type)
+        .getNonRecom(type)
         .then((request) => {
           const data = request.data.value;
           console.log(cutArr(data));
@@ -87,8 +83,8 @@ const Page2Non = () => {
         })
         .catch((e) => console.log(e));
     };
-    getData(userage, 'bean');
-    getData(userage, 'capsule');
+    getData('bean');
+    getData('capsule');
   }, []);
 
   return (
