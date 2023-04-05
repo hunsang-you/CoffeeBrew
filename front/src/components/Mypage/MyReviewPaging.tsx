@@ -1,5 +1,5 @@
 import Pagination from 'react-js-pagination';
-import './Paging.css';
+import '../ProductList/Paging.css';
 import { memberAPI } from '../../api/api';
 import { ReviewPageType } from './MyReview';
 
