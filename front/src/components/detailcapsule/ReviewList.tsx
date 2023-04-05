@@ -3,27 +3,16 @@ import { useState, useRef, useEffect } from 'react';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
-import { reviewType } from './DetailBean';
+import { CapsuleReviewType } from './DetailCapsule';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { reviewAPI } from '../../api/api';
 
 interface PropsTypes {
-  detailReview?: reviewType[] | null;
+  detailReview?: CapsuleReviewType[] | null;
 }
 const ReviewLists = ({ detailReview }: PropsTypes) => {
   const reduxData = useSelector((state: RootState) => state);
-  // 리뷰 최신/추천 순 조회버튼
-  const [isActive, setIsActive] = useState(true);
-  const activeBtn = () => {
-    setIsActive(!isActive);
-  };
-
-  // 리뷰 좋아요 토글
-  const [reviewLike, setReviewLike] = useState(false);
-  const handleReviewLike = () => {
-    setReviewLike(!reviewLike);
-  };
 
   // 리뷰 더보기
   const [showNumber, setShowNumber] = useState(1);
@@ -39,8 +28,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
       window.scrollTo({ top: location - 100, behavior: 'smooth' });
     }
   };
-
-  // 내 리뷰 삭제
 
   return (
     <div ref={reviewRef}>
@@ -214,11 +201,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
 };
 
 export default ReviewLists;
-
-// 최신순, 추천순
-// const ReviewFilter = tw.div`flex flex-row mb-4 justify-end mr-14`;
-// const FilterOn = tw.div`w-24 h-10 rounded-full border-2 text-2xl text-center leading-9  bg-black text-white ml-4`;
-// const FilterOff = tw.div`w-24 h-10 rounded-full border-2 bg-gray-300 text-2xl  text-black leading-9 ml-4 cursor-pointer hover:bg-slate-500`;
 
 const ReviewList = tw.div`w-1000 mx-auto`;
 const ReviewDelete = tw.div`w-16 h-9 bg-brownBorder text-white leading-9 rounded-t-lg ml-14 cursor-pointer hover:bg-slate-500`;

@@ -29,7 +29,7 @@ const Router = ({ setIsFooter }: IsFooterType) => {
         }
       />
       <Route
-        path="/detail/:beanId"
+        path="/detail/*"
         element={
           <Suspense fallback={<Loading />}>
             <ContentContainer>
