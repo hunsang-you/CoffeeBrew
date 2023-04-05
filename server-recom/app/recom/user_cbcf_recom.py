@@ -8,10 +8,10 @@ import pandas as pd
 
 # 사용자 기반 정보를 기준으로 다른 사용자 정보를 활용해(cf)
 # 사용자가 선호, 관심있는 아이템을 누른 다른 사용자가 선호하는 아이템을 추천해줌
-def get_recom_by_user(userIdx, data, matrix, item_type="bean"):
+def get_recom_by_user(userIdx, data, matrix, itemType="bean"):
     try:
         user_likes = data.loc[
-            (data["member_idx"] == userIdx) & (data["item_type"] == item_type)
+            (data["member_idx"] == userIdx) & (data["item_type"] == itemType)
         ]
         user_likes = list(user_likes["item_idx"].values)
 
