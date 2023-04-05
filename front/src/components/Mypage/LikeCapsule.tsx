@@ -19,7 +19,9 @@ const LikeCapsuleList = () => {
       <List>
         <CardBody>
           <CapsuleImg src={bean2} alt="bean" />
-          <CardContent style={{ backgroundColor: '#FFF0CE' }}>
+          <CardContent
+            style={{ backgroundColor: '#FFF0CE', minHeight: '630px' }}
+          >
             <div
               style={{
                 wordBreak: 'break-word',

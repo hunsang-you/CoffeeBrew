@@ -104,7 +104,6 @@ const LikeBeanList = () => {
                     style={{
                       color: 'red',
                       marginLeft: '8px',
-                      paddingTop: '8px',
                       cursor: 'pointer',
                     }}
                     onClick={() => {
@@ -134,8 +133,7 @@ const LikeBeanList = () => {
                       navigate(`/detail/${beanIdx[i]}`);
                     }}
                   >
-                    {' '}
-                    상세보기{' '}
+                    상세보기
                   </LinkBtn>
                 </FixedDiv>
               </CardBody>
@@ -151,7 +149,7 @@ const LikeBeanList = () => {
 
 export default LikeBeanList;
 
-const List = tw.div`flex max-w-fit mb-10 justify-evenly mt-4 select-none`;
+const List = tw.div`flex max-w-fit mb-10 justify-evenly mt-4 select-none break-words`;
 const CardBody = tw.div`w-52 mx-3 flex-col relative`;
 const BeanImg = tw.img`w-48 h-48 rounded-full mb-2 ml-4`;
 const CardContent = tw.div`w-56 h-36 rounded-t-xl rounded-b-md overflow-scroll text-ellipsis `;

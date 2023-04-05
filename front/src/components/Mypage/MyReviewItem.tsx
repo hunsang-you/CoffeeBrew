@@ -5,6 +5,7 @@ import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { ReviewType } from './MyReview';
+import { reviewAPI } from '../../api/api';
 
 const ReviewBody = tw.div` flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;
