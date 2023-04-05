@@ -31,7 +31,7 @@ export interface detailType {
   summary: string | null;
   sweetness: number;
   thumbnail: string | null;
-  userGrade: number | null;
+  userGrade: number;
   linkDTO: linkDTOType[];
 }
 export interface reviewType {
@@ -161,7 +161,7 @@ const DetailBean = (): JSX.Element => {
       </BeanTop2> */}
 
       {/* 네번째 줄(리뷰) */}
-      <BeanTop3 style={{ maxHeight: '600px', marginTop: '200px' }}>
+      <BeanTop3 style={{ maxHeight: '800px', marginTop: '200px' }}>
         {/* <Review /> */}
         {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </BeanTop3>
@@ -189,10 +189,10 @@ const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 
 const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
 // SideBar(맨위로이동, 최근조회)
-const SideBar = tw.div`
-border-4 border-brownBorder ml-auto top-100 right-60 bottom-40 fixed rounded-full drop-shadow-2xl`;
+const SideBar = tw.div`w-10 h-10
+border-4 border-brownBorder ml-auto top-100 right-60 bottom-40 fixed rounded-full  hover:bg-brownBorder hover:scale-105 hover:text-white`;
 // 해당 항목 이동
-const MoveTop = tw.div` h-10 text-3xl font-bold drop-shadow-2xl hover:bg-brownBorder hover:scale-105 hover:text-white`;
+const MoveTop = tw.div` h-10 text-3xl font-bold `;
 // const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
 // const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
 // const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
@@ -202,7 +202,7 @@ const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fad
 // 기기 및 분쇄도
 const RecOther = tw.div`w-1040  flex justify-between `;
 // 세번째 리뷰칸
-const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 overflow-y-scroll animate-fade-in-down `;
+const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down `;
 const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
 // 네번째 칸(구매사이트)
 const BeanTop4 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;
