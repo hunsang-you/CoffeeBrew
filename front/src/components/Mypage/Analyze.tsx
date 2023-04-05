@@ -91,7 +91,7 @@ const Analyze = ({ survey }: PropsTypes) => {
             </div>
             <div
               style={{
-                fontSize: '24px',
+                fontSize: '20px',
                 fontWeight: 'bold',
                 textAlign: 'center',
                 marginTop: '40px',
@@ -106,13 +106,26 @@ const Analyze = ({ survey }: PropsTypes) => {
           </div>
         </div>
       </div>
-      <LinkBtn
-        onClick={() => {
-          Navigate('/coffeeList');
-        }}
-      >
-        <div style={{ marginTop: '16px' }}>나랑 잘맞는 커피를 찾아볼까요?</div>
-      </LinkBtn>
+      <div style={{ display: 'flex' }}>
+        <LinkBtn
+          onClick={() => {
+            Navigate('/coffeeList/bean');
+          }}
+        >
+          <div style={{ marginTop: '16px' }}>
+            나랑 잘맞는 원두를 찾아볼까요?
+          </div>
+        </LinkBtn>
+        <LinkBtn
+          onClick={() => {
+            Navigate('/coffeeList/capsule');
+          }}
+        >
+          <div style={{ marginTop: '16px' }}>
+            나랑 잘맞는 캡슐을 찾아볼까요?
+          </div>
+        </LinkBtn>
+      </div>
     </AnalyzeBody>
   );
 };
