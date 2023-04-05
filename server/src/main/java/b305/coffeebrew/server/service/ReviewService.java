@@ -1,6 +1,7 @@
 package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.review.DetailPageReviewResDTO;
+import b305.coffeebrew.server.dto.review.MyPageReviewResDTO;
 import b305.coffeebrew.server.dto.review.ReviewPageDTO;
 import b305.coffeebrew.server.dto.review.ReviewResDTO;
 import b305.coffeebrew.server.entity.Bean;
@@ -17,6 +18,7 @@ import b305.coffeebrew.server.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -72,12 +74,23 @@ public class ReviewService {
      * 사용자 리뷰 목록 조회
      */
     @Transactional
-    public Page<Review> readMyPageReview(long memberIdx, Pageable pageable) throws RuntimeException {
+    public Page<MyPageReviewResDTO> readMyPageReview(long memberIdx, Pageable pageable) throws RuntimeException {
         Member member = new Member();
         member.setIdx(memberIdx);
-        Page<Review> reviewPage = reviewRepository.findByMemberIdxAndExpiredIsFalse(member, pageable);
-        log.info("reviewPage = {}", reviewPage);
-        return reviewPage;
+        Page<Review> reviews = reviewRepository.findByMemberIdxAndExpiredIsFalse(member, pageable);
+        List<MyPageReviewResDTO> myPageReviewResDTOs = new ArrayList<>();
+        String itemType = reviews.getContent().get(0).getItemType();
+        for (Review review : reviews) {
+            if("bean".equals(review.getItemType())){
+                String itemName = beanRepository.findByIdx( review.getItemIdx()).getNameKo();
+                myPageReviewResDTOs.add(MyPageReviewResDTO.of(review, itemName));
+            }else {
+                String itemName = capsuleRepository.findByIdx(review.getItemIdx()).getNameKo();
+                myPageReviewResDTOs.add(MyPageReviewResDTO.of(review, itemName));
+            }
+
+            }
+        return new PageImpl<>(myPageReviewResDTOs, reviews.getPageable(), reviews.getTotalElements());
     }
 
     /**
