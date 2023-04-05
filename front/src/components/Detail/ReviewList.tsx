@@ -45,7 +45,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
   // 내 리뷰 삭제
 
   return (
-    <div>
+    <div ref={reviewRef}>
       <ReviewList>
         {showNumber > 1 ? (
           <MoreBtn
@@ -129,7 +129,7 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                 return scoreItem;
               };
               return (
-                <div>
+                <div style={{ overflow: 'scroll' }}>
                   {data.profile.hashcode === reduxData.memberInfo?.hashcode ? (
                     <ReviewDelete
                       onClick={() => {

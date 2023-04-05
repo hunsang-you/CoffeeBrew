@@ -5,8 +5,7 @@ const Page2 = () => {
   return (
     <Inner>
       <CarouselDiv>
-        <Page2Carousel rec={'bean'} />
-        <Page2Carousel rec={'capcull'} />
+        <Page2Carousel />
       </CarouselDiv>
     </Inner>
   );

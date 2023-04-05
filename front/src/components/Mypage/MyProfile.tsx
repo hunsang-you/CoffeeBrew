@@ -20,8 +20,29 @@ const UserImg = tw.div`w-64 h-64 border-8 border-white bg-slate-600 mx-auto roun
 const UserInfo = tw.div`w-64 mt-6 border-2  rounded-xl bg-navColor  mx-auto`;
 const UserMenuBtn = tw.button`w-fit ml-8 mb-6 text-2xl font-bold cursor-pointer hover:scale-110 duration-300`;
 
+export interface SurveyType {
+  acidity: number;
+  bitterness: number;
+  body: number;
+  coffeeing_note: string | null;
+  expired: boolean;
+  flavor: number;
+  param1: number | null;
+  param2: number | null;
+  param3: number | null;
+  param4: number | null;
+  param5: number | null;
+  param6: number | null;
+  param7: number | null;
+  param8: number | null;
+  resultCode: string;
+  resultType: string;
+  sweetness: number;
+}
+
 const MyProfile = () => {
   const [typeCheck, setTypeCheck] = useState([true, false, false]);
+  const [survey, setSurvey] = useState<SurveyType | null>(null);
   const reduxData = useSelector((state: RootState) => state);
   useEffect(() => {
     const getInfo = async () => {
@@ -34,8 +55,8 @@ const MyProfile = () => {
         .then((request) => console.log(request))
         .catch((e) => console.log(e));
       await memberAPI
-        .memberLikesBeans()
-        .then((request) => console.log(request))
+        .memberSurvey()
+        .then((request) => setSurvey(request.data.value))
         .catch((e) => console.log(e));
     };
     getInfo();
@@ -194,7 +215,7 @@ const MyProfile = () => {
             </TypeBtnOff>
           )}
         </TypeBar>
-        {typeCheck[0] === true ? <Analyze /> : null}
+        {typeCheck[0] === true && survey ? <Analyze survey={survey} /> : null}
         {typeCheck[1] === true ? <BeanLike /> : null}
         {typeCheck[2] === true ? <MyReview /> : null}
       </ProfileRight>
