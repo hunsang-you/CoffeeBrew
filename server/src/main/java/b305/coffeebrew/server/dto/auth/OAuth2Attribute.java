@@ -70,6 +70,7 @@ public class OAuth2Attribute {
 
     public Member toEntity() {
         return Member.builder()
+                .kakaoId(kakaoId)
                 .nickname(name)
                 .memberEmail(email)
                 .profileImg(picture)
