@@ -72,19 +72,11 @@ const Analyze = ({ survey }: PropsTypes) => {
           <div style={{ marginLeft: '20px' }}>
             <div
               style={{
-                fontSize: '24px',
+                fontSize: '20px',
                 fontWeight: 'bold',
               }}
             >
-              <p
-                style={{
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  marginBottom: '16px',
-                }}
-              >
-                당신의 취향은...
-              </p>
+              <p>당신의 취향은...</p>
               <p style={{ color: colorList[Number(typeIndex)] }}>
                 {survey.resultType}!
               </p>
@@ -97,7 +89,7 @@ const Analyze = ({ survey }: PropsTypes) => {
                 marginTop: '40px',
               }}
             >
-              <p style={{ fontSize: '20px' }}>당신의 키워드는..</p>
+              <p>당신의 키워드는..</p>
               <p style={{ color: colorList[Number(typeIndex)] }}>
                 {survey.coffeeing_note}
               </p>
