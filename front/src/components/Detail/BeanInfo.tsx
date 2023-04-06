@@ -72,6 +72,7 @@ const BeanInfo = ({ detailBean }: PropsType) => {
             (check) =>
               check.itemType === 'bean' && check.idx === Number(beanId),
           );
+          console.log(isLiked);
           if (isLiked.length === 0) {
             setIsLike(false);
           } else {
