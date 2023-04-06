@@ -79,15 +79,35 @@ const RecommendBean = (): JSX.Element => {
               sweetness,
             })[maxIndex];
             if (maxVar === 'acidity') {
-              setCardImg([...cardImg, acidityImg]);
+              if (i === 0) {
+                setCardImg([acidityImg]);
+              } else {
+                setCardImg([...cardImg, acidityImg]);
+              }
             } else if (maxVar === 'bitter') {
-              setCardImg([...cardImg, bitterImg]);
+              if (i === 0) {
+                setCardImg([bitterImg]);
+              } else {
+                setCardImg([...cardImg, bitterImg]);
+              }
             } else if (maxVar === 'body') {
-              setCardImg([...cardImg, bodyImg]);
+              if (i === 0) {
+                setCardImg([bodyImg]);
+              } else {
+                setCardImg([...cardImg, bodyImg]);
+              }
             } else if (maxVar === 'flavor') {
-              setCardImg([...cardImg, flavorImg]);
+              if (i === 0) {
+                setCardImg([flavorImg]);
+              } else {
+                setCardImg([...cardImg, flavorImg]);
+              }
             } else if (maxVar === 'sweetness') {
-              setCardImg([...cardImg, sweetImg]);
+              if (i === 0) {
+                setCardImg([sweetImg]);
+              } else {
+                setCardImg([...cardImg, sweetImg]);
+              }
             }
           };
           beanTaste();
