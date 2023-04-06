@@ -1,52 +1,17 @@
 import { useState, useEffect } from 'react';
 import tw from 'tailwind-styled-components';
-
+import { CapsuleDetailType } from './detailcapsule/DetailCapsule';
 import capAcidity from '../assets/coffeecard/cap_acidity.svg';
 import capBitter from '../assets/coffeecard/cap_bitter.svg';
 import capBody from '../assets/coffeecard/cap_body.svg';
 import capFlavor from '../assets/coffeecard/cap_flavor.svg';
 import capSweetness from '../assets/coffeecard/cap_sweetness.svg';
 
-type Capsule = {
-  idx?: number | null;
-  nameEn?: string | null;
-  nameKo?: string | null;
-  summary?: string | null;
-  thumbnail?: string | null;
-  userGrade?: number | null;
-};
-
-type CapsuleDetail = {
-  capsule?: Capsule;
-  company?: string | null;
-  description?: string | null;
-  idx?: number | null;
-  machineType?: string | null;
-  origin?: string | null;
-};
-
-type CapsuleScore = {
-  idx?: number | null;
-  acidity?: number | null;
-  balance?: number | null;
-  bitterness?: number | null;
-  body?: number | null;
-  capsule?: Capsule;
-  coffeeingNote?: string | null;
-  flavor?: number | null;
-  roasting?: number | null;
-};
-
-interface CapsullProps {
-  capsuleData: {
-    capsule: Capsule;
-    capsuleDetail: CapsuleDetail;
-    capsuleScore: CapsuleScore;
-    linkDTO: null | any;
-  };
+interface PropsType {
+  capsuleData: CapsuleDetailType;
 }
 
-const CoffeeCapSule = ({ capsuleData }: CapsullProps) => {
+const CoffeeCapSule = ({ capsuleData }: PropsType) => {
   const [taste, setTaste] = useState('');
   const [cardImg, setCardImg] = useState('');
   const [cardBg, setCardBg] = useState('white');

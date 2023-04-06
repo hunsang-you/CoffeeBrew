@@ -6,6 +6,7 @@ import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
 import CoffeeCapSule from '../CoffeeCapSule';
+import { CapsuleDetailType } from '../detailcapsule/DetailCapsule';
 
 type CoffeeItem = {
   nameKo?: string;
@@ -31,51 +32,6 @@ type CoffeeItem = {
 
 interface propsData {
   [index: number]: CoffeeItem;
-}
-
-type Capsule = {
-  idx?: number | null;
-  nameEn?: string | null;
-  nameKo?: string | null;
-  summary?: string | null;
-  thumbnail?: string | null;
-  userGrade?: number | null;
-};
-
-type CapsuleDetail = {
-  capsule?: Capsule;
-  company?: string | null;
-  description?: string | null;
-  idx?: number | null;
-  machineType?: string | null;
-  origin?: string | null;
-};
-
-type CapsuleScore = {
-  idx?: number | null;
-  acidity?: number | null;
-  balance?: number | null;
-  bitterness?: number | null;
-  body?: number | null;
-  capsule?: Capsule;
-  coffeeingNote?: string | null;
-  flavor?: number | null;
-  roasting?: number | null;
-};
-
-interface capsuledata {
-  capsule: Capsule;
-  capsuleDetail: CapsuleDetail;
-  capsuleScore: CapsuleScore;
-}
-
-interface CapsullProps {
-  [index: number]: {
-    capsule: Capsule;
-    capsuleDetail: CapsuleDetail;
-    capsuleScore: CapsuleScore;
-    linkDTO: null | any;
-  };
 }
 
 const Page2Carousel = () => {
@@ -115,96 +71,10 @@ const Page2Carousel = () => {
       roastingPoint: '',
     },
   ]);
-  const [capsule, setCapsule] = useState([
-    {
-      capsule: {
-        idx: 1,
-        nameEn: '',
-        nameKo: '',
-        summary: '',
-        thumbnail: '',
-        userGrade: 5,
-      },
-      capsuleDetail: {
-        idx: 1,
-        company: '',
-        description: '',
-        machineType: '',
-        origin: '',
-        capsule: {
-          idx: 1,
-          nameEn: '',
-          nameKo: '',
-          summary: '',
-          thumbnail: '',
-          userGrade: 5,
-        },
-      },
-      capsuleScore: {
-        idx: 1,
-        acidity: 3,
-        balance: 4,
-        bitterness: 2,
-        body: 5,
-        coffeeingNote: '',
-        flavor: 4,
-        roasting: 3,
-        capsule: {
-          idx: 1,
-          nameEn: '',
-          nameKo: '',
-          summary: '',
-          thumbnail: '',
-          userGrade: 5,
-        },
-      },
-    },
-  ]);
-  const [ageCapsule, setAgeCapsule] = useState([
-    {
-      capsule: {
-        idx: 1,
-        nameEn: 'Test Capsule',
-        nameKo: '테스트 캡슐',
-        summary: 'This is a test capsule.',
-        thumbnail: 'default_capsule.png',
-        userGrade: 5,
-      },
-      capsuleDetail: {
-        idx: 1,
-        company: 'Nespresso',
-        description: 'This is a test capsule.',
-        machineType: 'original',
-        origin: 'Unknown',
-        capsule: {
-          idx: 1,
-          nameEn: 'Test Capsule',
-          nameKo: '테스트 캡슐',
-          summary: 'This is a test capsule.',
-          thumbnail: 'default_capsule.png',
-          userGrade: 5,
-        },
-      },
-      capsuleScore: {
-        idx: 1,
-        acidity: 3,
-        balance: 4,
-        bitterness: 2,
-        body: 5,
-        coffeeingNote: 'This is a test capsule.',
-        flavor: 4,
-        roasting: 3,
-        capsule: {
-          idx: 1,
-          nameEn: 'Test Capsule',
-          nameKo: '테스트 캡슐',
-          summary: 'This is a test capsule.',
-          thumbnail: 'default_capsule.png',
-          userGrade: 5,
-        },
-      },
-    },
-  ]);
+  const [capsule, setCapsule] = useState<CapsuleDetailType[] | null>(null);
+  const [ageCapsule, setAgeCapsule] = useState<CapsuleDetailType[] | null>(
+    null,
+  );
 
   const cutArr = (arr: []) => {
     return arr.slice(0, 4);
@@ -239,9 +109,11 @@ const Page2Carousel = () => {
           })}
         </InDiv>
         <InDiv>
-          {/* {capsule.map((data: CapsullProps, i) => {
-            return <CoffeeCapSule key={i} capsuleData={data} />;
-          })} */}
+          {capsule
+            ? capsule.map((data: CapsuleDetailType, i) => {
+                return <CoffeeCapSule key={i} capsuleData={data} />;
+              })
+            : null}
         </InDiv>
       </BigDiv>
       <BigDiv>
@@ -252,9 +124,11 @@ const Page2Carousel = () => {
           })}
         </InDiv>
         <InDiv>
-          {/* {ageCapsule.map((data: CapsullProps, i) => {
-            return <CoffeeCapSule key={i} capsuleData={data} />;
-          })} */}
+          {ageCapsule
+            ? ageCapsule.map((data: CapsuleDetailType, i) => {
+                return <CoffeeCapSule key={i} capsuleData={data} />;
+              })
+            : null}
         </InDiv>
       </BigDiv>
     </Carousel>
