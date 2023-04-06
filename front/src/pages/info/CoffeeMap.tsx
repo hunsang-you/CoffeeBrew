@@ -515,7 +515,13 @@ function CoffeeMap() {
             >
               {' '}
             </div>
-            <div style={{ color: '#B2FA5C', marginRight: '32px' }}>
+            <div
+              style={{
+                color: '#B2FA5C',
+                marginRight: '32px',
+                marginTop: '8px',
+              }}
+            >
               {' '}
               : 아라비카
             </div>
@@ -530,7 +536,9 @@ function CoffeeMap() {
             >
               {' '}
             </div>
-            <div style={{ color: '#F53', marginRight: '32px' }}>
+            <div
+              style={{ color: '#F53', marginRight: '32px', marginTop: '8px' }}
+            >
               {' '}
               : 로부스타
             </div>
@@ -545,7 +553,13 @@ function CoffeeMap() {
             >
               {' '}
             </div>
-            <div style={{ color: '#3296FF', marginRight: '32px' }}>
+            <div
+              style={{
+                color: '#3296FF',
+                marginRight: '32px',
+                marginTop: '8px',
+              }}
+            >
               {' '}
               : 둘 다
             </div>
