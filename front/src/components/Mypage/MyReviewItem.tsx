@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-
+import { useState, useEffect } from 'react';
 import bean from '../../assets/tempImg/bean.png';
 import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
@@ -9,6 +9,16 @@ import { reviewAPI, memberAPI } from '../../api/api';
 import NoReviewImg from '../../assets/tempImg/NoReviewImg.png';
 import { useNavigate } from 'react-router-dom';
 import { ReviewPageType } from './MyReview';
+import acidityCapsuleImg from '../../assets/detailImg/acidityCapsule.svg';
+import flavorCapsuleImg from '../../assets/detailImg/flavorCapsule.svg';
+import bodyCapsuleImg from '../../assets/detailImg/bodyCapsule.svg';
+import bitterCapsuleImg from '../../assets/detailImg/bitterCapsule.svg';
+import roastingCapsuleImg from '../../assets/detailImg/roastingCapsule.svg';
+import acidityImg from '../../assets/detailImg/acidityBean.svg';
+import bitternessImg from '../../assets/detailImg/bitterBean.svg';
+import sweetnessImg from '../../assets/detailImg/sweetBean.svg';
+import flavorImg from '../../assets/detailImg/flavorBean.svg';
+import bodyImg from '../../assets/detailImg/bodyBean.svg';
 
 const ReviewBody = tw.div` flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;
@@ -44,6 +54,22 @@ const MyReviewItem = ({
   setMemberReviews,
 }: PropsTypes) => {
   const navigate = useNavigate();
+  const [capsuleImg, setCapsuleImg] = useState([
+    acidityCapsuleImg,
+    bitterCapsuleImg,
+    flavorCapsuleImg,
+    bodyCapsuleImg,
+    roastingCapsuleImg,
+  ]);
+  const [beanImg, setBeanImg] = useState([
+    acidityImg,
+    bitternessImg,
+    flavorImg,
+    bodyImg,
+    sweetnessImg,
+  ]);
+  const [imgIdx, setImgIdx] = useState(0);
+
   const Rating = {
     향: reviewData.flavor,
     산미: reviewData.acidity,
@@ -52,6 +78,16 @@ const MyReviewItem = ({
     쓴맛: reviewData.bitterness,
     총점: reviewData.overall,
   };
+  useEffect(() => {
+    const acidity = reviewData.acidity;
+    const bitter = reviewData.bitterness;
+    const body = reviewData.body;
+    const flavor = reviewData.flavor;
+    const sweetness = reviewData.sweetness;
+    const values: any[] = [acidity, bitter, body, flavor, sweetness];
+    const maxIndex: number = values.indexOf(Math.max(...values));
+    setImgIdx(maxIndex);
+  }, []);
   const beanScore = () => {
     const scoreItem = [];
     const scoreArray = Object.entries(Rating);
@@ -111,7 +147,10 @@ const MyReviewItem = ({
                     console.log(request);
                     setMemberReviews(request.data.value);
                   })
-                  .catch((e) => console.log(e));
+                  .catch((e) => {
+                    console.log(e);
+                    window.location.reload();
+                  });
               })
               .catch((e) => console.log(e));
           }}
@@ -142,7 +181,14 @@ const MyReviewItem = ({
                   '시'
                 : null}
             </div>
-            <BeanImg src={bean} alt="no_img" />
+            <BeanImg
+              src={
+                reviewData.itemType === 'capsule'
+                  ? capsuleImg[imgIdx]
+                  : beanImg[imgIdx]
+              }
+              alt="no_img"
+            />
             <p
               style={{
                 fontSize: '20px',

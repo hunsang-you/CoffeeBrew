@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import { memberAPI, detailAPI } from '../../api/api';
 import { detailType } from '../Detail/DetailBean';
+import LikeBeanListItem from './LikeBeanListItem';
 // 예시 이미지
 import bean2 from '../../assets/tempImg/bean.png';
 import NoLikeImg from '../../assets/tempImg/NoLikeImg.png';
@@ -52,62 +53,18 @@ const LikeBeanList = () => {
     getLikesBean();
   }, [isLikeCheck]);
 
-  const handleLike = () => {
-    setIsLikeCheck(!isLikeCheck);
-  };
-
   return (
     <List style={{ display: 'flex', flexWrap: 'wrap' }}>
       {likeBeans.length > 0 ? (
         likeBeans.map((bean: detailType, i: number) => {
           return (
-            <CardBody>
-              <BeanImg src={bean2} alt="bean" />
-              <CardContent style={{ backgroundColor: '#FFF0CE' }}>
-                <div
-                  style={{
-                    wordBreak: 'break-word',
-                    overflow: 'scroll',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  <BeanName>{bean.nameKo}</BeanName>
-                  <BeanCountry>원산지 : {bean.origin}</BeanCountry>
-                  <BeanDescription>{bean.description}</BeanDescription>
-                </div>
-              </CardContent>
-              <FixedDiv
-                style={{
-                  bottom: 0,
-                  backgroundColor: 'rgb(0, 0, 0, 0.7)',
-                }}
-              >
-                <AiFillHeart
-                  size={42}
-                  style={{
-                    color: 'red',
-                    marginLeft: '8px',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => {
-                    detailAPI
-                      .beanLike(Number(beanIdx[i]))
-                      .then((request) => {
-                        console.log('좋아요 해제');
-                        handleLike();
-                      })
-                      .catch((e) => console.log(e));
-                  }}
-                />
-                <LinkBtn
-                  onClick={() => {
-                    navigate(`/detail/bean/${beanIdx[i]}`);
-                  }}
-                >
-                  상세보기
-                </LinkBtn>
-              </FixedDiv>
-            </CardBody>
+            <LikeBeanListItem
+              bean={bean}
+              i={i}
+              setIsLikeCheck={setIsLikeCheck}
+              isLikeCheck={isLikeCheck}
+              beanIdx={beanIdx}
+            />
           );
         })
       ) : (
