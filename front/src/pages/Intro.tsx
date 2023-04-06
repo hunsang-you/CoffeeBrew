@@ -66,7 +66,7 @@ const Intro = ({ setIsFooter }: IsFooterType) => {
 
 export default Intro;
 
-const OutDiv = tw.div`mt-1/10 flex justify-around content-center`;
+const OutDiv = tw.div`my-auto flex justify-around content-center`;
 const InnerDiv = tw.div`flex flex-col justify-center content-center`;
 const ImgDiv = tw.img``;
 const TitleDiv = tw.div`text-9xl font-extrabold text-center mt-12 text-white z-50`;
