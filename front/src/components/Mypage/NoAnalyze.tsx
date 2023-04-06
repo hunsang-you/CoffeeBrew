@@ -5,7 +5,7 @@ import { RootState } from '../../store';
 import { useNavigate } from 'react-router-dom';
 
 const NoAnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
-const NoComment = tw.div`text-xl font-bold text-left ml-5 mb-5`;
+const NoComment = tw.div`text-2xl font-bold text-left ml-10 mb-5 mt-5`;
 const NoUserTypeImg = tw.div`w-720 mx-auto`;
 const NoLinkBtn = tw.div` class="w-400 h-16 font-bold text-2xl text-white bg-brownBorder rounded-3xl cursor-pointer hover:scale-110 mx-auto my-10"`;
 
