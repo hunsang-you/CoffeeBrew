@@ -120,7 +120,7 @@ const DetailBean = (): JSX.Element => {
           <Title>이런 원두는 어떠세요?</Title>
         </div>
         {/* 캐러셀 부분 */}
-        <RecommendBean />
+        {/* <RecommendBean /> */}
       </BeanTop2>
       {/* 네번째 줄(리뷰) */}
       <BeanTop3 style={{ marginTop: '40px' }}>
