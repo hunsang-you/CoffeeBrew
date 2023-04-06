@@ -104,9 +104,15 @@ const Navbar = () => {
                   : 'text-mainColorBrown'
               }`}
               onClick={() => {
-                navigate('/survey');
-                setIsClick(false);
-                setMenuDropDownOpen(false);
+                if (reduxData.login) {
+                  navigate('/survey');
+                  setIsClick(false);
+                  setMenuDropDownOpen(false);
+                } else {
+                  alert('로그인이 필요합니다.');
+                  setIsClick(false);
+                  setMenuDropDownOpen(false);
+                }
               }}
             >
               원두 성향 테스트

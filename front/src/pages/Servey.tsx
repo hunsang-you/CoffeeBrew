@@ -13,8 +13,8 @@ import {
   Servey8,
 } from '../components/servey';
 import tw from 'tailwind-styled-components';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, setMemberInfo } from '../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, setMemberInfo, RootState } from '../store';
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +22,7 @@ interface IsFooterType {
 
 const Survey = ({ setIsFooter }: IsFooterType) => {
   const navigate = useNavigate();
+  const reduxData = useSelector((state: RootState) => state);
   const [page, setPage] = useState<number>(1);
   const [select, setSelect] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
   const dispatch = useDispatch<AppDispatch>();
@@ -47,7 +48,12 @@ const Survey = ({ setIsFooter }: IsFooterType) => {
         });
     }
   };
-
+  useEffect(() => {
+    if (!reduxData.login) {
+      alert('로그인이 필요한 페이지입니다.');
+      navigate('/');
+    }
+  });
   useEffect(() => {
     setPage(1);
   }, []);
