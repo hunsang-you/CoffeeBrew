@@ -42,7 +42,7 @@ const RecommendCapsuleList = ({ data, i }: Propstypes) => {
 
   return (
     <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-      <RecomItemImg src={capsuleImg[i]} />
+      <RecomItemImg src={capsuleImg[imgIdx]} />
       <RecomItemB>
         <RecomItemName>{data.capsule.nameKo}</RecomItemName>
         <RecomInfo>
