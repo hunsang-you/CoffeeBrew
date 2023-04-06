@@ -34,7 +34,13 @@ interface recomType {
 
 const RecommendBean = (): JSX.Element => {
   const { beanId } = useParams() as { beanId: string };
-  const [cardImg, setCardImg] = useState<string[]>([]);
+  const [cardImg, setCardImg] = useState<string[]>([
+    acidityImg,
+    acidityImg,
+    acidityImg,
+    acidityImg,
+    acidityImg,
+  ]);
   const [recommendBeanList, setRecommendBeanList] = useState<
     recomType[] | null
   >(null);
@@ -140,25 +146,20 @@ const RecommendBean = (): JSX.Element => {
                 flavor,
                 sweetness,
               })[maxIndex];
-              console.log(maxVar);
-              setCardImg(() => {
-                const ne = ['1'];
-                let addImg = [];
-                if (maxVar === 'acidity') {
-                  addImg.push(acidityImg);
-                } else if (maxVar === 'bitter') {
-                  addImg.push(bitterImg);
-                } else if (maxVar === 'body') {
-                  addImg.push(bodyImg);
-                } else if (maxVar === 'flavor') {
-                  addImg.push(flavorImg);
-                } else if (maxVar === 'sweetness') {
-                  addImg.push(sweetImg);
-                }
-                return [...cardImg, addImg[0]];
-              });
-
+              let tempImg = [...cardImg];
+              if (maxVar === 'acidity') {
+                tempImg[i] = acidityImg;
+              } else if (maxVar === 'bitter') {
+                tempImg[i] = bitterImg;
+              } else if (maxVar === 'body') {
+                tempImg[i] = bodyImg;
+              } else if (maxVar === 'flavor') {
+                tempImg[i] = flavorImg;
+              } else if (maxVar === 'sweetness') {
+                tempImg[i] = sweetImg;
+              }
               console.log('test' + i);
+              setCardImg(tempImg);
 
               return (
                 <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
