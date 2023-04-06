@@ -53,13 +53,6 @@ const Chart = ({ detailCapsuleScore }: PropsTypes) => {
       // enabled : true => 점마다 label생김
       dataLabels: {
         enabled: false,
-        // background: {
-        //   enabled: true,
-        //   borderRadius: 7,
-        // },
-        // style: {
-        //   colors: ['#D9D9D9'],
-        // },
       },
       plotOptions: {
         // 차트의 크기,위치 및 색깔 지정
@@ -87,10 +80,6 @@ const Chart = ({ detailCapsuleScore }: PropsTypes) => {
               return subject + `(${options.series[0].data[index]})`;
             }
           },
-          //   rotate: -45,
-          //   formatter: (value, index) => {
-          //     return this.props.subjects[index];
-          //   },
         },
       },
 
@@ -98,13 +87,7 @@ const Chart = ({ detailCapsuleScore }: PropsTypes) => {
       yaxis: {
         // show -> true시 y축에 기준 표시, style로 조정
         show: false,
-        // labels: {
-        //   style: {
-        //     fontSize: '12px',
-        //     fontWeight: 500,
-        //   },
-        //   offsetX: 8,
-        //   offsetY: 0,
+        max: 5,
         // },
       },
       // mousehover시 툴팁생김

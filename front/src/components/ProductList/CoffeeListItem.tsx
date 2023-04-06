@@ -69,6 +69,6 @@ const ProductItemT1 = tw(ProductItemT)`bg-brownBorder rounded-b-2xl`;
 const ProductItemImg = tw.img`w-32 h-48  mx-auto mt-4  `;
 
 const ProductItemB = tw.div`w-72 h-44  justify-center  bg-navColor mt-10 rounded-b-2xl hover:drop-shadow-2xl`;
-const ProductItemName = tw.div`text-productTextBrown pt-4 font-bold break-words mx-4 text-xl `;
-const ProductItemEngName = tw.div`text-productTextBrown font-bold break-words mx-4 `;
+const ProductItemName = tw.div`text-productTextBrown pt-4 font-bold break-words mx-4 text-base `;
+const ProductItemEngName = tw.div`text-productTextBrown font-bold break-words mx-4 text-sm `;
 const ProductInfo = tw.div`h-12 text-nameColor overflow-scroll mx-4`;
