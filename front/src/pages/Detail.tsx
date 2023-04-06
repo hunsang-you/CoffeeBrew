@@ -1,5 +1,5 @@
 import DetailBean from '../components/Detail/DetailBean';
-
+import DetailCapsule from '../components/detailcapsule/DetailCapsule';
 import { Route, Routes } from 'react-router-dom';
 import * as S from '../components/useageStyle';
 import { useEffect } from 'react';
@@ -15,7 +15,8 @@ const Detail = ({ setIsFooter }: IsFooterType) => {
   return (
     <S.ContentContainer>
       <Routes>
-        <Route path="" element={<DetailBean />} />
+        <Route path="/bean/:beanId" element={<DetailBean />} />
+        <Route path="/capsule/:capsuleId" element={<DetailCapsule />} />
       </Routes>
     </S.ContentContainer>
   );

@@ -30,7 +30,7 @@ const CapsuleListShow = ({ listDatas }: PropsTypes) => {
             <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
               <ProductItemImg
                 src={capsule}
-                onClick={() => navigate(`/detail/${data.idx}`)}
+                onClick={() => navigate(`/detail/capsule/${data.idx}`)}
               />
               <ProductItemB>
                 <ProductItemName>{data.nameKo}</ProductItemName>
@@ -50,7 +50,7 @@ export default CapsuleListShow;
 const ListDiv = tw.div`text-center my-10`;
 
 const ProductList = tw.div`flex mx-20 flex-wrap `;
-const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl my-12 ml-10 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 `;
+const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl my-12 ml-10 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 overflow-scroll`;
 const ProductItemT1 = tw(ProductItemT)`bg-brownBorder rounded-b-2xl`;
 const ProductItemImg = tw.img`w-32 h-48  mx-auto mt-4  `;
 

@@ -42,6 +42,7 @@ export interface reviewType {
     nickname: string | null;
     hashcode: string | null;
     snsType: string | null;
+    ageRange: string | null;
   };
   itemType: string;
   itemIdx: number;
@@ -74,33 +75,6 @@ const DetailBean = (): JSX.Element => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const recbeanRef = useRef<HTMLDivElement>(null);
-  const recotherRef = useRef<HTMLDivElement>(null);
-  const reviewRef = useRef<HTMLDivElement>(null);
-
-  // const handleClick = () => {
-  //   if (recbeanRef.current) {
-  //     const location: number = recbeanRef.current.offsetTop;
-  //     console.log(location);
-  //     window.scrollTo({ top: location - 80, behavior: 'smooth' });
-  //   }
-  // };
-
-  // const handleClick2 = () => {
-  //   if (recotherRef.current) {
-  //     const location: number = recotherRef.current.offsetTop;
-  //     console.log(location);
-  //     window.scrollTo({ top: location - 80, behavior: 'smooth' });
-  //   }
-  // };
-
-  // const handleClick3 = () => {
-  //   if (reviewRef.current) {
-  //     const location: number = reviewRef.current.offsetTop;
-  //     console.log(location);
-  //     window.scrollTo({ top: location - 80, behavior: 'smooth' });
-  //   }
-  // };
   useEffect(() => {
     const getDetailBean = async () => {
       await detailAPI
@@ -148,18 +122,6 @@ const DetailBean = (): JSX.Element => {
         {/* 캐러셀 부분 */}
         <RecommendBean />
       </BeanTop2>
-
-      {/* 세번째 줄(머신 / 분쇄도)*/}
-      {/* <BeanTop2>
-        <div ref={recotherRef}>
-          <Title id="RecOther">이렇게 먹어볼까요?</Title>
-        </div>
-        <RecOther>
-          <MachineInfo />
-          <Grinding />
-        </RecOther>
-      </BeanTop2> */}
-
       {/* 네번째 줄(리뷰) */}
       <BeanTop3 style={{ marginTop: '40px' }}>
         {/* <Review /> */}
@@ -193,14 +155,9 @@ const SideBar = tw.div`w-10 h-10
 border-4 border-brownBorder ml-auto top-100 bottom-40 right-20 rounded-full  hover:bg-brownBorder hover:scale-105 hover:text-white fixed`;
 // 해당 항목 이동
 const MoveTop = tw.div` h-10 text-3xl font-bold `;
-// const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-// const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-// const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
 
 // 두번째 추천칸
 const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
-// 기기 및 분쇄도
-const RecOther = tw.div`w-1040  flex justify-between `;
 // 세번째 리뷰칸
 const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down `;
 const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;

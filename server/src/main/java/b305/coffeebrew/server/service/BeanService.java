@@ -49,9 +49,6 @@ public class BeanService {
         this.beanRepository = beanRepository;
         this.beanDetailRepository = beanDetailRepository;
         this.beanScoreRepository = beanScoreRepository;
-        this.restTemplate = restTemplate;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
     }
 
     @Transactional
@@ -66,6 +63,7 @@ public class BeanService {
             throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
         }
 
+        long idx = bean.getIdx();
         String nameKo = bean.getNameKo();
         String nameEn = bean.getNameEn();
         String summary = bean.getSummary();
@@ -89,6 +87,7 @@ public class BeanService {
         String roastingPoint = beanScore.getRoastingPoint();
 
         return BeanDetailPageResDTO.builder()
+                .idx(idx)
                 .nameKo(nameKo)
                 .nameEn(nameEn)
                 .summary(summary)

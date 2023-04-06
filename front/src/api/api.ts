@@ -34,7 +34,14 @@ export const detailAPI = {
   getBean: (id: number) => api.get(`/item/bean/${id}`),
   /**원두 좋아요 조회 */
   beanLike: (id: number) => api.get(`member/like/toggle/bean/${id}`),
-  recommendBean: (id: number) => api.get(`recom/bean/${id}`),
+  /**원두 아이템 기반 추천 */
+  recommendBean: (id: number) => api.get(`recom/item/bean/${id}`),
+  /**캡슐 상세 조회 */
+  getCapsule: (id: number) => api.get(`/item/capsule/${id}`),
+  /**캡슐 좋아요 */
+  capsuleLike: (id: number) => api.get(`member/like/toggle/capsule/${id}`),
+  /**캡슐 아이템 기반 추천 */
+  recommendCapsule: (id: number) => api.get(`recom/item/capsule/${id}`),
 };
 
 /**원두 리스트,검새,필터 가변인자 보내기 */
@@ -59,10 +66,13 @@ export const listAPI = {
 
 export const reviewAPI = {
   /**원두에 대한 리뷰 불러오기 */
+  getCapsuleReview: (id: number) => api.get(`review/capsule/${id}`),
+  /**캡슐에 대한 리뷰 불러오기 */
   getBeanReview: (id: number) => api.get(`review/bean/${id}`),
   /**리뷰작성 */
   createBeanReview: (
     id: number,
+    Type: string,
     content: string,
     overall: number,
     flavor: number,
@@ -72,7 +82,7 @@ export const reviewAPI = {
     body: number,
   ) =>
     api.post(`member/review`, {
-      itemType: 'bean',
+      itemType: Type,
       itemIdx: id,
       content: content,
       overall: overall,
@@ -90,6 +100,8 @@ export const reviewAPI = {
 
 // 메인페이지
 export const mainAPI = {
+  /** 비회원 추천 */
+  getNonRecom: (itemType: string | null) => api.get(`recom/item/${itemType}`),
   /** 연령대별 추천 */
   getAgeRecom: (ageRange: string | null, type: string | null) =>
     api.get(`recom/age/${ageRange}/${type}`),

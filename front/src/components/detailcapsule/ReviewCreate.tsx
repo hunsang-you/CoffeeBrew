@@ -81,7 +81,7 @@ const ReviewCreate = () => {
     });
     return Item;
   };
-  const { beanId } = useParams() as { beanId: string };
+  const { capsuleId } = useParams() as { capsuleId: string };
 
   return (
     <div>
@@ -173,8 +173,8 @@ const ReviewCreate = () => {
                 onClick={() => {
                   reviewAPI
                     .createBeanReview(
-                      Number(beanId), // 원두ID
-                      'bean',
+                      Number(capsuleId), // 원두ID
+                      'capsule',
                       reviewContent, // 내용
                       Number(scoreValue[5]) * 2, // 총점
                       Number(scoreValue[0]) * 2, // 향

@@ -1,20 +1,18 @@
 import tw from 'tailwind-styled-components';
 import Chart from './UserChart';
-import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import ratingfull from '../../assets/tempImg/ratingfull.png';
-import ratinghalf from '../../assets/tempImg/ratinghalf.png';
-import ratingempty from '../../assets/tempImg/ratingempty.png';
-import examtype from '../../assets/tempImg/examtype.png';
 import { SurveyType } from './MyProfile';
+import { useNavigate } from 'react-router-dom';
+import flavorImg from '../../assets/tempImg/flavorImg.webp';
+import sweetImg from '../../assets/tempImg/sweetImg.jpg';
+import bitterImg from '../../assets/tempImg/bitterImg.jpg';
+import acidityImg from '../../assets/tempImg/acidityImg.jpg';
+import bodyImg from '../../assets/tempImg/BodyImg.jpg';
 
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
-const Score = tw.img`w-8`;
-const LinkBtn = tw.div` font-bold text-xl text-white rounded-3xl mt-24 cursor-pointer hover:scale-110`;
-const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
-const UserTypeImg = tw.div`w-48 bg-red-200 mx-auto`;
+const LinkBtn = tw.div`w-344 h-16 my-8 mx-auto border-2 bg-brownBorder text-white font-bold text-xl rounded-3xl drop-shadow-2xl cursor-pointer hover:scale-110`;
 
 interface PropsTypes {
   survey: SurveyType;
@@ -22,69 +20,23 @@ interface PropsTypes {
 
 const Analyze = ({ survey }: PropsTypes) => {
   const reduxData = useSelector((state: RootState) => state);
+  const Navigate = useNavigate();
 
-  // const standard = userStandard.map((data, i) => {
-  //   return data;
-  // });
-
-  // const scoreList = userScore.map((data, i) => {
-  //   // console.log(data, i);
-  //   return data;
-  // });
-  // console.log('기준', standard);
-  // console.log('scoreList', scoreList);
-
-  //커피점수콩없애기
-  // const scoreArray = Object.entries(userData);
-  // const beanScore = () => {
-  //   const scoreItem = [];
-
-  //   for (let i = 0; i < scoreArray.length; i++) {
-  //     const score = scoreArray[i];
-  //     // score[0] = 기준, score[1] = 점수
-  //     // console.log(score); //  ['향', 5]
-  //     // .5인지 판별
-  //     const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
-
-  //     // 점수만큼 가득찬 이미지
-  //     const scoreRatingFull = [];
-  //     if (Number.isInteger(score[1])) {
-  //       for (let j = 0; j < score[1]; j++) {
-  //         scoreRatingFull.push(<Score src={ratingfull} key={j} />);
-  //       }
-  //     } else {
-  //       // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-  //       for (let k = 0; k < Math.floor(score[1]); k++) {
-  //         scoreRatingFull.push(<Score src={ratingfull} key={k} />);
-  //       }
-  //     }
-
-  //     // .5라면 반개 추가
-  //     const scoreRatingHalf = isHalfCheck ? <Score src={ratinghalf} /> : null;
-
-  //     const scoreRatingEmpty = [];
-  //     if (Number.isInteger(score[1])) {
-  //       for (let k = 0; k < 5 - score[1]; k++) {
-  //         scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
-  //       }
-  //     } else {
-  //       for (let k = 0; k < Math.floor(5 - score[1]); k++) {
-  //         scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
-  //       }
-  //     }
-
-  //     scoreItem.push(
-  //       <ScoreTitle key={i}>
-  //         <p style={{ marginRight: '16px', fontWeight: 'bold' }}>{score[0]}</p>
-  //         {scoreRatingFull} {scoreRatingHalf}
-  //         {scoreRatingEmpty}
-  //       </ScoreTitle>,
-  //     );
-  //   }
-
-  //   return scoreItem;
-  // };
-
+  const typeIndex = Number(survey.resultCode.slice(0, 1));
+  const dataImg = () => {
+    if (survey.resultCode.slice(0, 1) === '1') {
+      return <img src={flavorImg} />;
+    } else if (survey.resultCode.slice(0, 1) === '2') {
+      return <img src={acidityImg} />;
+    } else if (survey.resultCode.slice(0, 1) === '3') {
+      return <img src={sweetImg} />;
+    } else if (survey.resultCode.slice(0, 1) === '4') {
+      return <img src={bitterImg} />;
+    } else if (survey.resultCode.slice(0, 1) === '5') {
+      return <img src={bodyImg} />;
+    }
+  };
+  const colorList = ['#03C846', '#06AACE', '#9A6533', '#D4AA70', '#CBAC97'];
   return (
     <AnalyzeBody
       style={{
@@ -95,30 +47,76 @@ const Analyze = ({ survey }: PropsTypes) => {
       <div style={{ scale: '130%', marginTop: '40px' }}>
         <Chart survey={survey} />
       </div>
-      <Comment>
-        {' '}
-        {reduxData.memberInfo?.nickname}님의 선호도 분석 입니다
-      </Comment>
+      <Comment>{reduxData.memberInfo?.nickname}님의 선호도 분석 입니다</Comment>
       <div
-        style={{ display: 'flex', justifyContent: 'end', marginRight: '40px' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
       >
-        <UserTypeImg>
-          {/* <img src={examtype} alt="user_type" /> */}
-        </UserTypeImg>
-        <div style={{ marginTop: '50px' }}>{survey.coffeeing_note}</div>
-        {/* <div style={{ marginLeft: '16px' }}>
-          <LinkBtn
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          <div
             style={{
-              backgroundColor: '#98643D',
-              paddingLeft: '20px',
-              paddingRight: '20px',
-              paddingTop: '12px',
-              paddingBottom: '12px',
+              width: '250px',
+              height: '250px',
+              marginRight: '40px',
+              marginLeft: '20px',
             }}
           >
-            맞춤 커피 보러 가기
-          </LinkBtn>
-        </div> */}
+            {dataImg()}
+          </div>
+          <div style={{ marginLeft: '20px' }}>
+            <div
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              <p>당신의 취향은...</p>
+              <p style={{ color: colorList[Number(typeIndex)] }}>
+                {survey.resultType}!
+              </p>
+            </div>
+            <div
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                marginTop: '40px',
+              }}
+            >
+              <p>당신의 키워드는..</p>
+              <p style={{ color: colorList[Number(typeIndex)] }}>
+                {survey.coffeeing_note}
+              </p>
+              <p>입니다</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style={{ display: 'flex' }}>
+        <LinkBtn
+          onClick={() => {
+            Navigate('/coffeeList/bean');
+          }}
+        >
+          <div style={{ marginTop: '16px' }}>
+            나랑 잘맞는 원두를 찾아볼까요?
+          </div>
+        </LinkBtn>
+        <LinkBtn
+          onClick={() => {
+            Navigate('/coffeeList/capsule');
+          }}
+        >
+          <div style={{ marginTop: '16px' }}>
+            나랑 잘맞는 캡슐을 찾아볼까요?
+          </div>
+        </LinkBtn>
       </div>
     </AnalyzeBody>
   );
