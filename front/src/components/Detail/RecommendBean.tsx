@@ -122,77 +122,67 @@ const RecommendBean = (): JSX.Element => {
   return (
     <ListDiv>
       <RecomList>
-        {recommendBeanList.length > 4
-          ? recommendBeanList?.map((data, i) => {
-              const beanTaste = () => {
-                const acidity = data?.acidity;
-                const bitter = data?.bitterness;
-                const body = data?.body;
-                const flavor = data?.flavor;
-                const sweetness = data?.sweetness;
-                const values: any[] = [
-                  acidity,
-                  bitter,
-                  body,
-                  flavor,
-                  sweetness,
-                ];
-                const maxIndex: number = values.indexOf(Math.max(...values));
-                const maxVar = Object.keys({
-                  acidity,
-                  bitter,
-                  body,
-                  flavor,
-                  sweetness,
-                })[maxIndex];
-                console.log(maxVar);
-                console.log(cardImg);
-                if (maxVar === 'acidity') {
-                  if (i === 0) {
-                    setCardImg([acidityImg]);
-                  } else {
-                    setCardImg([...cardImg, acidityImg]);
-                  }
-                } else if (maxVar === 'bitter') {
-                  if (i === 0) {
-                    setCardImg([bitterImg]);
-                  } else {
-                    setCardImg([...cardImg, bitterImg]);
-                  }
-                } else if (maxVar === 'body') {
-                  if (i === 0) {
-                    setCardImg([bodyImg]);
-                  } else {
-                    setCardImg([...cardImg, bodyImg]);
-                  }
-                } else if (maxVar === 'flavor') {
-                  if (i === 0) {
-                    setCardImg([flavorImg]);
-                  } else {
-                    setCardImg([...cardImg, flavorImg]);
-                  }
-                } else if (maxVar === 'sweetness') {
-                  if (i === 0) {
-                    setCardImg([sweetImg]);
-                  } else {
-                    setCardImg([...cardImg, sweetImg]);
-                  }
-                }
-              };
-              beanTaste();
-              return (
-                <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-                  <RecomItemImg src={cardImg[i]} />
-                  <RecomItemB>
-                    <RecomItemName>{data.nameKo}</RecomItemName>
-                    <RecomInfo>
-                      <div>{data.summary}</div>
-                    </RecomInfo>
-                  </RecomItemB>
-                </RecomItemT1>
-              );
-            })
-          : null}
+        {recommendBeanList?.map((data, i) => {
+          const acidity = data?.acidity;
+          const bitter = data?.bitterness;
+          const body = data?.body;
+          const flavor = data?.flavor;
+          const sweetness = data?.sweetness;
+          const values: any[] = [acidity, bitter, body, flavor, sweetness];
+          const maxIndex: number = values.indexOf(Math.max(...values));
+          const maxVar = Object.keys({
+            acidity,
+            bitter,
+            body,
+            flavor,
+            sweetness,
+          })[maxIndex];
+          console.log(maxVar);
+          console.log(cardImg);
+          if (maxVar === 'acidity') {
+            if (i === 0) {
+              setCardImg([acidityImg]);
+            } else {
+              setCardImg([...cardImg, acidityImg]);
+            }
+          } else if (maxVar === 'bitter') {
+            if (i === 0) {
+              setCardImg([bitterImg]);
+            } else {
+              setCardImg([...cardImg, bitterImg]);
+            }
+          } else if (maxVar === 'body') {
+            if (i === 0) {
+              setCardImg([bodyImg]);
+            } else {
+              setCardImg([...cardImg, bodyImg]);
+            }
+          } else if (maxVar === 'flavor') {
+            if (i === 0) {
+              setCardImg([flavorImg]);
+            } else {
+              setCardImg([...cardImg, flavorImg]);
+            }
+          } else if (maxVar === 'sweetness') {
+            if (i === 0) {
+              setCardImg([sweetImg]);
+            } else {
+              setCardImg([...cardImg, sweetImg]);
+            }
+          }
+
+          return (
+            <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
+              <RecomItemImg src={cardImg[i]} />
+              <RecomItemB>
+                <RecomItemName>{data.nameKo}</RecomItemName>
+                <RecomInfo>
+                  <div>{data.summary}</div>
+                </RecomInfo>
+              </RecomItemB>
+            </RecomItemT1>
+          );
+        })}
       </RecomList>
     </ListDiv>
   );
