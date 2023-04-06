@@ -49,17 +49,17 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
     const scoreArray = Object.entries(Rating);
     for (let j = 0; j < scoreArray.length; j++) {
       const score = scoreArray[j];
-      const isHalfCheck = score[1] - Math.floor(score[1]) > 0;
+      const isHalfCheck = score[1] / 2 - Math.floor(score[1] / 2) > 0;
 
       // 점수만큼 가득찬 이미지
       const scoreRatingFull = [];
-      if (Number.isInteger(score[1])) {
-        for (let k = 0; k < score[1]; k++) {
+      if (Number.isInteger(score[1] / 2)) {
+        for (let k = 0; k < score[1] / 2; k++) {
           scoreRatingFull.push(<Score src={ratingfull} key={k} />);
         }
       } else {
         // 점수가 정수형이 아니라면 Int(score)-1 개만큼 출력
-        for (let k = 0; k < Math.floor(score[1]); k++) {
+        for (let k = 0; k < Math.floor(score[1] / 2); k++) {
           scoreRatingFull.push(<Score src={ratingfull} key={k} />);
         }
       }
@@ -68,12 +68,12 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
       const scoreRatingHalf = isHalfCheck ? <Score src={ratinghalf} /> : null;
 
       const scoreRatingEmpty = [];
-      if (Number.isInteger(score[1])) {
+      if (Number.isInteger(score[1] / 2)) {
         for (let k = 0; k < 5 - score[1] / 2; k++) {
           scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
         }
       } else {
-        for (let k = 0; k < Math.floor(5 - score[1]); k++) {
+        for (let k = 0; k < Math.floor(5 - score[1] / 2); k++) {
           scoreRatingEmpty.push(<Score src={ratingempty} key={k} />);
         }
       }
