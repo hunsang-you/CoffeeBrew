@@ -56,11 +56,11 @@ const Main = ({ setIsFooter }: IsFooterType) => {
         await memberAPI
           .memberSurvey()
           .then((request) => {
-            setSurvey(1);
+            setSurvey(2);
           })
           .catch((e) => {
             console.log(e);
-            setSurvey(2);
+            setSurvey(1);
           });
       };
       getInfo();
