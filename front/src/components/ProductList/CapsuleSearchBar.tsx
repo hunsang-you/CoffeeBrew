@@ -209,7 +209,7 @@ const CapsuleSearchBar = ({
   const handleMoreBtn3 = () => {
     setIsMoreState({
       ...isMoreState,
-      morebtn2: !isMoreState.morebtn3,
+      morebtn3: !isMoreState.morebtn3,
     });
   };
 
@@ -366,11 +366,11 @@ const CapsuleSearchBar = ({
     });
   };
   const SelectKeyword3 = () => {
-    const keywordEntries = Object.entries(keywordsSweet);
+    const keywordEntries = Object.entries(keywordsFlavor);
 
     return keywordEntries.map(([key, value]: string[]) => {
-      for (let i = 0; i < Object.keys(keywordsSweet).length + 1; i++) {
-        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
+      for (let i = 0; i < Object.keys(keywordsFlavor).length + 1; i++) {
+        if (isMoreState.morebtn3 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
               {isKeywordState3['keyword' + key] ? (
@@ -397,7 +397,7 @@ const CapsuleSearchBar = ({
         ) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
-              {isKeywordState2['keyword' + key] ? (
+              {isKeywordState3['keyword' + key] ? (
                 <CheckedKeyword
                   key={value}
                   onClick={() => handleKeyword3('keyword' + key)}
