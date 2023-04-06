@@ -5,12 +5,14 @@ import bean from '../../assets/tempImg/bean.png';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Chart from './Chart/apexchart';
 import { detailType } from './DetailBean';
-import { detailAPI } from '../../api/api';
+import { detailAPI, memberAPI } from '../../api/api';
 import acidityImg from '../../assets/detailImg/acidityBean.svg';
 import bitterImg from '../../assets/detailImg/bitterBean.svg';
 import sweetImg from '../../assets/detailImg/sweetBean.svg';
 import flavorImg from '../../assets/detailImg/flavorBean.svg';
 import bodyImg from '../../assets/detailImg/bodyBean.svg';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
 
 interface PropsType {
   detailBean: detailType;
@@ -18,7 +20,7 @@ interface PropsType {
 
 const BeanInfo = ({ detailBean }: PropsType) => {
   const [isLike, setIsLike] = useState(false);
-
+  const reduxData = useSelector((state: RootState) => state);
   const note = () => {
     const newwords = '#' + detailBean?.coffeeingNote.replaceAll(', ', '#');
     return newwords;
@@ -54,6 +56,14 @@ const BeanInfo = ({ detailBean }: PropsType) => {
 
   useEffect(() => {
     beanTaste();
+    const getLikesBeans = async () => {
+      await memberAPI
+        .memberLikesBeans()
+        .then((request) => {
+          console.log(request);
+        })
+        .catch((e) => console.log(e));
+    };
   }, []);
   return (
     <BeanTop1 id="Top">
@@ -61,34 +71,36 @@ const BeanInfo = ({ detailBean }: PropsType) => {
         {/* 커피이미지 컴포넌트 */}
         <BeanImg1 src={cardImg} alt="img" />
         <HeartImgLike>
-          {isLike ? (
-            <AiFillHeart
-              size={50}
-              onClick={() => {
-                setIsLike(false);
-                detailAPI
-                  .beanLike(Number(beanId))
-                  .then((request) => {
-                    console.log('like api 취소성공', request.data);
-                  })
-                  .catch((e) => console.log(e));
-              }}
-              style={{ color: 'red' }}
-            />
-          ) : (
-            <AiOutlineHeart
-              size={50}
-              onClick={() => {
-                setIsLike(true);
-                detailAPI
-                  .beanLike(Number(beanId))
-                  .then((request) =>
-                    console.log('like api 연결', request.data),
-                  );
-              }}
-              style={{ color: 'gray' }}
-            />
-          )}
+          {reduxData.login ? (
+            isLike ? (
+              <AiFillHeart
+                size={50}
+                onClick={() => {
+                  setIsLike(false);
+                  detailAPI
+                    .beanLike(Number(beanId))
+                    .then((request) => {
+                      console.log('like api 취소성공', request.data);
+                    })
+                    .catch((e) => console.log(e));
+                }}
+                style={{ color: 'red' }}
+              />
+            ) : (
+              <AiOutlineHeart
+                size={50}
+                onClick={() => {
+                  setIsLike(true);
+                  detailAPI
+                    .beanLike(Number(beanId))
+                    .then((request) =>
+                      console.log('like api 연결', request.data),
+                    );
+                }}
+                style={{ color: 'gray' }}
+              />
+            )
+          ) : null}
         </HeartImgLike>
       </BeanImgBox>
       {/* 최상단 우측(정보, 차트) */}
