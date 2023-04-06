@@ -27,6 +27,7 @@ interface CoffeeItem {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
+  idx: number;
 }
 
 interface propsData {
