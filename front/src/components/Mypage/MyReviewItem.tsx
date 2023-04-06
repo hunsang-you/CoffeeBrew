@@ -126,7 +126,7 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
                 marginBottom: '16px',
               }}
             >
-              원두이름(뭘채울까)
+              {reviewData.itemName}
             </p>
           </div>
 
