@@ -110,6 +110,7 @@ const RecommendBean = (): JSX.Element => {
       }
     };
     updateCardImg();
+    console.log('ddd');
   }, []);
   const BackColor: string[] = [
     '#FFAA01',
