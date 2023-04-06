@@ -1,15 +1,10 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import bean from '../../assets/tempImg/bean.png';
 import { detailAPI } from '../../api/api';
-import acidityImg from '../../assets/detailImg/acidityBean.svg';
-import bitterImg from '../../assets/detailImg/bitterBean.svg';
-import sweetImg from '../../assets/detailImg/sweetBean.svg';
-import flavorImg from '../../assets/detailImg/flavorBean.svg';
-import bodyImg from '../../assets/detailImg/bodyBean.svg';
+import RecommendBeanList from './RecommendBeanList';
 
-interface recomType {
+export interface recomType {
   flavor: number;
   acidity: number;
   sweetness: number;
@@ -34,7 +29,6 @@ interface recomType {
 
 const RecommendBean = (): JSX.Element => {
   const { beanId } = useParams() as { beanId: string };
-
   const [recommendBeanList, setRecommendBeanList] = useState<
     recomType[] | null
   >(null);
@@ -51,58 +45,15 @@ const RecommendBean = (): JSX.Element => {
     };
     recomBean();
   }, []);
-  const BackColor: string[] = [
-    '#FFAA01',
-    '#D4AA70',
-    '#E8D2A0',
-    '#F6842B',
-    '#D3BD94',
-  ];
-  const [cardImg, setCardImg] = useState<string[]>([]);
+
   return (
     <ListDiv>
       <RecomList>
-        {recommendBeanList?.map((data, i) => {
-          const beanTaste = () => {
-            const acidity = data?.acidity;
-            const bitter = data?.bitterness;
-            const body = data?.body;
-            const flavor = data?.flavor;
-            const sweetness = data?.sweetness;
-            const values: any[] = [acidity, bitter, body, flavor, sweetness];
-            const maxIndex: number = values.indexOf(Math.max(...values));
-            const maxVar = Object.keys({
-              acidity,
-              bitter,
-              body,
-              flavor,
-              sweetness,
-            })[maxIndex];
-            if (maxVar === 'acidity') {
-              setCardImg([...cardImg, acidityImg]);
-            } else if (maxVar === 'bitter') {
-              setCardImg([...cardImg, bitterImg]);
-            } else if (maxVar === 'body') {
-              setCardImg([...cardImg, bodyImg]);
-            } else if (maxVar === 'flavor') {
-              setCardImg([...cardImg, flavorImg]);
-            } else if (maxVar === 'sweetness') {
-              setCardImg([...cardImg, sweetImg]);
-            }
-          };
-          beanTaste();
-          return (
-            <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-              <RecomItemImg src={cardImg[i]} />
-              <RecomItemB>
-                <RecomItemName>{data.nameKo}</RecomItemName>
-                <RecomInfo>
-                  <div>{data.summary}</div>
-                </RecomInfo>
-              </RecomItemB>
-            </RecomItemT1>
-          );
-        })}
+        {recommendBeanList
+          ? recommendBeanList.map((data, i) => {
+              return <RecommendBeanList data={data} i={i} />;
+            })
+          : null}
       </RecomList>
     </ListDiv>
   );
