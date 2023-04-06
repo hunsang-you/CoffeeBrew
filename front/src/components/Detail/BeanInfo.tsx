@@ -10,7 +10,7 @@ import acidityImg from '../../assets/detailImg/acidityBean.svg';
 import bitterImg from '../../assets/detailImg/bitterBean.svg';
 import sweetImg from '../../assets/detailImg/sweetBean.svg';
 import flavorImg from '../../assets/detailImg/flavorBean.svg';
-import bodyImg from '../../assets/detailImg/bodyImg.svg';
+import bodyImg from '../../assets/detailImg/bodyBean.svg';
 
 interface PropsType {
   detailBean: detailType;
