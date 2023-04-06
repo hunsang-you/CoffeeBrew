@@ -2,6 +2,7 @@ package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
 import b305.coffeebrew.server.dto.bean.BeanResDTO;
+import b305.coffeebrew.server.dto.bean.BeanSearchResDTO;
 import b305.coffeebrew.server.dto.naverShopping.LinkDTO;
 import b305.coffeebrew.server.dto.naverShopping.NaverShoppingItemDTO;
 import b305.coffeebrew.server.dto.naverShopping.NaverShoppingResDTO;
@@ -110,16 +111,31 @@ public class BeanService {
                 .build();
     }
 
-    public Page<BeanResDTO> searchBeans(List<String> keywords, Pageable pageable) {
+    public Page<BeanSearchResDTO> searchBeans(List<String> keywords, Pageable pageable) {
         if (CollectionUtils.isEmpty(keywords)) {
-            return beanRepository.findAll(pageable).map(BeanResDTO::of);
+            List<Bean> beans = beanRepository.findAll(pageable).getContent();
+            List<BeanSearchResDTO> dtoList = new ArrayList<>();
+            for (Bean bean : beans) {
+                BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
+                dtoList.add(BeanSearchResDTO.of(bean, beanScore));
+            }
+            return new PageImpl<>(dtoList, pageable, dtoList.size());
         } else {
-            Set<Bean> result = new TreeSet<>(Comparator.comparing(Bean::getNameKo).thenComparing(Bean::getNameEn).thenComparing(Bean::getSummary));
+            Set<Bean> result = new TreeSet<>(Comparator.comparing(Bean::getNameKo)
+                    .thenComparing(Bean::getNameEn)
+                    .thenComparing(Bean::getSummary));
             for (String keyword : keywords) {
                 String processedKeyword = "%" + keyword.toLowerCase() + "%";
-                result.addAll(beanRepository.findBeansByKeyword(processedKeyword, pageable).getContent());
+                result.addAll(beanRepository.findBeansByKeyword(processedKeyword, pageable)
+                        .getContent());
             }
-            return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(BeanResDTO::of);
+            List<BeanSearchResDTO> dtoList = new ArrayList<>();
+            for (Bean bean : result.stream().limit(pageable.getPageSize())
+                    .collect(Collectors.toList())) {
+                BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
+                dtoList.add(BeanSearchResDTO.of(bean, beanScore));
+            }
+            return new PageImpl<>(dtoList, pageable, dtoList.size());
         }
     }
 }

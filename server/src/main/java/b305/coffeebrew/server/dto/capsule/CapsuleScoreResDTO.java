@@ -17,18 +17,20 @@ public class CapsuleScoreResDTO {
     private int flavor; // intensity -> flavor
     private int acidity; // 산미
     private int bitterness; // 쓴맛
+    private int sweetness; // 단맛
     private int body; // 바디감
     private int roasting; // 로스팅. 근데 int 맞냐?
     private String coffeeingNote; // 맛 상세
 
     @Builder
-    public CapsuleScoreResDTO(Long idx, CapsuleResDTO capsule, int balance, int flavor, int acidity, int bitterness, int body, int roasting, String coffeeingNote) {
+    public CapsuleScoreResDTO(Long idx, CapsuleResDTO capsule, int balance, int flavor, int acidity, int bitterness, int sweetness, int body, int roasting, String coffeeingNote) {
         this.idx = idx;
         this.capsule = capsule;
         this.balance = balance;
         this.flavor = flavor;
         this.acidity = acidity;
         this.bitterness = bitterness;
+        this.sweetness = sweetness;
         this.body = body;
         this.roasting = roasting;
         this.coffeeingNote = coffeeingNote;
@@ -42,6 +44,7 @@ public class CapsuleScoreResDTO {
                 .flavor(capsuleScore.getFlavor())
                 .acidity(capsuleScore.getAcidity())
                 .bitterness(capsuleScore.getBitterness())
+                .sweetness(capsuleScore.getSweetness())
                 .body(capsuleScore.getBody())
                 .roasting(capsuleScore.getRoasting())
                 .coffeeingNote(capsuleScore.getCoffeeingNote())
