@@ -11,7 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.Optional;
 
 @DynamicInsert
 @DynamicUpdate
@@ -69,6 +68,7 @@ public class Member extends BaseAtTime implements Serializable {
     public Member update(SignModReqDTO signModReqDTO) {
         this.profileImg = signModReqDTO.getProfileImg();
         this.nickname = signModReqDTO.getNickname();
+        this.kakaoId = signModReqDTO.getKakaoId();
         return this;
     }
 
