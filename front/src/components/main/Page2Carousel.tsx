@@ -29,33 +29,53 @@ type CoffeeItem = {
   roastingPoint?: string | null;
 };
 
-interface Capsule {
-  idx: number | null;
-  nameEn: string | null;
-  nameKo: string | null;
-  summary: string | null;
-  thumbnail: string | null;
-  userGrade: number | null;
+interface propsData {
+  [index: number]: CoffeeItem;
 }
 
-interface CapsuleScore {
-  idx: number | null;
-  acidity: number | null;
-  balance: number | null;
-  bitterness: number | null;
-  body: number | null;
-  coffeeingNote: string | null;
-  flavor: number | null;
-  roasting: number | null;
+type Capsule = {
+  idx?: number | null;
+  nameEn?: string | null;
+  nameKo?: string | null;
+  summary?: string | null;
+  thumbnail?: string | null;
+  userGrade?: number | null;
+};
+
+type CapsuleDetail = {
+  capsule?: Capsule;
+  company?: string | null;
+  description?: string | null;
+  idx?: number | null;
+  machineType?: string | null;
+  origin?: string | null;
+};
+
+type CapsuleScore = {
+  idx?: number | null;
+  acidity?: number | null;
+  balance?: number | null;
+  bitterness?: number | null;
+  body?: number | null;
+  capsule?: Capsule;
+  coffeeingNote?: string | null;
+  flavor?: number | null;
+  roasting?: number | null;
+};
+
+interface capsuledata {
   capsule: Capsule;
-}
-
-interface CapsuleData {
+  capsuleDetail: CapsuleDetail;
   capsuleScore: CapsuleScore;
 }
 
-interface propsData {
-  [index: number]: CoffeeItem;
+interface CapsullProps {
+  [index: number]: {
+    capsule: Capsule;
+    capsuleDetail: CapsuleDetail;
+    capsuleScore: CapsuleScore;
+    linkDTO: null | any;
+  };
 }
 
 const Page2Carousel = () => {
@@ -97,34 +117,92 @@ const Page2Carousel = () => {
   ]);
   const [capsule, setCapsule] = useState([
     {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
+      capsule: {
+        idx: 1,
+        nameEn: '',
+        nameKo: '',
+        summary: '',
+        thumbnail: '',
+        userGrade: 5,
+      },
+      capsuleDetail: {
+        idx: 1,
+        company: '',
+        description: '',
+        machineType: '',
+        origin: '',
+        capsule: {
+          idx: 1,
+          nameEn: '',
+          nameKo: '',
+          summary: '',
+          thumbnail: '',
+          userGrade: 5,
+        },
+      },
+      capsuleScore: {
+        idx: 1,
+        acidity: 3,
+        balance: 4,
+        bitterness: 2,
+        body: 5,
+        coffeeingNote: '',
+        flavor: 4,
+        roasting: 3,
+        capsule: {
+          idx: 1,
+          nameEn: '',
+          nameKo: '',
+          summary: '',
+          thumbnail: '',
+          userGrade: 5,
+        },
+      },
     },
   ]);
   const [ageCapsule, setAgeCapsule] = useState([
     {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
+      capsule: {
+        idx: 1,
+        nameEn: 'Test Capsule',
+        nameKo: '테스트 캡슐',
+        summary: 'This is a test capsule.',
+        thumbnail: 'default_capsule.png',
+        userGrade: 5,
+      },
+      capsuleDetail: {
+        idx: 1,
+        company: 'Nespresso',
+        description: 'This is a test capsule.',
+        machineType: 'original',
+        origin: 'Unknown',
+        capsule: {
+          idx: 1,
+          nameEn: 'Test Capsule',
+          nameKo: '테스트 캡슐',
+          summary: 'This is a test capsule.',
+          thumbnail: 'default_capsule.png',
+          userGrade: 5,
+        },
+      },
+      capsuleScore: {
+        idx: 1,
+        acidity: 3,
+        balance: 4,
+        bitterness: 2,
+        body: 5,
+        coffeeingNote: 'This is a test capsule.',
+        flavor: 4,
+        roasting: 3,
+        capsule: {
+          idx: 1,
+          nameEn: 'Test Capsule',
+          nameKo: '테스트 캡슐',
+          summary: 'This is a test capsule.',
+          thumbnail: 'default_capsule.png',
+          userGrade: 5,
+        },
+      },
     },
   ]);
 
@@ -157,26 +235,26 @@ const Page2Carousel = () => {
         <PageTitle>{usernick}님의 추천원두</PageTitle>
         <InDiv>
           {beanMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} beanData={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
-          {capsule.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} beanData={data} />;
-          })}
+          {/* {capsule.map((data: CapsullProps, i) => {
+            return <CoffeeCapSule key={i} capsuleData={data} />;
+          })} */}
         </InDiv>
       </BigDiv>
       <BigDiv>
         <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
         <InDiv>
           {ageMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} beanData={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
-          {ageCapsule.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} beanData={data} />;
-          })}
+          {/* {ageCapsule.map((data: CapsullProps, i) => {
+            return <CoffeeCapSule key={i} capsuleData={data} />;
+          })} */}
         </InDiv>
       </BigDiv>
     </Carousel>

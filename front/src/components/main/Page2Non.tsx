@@ -128,12 +128,12 @@ const Page2Non = () => {
         <PageTitle>모두가 사랑하는 원두</PageTitle>
         <InDiv>
           {nonBean1.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} beanData={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
           {noncapsule1.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} beanData={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
       </BigDiv>
@@ -141,12 +141,12 @@ const Page2Non = () => {
         <PageTitle>모두가 사랑하는 원두</PageTitle>
         <InDiv>
           {nonBean2.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} beanData={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
           {noncapsule2.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} beanData={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
       </BigDiv>

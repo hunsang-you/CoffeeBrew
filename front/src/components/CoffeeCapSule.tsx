@@ -7,32 +7,84 @@ import capBody from '../assets/coffeecard/cap_body.svg';
 import capFlavor from '../assets/coffeecard/cap_flavor.svg';
 import capSweetness from '../assets/coffeecard/cap_sweetness.svg';
 
-interface Capsule {
-  idx: number | null;
-  nameEn: string | null;
-  nameKo: string | null;
-  summary: string | null;
-  thumbnail: string | null;
-  userGrade: number | null;
+type Capsule = {
+  idx?: number | null;
+  nameEn?: string | null;
+  nameKo?: string | null;
+  summary?: string | null;
+  thumbnail?: string | null;
+  userGrade?: number | null;
+};
+
+type CapsuleDetail = {
+  capsule?: Capsule;
+  company?: string | null;
+  description?: string | null;
+  idx?: number | null;
+  machineType?: string | null;
+  origin?: string | null;
+};
+
+type CapsuleScore = {
+  idx?: number | null;
+  acidity?: number | null;
+  balance?: number | null;
+  bitterness?: number | null;
+  body?: number | null;
+  capsule?: Capsule;
+  coffeeingNote?: string | null;
+  flavor?: number | null;
+  roasting?: number | null;
+};
+
+interface CapsullProps {
+  capsuleData: {
+    capsule: Capsule;
+    capsuleDetail: CapsuleDetail;
+    capsuleScore: CapsuleScore;
+    linkDTO: null | any;
+  };
 }
 
-interface CapsuleScore {
-  idx: number | null;
-  acidity: number | null;
-  balance: number | null;
-  bitterness: number | null;
-  body: number | null;
-  coffeeingNote: string | null;
-  flavor: number | null;
-  roasting: number | null;
-  capsule: Capsule;
-}
+const CoffeeCapSule = ({ capsuleData }: CapsullProps) => {
+  const [taste, setTaste] = useState('');
+  const [cardImg, setCardImg] = useState('');
+  const [cardBg, setCardBg] = useState('white');
+  const capsuleTaste = () => {
+    const acidity = capsuleData.capsuleScore.acidity;
+    const bitter = capsuleData.capsuleScore.bitterness;
+    const body = capsuleData.capsuleScore.body;
+    const flavor = capsuleData.capsuleScore.flavor;
+    const balance = capsuleData.capsuleScore.balance;
+    const values: any[] = [acidity, bitter, body, flavor, balance];
+    const maxIndex: number = values.indexOf(Math.max(...values));
+    const maxVar = Object.keys({ acidity, bitter, body, flavor, balance })[
+      maxIndex
+    ];
 
-interface CapsuleData {
-  capsuleScore: CapsuleScore;
-}
+    if (maxVar === 'acidity') {
+      setCardImg(capAcidity);
+      setCardBg('#FEC200');
+      setTaste('산미');
+    } else if (maxVar === 'bitter') {
+      setCardImg(capBitter);
+      setCardBg('#ACA571');
+      setTaste('쓴맛');
+    } else if (maxVar === 'body') {
+      setCardImg(capBody);
+      setCardBg('#A33A1D');
+      setTaste('바디감');
+    } else if (maxVar === 'flavor') {
+      setCardImg(capFlavor);
+      setCardBg('#938EAE');
+      setTaste('향');
+    } else if (maxVar === 'balance') {
+      setCardImg(capSweetness);
+      setCardBg('#DB7624');
+      setTaste('단맛');
+    }
+  };
 
-const CoffeeCapSule = () => {
   return (
     <div>
       <h1>1</h1>
