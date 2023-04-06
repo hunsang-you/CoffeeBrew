@@ -64,6 +64,7 @@ const BeanInfo = ({ detailBean }: PropsType) => {
         })
         .catch((e) => console.log(e));
     };
+    getLikesBeans();
   }, []);
   return (
     <BeanTop1 id="Top">
