@@ -44,20 +44,22 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // OAuth2UserService를 통해 가져온 OAuth2User 값들로 oAuth2Attribute 객체 생성 ( oAuth2User.getAttributes() 에는 반환받은 JSON 값이 들어가있음 )
         OAuth2Attribute oAuth2Attribute = OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
+        log.debug("oAuth2User = {}", oAuth2User.getName());
         // 만들어진 객체를 map 형식으로 변환 후 OAuth2User 기본객체인 DefaultOAuth2User 생성후 리턴 ( 권한, 유저 데이터, nameAttributeKey ( 사용자 식별을 하기위한 키 ))
-        Member member = saveOrUpdate(oAuth2Attribute);
+        Member member = saveOrUpdate(oAuth2Attribute, oAuth2User.getName());
         log.debug("getAttributes = {}", oAuth2Attribute.getAttributes());
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(member.getRole())),
                 oAuth2Attribute.getAttributes(), "email");
     }
 
-    private Member saveOrUpdate(OAuth2Attribute attributes) {
-        Member member = memberRepository.findByMemberEmailAndExpiredIsFalse(attributes.getEmail())
-                .map(entity -> entity.update(new SignModReqDTO(attributes.getName(), attributes.getPicture(), attributes.getKakaoId())))
+    private Member saveOrUpdate(OAuth2Attribute attributes, String kakaoId) {
+        Member member = memberRepository.findByMemberEmail(attributes.getEmail())
+                .map(entity -> entity.update(new SignModReqDTO(attributes.getName(), attributes.getPicture(), Long.parseLong(kakaoId))))
                 .orElse(attributes.toEntity());
         member.setExpired(false);
+        member.setKakaoId(Long.parseLong(kakaoId));
+        log.info("Member Kakao Id = {} ", member.getKakaoId());
         return memberRepository.save(member);
     }
 }
