@@ -369,11 +369,11 @@ const SearchBar = ({
     const keywordEntries = Object.entries(keywordsSweet);
 
     return keywordEntries.map(([key, value]: string[]) => {
-      for (let i = 0; i < Object.keys(keywordsSweet).length + 1; i++) {
-        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
+      for (let i = 0; i < Object.keys(keywordsFlavor).length + 1; i++) {
+        if (isMoreState.morebtn3 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
-              {isKeywordState2['keyword' + key] ? (
+              {isKeywordState3['keyword' + key] ? (
                 <CheckedKeyword
                   key={value}
                   onClick={() => handleKeyword3('keyword' + key)}

@@ -113,10 +113,10 @@ const CapsuleSearchBar = ({
         }
       }
       const keys3 = Object.keys(isKeywordState3);
-      for (let i = 0; i < keys2.length; i++) {
+      for (let i = 0; i < keys3.length; i++) {
         const key = keys3[i];
         if (isKeywordState3[key]) {
-          newWords = [...newWords, `keywords=${keywordsSweet[i]}`];
+          newWords = [...newWords, `keywords=${keywordsFlavor[i]}`];
         }
       }
       if (textWord.length > 0) {

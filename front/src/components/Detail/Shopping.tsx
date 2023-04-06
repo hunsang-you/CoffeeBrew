@@ -29,7 +29,7 @@ const Shopping = ({ linkDTO }: PropsTypes) => {
 
 export default Shopping;
 const ShopList = tw.div`flex justify-between `;
-const ShopItemT = tw.div`w-40  border-2 justify-center rounded-t-2xl`;
+const ShopItemT = tw.div`w-40  border-2 justify-center rounded-t-2xl pt-3`;
 const ShopItemT1 = tw(ShopItemT)`bg-brownBorder border-0`;
 const ShopItemImg = tw.img`w-24 h-24 rounded-full mx-auto mt-2 `;
 
