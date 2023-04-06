@@ -82,13 +82,13 @@ fastapi, 추천알고리즘(collaborative filtering, content based filtering)
   > | &nbsp;   | &nbsp;            | Redux              | 8.0.5   |
   > | &nbsp;   | &nbsp;            | Redux-Toolkit      | 1.9.2   |
   > | &nbsp;   | IDE               | Visual Studio Code | 1.75.1  |
-  > | BackEnd  | Java              | OpenJDK            | 11.0.16 |
-  > | &nbsp;   | Build             | Gradle             | 7.5.1   |
-  > | &nbsp;   | Spring            | Boot               | 2.5.9   |
-  > | &nbsp;   | &nbsp;            | Security           | 2.1.7   |
+  > | BackEnd  | Java              | OpenJDK            | 11.0.15 |
+  > | &nbsp;   | Build             | Gradle             | 7.6.1   |
+  > | &nbsp;   | Spring            | Boot               | 2.7.9   |
+  > | &nbsp;   | &nbsp;            | Security           | 5.6.1   |
   > | &nbsp;   | API Docs          | Swagger2           | 2.9.2   |
   > | &nbsp;   | DB                | Mysql              | 8.0.32  |
-  > | &nbsp;   | &nbsp;            | Spring-Data-jpa    | 2.1.10  |
+  > | &nbsp;   | &nbsp;            | Spring-Data-jpa    | 2.6.0  |
   > | &nbsp;   | IDE               | IntelliJ           | 22.3.1  |
   > | Server   | AWS EC2           | Ubuntu             | 20.04   |
   > | &nbsp;   | 배포              | Docker             | 23.0.0  |
@@ -113,9 +113,6 @@ fastapi, 추천알고리즘(collaborative filtering, content based filtering)
 
 ![피그마]
 
-피그마를 활용하여 작성함
-
-와이어프레임 기획단계에서는 웹 화면으로 구상.
 
 <br>
 
