@@ -22,3 +22,147 @@ id,thumbnail,user_grade,title,coffeeing_note,company,flavor,bitterness,acidity,b
 21,?,0,Vanilio*,Vanilla,Nespresso,6,3,3,3,3,original
 22,?,0,Vivalto Lungo*,Floral / roasted,Nespresso,4,2,2,2,3,original
 23,?,0,Vivalto Lungo Decaffeinato*,Fruity / floral,Nespresso,4,2,2,2,3,original
+id,?,0,Aged Sumatra,"Woody, spicy, cocoa",Nespresso,7,3,1,3,4,original
+24,?,0,Amaha awe Uganda,"Sandalwood, floral",Nespresso,8,4,2,4,4,original
+25,?,0,Arpeggio,Intensely Roasted / Cocoa,Nespresso,9,4,2,4,4,original
+26,?,0,Arpeggio Decaffeinato,Intensely roasted / Cocoa,Nespresso,9,4,2,4,4,original
+27,?,0,Brazil Organic,"Malt cereal, sweet caramel",Nespresso,7,2,1,2,5,original
+28,?,0,Buenos Aires Lungo,Sweet / carmel / popcorn,Nespresso,4,1,2,1,1,original
+29,?,0,Cafecito de Cuba,"Smoky, wood, tobacco",Nespresso,10,4,1,3,4,original
+30,?,0,Cafecito de Puerto Rico,Cocoa and black pepper,Nespresso,11,?,?,?,?,original
+31,?,0,Cafezinho do Brasil,"Walnut, sandalwood & herbal.",Nespresso,9,4,1,4,4,original
+32,?,0,Cape Town Envivo Lungo,"Roastiness, Woody",Nespresso,10,4,1,4,5,original
+33,?,0,Capriccio,Cereals,Nespresso,5,3,3,2,2,original
+34,?,0,Caramel Cr?me Brulee,Caramel,Nespresso,?,1,1,2,2,original
+35,?,0,Caramello,Creamy & Caramel,Nespresso,?,2,3,2,2,original
+36,?,0,Chiaro,"Creamy carmel, sweet",Nespresso,?,1,?,?,1,original
+37,?,0,Cioccolatino,Creamy & Chocolately,Nespresso,?,2,3,2,2,original
+38,?,0,Cocoa Truffle,Dark chocolate,Nespresso,?,1,1,2,2,original
+39,?,0,Coconut Flavor Over Ice,"Coconut, vanilla",Nespresso,?,?,?,?,?,original
+40,?,0,Colombia,Fruity-winey,Nespresso,6,3,4,3,3,original
+41,?,0,Corto,Spicy,Nespresso,?,5,?,?,5,original
+42,?,0,Cosi,Cereals / Fruity,Nespresso,4,2,3,2,2,original
+43,?,0,Esperanza de Colombia,"Yellow fruit, cereal",Nespresso,5,3,3,3,3,original
+44,?,0,Ethiopia,Fruity-winey,Nespresso,4,2,4,2,2,original
+45,?,0,Filter Style Intense,Roasted & smoky,Nespresso,?,2,1,5,3,original
+46,?,0,Filter Style Mild,Floral & malted cereal,Nespresso,?,1,1,3,1,original
+id,?,0,Freddo Delicato,Fruity,Nespresso,?,?,?,?,?,original
+47,?,0,Freddo Intenso,"Cereal, woody",Nespresso,?,?,?,?,?,original
+48,?,0,Galapagos Special Reserve,"Sweet, cereal",Nespresso,7,3,2,3,4,original
+49,?,0,Hawaii Kona,"Nutty, fruity",Nespresso,5,2,3,3,2,original
+50,?,0,Honduras,"Cereal, cocoa",Nespresso,8,4,2,3,3,original
+51,?,0,Il Caff?,Cereal & woody,Nespresso,13,5,1,4,5,original
+52,?,0,India,Spicy,Nespresso,11,5,1,4,5,original
+53,?,0,Indonesia,Woody,Nespresso,8,3,2,4,4,original
+54,?,0,Istanbul Espresso,Fruit / almond,Nespresso,8,3,4,3,3,original
+55,?,0,Jamaica Blue Mountain,Pepper / Cinnamon / Nutmeg,Nespresso,7,3,2,3,4,original
+56,?,0,Kahawa ya Congo,"Biscuit, cereal, fruity",Nespresso,7,3,3,4,4,original
+57,?,0,Kazaar,Woody / Spicy,Nespresso,12,5,1,5,5,original
+58,?,0,La Cumplida Refinada,"Candied cherries, pomegranate",Nespresso,5,2,3,3,2,original
+59,?,0,Liminha Over Ice,Lime / mint,Nespresso,?,?,?,?,?,original
+60,?,0,Livanto,Caramel,Nespresso,6,3,3,3,3,original
+61,?,0,Miami,Pepper / tobacco,Nespresso,9,4,1,4,5,original
+62,?,0,Milano Intenso,Cocoa & cereal,Nespresso,8,3,2,3,4,original
+63,?,0,Millennio,Spicy and hint of fruit,Nespresso,8,3,3,3,3,original
+64,?,0,Nicaragua,Sweet honey,Nespresso,5,2,2,2,2,original
+65,?,0,Napoli,Woody / Spicy,Nespresso,13,5,1,5,5,original
+66,?,0,Nocciola,Rich & Nutty,Nespresso,?,2,3,2,2,original
+67,?,0,Novecento,Intense with heavy body,Nespresso,9,4,1,4,4,original
+68,?,0,Papua New Guinea,"Fruit, jam",Nespresso,5,2,3,3,2,original
+69,?,0,Paris Espresso,Cereal / Biscuit,Nespresso,6,3,2,3,3,original
+id,?,0,Peru Organic,Fruity-vegetables,Nespresso,6,3,4,3,3,original
+70,?,0,Pumpkin Spice Cake,"Pumpkin pie, clove",Nespresso,?,2,3,3,2,original
+71,?,0,Rio de Janeiro Espresso,Herbal / spicy,Nespresso,9,4,1,4,4,original
+72,?,0,Ristretto,Intensely Roasted / Fruity,Nespresso,10,4,3,4,4,original
+73,?,0,Ristretto Decaffeinato,Intensely roasted / Hint of fruity,Nespresso,10,4,3,4,4,original
+74,?,0,Roma,Woody / Cereals,Nespresso,8,4,4,3,3,original
+75,?,0,Scuro,Intense,Nespresso,?,3,?,?,2,original
+76,?,0,Shanghai Lungo,Orange / peach / fruit,Nespresso,5,1,2,2,2,original
+77,?,0,Stockholm Fortissio Lungo,Sweet Cereal / Malted,Nespresso,8,3,2,3,4,original
+78,?,0,Tamuka mu Zimbabwe,"Fruity, flowery",Nespresso,5,2,4,3,2,original
+79,?,0,Tokyo Vivalto Lungo,"Floral, Hint of fruit",Nespresso,6,2,1,3,3,original
+80,?,0,Tribute to Milano,"Chocolate, hazelnut & fruity",Nespresso,9,3,1,4,4,original
+81,?,0,Tribute to Trieste,Fruity-cereal,Nespresso,9,5,1,1,5,original
+82,?,0,Umutima wa Lake Kivu Rwanda,"Bright, juicy fruit",Nespresso,6,2,3,2,2,original
+83,?,0,Vaniglia,Velvety & Vanilla,Nespresso,?,2,3,2,2,original
+84,?,0,Vanilla ?clair,Vanilla,Nespresso,?,1,1,2,2,original
+85,?,0,Venezia,Mellow,Nespresso,8,3,1,4,4,original
+86,?,0,Vienna Linizio Lungo,"Malty Cereal, Sweet",Nespresso,6,2,1,2,3,original
+87,?,0,Volluto,Cereals / Fruity,Nespresso,4,2,3,2,2,original
+88,?,0,Volluto Decaffeinato,Cereal / Fruity,Nespresso,4,2,3,2,2,original
+89,?,0,Aged Sumatra,Woody & spicy,Nespresso,8,4,1,3,4,vertuo
+90,?,0,Altissio,Full-bodied and creamy,Nespresso,9,3,1,3,3,vertuo
+91,?,0,Altissio Decaffeinato,"Cereal, roasted",Nespresso,9,3,1,3,3,vertuo
+92,?,0,Alto Ambrato,Honeyed & delicate,Nespresso,7,2,1,3,2,vertuo
+93,?,0,Alto Onice,Roasted & woody,Nespresso,4,3,1,3,3,vertuo
+94,?,0,Amaha awe Uganda,"Woody, flowery",Nespresso,6,4,2,4,4,vertuo
+95,?,0,Arondio,Cereal and mild,Nespresso,6,4,3,3,3,vertuo
+96,?,0,Bianco Doppio,"Cereal, Caramel & biscuit",Nespresso,?,1,?,?,1,vertuo
+97,?,0,Bianco Forte,Dark roasted,Nespresso,?,4,?,?,5,vertuo
+98,?,0,Cafecito de Puerto Rico,Intense cocoa,Nespresso,10,4,1,3,5,vertuo
+99,?,0,Bianco Piccolo,Caramel and biscuit,Nespresso,?,2,?,?,3,vertuo
+100,?,0,Caramel Cookie,Caramel flavored,Nespresso,?,1,1,2,2,vertuo
+101,?,0,Chocolate Fudge,Dark chocolate flavored,Nespresso,?,1,1,2,2,vertuo
+102,?,0,Colombia,Fruity and winey,Nespresso,5,1,5,1,1,vertuo
+103,?,0,Costa Rica,Cereal and mild,Nespresso,7,2,0,3,3,vertuo
+104,?,0,Diavolitto,Highly intense and powerful,Nespresso,11,4,1,4,4,vertuo
+105,?,0,Double Espresso Chiaro,Dense and wild,Nespresso,8,3,1,2,3,vertuo
+106,?,0,Double Espresso Dolce,Cereal & malt,Nespresso,5,2,2,2,3,vertuo
+107,?,0,Double Espresso Scuro,Dark and bold,Nespresso,11,3,1,3,3,vertuo
+108,?,0,Esperanza de Colombia,"Fruit, cereal",Nespresso,5,2,3,3,3,vertuo
+109,?,0,Ethiopia,"Flowery, berry",Nespresso,4,1,3,2,2,vertuo
+110,?,0,Fortado,Intense and full-bodied,Nespresso,8,4,1,4,4,vertuo
+111,?,0,Fortado Decaffeinato,"Roasted, woody",Nespresso,8,4,1,4,4,vertuo
+112,?,0,Gingerbread LE,Gingerbread,Nespresso,?,1,1,2,2,vertuo
+113,?,0,Golden Caramel,Creamy & biscuity,Nespresso,?,1,1,2,2,vertuo
+114,?,0,Half-caffeinato,Sweet and velvety,Nespresso,5,1,1,2,2,vertuo
+115,?,0,Hawaii Kona LE,"Fruity, nutty",Nespresso,6,2,3,3,2,vertuo
+116,?,0,Hazelino Muffin,Hazelnut-flavored,Nespresso,?,1,1,2,2,vertuo
+117,?,0,Ice Forte,"Cereal, woody, peppery",Nespresso,?,?,?,?,?,vertuo
+118,?,0,Ice Leggero,"Toasted cereal, fruity",Nespresso,?,?,?,?,?,vertuo
+119,?,0,Il Caff?,"Cereal, spicy",Nespresso,11,4,1,4,5,vertuo
+120,?,0,Inizio,Floral & cereal,Nespresso,6,2,3,2,2,vertuo
+121,?,0,Intenso (coffee),Deep and dense,Nespresso,9,3,1,2,3,vertuo
+122,?,0,Jamaica Blue Mountain LE,"Woody, spicy",Nespresso,7,3,2,3,4,vertuo
+123,?,0,Kahawa ya Congo,"Cereal, nutty, fruity",Nespresso,6,2,2,3,2,vertuo
+124,?,0,Melozio,"Biscuity, cereal",Nespresso,6,2,1,3,3,vertuo
+125,?,0,Melozio Boost,"Biscuity, cereal",Nespresso,6,2,1,3,3,vertuo
+126,?,0,Melozio Decaffeinato,"Cereal, Honey",Nespresso,6,2,1,3,3,vertuo
+127,?,0,Mexico,Intense and spiced,Nespresso,7,3,1,3,4,vertuo
+128,?,0,Nicaragua La Cumplida,Fruity and candied,Nespresso,5,2,3,3,2,vertuo
+129,?,0,Odacio,Bold and lively,Nespresso,7,4,2,4,4,vertuo
+130,?,0,Orafio,"Cereal, liquorice, spicy",Nespresso,6,3,1,2,3,vertuo
+131,?,0,Papua New Guinea,Fruity / jammy,Nespresso,4,?,?,?,?,vertuo
+132,?,0,Peppermint Pinwheel LE,"Sweet candy, peppermint",Nespresso,?,?,?,?,?,vertuo
+133,?,0,Peru Organic,"Toasted sweet cereal, fruity",Nespresso,6,3,4,3,3,vertuo
+134,?,0,Pour-over Style Intense,Woody cedar,Nespresso,?,3,1,3,3,vertuo
+135,?,0,Pour-over Style Mild,"Cereal, sweet",Nespresso,?,2,1,3,2,vertuo
+136,?,0,Pumpkin Spice Cake LE,"Sweet pumpkin, cinnamon",Nespresso,5,1,1,2,2,vertuo
+137,?,0,Rich Chocolate,Creamy & chocolately,Nespresso,?,1,1,?,2,vertuo
+138,?,0,Roasted Hazelnut,Rich & nutty,Nespresso,?,1,1,2,2,vertuo
+139,?,0,Stormio,Rich and strong,Nespresso,8,4,1,4,4,vertuo
+140,?,0,Stormio Boost,"Spicy, woody",Nespresso,8,4,1,4,4,vertuo
+141,?,0,Solelio,Fruity and lightly-bodied,Nespresso,2,1,3,1,1,vertuo
+142,?,0,Sweet Vanilla,Creamy & sweet,Nespresso,?,1,1,2,2,vertuo
+143,?,0,Tamuka mu Zimbabwe,"Winey, berry",Nespresso,5,4,4,3,2,vertuo
+144,?,0,Toccanto,"Candied fruit, pineapple",Nespresso,5,2,3,2,2,vertuo
+145,?,0,Tropical Coconut Flavor Over Ice,"Coconut, vanilla",Nespresso,?,?,?,?,?,vertuo
+146,?,0,Vanilla Custard Pie,Vanilla flavored,Nespresso,?,1,1,2,2,vertuo
+147,?,0,Vivida B12,Sweet and cereal,Nespresso,6,2,1,3,3,vertuo
+148,?,0,Voltesso,Light and sweet,Nespresso,4,2,2,2,2,vertuo
+149,?,0,Whiskey Essence,Whiskey flavor & Ripe fruits,Nespresso,?,2,2,2,2,vertuo
+150,?,0,Aflorazio*,Floral and delicate,Nespresso,4,?,?,?,?,vertuo
+151,?,0,Bianco Leggero,Sweet biscuit,Nespresso,?,1,?,?,1,vertuo
+152,?,0,Decaffeinato*,Round and malty,Nespresso,6,?,?,?,?,vertuo
+153,?,0,Dolce*,Smooth & Round,Nespresso,4,?,?,?,?,vertuo
+154,?,0,Elvazio*,Delicate and fruity,Nespresso,4,?,?,?,?,vertuo
+155,?,0,Forest Almond Flavor,"Almond, vanilla",Nespresso,?,1,1,2,2,vertuo
+156,?,0,Forest Black,"Woody, spicy",Nespresso,6,2,1,3,3,vertuo
+157,?,0,Forest Fruit Flavor,"Juicy, berry, sweet pastry",Nespresso,?,1,1,2,2,vertuo
+158,?,0,Giornio*,Floral and velvety,Nespresso,4,?,?,?,?,vertuo
+159,?,0,Infinitely Double Espresso,Fruity & cereal,Nespresso,?,2,3,?,2,vertuo
+160,?,0,Infinitely Fruity Raspberry,Raspberry,Nespresso,?,3,2,?,3,vertuo
+161,?,0,Infinitely Gourmet Hazelnut,,Nespresso,?,3,2,?,3,vertuo
+162,?,0,Intenso (Alto)*,Smooth & Strong,Nespresso,7,?,?,?,?,vertuo
+163,?,0,"Intenso, Decaf (espresso)*",Dense and harmonious,Nespresso,7,?,?,?,?,vertuo
+164,?,0,"Ontuoso, Decaf*",Malty and unctuous,Nespresso,4,?,?,?,?,vertuo

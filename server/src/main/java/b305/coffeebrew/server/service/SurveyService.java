@@ -44,18 +44,19 @@ public class SurveyService {
         String[] params2 = {"00~00", "10~19", "20~29", "30~39", "40~49", "50~59"};
         // none, 스벅, 투썸, 파스, 이디야
         int[][] params3 = {{6, 6, 6, 6, 6}, {8, 4, 4, 9, 6}, {9, 5, 3, 7, 10}, {7, 10, 8, 6, 7}, {4, 8, 5, 6, 8}, {0, 0, 0, 0, 0}};
+        String[] params3_note = {"", "카라멜, 고소한, 풍부한", "견과류, 묵직한, 스모크", "과일, 초코, 균형있는", "견과류, 고소한, 중후한", ""};
         // 향, 산미, 단맛, 쓴맛, 목넘김
-        int[][] params4 = {{6, 6, 6, 6, 6}, {8, 0, 0, 0, 0}, {0, 8, 0, 0, 0}, {0, 0, 8, 0, 0}, {0, 0, 0, 8, 0}, {0, 0, 0, 0, 8}};
+        int[][] params4 = {{6, 6, 6, 6, 6}, {12, 0, 0, 0, 0}, {0, 12, 0, 0, 0}, {0, 0, 12, 0, 0}, {0, 0, 0, 12, 0}, {0, 0, 0, 0, 12}};
         // 아메리카노, 카페라떼, 바닐라라떼, 티
-        int[][] params5 = {{6, 6, 6, 6, 6}, {12, 7, 4, 10, 9}, {7, 3, 7, 4, 11}, {8, 2, 12, 2, 6}, {11, 5, 11, 1, 4}, {0, 0, 0, 0, 0}};
+        int[][] params5 = {{6, 6, 6, 6, 6}, {11, 7, 4, 10, 9}, {7, 3, 7, 4, 11}, {8, 2, 11, 2, 6}, {9, 5, 9, 1, 4}, {0, 0, 0, 0, 0}};
         // 과일타르트, 초코케이크, 호두파이
-        int[][] params6 = {{6, 6, 6, 6, 6}, {9, 5, 8, 2, 4}, {5, 1, 10, 4, 9}, {7, 0, 4, 7, 10}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
+        int[][] params6 = {{6, 6, 6, 6, 6}, {11, 9, 8, 2, 4}, {5, 2, 12, 4, 9}, {7, 0, 4, 7, 12}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}};
         String[] params6_note = {"", "과일, 풍부한", "초코, 부드러운", "견과류, 고소한", "", ""};
         // 사과, 복숭아, 베리, 오렌지, 바나나
-        int[][] params7 = {{6, 6, 6, 6, 6}, {6, 6, 7, 2, 3}, {12, 3, 10, 3, 2}, {5, 8, 6, 9, 4}, {8, 12, 4, 6, 5}, {7, 5, 9, 4, 10}};
+        int[][] params7 = {{6, 6, 6, 6, 6}, {6, 6, 7, 2, 3}, {12, 3, 10, 3, 2}, {5, 8, 6, 10, 4}, {8, 12, 4, 6, 5}, {7, 5, 9, 4, 12}};
         String[] params7_note = {"", "사과, 배", "체리, 복숭아", "베리, 커런트", "레몬, 오렌지, 귤", "망고, 바나나, 파인애플"};
         // 우디, 시트러스, 허브, 꽃, 허니
-        int[][] params8 = {{6, 6, 6, 6, 6}, {5, 1, 1, 9, 10}, {8, 10, 4, 1, 5}, {11, 2, 2, 3, 5}, {10, 3, 3, 3, 4}, {9, 0, 10, 0, 6}};
+        int[][] params8 = {{6, 6, 6, 6, 6}, {5, 1, 1, 9, 12}, {8, 12, 4, 1, 5}, {10, 4, 4, 12, 5}, {12, 3, 3, 3, 4}, {9, 0, 12, 0, 6}};
         String[] params8_note = {"", "우디", "시트러스", "허브", "플로럴", "허니"};
 
         String gender = params1[surveyReqDTO.getParam1()];
@@ -91,7 +92,8 @@ public class SurveyService {
         String resultType = resultTypes[idx1st];
 
         // 커핑 노트
-        String coffeeing_note = params6_note[surveyReqDTO.getParam6()];
+        String coffeeing_note = params3_note[surveyReqDTO.getParam3()];
+        coffeeing_note = params6_note[surveyReqDTO.getParam6()].length() > 0 ? coffeeing_note + ", " + params6_note[surveyReqDTO.getParam6()] : coffeeing_note;
         coffeeing_note = params7_note[surveyReqDTO.getParam7()].length() > 0 ? coffeeing_note + ", " + params7_note[surveyReqDTO.getParam7()] : coffeeing_note;
         coffeeing_note = params8_note[surveyReqDTO.getParam8()].length() > 0 ? coffeeing_note + ", " + params8_note[surveyReqDTO.getParam8()] : coffeeing_note;
 
