@@ -101,12 +101,11 @@ export const reviewAPI = {
 // 메인페이지
 export const mainAPI = {
   /** 비회원 추천 */
-  getNonRecom: (itemType: string | null) => api.get(`recom/item/${itemType}`),
+  getNonRecom: (itemType: string) => api.get(`recom/item/${itemType}`),
   /** 회원 추천 */
-  getRecommend: (itemType: string | null) =>
-    api.get(`member/recom/user/${itemType}`),
+  getRecommend: (itemType: string) => api.get(`member/recom/user/${itemType}`),
   /** 연령대별 추천 */
-  getAgeRecom: (ageRange: string | null, type: string | null) =>
+  getAgeRecom: (ageRange: string, type: string) =>
     api.get(`recom/age/${ageRange}/${type}`),
 };
 

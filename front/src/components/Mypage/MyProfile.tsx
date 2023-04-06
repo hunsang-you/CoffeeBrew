@@ -8,6 +8,7 @@ import dogprofile from '../../assets/tempImg/dogprofile.png';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import NoAnalyze from './NoAnalyze';
 
 const ProfileDiv = tw.div`w-1200   bg-background flex justify-between`;
 const ProfileLeft = tw.div`w-80 mt-20 ml-20  bg-nameTag drop-shadow-2xl justify-center rounded-t-full`;
@@ -218,7 +219,13 @@ const MyProfile = () => {
             </TypeBtnOff>
           )}
         </TypeBar>
-        {typeCheck[0] === true && survey ? <Analyze survey={survey} /> : null}
+        {typeCheck[0] === true ? (
+          survey ? (
+            <Analyze survey={survey} />
+          ) : (
+            <NoAnalyze />
+          )
+        ) : null}
         {typeCheck[1] === true ? <BeanLike /> : null}
         {typeCheck[2] === true ? <MyReview /> : null}
       </ProfileRight>
