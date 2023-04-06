@@ -73,7 +73,7 @@ public class ItemController {
     })
     public ResponseEntity<ResponseDTO> readBeanDetail(@PathVariable("beanId") long beanId) {
         BeanDetailPageResDTO beanDetailPageResDTO = beanService.getBeanDetail(beanId);
-        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(beanDetailPageResDTO.getNameKo(), beanDetailPageResDTO.getNameEn());
+        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(beanDetailPageResDTO.getNameKo() + " 원두", beanDetailPageResDTO.getNameEn() + " bean");
         if (naverLinks != null) {
             if (beanDetailPageResDTO.getLinkDTO() == null) {
                 beanDetailPageResDTO.setLinkDTO(new HashSet<>());
@@ -92,7 +92,7 @@ public class ItemController {
     })
     public ResponseEntity<ResponseDTO> readCapsuleDetail(@PathVariable("capsuleId") long capsuleId) {
         CapsuleDetailPageResDTO capsuleDetailPageResDTO = capsuleService.getCapsuleDetail(capsuleId);
-        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(capsuleDetailPageResDTO.getCapsule().getNameKo(), capsuleDetailPageResDTO.getCapsule().getNameEn());
+        Set<LinkDTO> naverLinks = naverService.searchNaverShopping(capsuleDetailPageResDTO.getCapsule().getNameKo() + " 캡슐", capsuleDetailPageResDTO.getCapsule().getNameEn() + " capsule");
         if (naverLinks != null) {
             if (capsuleDetailPageResDTO.getLinkDTO() == null) {
                 capsuleDetailPageResDTO.setLinkDTO(new HashSet<>());

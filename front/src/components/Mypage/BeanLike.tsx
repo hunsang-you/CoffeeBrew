@@ -4,7 +4,7 @@ import { useState } from 'react';
 import LikeBeanList from './LikeBeanList';
 import LikeCapsuleList from './LikeCapsule';
 
-const BeanLikeBody = tw.div`min-h-screen border-2 rounded-b-lg text-center  mb-4`;
+const BeanLikeBody = tw.div` border-2 rounded-b-lg text-center  mb-4`;
 const SelectTypeBar = tw.div`flex justify-center`;
 const SelectBtn = tw.div`w-120 h-10 flex bg-brownBorder rounded-full mx-4 my-4 justify-center text-xl text-white font-bold cursor-pointer drop-shadow-xl hover:scale-110`;
 const OffRoundBtn = tw.div`w-5 h-5 bg-gray-400 rounded-full mr-6 mt-2.5  `;
@@ -18,7 +18,7 @@ const BeanLike = () => {
   };
 
   return (
-    <BeanLikeBody style={{ border: 'solid 4px #03C846' }}>
+    <BeanLikeBody style={{ border: 'solid 4px #03C846', minHeight: '630px' }}>
       <SelectTypeBar>
         {isTypeCheck ? (
           <SelectBtn>

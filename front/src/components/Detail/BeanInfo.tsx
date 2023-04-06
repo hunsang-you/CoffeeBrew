@@ -6,9 +6,14 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Chart from './Chart/apexchart';
 import { detailType } from './DetailBean';
 import { detailAPI } from '../../api/api';
+import acidityImg from '../../assets/detailImg/acidityBean.svg';
+import bitterImg from '../../assets/detailImg/bitterBean.svg';
+import sweetImg from '../../assets/detailImg/sweetBean.svg';
+import flavorImg from '../../assets/detailImg/flavorBean.svg';
+import bodyImg from '../../assets/detailImg/bodyBean.svg';
 
 interface PropsType {
-  detailBean: detailType | null;
+  detailBean: detailType;
 }
 
 const BeanInfo = ({ detailBean }: PropsType) => {
@@ -21,11 +26,40 @@ const BeanInfo = ({ detailBean }: PropsType) => {
 
   const { beanId } = useParams() as { beanId: string };
 
+  // 이미지 출력
+  const [cardImg, setCardImg] = useState('');
+  const beanTaste = () => {
+    const acidity = detailBean.acidity;
+    const bitter = detailBean.bitterness;
+    const body = detailBean.body;
+    const flavor = detailBean.flavor;
+    const sweetness = detailBean.sweetness;
+    const values: any[] = [acidity, bitter, body, flavor, sweetness];
+    const maxIndex: number = values.indexOf(Math.max(...values));
+    const maxVar = Object.keys({ acidity, bitter, body, flavor, sweetness })[
+      maxIndex
+    ];
+    if (maxVar === 'acidity') {
+      setCardImg(acidityImg);
+    } else if (maxVar === 'bitter') {
+      setCardImg(bitterImg);
+    } else if (maxVar === 'body') {
+      setCardImg(bodyImg);
+    } else if (maxVar === 'flavor') {
+      setCardImg(flavorImg);
+    } else if (maxVar === 'sweetness') {
+      setCardImg(sweetImg);
+    }
+  };
+
+  useEffect(() => {
+    beanTaste();
+  }, []);
   return (
     <BeanTop1 id="Top">
       <BeanImgBox>
         {/* 커피이미지 컴포넌트 */}
-        <BeanImg1 src={bean} alt="img" />
+        <BeanImg1 src={cardImg} alt="img" />
         <HeartImgLike>
           {isLike ? (
             <AiFillHeart
@@ -87,7 +121,7 @@ export default BeanInfo;
 
 // 최상단 좌측
 const BeanTop1 = tw.div`flex justify-center ml-8 mr-8 mb-10 animate-fade-in-down`;
-const BeanImg1 = tw.img`object-cover mt-10 drop-shadow-xl`;
+const BeanImg1 = tw.img`w-60 mx-auto mt-10 drop-shadow-xl`;
 const HeartImgLike = tw.div`flex justify-center mt-2`;
 
 // 최상단 우측 설명

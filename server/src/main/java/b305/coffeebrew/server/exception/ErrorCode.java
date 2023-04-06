@@ -42,7 +42,9 @@ public enum ErrorCode {
     BEAN_NOT_FOUND(404, "원두 정보를 찾을 수 없습니다"),
     CAPSULE_NOT_FOUND(404, "캡슐 정보를 찾을 수 없습니다"),
 
-    RECOM_SERVER_ERROR(500, "추천 서버에 에러가 발생했습니다.");
+    RECOM_SERVER_ERROR(500, "추천 서버에 에러가 발생하였습니다."),
+
+    SURVEY_NOT_FOUND(500, "사용자의 설문 내용이 존재하지 않습니다.");
 
     private final int status;
     private final String message;

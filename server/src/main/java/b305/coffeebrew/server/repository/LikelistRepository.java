@@ -21,4 +21,5 @@ public interface LikelistRepository extends JpaRepository<Likelist, Long> {
     @Query("SELECT l FROM Likelist l WHERE l.itemType = :itemType AND l.member.idx = :memberIdx AND l.expired = false ORDER BY l.updatedDate DESC")
     List<Likelist> findTop9ByItemTypeAndMemberIdxOrderByUpdatedDateDesc(@Param("itemType") String itemType, @Param("memberIdx") Long memberIdx);
 
+    List<Likelist> findByMember(Member member);
 }

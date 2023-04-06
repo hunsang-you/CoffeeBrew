@@ -11,7 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.Optional;
 
 @DynamicInsert
 @DynamicUpdate
@@ -57,6 +56,9 @@ public class Member extends BaseAtTime implements Serializable {
     @Convert(converter = BooleanToYNConverter.class)
     private boolean expired;
 
+    @Column(name = "kakao_id")
+    private Long kakaoId;
+
     @Override
     public void prePersist() {
         super.prePersist();
@@ -66,6 +68,13 @@ public class Member extends BaseAtTime implements Serializable {
     public Member update(SignModReqDTO signModReqDTO) {
         this.profileImg = signModReqDTO.getProfileImg();
         this.nickname = signModReqDTO.getNickname();
+        this.kakaoId = signModReqDTO.getKakaoId();
+        return this;
+    }
+
+    public Member updateAgeAndGender(String ageRange, String gender) {
+        this.ageRange = ageRange;
+        this.gender = gender;
         return this;
     }
 

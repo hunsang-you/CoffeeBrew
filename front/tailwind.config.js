@@ -81,7 +81,7 @@ module.exports = {
           },
         },
       },
-      animation: { 'fade-in-up': 'fade-in-up 1s ease-out' },
+      animation: { 'fade-in-up': 'fade-in-up 0.3s ease-out' },
       backgroundImage: {
         mainBg1: "url('./assets/mainImg/bg1.png')",
         mainBg2: "url('./assets/mainImg/bg02.png')",
@@ -89,7 +89,7 @@ module.exports = {
         wordimg: "url('./assets/wordbg.png')",
       },
       spacing: {
-        47: '47%',
+        47: '46%',
         '1/10': '10%',
       },
       backgroundColor: {

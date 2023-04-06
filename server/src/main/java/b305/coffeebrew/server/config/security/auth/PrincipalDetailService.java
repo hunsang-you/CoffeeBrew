@@ -23,7 +23,7 @@ public class PrincipalDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info(METHOD_NAME + "- loadUserByUsername() ...");
-		Optional<Member> member = memberRepository.findByMemberEmail(username);
+		Optional<Member> member = memberRepository.findByMemberEmailAndExpiredIsFalse(username);
 
 		MemberDTO memberDTO = MemberDTO.builder().build().of(member);
 

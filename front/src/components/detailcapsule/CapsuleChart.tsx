@@ -1,25 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
+import { CapsuleScore } from './DetailCapsule';
 
-type ChartProps = {};
+interface PropsTypes {
+  detailCapsuleScore: CapsuleScore | undefined;
+}
 
-const Chart: React.FC<ChartProps> = () => {
+const Chart = ({ detailCapsuleScore }: PropsTypes) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState([
     '향',
-    '단맛',
+    '로스팅',
     '산미',
     '바디감',
     '쓴맛',
-    '총점',
+    '밸런스',
   ]);
 
   useEffect(() => {
+    const data = [
+      detailCapsuleScore && detailCapsuleScore.flavor / 2,
+      detailCapsuleScore && detailCapsuleScore.roasting / 2,
+      detailCapsuleScore && detailCapsuleScore.acidity / 2,
+      detailCapsuleScore && detailCapsuleScore.body / 2,
+      detailCapsuleScore && detailCapsuleScore.bitterness / 2,
+      detailCapsuleScore && detailCapsuleScore.balance / 2,
+    ];
     const options = {
       series: [
         {
           name: 'coffee',
-          data: [1, 4, 3.5, 4, 1, 3],
+          data,
         },
       ],
 
@@ -42,6 +53,13 @@ const Chart: React.FC<ChartProps> = () => {
       // enabled : true => 점마다 label생김
       dataLabels: {
         enabled: false,
+        // background: {
+        //   enabled: true,
+        //   borderRadius: 7,
+        // },
+        // style: {
+        //   colors: ['#D9D9D9'],
+        // },
       },
       plotOptions: {
         // 차트의 크기,위치 및 색깔 지정
@@ -52,17 +70,7 @@ const Chart: React.FC<ChartProps> = () => {
           polygons: {
             strokeColors: '#FFFFFF',
             fill: {
-              colors: [
-                '#B1662F',
-                '#B1662F',
-                '#CC651A',
-                '#CC651A',
-                '#FB8C3B',
-                '#FB8C3B',
-                '#E48642',
-                '#E48642',
-                '#F8B584',
-              ],
+              colors: ['#B1662F', '#CC651A', '#FB8C3B', '#E48642', '#F8B584'],
             },
           },
         },
@@ -70,7 +78,7 @@ const Chart: React.FC<ChartProps> = () => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '단맛', '산미', '바디감', '쓴맛', '총점'],
+        categories: ['향', '로스팅', '산미', '바디감', '쓴맛', '밸런스'],
         labels: {
           show: true,
           formatter: (subject: string) => {
@@ -79,6 +87,10 @@ const Chart: React.FC<ChartProps> = () => {
               return subject + `(${options.series[0].data[index]})`;
             }
           },
+          //   rotate: -45,
+          //   formatter: (value, index) => {
+          //     return this.props.subjects[index];
+          //   },
         },
       },
 
@@ -86,7 +98,14 @@ const Chart: React.FC<ChartProps> = () => {
       yaxis: {
         // show -> true시 y축에 기준 표시, style로 조정
         show: false,
-        max: 6,
+        // labels: {
+        //   style: {
+        //     fontSize: '12px',
+        //     fontWeight: 500,
+        //   },
+        //   offsetX: 8,
+        //   offsetY: 0,
+        // },
       },
       // mousehover시 툴팁생김
       tooltip: {

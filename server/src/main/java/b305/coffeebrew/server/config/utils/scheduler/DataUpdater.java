@@ -1,4 +1,4 @@
-package b305.coffeebrew.server.config.utils;
+package b305.coffeebrew.server.config.utils.scheduler;
 
 import b305.coffeebrew.server.service.RecommendService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@EnableScheduling
 @RequiredArgsConstructor
 public class DataUpdater {
     private static final String METHOD_NAME = DataUpdater.class.getName();

@@ -2,6 +2,7 @@ package b305.coffeebrew.server.service;
 
 import b305.coffeebrew.server.dto.bean.BeanDetailPageResDTO;
 import b305.coffeebrew.server.dto.bean.BeanResDTO;
+import b305.coffeebrew.server.dto.bean.BeanSearchResDTO;
 import b305.coffeebrew.server.dto.naverShopping.LinkDTO;
 import b305.coffeebrew.server.dto.naverShopping.NaverShoppingItemDTO;
 import b305.coffeebrew.server.dto.naverShopping.NaverShoppingResDTO;
@@ -44,17 +45,11 @@ public class BeanService {
     private final BeanRepository beanRepository;
     private final BeanDetailRepository beanDetailRepository;
     private final BeanScoreRepository beanScoreRepository;
-    private final RestTemplate restTemplate;
-    private final String clientId;
-    private final String clientSecret;
 
     public BeanService(BeanRepository beanRepository, BeanDetailRepository beanDetailRepository, BeanScoreRepository beanScoreRepository, RestTemplate restTemplate, @Value("${naver.shopping.client-id}") String clientId, @Value("${naver.shopping.client-secret}") String clientSecret) {
         this.beanRepository = beanRepository;
         this.beanDetailRepository = beanDetailRepository;
         this.beanScoreRepository = beanScoreRepository;
-        this.restTemplate = restTemplate;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
     }
 
     @Transactional
@@ -69,6 +64,7 @@ public class BeanService {
             throw new BeanNotFoundException(ErrorCode.BEAN_NOT_FOUND);
         }
 
+        long idx = bean.getIdx();
         String nameKo = bean.getNameKo();
         String nameEn = bean.getNameEn();
         String summary = bean.getSummary();
@@ -92,6 +88,7 @@ public class BeanService {
         String roastingPoint = beanScore.getRoastingPoint();
 
         return BeanDetailPageResDTO.builder()
+                .idx(idx)
                 .nameKo(nameKo)
                 .nameEn(nameEn)
                 .summary(summary)
@@ -114,80 +111,32 @@ public class BeanService {
                 .build();
     }
 
-    public Page<BeanResDTO> searchBeans(List<String> keywords, Pageable pageable) {
+    public Page<BeanSearchResDTO> searchBeans(List<String> keywords, Pageable pageable) {
         if (CollectionUtils.isEmpty(keywords)) {
-            return beanRepository.findAll(pageable).map(BeanResDTO::of);
+            Page<Bean> beans = beanRepository.findAll(pageable);
+            List<BeanSearchResDTO> dtoList = new ArrayList<>();
+            for (Bean bean : beans) {
+                BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
+                dtoList.add(BeanSearchResDTO.of(bean, beanScore));
+            }
+            return new PageImpl<>(dtoList, pageable, beans.getTotalElements());
         } else {
-            Set<Bean> result = new TreeSet<>(Comparator.comparing(Bean::getNameKo).thenComparing(Bean::getNameEn).thenComparing(Bean::getSummary));
+            Set<Bean> result = new TreeSet<>(Comparator.comparing(Bean::getNameKo)
+                    .thenComparing(Bean::getNameEn)
+                    .thenComparing(Bean::getSummary));
             for (String keyword : keywords) {
                 String processedKeyword = "%" + keyword.toLowerCase() + "%";
-                result.addAll(beanRepository.findBeansByKeyword(processedKeyword, pageable).getContent());
+                result.addAll(beanRepository.findBeansByKeyword(processedKeyword, pageable)
+                        .getContent());
             }
-            return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(BeanResDTO::of);
+            List<BeanSearchResDTO> dtoList = new ArrayList<>();
+            for (Bean bean : result.stream().limit(pageable.getPageSize())
+                    .collect(Collectors.toList())) {
+                BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
+                dtoList.add(BeanSearchResDTO.of(bean, beanScore));
+            }
+            long total = result.size();
+            return new PageImpl<>(dtoList, pageable, total);
         }
     }
-
-//    public Set<LinkDTO> searchNaverShopping(String nameKo, String nameEn) {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("X-Naver-Client-Id", clientId);
-//        headers.add("X-Naver-Client-Secret", clientSecret);
-//
-//        String query = nameKo;
-//        HttpEntity<?> requestEntity = new HttpEntity<>(headers);
-//        ResponseEntity<NaverShoppingResDTO> response = restTemplate.exchange(
-//                "https://openapi.naver.com/v1/search/shop.json?query={query}",
-//                HttpMethod.GET,
-//                requestEntity,
-//                NaverShoppingResDTO.class,
-//                query
-//        );
-//        NaverShoppingResDTO naverShoppingResponse = response.getBody();
-//        Set<LinkDTO> result = new LinkedHashSet<>();
-//
-//        if (naverShoppingResponse != null && !naverShoppingResponse.getItems().isEmpty()) {
-//            for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
-//                String mallName = item.getMallName();
-//                String link = item.getLink();
-//                String image = item.getImage();
-//
-//                if (!result.contains(LinkDTO.of(mallName, link, image))) {
-//                    result.add(LinkDTO.of(mallName, link, image));
-//                }
-//
-//                if (result.size() >= 5) {
-//                    return result;
-//                }
-//            }
-//        }
-//
-//        if (result.size() < 5 && StringUtils.isNotBlank(nameEn)) {
-//            query = nameEn;
-//            response = restTemplate.exchange(
-//                    "https://openapi.naver.com/v1/search/shop.json?query={query}",
-//                    HttpMethod.GET,
-//                    requestEntity,
-//                    NaverShoppingResDTO.class,
-//                    query
-//            );
-//            naverShoppingResponse = response.getBody();
-//
-//            if (naverShoppingResponse != null && !naverShoppingResponse.getItems().isEmpty()) {
-//                for (NaverShoppingItemDTO item : naverShoppingResponse.getItems()) {
-//                    String mallName = item.getMallName();
-//                    String link = item.getLink();
-//                    String image = item.getImage();
-//
-//                    if (!result.contains(LinkDTO.of(mallName, link, image))) {
-//                        result.add(LinkDTO.of(mallName, link, image));
-//                    }
-//
-//                    if (result.size() >= 5) {
-//                        return result;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return result;
-//    }
 }

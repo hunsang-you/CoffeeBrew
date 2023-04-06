@@ -6,6 +6,8 @@ import json
 import numpy as np
 import pandas as pd
 
+from .util.logging_time import logging_time
+
 from typing import Union
 
 import uvicorn
@@ -15,19 +17,14 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from .recom import bean_cbf_recom
-from .recom import user_recom, user_cbcf_recom
+from .recom import item_recom_cbf, user_recom_cbcf
+from .recom import user_recom
 
 from sqlalchemy.orm import Session
 
 from .db import crud
 from .db import model
 
-# from .database.model.Bean import Bean, Bean_detail, Bean_score
-# from .database.model.Capsule import Capsule, Capsule_detail, Capsule_score
-# from .database.model.Member import Member
-# from .database.model.Review import Review
-# from .database.model.LikeList import LikeList
 from .db.database import engine, SessionLocal, Base
 
 DIR_PATH = path.join(".", "data")
@@ -71,36 +68,78 @@ async def root():
 # db connect check
 @app.get("/db-check")
 async def checkDB(db: Session = Depends(get_db)):
+    print("Call - {}...".format(checkDB.__name__))
+
     db_check = crud.get_many(db, model.Bean)
     return db_check
 
 
 @app.get("/db-check/{idx}")
-async def checkDB(idx: Union[int, None] = None, db: Session = Depends(get_db)):
+async def checkDBByIdx(idx: Union[int, None] = None, db: Session = Depends(get_db)):
+    print("Call - {}...".format(checkDBByIdx.__name__))
+    print("idx:{}".format(idx))
+
     db_check = crud.get_once(db, model.Bean, idx)
     if db_check is None:
         raise HTTPException(status_code=404, detail="DB connect check failed")
     return db_check
 
 
-# cbf 기반 원두 추천 알고리즘 호출
-@app.get("/bean")
-async def getBeanInfoAll():
-    pass
-    return {"message": "call /bean"}
+# cbf 기반 추천 알고리즘
+# 전체 사용자 기준 추천 알고리즘(비회원용)
+@app.get("/item/{itemType}")
+async def getItemRecom(
+    itemType: Union[str, None] = None, itemId: Union[int, None] = None
+):
+    print("Call - {}...".format(getItemRecom.__name__))
+    print("itemType:{}".format(itemType))
 
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "item_recom_bean.csv"
+    elif itemType == "capsule":
+        read_file = "item_recom_capsule.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
 
-@app.get("/bean/{beanId}")
-async def getBeanRecom(beanId: Union[int, None] = None):
-    print("id:{}, type:{}".format(beanId, type(beanId)))
-
-    bean_recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", "bean_cbf_recom.csv"),
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
 
-    result = bean_cbf_recom.get_recom_by_bean(beanId, bean_recom_read)
+    result = item_recom_cbf.get_recom_by_item(
+        np.random.randint(recom_read.shape[0]), recom_read, k=8
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        return result
+
+
+# 스테이터스 기반 추천 알고리즘
+@app.get("/item/{itemType}/{itemId}")
+async def getItemRecom(
+    itemType: Union[str, None] = None, itemId: Union[int, None] = None
+):
+    print("Call - {}...".format(getItemRecom.__name__))
+    print("itemId:{}, itemType:{}".format(itemId, itemType))
+
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "item_recom_bean.csv"
+    elif itemType == "capsule":
+        read_file = "item_recom_capsule.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, read_file),
+        low_memory=False,
+        encoding="utf-8",
+    )
+
+    result = item_recom_cbf.get_recom_by_item(itemId, recom_read, k=5)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -108,10 +147,24 @@ async def getBeanRecom(beanId: Union[int, None] = None):
 
 
 # 통계 기반 추천 알고리즘
-@app.get("/age/{ageRange}")
-async def getAgeRecom(ageRange: Union[str, None] = None):
+# 사용자 연령대 기반 제품 추천
+@app.get("/age/{ageRange}/{itemType}")
+async def getAgeRecom(
+    ageRange: Union[str, None] = None, itemType: Union[str, None] = None
+):
+    print("Call - {}...".format(getAgeRecom.__name__))
+    print("ageRange:{}, itemType:{}".format(ageRange, itemType))
+
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "like_recom_bean_by_age.csv"
+    elif itemType == "capsule":
+        read_file = "like_recom_capsule_by_age.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", "like_recom_by_age.csv"),
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
@@ -123,10 +176,24 @@ async def getAgeRecom(ageRange: Union[str, None] = None):
         return result
 
 
-@app.get("/gender/{gender}")
-async def getGenderRecom(gender: Union[str, None] = None):
+# 사용자 성별 기반 제품 추천
+@app.get("/gender/{gender}/{itemType}")
+async def getGenderRecom(
+    gender: Union[str, None] = None, itemType: Union[str, None] = None
+):
+    print("Call - {}...".format(getGenderRecom.__name__))
+    print("gender:{}, itemType:{}".format(gender, itemType))
+
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "like_recom_bean_by_gender.csv"
+    elif itemType == "capsule":
+        read_file = "like_recom_capsule_by_gender.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", "like_recom_by_gender.csv"),
+        path.join(DIR_PATH, "output", read_file),
         low_memory=False,
         encoding="utf-8",
     )
@@ -139,60 +206,126 @@ async def getGenderRecom(gender: Union[str, None] = None):
 
 
 # cf 기반 추천 알고리즘 호출
-@app.get("/user")
-async def getUserInfoAll():
-    pass
-    return {"message": "call /user"}
+# 사용자 데이터 기반 제품 추천
+@app.get("/user/{userId}/{itemType}")
+async def getUserRecom(
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
+):
+    print("Call - {}...".format(getUserRecom.__name__))
+    print("userId:{}, itemType:{}".format(userId, itemType))
+
+    if itemType == "bean":
+        result = await getUserRecomByLike(userId, itemType, db)
+    elif itemType == "capsule":
+        result = await getUserRecomByLike(userId, itemType, db)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return result
 
 
-@app.get("/user/{userId}")
-async def getUserRecom(userId: Union[int, None] = None):
-    pass
-    return {"message": f"call /user/{userId}"}
+# 사용자 설문 기반 제품 추천
+@app.get("/user/{userId}/{itemType}/survey")
+async def getUserRecomBySurvey(
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
+):
+    print("Call - {}...".format(getUserRecomBySurvey.__name__))
+    print("userId:{}, itemType:{}".format(userId, itemType))
+
+    data_read = user_recom.load_survey_data(db)
+
+    result = await getUserRecomByLike(userId, itemType)
+
+    if itemType == "bean":
+        result = await getUserRecomByLike(userId, itemType)
+    elif itemType == "capsule":
+        result = await getUserRecomByLike(userId, itemType)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return result
 
 
-@app.get("/user/{userId}/like")
-async def getUserRecom(userId: Union[int, None] = None):
-    print("user_id:{}, type:{}".format(userId, type(userId)))
+# 사용자 좋아요 기반 제품 추천
+@app.get("/user/{userId}/{itemType}/like")
+async def getUserRecomByLike(
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
+):
+    print("Call - {}...".format(getUserRecomByLike.__name__))
+    print("userId:{}, itemType:{}".format(userId, itemType))
 
-    like_list_read = pd.read_csv(
-        path.join(DIR_PATH, "sql_dummy", "sql_like_list.csv"),
-        low_memory=False,
-        encoding="cp949",
-    )
-    like_recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", "bean_cbf_by_like_recom.csv"),
+    data_read = user_recom.load_like_data(db)
+
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "user_recom_bean_by_like.csv"
+    elif itemType == "capsule":
+        read_file = "user_recom_capsule_by_like.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
 
-    result = user_cbcf_recom.get_recom_by_user(
-        userId, like_list_read, like_recom_read, item_type="bean"
-    )
+    if (
+        data_read.loc[
+            (data_read["member_idx"] == userId) & (data_read["item_type"] == itemType)
+        ].shape[0]
+        == 0
+    ):
+        return user_recom.get_recom_by_user(1, data_read, recom_read, itemType)
+
+    result = user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
         return result
 
 
-@app.get("/user/{userId}/review")
-async def getUserRecom(userId: Union[int, None] = None):
-    print("user_id:{}, type:{}".format(userId, type(userId)))
+# 사용자 리뷰 기반 제품 추천
+@app.get("/user/{userId}/{itemType}/review")
+async def getUserRecomByReview(
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
+):
+    print("Call - {}...".format(getUserRecomByReview.__name__))
+    print("userId:{}, itemType:{}".format(userId, itemType))
 
-    review_read = pd.read_csv(
-        path.join(DIR_PATH, "sql_dummy", "sql_review.csv"),
-        low_memory=False,
-        encoding="cp949",
-    )
-    review_recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", "bean_cbf_by_review_recom.csv"),
+    data_read = user_recom.load_review_data(db)
+
+    read_file = "null"
+    if itemType == "bean":
+        read_file = "user_recom_bean_by_review.csv"
+    elif itemType == "capsule":
+        read_file = "user_recom_capsule_by_review.csv"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    recom_read = pd.read_csv(
+        path.join(DIR_PATH, "output", read_file),
         low_memory=False,
         encoding="utf-8",
     )
 
-    result = user_cbcf_recom.get_recom_by_user(
-        userId, review_read, review_recom_read, "bean"
-    )
+    if (
+        data_read.loc[
+            (data_read["member_idx"] == userId) & (data_read["item_type"] == itemType)
+        ].shape[0]
+        == 0
+    ):
+        await user_recom.get_recom_by_user(1, data_read, recom_read, itemType)
+
+    result = user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -200,24 +333,69 @@ async def getUserRecom(userId: Union[int, None] = None):
 
 
 # 스케줄러에서 추천 데이터 최신화를 요청할 때 호출
+@logging_time
 @app.get("/update")
-async def updateRecom():
-    pass
-    return {"message": "call /update"}
+async def updateRecom(db: Session = Depends(get_db)):
+    print("Call - {}...".format(updateRecom.__name__))
+
+    await updateRecomByItem("bean", db)
+    await updateRecomByItem("capsule", db)
+
+    return {"message": "update all recommendations"}
 
 
-# @app.get("/update/bean")
-# async def updateBeanRecom(type: Union[str, None] = "status"):
-#     global recom_data
+@logging_time
+@app.get("/update/{itemType}")
+async def updateRecomByItem(
+    itemType: Union[str, None] = None, db: Session = Depends(get_db)
+):
+    print("Call - {}...".format(updateRecomByItem.__name__))
+    print("itemType:{}".format(itemType))
 
-#     if type == "keyword":
-#         bean_cbf_recom.calc_bean_recom_by_keyword(DIR_PATH)
-#         recom_data = load_bean_recom_data()
-#         return {"message": "update keyword-based recommendation list"}
-#     else:
-#         bean_cbf_recom.calc_bean_recom_by_status(DIR_PATH)
-#         recom_data = load_bean_recom_data()
-#         return {"message": "update status-based recommendation list"}
+    if itemType == "bean":
+        item_recom_cbf.calc_recom_bean(db, DIR_PATH)
+    elif itemType == "capsule":
+        item_recom_cbf.calc_recom_capsule(db, DIR_PATH)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return {"message": "update item-based recommendations"}
+
+
+@logging_time
+@app.get("/update/{itemType}/like")
+async def updateRecomByLike(
+    itemType: Union[str, None] = None, db: Session = Depends(get_db)
+):
+    print("Call - {}...".format(updateRecomByLike.__name__))
+    print("itemType:{}".format(itemType))
+
+    if itemType == "bean":
+        user_recom_cbcf.calc_recom_bean_by_like(db, DIR_PATH)
+    elif itemType == "capsule":
+        user_recom_cbcf.calc_recom_capsule_by_like(db, DIR_PATH)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return {"message": "update like-based recommendations"}
+
+
+@logging_time
+@app.get("/update/{itemType}/age")
+async def updateRecomByAge(
+    itemType: Union[str, None] = None, db: Session = Depends(get_db)
+):
+    print("Call - {}...".format(updateRecomByAge.__name__))
+    print("itemType:{}".format(itemType))
+
+    if itemType == "bean":
+        user_recom.calc_recom_bean_by_age(db, DIR_PATH)
+    elif itemType == "capsule":
+        user_recom.calc_recom_capsule_by_age(db, DIR_PATH)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return {"message": "update age-based recommendations"}
 
 
 if __name__ == "__main__":

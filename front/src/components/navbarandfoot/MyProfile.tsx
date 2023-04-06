@@ -4,6 +4,8 @@ import ProfileDropDown from './ProfileDropDown';
 import { useState, useRef, useEffect } from 'react';
 import { loginAPI } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 interface isClickType {
   isClick: boolean;
@@ -11,6 +13,7 @@ interface isClickType {
 }
 
 const MyProfile = ({ isClick, setIsClick }: isClickType) => {
+  const reduxData = useSelector((state: RootState) => state);
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -34,7 +37,11 @@ const MyProfile = ({ isClick, setIsClick }: isClickType) => {
         }}
       >
         <img
-          src={highlands}
+          src={
+            reduxData.memberInfo == null
+              ? highlands
+              : reduxData.memberInfo.profileImg || ''
+          }
           alt="no_img"
           className="w-full h-full object-cover"
         />
@@ -42,25 +49,28 @@ const MyProfile = ({ isClick, setIsClick }: isClickType) => {
       {isClick && (
         <ProfileDropDown setIsClick={setIsClick}>
           <div
-            className="mb-3 hover:text-mainColorOrange"
-            onClick={() => {
+            className="mb-3 hover:text-mainColorOrange active:relative active:top-0.5"
+            onClick={(e) => {
               navigate('/mypage');
+              setIsClick(false);
             }}
           >
             마이페이지
           </div>
           <div
-            className="pb-4 hover:text-mainColorOrange"
-            onClick={() => {
+            className="pb-4 hover:text-mainColorOrange active:relative active:top-0.5"
+            onClick={(e) => {
               loginAPI
                 .logout()
                 .then((request) => {
                   console.log(request);
                   window.localStorage.clear();
                   window.location.replace('/');
+                  setIsClick(false);
                 })
                 .catch((e) => {
                   console.log(e);
+                  setIsClick(false);
                 });
             }}
           >

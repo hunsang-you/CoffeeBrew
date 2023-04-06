@@ -9,6 +9,8 @@ import MachineInfo from './MachineInfo';
 import ReviewAll from './ReviewAll';
 import Shopping from './Shopping';
 
+// import RecommendCarousel from './RecommendCarousel';
+
 /**detailbean 타입설정 */
 export interface detailType {
   acidity: number;
@@ -27,9 +29,9 @@ export interface detailType {
   region: string | null;
   roastingPoint: string | null;
   summary: string | null;
-  sweetness: string;
+  sweetness: number;
   thumbnail: string | null;
-  userGrade: number | null;
+  userGrade: number;
   linkDTO: linkDTOType[];
 }
 export interface reviewType {
@@ -40,6 +42,7 @@ export interface reviewType {
     nickname: string | null;
     hashcode: string | null;
     snsType: string | null;
+    ageRange: string | null;
   };
   itemType: string;
   itemIdx: number;
@@ -72,33 +75,6 @@ const DetailBean = (): JSX.Element => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const recbeanRef = useRef<HTMLDivElement>(null);
-  const recotherRef = useRef<HTMLDivElement>(null);
-  const reviewRef = useRef<HTMLDivElement>(null);
-
-  const handleClick = () => {
-    if (recbeanRef.current) {
-      const location: number = recbeanRef.current.offsetTop;
-      console.log(location);
-      window.scrollTo({ top: location - 80, behavior: 'smooth' });
-    }
-  };
-
-  const handleClick2 = () => {
-    if (recotherRef.current) {
-      const location: number = recotherRef.current.offsetTop;
-      console.log(location);
-      window.scrollTo({ top: location - 80, behavior: 'smooth' });
-    }
-  };
-
-  const handleClick3 = () => {
-    if (reviewRef.current) {
-      const location: number = reviewRef.current.offsetTop;
-      console.log(location);
-      window.scrollTo({ top: location - 80, behavior: 'smooth' });
-    }
-  };
   useEffect(() => {
     const getDetailBean = async () => {
       await detailAPI
@@ -130,36 +106,24 @@ const DetailBean = (): JSX.Element => {
   return (
     <DetailBg>
       <SideBar>
-        <RecbarBean onClick={handleClick}> 원두 추천 </RecbarBean>
+        {/* <RecbarBean onClick={handleClick}> 원두 추천 </RecbarBean>
         <RecbarMachine onClick={handleClick2}> 기기 추천 </RecbarMachine>
-        <ReviewBar onClick={handleClick3}> 리 뷰 </ReviewBar>
-        <MoveTop onClick={ScrollTop}>맨 위로</MoveTop>
+        <ReviewBar onClick={handleClick3}> 리 뷰 </ReviewBar> */}
+        <MoveTop onClick={ScrollTop}>↑</MoveTop>
       </SideBar>
       {/* 첫번째 줄 (원두정보) */}
       {detailBean ? <BeanInfo detailBean={detailBean} /> : null}
 
       {/* 두번째 줄 (원두추천) */}
       <BeanTop2>
-        <div ref={recbeanRef} id="Recbean">
-          <Title onClick={handleClick}>이런 원두는 어떠세요?</Title>
+        <div>
+          <Title>이런 원두는 어떠세요?</Title>
         </div>
         {/* 캐러셀 부분 */}
-        <RecommendBean />
+        {detailBean ? <RecommendBean /> : null}
       </BeanTop2>
-
-      {/* 세번째 줄(머신 / 분쇄도)*/}
-      <BeanTop2>
-        <div ref={recotherRef}>
-          <Title id="RecOther">이렇게 먹어볼까요?</Title>
-        </div>
-        <RecOther>
-          <MachineInfo />
-          <Grinding />
-        </RecOther>
-      </BeanTop2>
-
       {/* 네번째 줄(리뷰) */}
-      <BeanTop3 ref={reviewRef} id="Reivew">
+      <BeanTop3 style={{ marginTop: '40px' }}>
         {/* <Review /> */}
         {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
       </BeanTop3>
@@ -185,22 +149,17 @@ export default DetailBean;
 const Title = tw.p`text-left text-2xl mt-6 mb-6 ml-20 animate-bounce`;
 const Line = tw.hr`h-px bg-red-600 border-dashed w-1040 mx-auto my-10`;
 
-const DetailBg = tw.div`text-center bg-background w-1200 select-none `;
+const DetailBg = tw.div`flex-col text-center bg-background w-1200 select-none `;
 // SideBar(맨위로이동, 최근조회)
-const SideBar = tw.div`
-  border-2 border-brownBorder ml-auto top-100 right-60 bottom-60 fixed`;
+const SideBar = tw.div`w-10 h-10 
+border-4 border-brownBorder ml-auto top-100 bottom-40 right-20 rounded-full  hover:bg-brownBorder hover:scale-105 hover:text-white fixed`;
 // 해당 항목 이동
-const MoveTop = tw.div` h-14 border-8 border-gray-500 text-sm`;
-const RecbarBean = tw.div`bg-navColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-const RecbarMachine = tw.div`bg-pinkColor text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
-const ReviewBar = tw.div`bg-brownBorder text-base cursor-pointer hover:bg-slate-400 hover:text-white`;
+const MoveTop = tw.div` h-10 text-3xl font-bold `;
 
 // 두번째 추천칸
 const BeanTop2 = tw.div`text-center justify-center ml-20 mr-20 mb-10 animate-fade-in-down`;
-// 기기 및 분쇄도
-const RecOther = tw.div`w-1040  flex justify-between `;
 // 세번째 리뷰칸
-const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down`;
+const BeanTop3 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10 animate-fade-in-down `;
 const MoreBtn = tw.button`w-40 h-10 bg-black text-white rounded-full mt-10 mb-4 cursor-pointer hover:bg-slate-500`;
 // 네번째 칸(구매사이트)
 const BeanTop4 = tw.div`flex w-1040 justify-center mx-auto flex-col mb-10`;

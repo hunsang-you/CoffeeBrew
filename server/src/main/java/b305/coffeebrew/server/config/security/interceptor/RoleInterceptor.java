@@ -37,7 +37,8 @@ public class RoleInterceptor implements HandlerInterceptor {
     private final String itemURL;
     private final String recomURL;
     private final String reviewURL;
-//    private final String likelistURL;
+    private final String surveyURL;
+    //    private final String likelistURL;
     private final String swaggerURL;
     private final String swaggerIndexURL;
 
@@ -50,6 +51,7 @@ public class RoleInterceptor implements HandlerInterceptor {
                            @Value(value = "${user.url.item}") String itemURL,
                            @Value(value = "${user.url.recom}") String recomURL,
                            @Value(value = "${user.url.review}") String reviewURL,
+                           @Value(value = "${user.url.survey}") String surveyURL,
 //                           @Value(value = "${user.url.likelist}") String likelistURL,
                            @Value(value = "${user.url.test}") String testURL,
                            @Value(value = "${user.url.swagger}") String swaggerURL,
@@ -63,6 +65,7 @@ public class RoleInterceptor implements HandlerInterceptor {
         this.itemURL = itemURL;
         this.recomURL = recomURL;
         this.reviewURL = reviewURL;
+        this.surveyURL = surveyURL;
 //        this.likelistURL = likelistURL;
         this.swaggerURL = swaggerURL;
         this.swaggerIndexURL = swaggerIndexURL;
@@ -72,7 +75,7 @@ public class RoleInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info(METHOD_NAME + "- preHandle() ...");
         boolean result = false;
-        log.info("SIbar request URL = {} url 위치입니다.",request.getRequestURI());
+        log.info("request URL = {} url 위치입니다.", request.getRequestURI());
         try {
             TokenResDTO tokenResDTO = jwtTokenProvider.requestCheckToken(request);
             String token = tokenResDTO.getToken();
@@ -98,6 +101,18 @@ public class RoleInterceptor implements HandlerInterceptor {
                             break Outer;
                         }
                         if (request.getRequestURI().startsWith(memberURL)) {
+                            log.info("MEMBER role validate ...");
+                            if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
+                                log.info("MEMBER role validate - Success");
+                                result = true;
+                            } else {
+                                log.warn("MEMBER role validate - Fail");
+                                response.setContentType("text/html; charset=UTF-8");
+                                response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
+                            }
+                            break Outer;
+                        }
+                        if (request.getRequestURI().startsWith(surveyURL)) {
                             log.info("MEMBER role validate ...");
                             if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
                                 log.info("MEMBER role validate - Success");
