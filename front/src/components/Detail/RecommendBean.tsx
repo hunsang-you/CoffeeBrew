@@ -35,9 +35,7 @@ interface recomType {
 const RecommendBean = (): JSX.Element => {
   const { beanId } = useParams() as { beanId: string };
   const [cardImg, setCardImg] = useState<string[]>([]);
-  const [recommendBeanList, setRecommendBeanList] = useState<
-    recomType[] | null
-  >(null);
+  const [recommendBeanList, setRecommendBeanList] = useState<recomType[]>([]);
 
   useEffect(() => {
     const recomBean = async () => {
@@ -50,66 +48,67 @@ const RecommendBean = (): JSX.Element => {
         .catch((e) => console.log(e));
     };
     //
-    const updateCardImg = async () => {
-      try {
-        await recomBean();
-        const cards: string[] = [];
-        recommendBeanList?.map((data, i) => {
-          const acidity = data?.acidity;
-          const bitter = data?.bitterness;
-          const body = data?.body;
-          const flavor = data?.flavor;
-          const sweetness = data?.sweetness;
-          const values: any[] = [acidity, bitter, body, flavor, sweetness];
-          const maxIndex: number = values.indexOf(Math.max(...values));
-          const maxVar = Object.keys({
-            acidity,
-            bitter,
-            body,
-            flavor,
-            sweetness,
-          })[maxIndex];
-          console.log(maxVar);
-          console.log(cardImg);
-          if (maxVar === 'acidity') {
-            if (i === 0) {
-              cards.push(acidityImg);
-            } else {
-              cards.push(acidityImg);
-            }
-          } else if (maxVar === 'bitter') {
-            if (i === 0) {
-              cards.push(bitterImg);
-            } else {
-              cards.push(bitterImg);
-            }
-          } else if (maxVar === 'body') {
-            if (i === 0) {
-              cards.push(bodyImg);
-            } else {
-              cards.push(bodyImg);
-            }
-          } else if (maxVar === 'flavor') {
-            if (i === 0) {
-              cards.push(flavorImg);
-            } else {
-              cards.push(flavorImg);
-            }
-          } else if (maxVar === 'sweetness') {
-            if (i === 0) {
-              cards.push(sweetImg);
-            } else {
-              cards.push(sweetImg);
-            }
-          }
-        });
-        setCardImg(cards);
-      } catch (error) {
-        console.log(error);
-        setCardImg([]);
-      }
-    };
-    updateCardImg();
+    // const updateCardImg = async () => {
+    //   try {
+    //     await recomBean();
+    //     const cards: string[] = [];
+    //     recommendBeanList?.map((data, i) => {
+    //       const acidity = data?.acidity;
+    //       const bitter = data?.bitterness;
+    //       const body = data?.body;
+    //       const flavor = data?.flavor;
+    //       const sweetness = data?.sweetness;
+    //       const values: any[] = [acidity, bitter, body, flavor, sweetness];
+    //       const maxIndex: number = values.indexOf(Math.max(...values));
+    //       const maxVar = Object.keys({
+    //         acidity,
+    //         bitter,
+    //         body,
+    //         flavor,
+    //         sweetness,
+    //       })[maxIndex];
+    //       console.log(maxVar);
+    //       console.log(cardImg);
+    //       if (maxVar === 'acidity') {
+    //         if (i === 0) {
+    //           cards.push(acidityImg);
+    //         } else {
+    //           cards.push(acidityImg);
+    //         }
+    //       } else if (maxVar === 'bitter') {
+    //         if (i === 0) {
+    //           cards.push(bitterImg);
+    //         } else {
+    //           cards.push(bitterImg);
+    //         }
+    //       } else if (maxVar === 'body') {
+    //         if (i === 0) {
+    //           cards.push(bodyImg);
+    //         } else {
+    //           cards.push(bodyImg);
+    //         }
+    //       } else if (maxVar === 'flavor') {
+    //         if (i === 0) {
+    //           cards.push(flavorImg);
+    //         } else {
+    //           cards.push(flavorImg);
+    //         }
+    //       } else if (maxVar === 'sweetness') {
+    //         if (i === 0) {
+    //           cards.push(sweetImg);
+    //         } else {
+    //           cards.push(sweetImg);
+    //         }
+    //       }
+    //     });
+    //     setCardImg(cards);
+    //   } catch (error) {
+    //     console.log(error);
+    //     setCardImg([]);
+    //   }
+    // };
+    // updateCardImg();
+    recomBean();
     console.log('ddd');
   }, []);
   const BackColor: string[] = [
@@ -123,69 +122,77 @@ const RecommendBean = (): JSX.Element => {
   return (
     <ListDiv>
       <RecomList>
-        {recommendBeanList?.map((data, i) => {
-          // const beanTaste = () => {
-          //   const acidity = data?.acidity;
-          //   const bitter = data?.bitterness;
-          //   const body = data?.body;
-          //   const flavor = data?.flavor;
-          //   const sweetness = data?.sweetness;
-          //   const values: any[] = [acidity, bitter, body, flavor, sweetness];
-          //   const maxIndex: number = values.indexOf(Math.max(...values));
-          //   const maxVar = Object.keys({
-          //     acidity,
-          //     bitter,
-          //     body,
-          //     flavor,
-          //     sweetness,
-          //   })[maxIndex];
-          //   console.log(maxVar);
-          //   console.log(cardImg);
-          //   if (maxVar === 'acidity') {
-          //     if (i === 0) {
-          //       setCardImg([acidityImg]);
-          //     } else {
-          //       setCardImg([...cardImg, acidityImg]);
-          //     }
-          //   } else if (maxVar === 'bitter') {
-          //     if (i === 0) {
-          //       setCardImg([bitterImg]);
-          //     } else {
-          //       setCardImg([...cardImg, bitterImg]);
-          //     }
-          //   } else if (maxVar === 'body') {
-          //     if (i === 0) {
-          //       setCardImg([bodyImg]);
-          //     } else {
-          //       setCardImg([...cardImg, bodyImg]);
-          //     }
-          //   } else if (maxVar === 'flavor') {
-          //     if (i === 0) {
-          //       setCardImg([flavorImg]);
-          //     } else {
-          //       setCardImg([...cardImg, flavorImg]);
-          //     }
-          //   } else if (maxVar === 'sweetness') {
-          //     if (i === 0) {
-          //       setCardImg([sweetImg]);
-          //     } else {
-          //       setCardImg([...cardImg, sweetImg]);
-          //     }
-          //   }
-          // };
-          // beanTaste();
-          return (
-            <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-              <RecomItemImg src={cardImg[i]} />
-              <RecomItemB>
-                <RecomItemName>{data.nameKo}</RecomItemName>
-                <RecomInfo>
-                  <div>{data.summary}</div>
-                </RecomInfo>
-              </RecomItemB>
-            </RecomItemT1>
-          );
-        })}
+        {recommendBeanList.length > 4
+          ? recommendBeanList?.map((data, i) => {
+              const beanTaste = () => {
+                const acidity = data?.acidity;
+                const bitter = data?.bitterness;
+                const body = data?.body;
+                const flavor = data?.flavor;
+                const sweetness = data?.sweetness;
+                const values: any[] = [
+                  acidity,
+                  bitter,
+                  body,
+                  flavor,
+                  sweetness,
+                ];
+                const maxIndex: number = values.indexOf(Math.max(...values));
+                const maxVar = Object.keys({
+                  acidity,
+                  bitter,
+                  body,
+                  flavor,
+                  sweetness,
+                })[maxIndex];
+                console.log(maxVar);
+                console.log(cardImg);
+                if (maxVar === 'acidity') {
+                  if (i === 0) {
+                    setCardImg([acidityImg]);
+                  } else {
+                    setCardImg([...cardImg, acidityImg]);
+                  }
+                } else if (maxVar === 'bitter') {
+                  if (i === 0) {
+                    setCardImg([bitterImg]);
+                  } else {
+                    setCardImg([...cardImg, bitterImg]);
+                  }
+                } else if (maxVar === 'body') {
+                  if (i === 0) {
+                    setCardImg([bodyImg]);
+                  } else {
+                    setCardImg([...cardImg, bodyImg]);
+                  }
+                } else if (maxVar === 'flavor') {
+                  if (i === 0) {
+                    setCardImg([flavorImg]);
+                  } else {
+                    setCardImg([...cardImg, flavorImg]);
+                  }
+                } else if (maxVar === 'sweetness') {
+                  if (i === 0) {
+                    setCardImg([sweetImg]);
+                  } else {
+                    setCardImg([...cardImg, sweetImg]);
+                  }
+                }
+              };
+              beanTaste();
+              return (
+                <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
+                  <RecomItemImg src={cardImg[i]} />
+                  <RecomItemB>
+                    <RecomItemName>{data.nameKo}</RecomItemName>
+                    <RecomInfo>
+                      <div>{data.summary}</div>
+                    </RecomInfo>
+                  </RecomItemB>
+                </RecomItemT1>
+              );
+            })
+          : null}
       </RecomList>
     </ListDiv>
   );
