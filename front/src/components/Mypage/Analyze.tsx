@@ -9,6 +9,7 @@ import sweetImg from '../../assets/tempImg/sweetImg.jpg';
 import bitterImg from '../../assets/tempImg/bitterImg.jpg';
 import acidityImg from '../../assets/tempImg/acidityImg.jpg';
 import bodyImg from '../../assets/tempImg/BodyImg.jpg';
+import noanalyze from '../../assets/tempImg/noanalyze.png';
 
 const AnalyzeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
 const Comment = tw.div`text-3xl font-bold text-left ml-5 mb-10`;
