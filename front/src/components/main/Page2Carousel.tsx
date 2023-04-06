@@ -31,10 +31,6 @@ interface CoffeeItem {
   roastingPoint?: string | null;
 }
 
-interface propsData {
-  [index: number]: CoffeeItem;
-}
-
 const Page2Carousel = () => {
   const reudxData = useSelector((state: RootState) => state);
   const usernick = reudxData.memberInfo?.nickname;
