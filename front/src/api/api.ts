@@ -106,7 +106,7 @@ export const mainAPI = {
   getRecommend: (itemType: string | null) =>
     api.get(`member/recom/user/${itemType}`),
   /** 연령대별 추천 */
-  getAgeRecom: (ageRange: string | null, type: string | null) =>
+  getAgeRecom: (ageRange: string, type: string) =>
     api.get(`recom/age/${ageRange}/${type}`),
 };
 

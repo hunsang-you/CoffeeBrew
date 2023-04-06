@@ -51,9 +51,16 @@ const CoffeeCapSule = ({ capsuleData }: PropsType) => {
   };
 
   return (
-    <div>
-      <h1>1</h1>
-    </div>
+    <OutDiv style={{ backgroundColor: cardBg }}>
+      <InnerDiv>
+        <ImgDiv src={cardImg} />
+      </InnerDiv>
+      <UnderDiv>
+        <UnTitle>{capsuleData.capsule.nameKo}</UnTitle>
+        <UnContent>{capsuleData.capsule.summary}</UnContent>
+        <UnContent>{taste}</UnContent>
+      </UnderDiv>
+    </OutDiv>
   );
 };
 

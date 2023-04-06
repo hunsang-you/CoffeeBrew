@@ -81,7 +81,7 @@ const Page2Carousel = () => {
   };
 
   useEffect(() => {
-    const getData = async (age: any, type: any) => {
+    const getData = async (age: any, type: string) => {
       await mainAPI
         .getAgeRecom(age, type)
         .then((request) => {
