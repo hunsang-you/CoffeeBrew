@@ -306,14 +306,9 @@ const CapsuleSearchBar = ({
 
   return (
     <SearchDiv>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {/* <AiOutlineSearch
-          size={50}
-          style={{
-            marginRight: '16px',
-            marginTop: '2.5rem',
-          }}
-        /> */}
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}
+      >
         <img src={Logo} alt="Logo" width={100} style={{ marginTop: '24px' }} />
         <TextField
           id="outlined-basic"
