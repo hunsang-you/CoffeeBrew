@@ -34,12 +34,13 @@ const RecommendCapsule = () => {
     '#F6842B',
     '#D3BD94',
   ];
+
+  const [recomCapsuleImg, setRecomCapsuleImg] = useState('');
   return (
     <ListDiv>
       <RecomList>
         {recommendCapsuleList
           ? recommendCapsuleList?.map((data, i) => {
-              const [recomCapsuleImg, setRecomCapsuleImg] = useState('');
               const beanTaste = () => {
                 const acidity = data?.capsuleScore.acidity;
                 const bitter = data?.capsuleScore.bitterness;

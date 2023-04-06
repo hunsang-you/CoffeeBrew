@@ -58,12 +58,11 @@ const RecommendBean = (): JSX.Element => {
     '#F6842B',
     '#D3BD94',
   ];
-
+  const [cardImg, setCardImg] = useState('');
   return (
     <ListDiv>
       <RecomList>
         {recommendBeanList?.map((data, i) => {
-          const [cardImg, setCardImg] = useState('');
           const beanTaste = () => {
             const acidity = data?.acidity;
             const bitter = data?.bitterness;
