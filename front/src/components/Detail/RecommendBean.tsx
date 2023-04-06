@@ -126,53 +126,38 @@ const RecommendBean = (): JSX.Element => {
       <RecomList>
         {recommendBeanList
           ? recommendBeanList?.map((data, i) => {
-              // const acidity = data?.acidity;
-              // const bitter = data?.bitterness;
-              // const body = data?.body;
-              // const flavor = data?.flavor;
-              // const sweetness = data?.sweetness;
-              // const values: any[] = [acidity, bitter, body, flavor, sweetness];
-              // const maxIndex: number = values.indexOf(Math.max(...values));
-              // const maxVar = Object.keys({
-              //   acidity,
-              //   bitter,
-              //   body,
-              //   flavor,
-              //   sweetness,
-              // })[maxIndex];
-              // console.log(maxVar);
-              // console.log(cardImg);
-              // if (maxVar === 'acidity') {
-              //   if (i === 0) {
-              //     setCardImg([acidityImg]);
-              //   } else {
-              //     setCardImg([...cardImg, acidityImg]);
-              //   }
-              // } else if (maxVar === 'bitter') {
-              //   if (i === 0) {
-              //     setCardImg([bitterImg]);
-              //   } else {
-              //     setCardImg([...cardImg, bitterImg]);
-              //   }
-              // } else if (maxVar === 'body') {
-              //   if (i === 0) {
-              //     setCardImg([bodyImg]);
-              //   } else {
-              //     setCardImg([...cardImg, bodyImg]);
-              //   }
-              // } else if (maxVar === 'flavor') {
-              //   if (i === 0) {
-              //     setCardImg([flavorImg]);
-              //   } else {
-              //     setCardImg([...cardImg, flavorImg]);
-              //   }
-              // } else if (maxVar === 'sweetness') {
-              //   if (i === 0) {
-              //     setCardImg([sweetImg]);
-              //   } else {
-              //     setCardImg([...cardImg, sweetImg]);
-              //   }
-              // }
+              const acidity = data?.acidity;
+              const bitter = data?.bitterness;
+              const body = data?.body;
+              const flavor = data?.flavor;
+              const sweetness = data?.sweetness;
+              const values: any[] = [acidity, bitter, body, flavor, sweetness];
+              const maxIndex: number = values.indexOf(Math.max(...values));
+              const maxVar = Object.keys({
+                acidity,
+                bitter,
+                body,
+                flavor,
+                sweetness,
+              })[maxIndex];
+              console.log(maxVar);
+              setCardImg(() => {
+                const ne = ['1'];
+                let addImg = [];
+                if (maxVar === 'acidity') {
+                  addImg.push(acidityImg);
+                } else if (maxVar === 'bitter') {
+                  addImg.push(bitterImg);
+                } else if (maxVar === 'body') {
+                  addImg.push(bodyImg);
+                } else if (maxVar === 'flavor') {
+                  addImg.push(flavorImg);
+                } else if (maxVar === 'sweetness') {
+                  addImg.push(sweetImg);
+                }
+                return [...cardImg, addImg[0]];
+              });
+
               console.log('test' + i);
 
               return (
