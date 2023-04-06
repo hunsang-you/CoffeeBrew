@@ -108,13 +108,13 @@ const Page2Non = () => {
         .then((request) => {
           const data = request.data.value;
           console.log(cutArr(data, 0, 8));
-          if (type === 'bean') {
-            setNonBean1(cutArr(data, 0, 4));
-            setNonBean2(cutArr(data, 4, 8));
-          } else if (type === 'capsule') {
-            setNoncapsule1(cutArr(data, 0, 4));
-            setNoncapsule2(cutArr(data, 4, 8));
-          }
+          // if (type === 'bean') {
+          //   setNonBean1(cutArr(data, 0, 4));
+          //   setNonBean2(cutArr(data, 4, 8));
+          // } else if (type === 'capsule') {
+          //   setNoncapsule1(cutArr(data, 0, 4));
+          //   setNoncapsule2(cutArr(data, 4, 8));
+          // }
         })
         .catch((e) => console.log(e));
     };
