@@ -50,6 +50,7 @@ export interface ReviewType {
   createdDate: number[] | null;
   updatedDate: number[] | null;
   member_idx: number;
+  idx: number;
 }
 
 // export interface memberType {
