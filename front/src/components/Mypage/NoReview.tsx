@@ -8,7 +8,7 @@ const NoReview = () => {
   return (
     <NoReviewBody>
       <NoUserReviewImg>
-        <img src={NoReviewImg} alt="noReview" style={{ marginLeft: '80px' }} />
+        <img src={NoReviewImg} alt="noReview" style={{ marginLeft: '35px' }} />
       </NoUserReviewImg>
 
       <NoComment>아직 남긴 리뷰가 없네요!</NoComment>
