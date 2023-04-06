@@ -31,34 +31,6 @@ const RecommendBeanList = ({ data, i }: Propstypes) => {
     const maxIndex: number = values.indexOf(Math.max(...values));
     setImgIdx(maxIndex);
   }, []);
-  // const acidity = data?.acidity;
-  // const bitter = data?.bitterness;
-  // const body = data?.body;
-  // const flavor = data?.flavor;
-  // const sweetness = data?.sweetness;
-  // const values: any[] = [acidity, bitter, body, flavor, sweetness];
-  // const maxIndex: number = values.indexOf(Math.max(...values));
-  // const maxVar = Object.keys({
-  //   acidity,
-  //   bitter,
-  //   body,
-  //   flavor,
-  //   sweetness,
-  // })[maxIndex];
-  // let tempImg = [...cardImg];
-  // if (maxVar === 'acidity') {
-  //   tempImg[i] = acidityImg;
-  // } else if (maxVar === 'bitter') {
-  //   tempImg[i] = bitterImg;
-  // } else if (maxVar === 'body') {
-  //   tempImg[i] = bodyImg;
-  // } else if (maxVar === 'flavor') {
-  //   tempImg[i] = flavorImg;
-  // } else if (maxVar === 'sweetness') {
-  //   tempImg[i] = sweetImg;
-  // }
-  // console.log('test' + i);
-  // setCardImg(tempImg);
   const BackColor: string[] = [
     '#FFAA01',
     '#D4AA70',
