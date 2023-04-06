@@ -25,6 +25,7 @@ export interface recomType {
   roastingPoint: string;
   summary: string;
   thumbnail: string;
+  idx: number;
 }
 
 const RecommendBean = (): JSX.Element => {
