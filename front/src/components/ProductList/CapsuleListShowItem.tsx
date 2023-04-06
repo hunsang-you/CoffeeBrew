@@ -1,20 +1,21 @@
 import tw from 'tailwind-styled-components';
-import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CapsuleType } from './CapsuleList';
+import { useEffect, useState } from 'react';
 import acidity from '../../assets/detailImg/acidityBean.svg';
 import bitterness from '../../assets/detailImg/bitterBean.svg';
 import sweetness from '../../assets/detailImg/sweetBean.svg';
 import flavor from '../../assets/detailImg/flavorBean.svg';
 import body from '../../assets/detailImg/bodyBean.svg';
-import { BeanType } from './AllList';
-import { useNavigate } from 'react-router-dom';
 
 interface PropsTypes {
-  data: BeanType;
+  data: CapsuleType;
   i: number;
 }
-const CoffeeListItem = ({ data, i }: PropsTypes) => {
-  const navigate = useNavigate();
+
+const CapsuleListShowItem = ({ data, i }: PropsTypes) => {
   const [imgg, setImgg] = useState(acidity);
+
   const BackColor: string[] = [
     '#FFAA01',
     '#D4AA70',
@@ -29,11 +30,12 @@ const CoffeeListItem = ({ data, i }: PropsTypes) => {
   useEffect(() => {
     setImgg(data.taste);
   }, []);
+  const navigate = useNavigate();
   return (
     <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
       <ProductItemImg
         src={imgg}
-        onClick={() => navigate(`/detail/bean/${data.idx}`)}
+        onClick={() => navigate(`/detail/capsule/${data.idx}`)}
       />
       <ProductItemB>
         <ProductItemName>{data.nameKo}</ProductItemName>
@@ -44,9 +46,9 @@ const CoffeeListItem = ({ data, i }: PropsTypes) => {
   );
 };
 
-export default CoffeeListItem;
+export default CapsuleListShowItem;
 
-const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl my-12 ml-10 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 overflow-auto `;
+const ProductItemT = tw.div`w-72 h-400 justify-center rounded-t-2xl my-12 ml-10 drop-shadow-xl hover:scale-105 hover:drop-shadow-2xl duration-300 overflow-scroll`;
 const ProductItemT1 = tw(ProductItemT)`bg-brownBorder rounded-b-2xl`;
 const ProductItemImg = tw.img`w-32 h-48  mx-auto mt-4  `;
 
