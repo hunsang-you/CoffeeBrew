@@ -8,7 +8,7 @@ import CoffeeCard from '../CoffeeCard';
 import CoffeeCapSule from '../CoffeeCapSule';
 import { CapsuleDetailType } from '../detailcapsule/DetailCapsule';
 
-type CoffeeItem = {
+interface CoffeeItem {
   nameKo?: string;
   nameEn?: string | null;
   summary?: string | null;
@@ -28,7 +28,7 @@ type CoffeeItem = {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
-};
+}
 
 interface propsData {
   [index: number]: CoffeeItem;
@@ -39,38 +39,8 @@ const Page2Carousel = () => {
   const usernick = reudxData.memberInfo?.nickname;
   const userage = reudxData.memberInfo?.ageRange;
   console.log(userage);
-  const [beanMain, setbeanMain] = useState([
-    {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
-    },
-  ]);
-  const [ageMain, setAgeMain] = useState([
-    {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
-    },
-  ]);
+  const [beanMain, setbeanMain] = useState<CoffeeItem[] | null>(null);
+  const [ageMain, setAgeMain] = useState<CoffeeItem[] | null>(null);
   const [capsule, setCapsule] = useState<CapsuleDetailType[] | null>(null);
   const [ageCapsule, setAgeCapsule] = useState<CapsuleDetailType[] | null>(
     null,
@@ -115,9 +85,11 @@ const Page2Carousel = () => {
       <BigDiv>
         <PageTitle>{usernick}님의 추천원두</PageTitle>
         <InDiv>
-          {beanMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} beanData={data} />;
-          })}
+          {beanMain
+            ? beanMain.map((data: CoffeeItem, i) => {
+                return <CoffeeCard key={i} beanData={data} />;
+              })
+            : null}
         </InDiv>
         <InDiv>
           {capsule
@@ -130,9 +102,11 @@ const Page2Carousel = () => {
       <BigDiv>
         <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
         <InDiv>
-          {ageMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} beanData={data} />;
-          })}
+          {ageMain
+            ? ageMain.map((data: CoffeeItem, i) => {
+                return <CoffeeCard key={i} beanData={data} />;
+              })
+            : null}
         </InDiv>
         <InDiv>
           {ageCapsule

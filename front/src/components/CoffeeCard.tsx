@@ -12,7 +12,7 @@ import capBody from '../assets/coffeecard/cap_body.svg';
 import capFlavor from '../assets/coffeecard/cap_flavor.svg';
 import capSweetness from '../assets/coffeecard/cap_sweetness.svg';
 
-type CoffeeItem = {
+interface CoffeeItem {
   nameKo?: string;
   nameEn?: string | null;
   summary?: string | null;
@@ -32,13 +32,13 @@ type CoffeeItem = {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
-};
+}
 
-interface propsData {
+interface propsTypes {
   beanData: CoffeeItem;
 }
 
-const CoffeeCard = ({ beanData }: propsData) => {
+const CoffeeCard = ({ beanData }: propsTypes) => {
   console.log(beanData);
   const [taste, setTaste] = useState('');
   const cardTitle = beanData.origin + ' ' + beanData.rank;
