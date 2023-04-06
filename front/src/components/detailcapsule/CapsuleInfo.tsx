@@ -62,9 +62,9 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
 
   useEffect(() => {
     capsuleTaste();
-    const getLikesBeans = async () => {
+    const getLikesCapsules = async () => {
       await memberAPI
-        .memberLikesBeans()
+        .memberLiskeCapsules()
         .then((request) => {
           console.log(request);
           const likeCheck: likedCheck[] = request.data.value;
@@ -83,7 +83,7 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
         .catch((e) => console.log(e));
     };
     if (reduxData.login) {
-      getLikesBeans();
+      getLikesCapsules();
     }
   }, []);
 
