@@ -34,7 +34,7 @@ interface recomType {
 
 const RecommendBean = (): JSX.Element => {
   const { beanId } = useParams() as { beanId: string };
-
+  const [cardImg, setCardImg] = useState<string[]>([]);
   const [recommendBeanList, setRecommendBeanList] = useState<
     recomType[] | null
   >(null);
@@ -49,7 +49,60 @@ const RecommendBean = (): JSX.Element => {
         })
         .catch((e) => console.log(e));
     };
-    recomBean();
+    setCardImg(() => {
+      recomBean();
+      let cards: string[] = [];
+      recommendBeanList?.map((data, i) => {
+        const acidity = data?.acidity;
+        const bitter = data?.bitterness;
+        const body = data?.body;
+        const flavor = data?.flavor;
+        const sweetness = data?.sweetness;
+        const values: any[] = [acidity, bitter, body, flavor, sweetness];
+        const maxIndex: number = values.indexOf(Math.max(...values));
+        const maxVar = Object.keys({
+          acidity,
+          bitter,
+          body,
+          flavor,
+          sweetness,
+        })[maxIndex];
+        console.log(maxVar);
+        console.log(cardImg);
+        if (maxVar === 'acidity') {
+          if (i === 0) {
+            cards = [acidityImg];
+          } else {
+            cards = [...cards, acidityImg];
+          }
+        } else if (maxVar === 'bitter') {
+          if (i === 0) {
+            cards = [bitterImg];
+          } else {
+            cards = [...cards, bitterImg];
+          }
+        } else if (maxVar === 'body') {
+          if (i === 0) {
+            cards = [bodyImg];
+          } else {
+            cards = [...cards, bodyImg];
+          }
+        } else if (maxVar === 'flavor') {
+          if (i === 0) {
+            cards = [flavorImg];
+          } else {
+            cards = [...cards, flavorImg];
+          }
+        } else if (maxVar === 'sweetness') {
+          if (i === 0) {
+            cards = [sweetImg];
+          } else {
+            cards = [...cards, sweetImg];
+          }
+        }
+      });
+      return cards;
+    });
   }, []);
   const BackColor: string[] = [
     '#FFAA01',
@@ -58,61 +111,61 @@ const RecommendBean = (): JSX.Element => {
     '#F6842B',
     '#D3BD94',
   ];
-  const [cardImg, setCardImg] = useState<string[]>([]);
+
   return (
     <ListDiv>
       <RecomList>
         {recommendBeanList?.map((data, i) => {
-          const beanTaste = () => {
-            const acidity = data?.acidity;
-            const bitter = data?.bitterness;
-            const body = data?.body;
-            const flavor = data?.flavor;
-            const sweetness = data?.sweetness;
-            const values: any[] = [acidity, bitter, body, flavor, sweetness];
-            const maxIndex: number = values.indexOf(Math.max(...values));
-            const maxVar = Object.keys({
-              acidity,
-              bitter,
-              body,
-              flavor,
-              sweetness,
-            })[maxIndex];
-            console.log(maxVar);
-            console.log(cardImg);
-            if (maxVar === 'acidity') {
-              if (i === 0) {
-                setCardImg([acidityImg]);
-              } else {
-                setCardImg([...cardImg, acidityImg]);
-              }
-            } else if (maxVar === 'bitter') {
-              if (i === 0) {
-                setCardImg([bitterImg]);
-              } else {
-                setCardImg([...cardImg, bitterImg]);
-              }
-            } else if (maxVar === 'body') {
-              if (i === 0) {
-                setCardImg([bodyImg]);
-              } else {
-                setCardImg([...cardImg, bodyImg]);
-              }
-            } else if (maxVar === 'flavor') {
-              if (i === 0) {
-                setCardImg([flavorImg]);
-              } else {
-                setCardImg([...cardImg, flavorImg]);
-              }
-            } else if (maxVar === 'sweetness') {
-              if (i === 0) {
-                setCardImg([sweetImg]);
-              } else {
-                setCardImg([...cardImg, sweetImg]);
-              }
-            }
-          };
-          beanTaste();
+          // const beanTaste = () => {
+          //   const acidity = data?.acidity;
+          //   const bitter = data?.bitterness;
+          //   const body = data?.body;
+          //   const flavor = data?.flavor;
+          //   const sweetness = data?.sweetness;
+          //   const values: any[] = [acidity, bitter, body, flavor, sweetness];
+          //   const maxIndex: number = values.indexOf(Math.max(...values));
+          //   const maxVar = Object.keys({
+          //     acidity,
+          //     bitter,
+          //     body,
+          //     flavor,
+          //     sweetness,
+          //   })[maxIndex];
+          //   console.log(maxVar);
+          //   console.log(cardImg);
+          //   if (maxVar === 'acidity') {
+          //     if (i === 0) {
+          //       setCardImg([acidityImg]);
+          //     } else {
+          //       setCardImg([...cardImg, acidityImg]);
+          //     }
+          //   } else if (maxVar === 'bitter') {
+          //     if (i === 0) {
+          //       setCardImg([bitterImg]);
+          //     } else {
+          //       setCardImg([...cardImg, bitterImg]);
+          //     }
+          //   } else if (maxVar === 'body') {
+          //     if (i === 0) {
+          //       setCardImg([bodyImg]);
+          //     } else {
+          //       setCardImg([...cardImg, bodyImg]);
+          //     }
+          //   } else if (maxVar === 'flavor') {
+          //     if (i === 0) {
+          //       setCardImg([flavorImg]);
+          //     } else {
+          //       setCardImg([...cardImg, flavorImg]);
+          //     }
+          //   } else if (maxVar === 'sweetness') {
+          //     if (i === 0) {
+          //       setCardImg([sweetImg]);
+          //     } else {
+          //       setCardImg([...cardImg, sweetImg]);
+          //     }
+          //   }
+          // };
+          // beanTaste();
           return (
             <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
               <RecomItemImg src={cardImg[i]} />
