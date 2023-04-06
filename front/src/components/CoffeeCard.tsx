@@ -39,7 +39,6 @@ interface propsTypes {
 }
 
 const CoffeeCard = ({ beanData }: propsTypes) => {
-  console.log(beanData);
   const [taste, setTaste] = useState('');
   const cardTitle = beanData.origin + ' ' + beanData.rank;
   const splitArr = (str: string) => {
