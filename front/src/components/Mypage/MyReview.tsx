@@ -3,6 +3,7 @@ import MyReviewItem from './MyReviewItem';
 import { memberAPI } from '../../api/api';
 import { useEffect, useState } from 'react';
 import ReviewPaging from './MyReviewPaging';
+import NoReview from './NoReview';
 
 export interface ReviewPageType {
   content: ReviewType[];
@@ -85,11 +86,13 @@ const MyReview = () => {
 
   return (
     <MyReviewBody style={{ border: 'solid 4px #06AACE', minHeight: '630px' }}>
-      {memberReviews
-        ? memberReviews.content.map((data, i) => {
-            return <MyReviewItem reviewData={data} />;
-          })
-        : null}
+      {memberReviews ? (
+        memberReviews.content.map((data, i) => {
+          return <MyReviewItem reviewData={data} />;
+        })
+      ) : (
+        <NoReview />
+      )}
       {memberReviews ? (
         <ReviewPaging
           pagination={memberReviews}
