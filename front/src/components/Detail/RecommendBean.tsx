@@ -78,6 +78,8 @@ const RecommendBean = (): JSX.Element => {
               flavor,
               sweetness,
             })[maxIndex];
+            console.log(maxVar);
+            console.log(cardImg);
             if (maxVar === 'acidity') {
               if (i === 0) {
                 setCardImg([acidityImg]);
