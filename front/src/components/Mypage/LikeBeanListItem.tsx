@@ -43,7 +43,7 @@ const LikeBeanListItem = ({
     const body = bean.body;
     const flavor = bean.flavor;
     const sweetness = bean.sweetness;
-    const values: any[] = [acidity, bitter, body, flavor, sweetness];
+    const values: any[] = [acidity, bitter, flavor, body, sweetness];
     const maxIndex: number = values.indexOf(Math.max(...values));
     setImgIdx(maxIndex);
   }, []);
