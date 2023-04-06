@@ -2,11 +2,11 @@ import tw from 'tailwind-styled-components';
 import { useNavigate } from 'react-router-dom';
 import { CapsuleType } from './CapsuleList';
 import { useEffect, useState } from 'react';
-import acidity from '../../assets/detailImg/acidityBean.svg';
-import bitterness from '../../assets/detailImg/bitterBean.svg';
-import sweetness from '../../assets/detailImg/sweetBean.svg';
-import flavor from '../../assets/detailImg/flavorBean.svg';
-import body from '../../assets/detailImg/bodyBean.svg';
+import acidityCapsuleImg from '../../assets/detailImg/acidityCapsule.svg';
+import flavorCapsuleImg from '../../assets/detailImg/flavorCapsule.svg';
+import bodyCapsuleImg from '../../assets/detailImg/bodyCapsule.svg';
+import bitterCapsuleImg from '../../assets/detailImg/bitterCapsule.svg';
+import roastingCapsuleImg from '../../assets/detailImg/roastingCapsule.svg';
 
 interface PropsTypes {
   data: CapsuleType;
@@ -14,8 +14,14 @@ interface PropsTypes {
 }
 
 const CapsuleListShowItem = ({ data, i }: PropsTypes) => {
-  const [imgg, setImgg] = useState(acidity);
-
+  const [capsuleImg, setCapsuleImg] = useState([
+    acidityCapsuleImg,
+    bitterCapsuleImg,
+    flavorCapsuleImg,
+    bodyCapsuleImg,
+    roastingCapsuleImg,
+  ]);
+  const [imgNumber, setImgNumber] = useState<number>(0);
   const BackColor: string[] = [
     '#FFAA01',
     '#D4AA70',
@@ -28,13 +34,23 @@ const CapsuleListShowItem = ({ data, i }: PropsTypes) => {
     '#E8D2A0',
   ];
   useEffect(() => {
-    setImgg(data.taste);
+    if (data.taste === 'acidity') {
+      setImgNumber(0);
+    } else if (data.taste === 'bitterness') {
+      setImgNumber(1);
+    } else if (data.taste === 'flavor') {
+      setImgNumber(2);
+    } else if (data.taste === 'body') {
+      setImgNumber(3);
+    } else if (data.taste === 'roasting') {
+      setImgNumber(4);
+    }
   }, []);
   const navigate = useNavigate();
   return (
-    <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
+    <ProductItemT1 style={{ backgroundColor: BackColor[imgNumber] }} key={i}>
       <ProductItemImg
-        src={imgg}
+        src={capsuleImg[imgNumber]}
         onClick={() => navigate(`/detail/capsule/${data.idx}`)}
       />
       <ProductItemB>

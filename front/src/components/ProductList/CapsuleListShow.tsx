@@ -12,9 +12,11 @@ const CapsuleListShow = ({ listDatas }: PropsTypes) => {
   return (
     <ListDiv>
       <ProductList>
-        {listDatas.map((data, i) => {
-          return <CapsuleListShowItem data={data} i={i} />;
-        })}
+        {listDatas
+          ? listDatas.map((data, i) => {
+              return <CapsuleListShowItem data={data} i={i} />;
+            })
+          : null}
       </ProductList>
     </ListDiv>
   );
