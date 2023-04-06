@@ -25,6 +25,8 @@ function App() {
           .catch((e) => {
             console.log(e);
             alert('로그인 관련 문제가 생겼으니 재로그인해주세요');
+            window.localStorage.clear();
+            window.location.reload();
           });
       };
       getMemberInfo();
