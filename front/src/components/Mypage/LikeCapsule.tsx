@@ -124,7 +124,7 @@ const LikeCapsuleList = () => {
             <img src={NoLikeImg} alt="noLike" />
           </NoUserLikeImg>
 
-          <NoComment>아직 맘에 드는 캡슐가 없나요??</NoComment>
+          <NoComment>아직 맘에 드는 캡슐이 없나요??</NoComment>
           <NoLinkBtn
             onClick={() => {
               navigate('/coffeelist/bean');

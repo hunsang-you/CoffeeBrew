@@ -31,10 +31,6 @@ interface CoffeeItem {
   roastingPoint?: string | null;
 }
 
-interface propsData {
-  [index: number]: CoffeeItem;
-}
-
 const Page2Carousel = () => {
   const reudxData = useSelector((state: RootState) => state);
   const usernick = reudxData.memberInfo?.nickname;
@@ -48,7 +44,7 @@ const Page2Carousel = () => {
   );
 
   const cutArr = (arr: []) => {
-    return arr.slice(0, 5);
+    return arr.slice(0, 4);
   };
 
   useEffect(() => {
@@ -69,9 +65,9 @@ const Page2Carousel = () => {
     const getRecommend = async (type: string) => {
       await mainAPI.getRecommend(type).then((request) => {
         if (type === 'bean') {
-          setbeanMain(request.data.value);
+          setbeanMain(cutArr(request.data.value));
         } else if (type === 'capsule') {
-          setCapsule(request.data.value);
+          setCapsule(cutArr(request.data.value));
         }
       });
     };

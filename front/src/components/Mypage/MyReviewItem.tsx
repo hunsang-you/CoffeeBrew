@@ -91,7 +91,17 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
   return (
     <ReviewBody>
       <ReviewItems>
-        <DeleteBtn> 삭 제</DeleteBtn>
+        <DeleteBtn
+          onClick={() => {
+            reviewAPI
+              .deleteReview(Number(reviewData.idx))
+              .then((request) => console.log(request.data))
+              .catch((e) => console.log(e));
+          }}
+        >
+          {' '}
+          삭 제
+        </DeleteBtn>
         <Item>
           <div
             style={{
@@ -126,7 +136,7 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
                 marginBottom: '16px',
               }}
             >
-              원두이름(뭘채울까)
+              {reviewData.itemName}
             </p>
           </div>
 
