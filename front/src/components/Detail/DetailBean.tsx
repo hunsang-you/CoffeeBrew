@@ -1,15 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import { detailAPI, reviewAPI } from '../../api/api';
 import RecommendBean from './RecommendBean';
-import Grinding from './Grinding';
 import BeanInfo from './BeanInfo';
-import MachineInfo from './MachineInfo';
 import ReviewAll from './ReviewAll';
 import Shopping from './Shopping';
-
-// import RecommendCarousel from './RecommendCarousel';
 
 /**detailbean 타입설정 */
 export interface detailType {
@@ -106,9 +102,6 @@ const DetailBean = (): JSX.Element => {
   return (
     <DetailBg>
       <SideBar>
-        {/* <RecbarBean onClick={handleClick}> 원두 추천 </RecbarBean>
-        <RecbarMachine onClick={handleClick2}> 기기 추천 </RecbarMachine>
-        <ReviewBar onClick={handleClick3}> 리 뷰 </ReviewBar> */}
         <MoveTop onClick={ScrollTop}>↑</MoveTop>
       </SideBar>
       {/* 첫번째 줄 (원두정보) */}
@@ -122,12 +115,6 @@ const DetailBean = (): JSX.Element => {
         {/* 캐러셀 부분 */}
         {detailBean ? <RecommendBean /> : null}
       </BeanTop2>
-      {/* 네번째 줄(리뷰) */}
-      <BeanTop3 style={{ marginTop: '40px' }}>
-        {/* <Review /> */}
-        {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
-      </BeanTop3>
-      <Line></Line>
 
       {/* 다섯번째 줄(쇼핑몰링크) */}
       <BeanTop4>
@@ -136,6 +123,13 @@ const DetailBean = (): JSX.Element => {
           <Shopping linkDTO={detailBean?.linkDTO} />
         ) : null}
       </BeanTop4>
+
+      {/* 네번째 줄(리뷰) */}
+      <BeanTop3 style={{ marginTop: '40px' }}>
+        {/* <Review /> */}
+        {detailReview ? <ReviewAll detailReview={detailReview} /> : null}
+      </BeanTop3>
+      <Line></Line>
 
       <Line></Line>
 

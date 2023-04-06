@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ApexCharts from 'apexcharts';
 import { detailType } from '../DetailBean';
 
@@ -53,13 +53,6 @@ const Chart = ({ detailBean }: PropsTypes) => {
       // enabled : true => 점마다 label생김
       dataLabels: {
         enabled: false,
-        // background: {
-        //   enabled: true,
-        //   borderRadius: 7,
-        // },
-        // style: {
-        //   colors: ['#D9D9D9'],
-        // },
       },
       plotOptions: {
         // 차트의 크기,위치 및 색깔 지정
@@ -78,7 +71,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
 
       // 각 평가도 항목
       xaxis: {
-        categories: ['향', '단맛', '산미', '바디감', '쓴맛', ' 평점'],
+        categories: ['향', '단맛', '산미', '바디감', '쓴맛', '평점'],
         labels: {
           show: true,
           formatter: (subject: string) => {
@@ -87,10 +80,6 @@ const Chart = ({ detailBean }: PropsTypes) => {
               return subject + `(${options.series[0].data[index]})`;
             }
           },
-          //   rotate: -45,
-          //   formatter: (value, index) => {
-          //     return this.props.subjects[index];
-          //   },
         },
       },
 
@@ -98,14 +87,7 @@ const Chart = ({ detailBean }: PropsTypes) => {
       yaxis: {
         // show -> true시 y축에 기준 표시, style로 조정
         show: false,
-        // labels: {
-        //   style: {
-        //     fontSize: '12px',
-        //     fontWeight: 500,
-        //   },
-        //   offsetX: 8,
-        //   offsetY: 0,
-        // },
+        max: 5,
       },
       // mousehover시 툴팁생김
       tooltip: {
