@@ -70,7 +70,7 @@ const BeanInfo = ({ detailBean }: PropsType) => {
           const likeCheck: likedCheck[] = request.data.value;
           const isLiked = likeCheck.filter(
             (check) =>
-              check.itemType === 'bean' && check.idx === Number(beanId),
+              check.itemType === 'bean' && check.itemIdx === Number(beanId),
           );
           console.log(isLiked);
           if (isLiked.length === 0) {
