@@ -93,7 +93,8 @@ const MyReview = () => {
             <MyReviewItem
               reviewData={data}
               setReviewPage={setReviewPage}
-              pageNumber={memberReviews.number}
+              reviewPage={reviewPage}
+              setMemberReviews={setMemberReviews}
             />
           );
         })

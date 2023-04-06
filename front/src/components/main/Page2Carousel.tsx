@@ -29,6 +29,7 @@ interface CoffeeItem {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
+  idx: number;
 }
 
 const Page2Carousel = () => {

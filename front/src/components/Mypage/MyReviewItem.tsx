@@ -5,9 +5,10 @@ import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { ReviewType } from './MyReview';
-import { reviewAPI } from '../../api/api';
+import { reviewAPI, memberAPI } from '../../api/api';
 import NoReviewImg from '../../assets/tempImg/NoReviewImg.png';
 import { useNavigate } from 'react-router-dom';
+import { ReviewPageType } from './MyReview';
 
 const ReviewBody = tw.div` flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;
@@ -32,13 +33,15 @@ const NoLinkBtn = tw.div`w-80 h-16 font-bold text-2xl text-white bg-brownBorder 
 interface PropsTypes {
   reviewData: ReviewType;
   setReviewPage: React.Dispatch<React.SetStateAction<string>>;
-  pageNumber: number;
+  setMemberReviews: React.Dispatch<React.SetStateAction<ReviewPageType | null>>;
+  reviewPage: string;
 }
 
 const MyReviewItem = ({
   reviewData,
   setReviewPage,
-  pageNumber,
+  reviewPage,
+  setMemberReviews,
 }: PropsTypes) => {
   const navigate = useNavigate();
   const Rating = {
@@ -102,7 +105,13 @@ const MyReviewItem = ({
               .deleteReview(Number(reviewData.idx))
               .then((request) => {
                 console.log(request.data);
-                setReviewPage(`page=${pageNumber}`);
+                memberAPI
+                  .memberReviews(reviewPage)
+                  .then((request) => {
+                    console.log(request);
+                    setMemberReviews(request.data.value);
+                  })
+                  .catch((e) => console.log(e));
               })
               .catch((e) => console.log(e));
           }}
