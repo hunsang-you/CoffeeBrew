@@ -6,6 +6,7 @@ import { memberAPI, detailAPI } from '../../api/api';
 import { detailType } from '../Detail/DetailBean';
 // 예시 이미지
 import bean2 from '../../assets/tempImg/bean.png';
+import NoLikeImg from '../../assets/tempImg/NoLikeImg.png';
 
 interface like {
   idx: number;
@@ -43,20 +44,6 @@ const LikeBeanList = () => {
               setBeanIdx([...beanLikesIdx]);
             })
             .catch((e) => console.log(e));
-          // likes.map((like: like) => {
-          //   if (like.itemType === 'bean') {
-          //     let tempIdxArr = beanIdx;
-          //     setBeanIdx([...tempIdxArr, like.itemIdx]);
-          //     detailAPI
-          //       .getBean(Number(like.itemIdx))
-          //       .then((request) => {
-          //         console.log(request.data);
-          //         let temp = likeBeans;
-          //         setLikeBeans([...temp, request.data.value]);
-          //       })
-          //       .catch((e) => console.log(e));
-          //   }
-          // });
         } else {
           setLikeBeans([]);
         }
@@ -112,18 +99,6 @@ const LikeBeanList = () => {
                       .catch((e) => console.log(e));
                   }}
                 />
-
-                {/* {isLikeCheck ? null : (
-                    <AiOutlineHeart
-                      size={42}
-                      style={{
-                        color: 'gray',
-                        marginLeft: '8px',
-                        paddingTop: '8px',
-                      }}
-                      onClick={() => handleLike()}
-                    />
-                  )} */}
                 <LinkBtn
                   onClick={() => {
                     navigate(`/detail/bean/${beanIdx[i]}`);
@@ -136,7 +111,25 @@ const LikeBeanList = () => {
           );
         })
       ) : (
-        <div>좋아요한 원두가 없습니다.</div>
+        <NoLikeBody
+          style={{
+            border: 'solid 4px #03C846',
+            minHeight: '630px',
+          }}
+        >
+          <NoUserLikeImg>
+            <img src={NoLikeImg} alt="noLike" />
+          </NoUserLikeImg>
+
+          <NoComment>아직 맘에 드는 원두가 없나요??</NoComment>
+          <NoLinkBtn
+            onClick={() => {
+              navigate('/coffeelist/bean');
+            }}
+          >
+            <p style={{ paddingTop: '16px' }}>원두 보러 가기 →</p>
+          </NoLinkBtn>
+        </NoLikeBody>
       )}
     </List>
   );
@@ -154,3 +147,8 @@ const BeanDescription = tw.div`text-sm text-nameColor font-bold text-left mt-2 p
 
 const FixedDiv = tw.div`w-56 h-10 rounded-b-md bg-gray-500 my-auto flex absolute bottom-0`;
 const LinkBtn = tw.div`w-36 h-8 bg-brownBorder font-bold text-xl text-white rounded-full mt-1 ml-4 mb-1 cursor-pointer`;
+
+const NoLikeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
+const NoComment = tw.div`text-2xl font-bold text-left ml-10 mb-5 mt-5`;
+const NoUserLikeImg = tw.div`w-720 mx-auto`;
+const NoLinkBtn = tw.div` w-80 h-16 font-bold text-2xl text-white bg-brownBorder rounded-3xl cursor-pointer hover:scale-110 mx-auto my-10"`;
