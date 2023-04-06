@@ -7,6 +7,7 @@ import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
 import CoffeeCapSule from '../CoffeeCapSule';
 import { CapsuleDetailType } from '../detailcapsule/DetailCapsule';
+import Loading from '../Loading';
 
 interface CoffeeItem {
   nameKo?: string;
@@ -83,6 +84,7 @@ const Page2Carousel = () => {
   return (
     <Carousel>
       <BigDiv>
+        {beanMain ? null : <Loading />}
         <PageTitle>{usernick}님의 추천원두</PageTitle>
         <InDiv>
           {beanMain

@@ -119,6 +119,7 @@ const CoffeeCard = ({ beanData }: propsTypes) => {
       setTaste('단맛');
     }
   };
+  beanTaste();
 
   return (
     <OutDiv style={{ backgroundColor: cardBg }}>

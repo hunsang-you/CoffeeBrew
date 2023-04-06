@@ -49,6 +49,7 @@ const CoffeeCapSule = ({ capsuleData }: PropsType) => {
       setTaste('단맛');
     }
   };
+  capsuleTaste();
 
   return (
     <OutDiv style={{ backgroundColor: cardBg }}>
