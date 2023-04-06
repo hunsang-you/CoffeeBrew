@@ -71,7 +71,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			log.info("Response headers: {}", response.getHeaderNames());
 
 			// redirect 방식으로 /api 로 보냅니다.
-			String url = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth2/redirect/"+accessToken)
+			String url = UriComponentsBuilder.fromUriString("https://j8b305.p.ssafy.io/redirect?accessToken="+accessToken)
 					.build().toUriString();
 			log.info("Url: {}", url);
 			getRedirectStrategy().sendRedirect(request, response, url);

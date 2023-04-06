@@ -1,9 +1,6 @@
 package b305.coffeebrew.server.service;
 
-import b305.coffeebrew.server.dto.capsule.CapsuleDetailPageResDTO;
-import b305.coffeebrew.server.dto.capsule.CapsuleDetailResDTO;
-import b305.coffeebrew.server.dto.capsule.CapsuleResDTO;
-import b305.coffeebrew.server.dto.capsule.CapsuleScoreResDTO;
+import b305.coffeebrew.server.dto.capsule.*;
 import b305.coffeebrew.server.entity.Capsule;
 import b305.coffeebrew.server.entity.CapsuleDetail;
 import b305.coffeebrew.server.entity.CapsuleScore;
@@ -59,16 +56,28 @@ public class CapsuleService {
                 .build();
     }
 
-    public Page<CapsuleResDTO> searchCapsules(List<String> keywords, Pageable pageable) {
+    public Page<CapsuleSearchResDTO> searchCapsules(List<String> keywords, Pageable pageable) {
         if (CollectionUtils.isEmpty(keywords)) {
-            return capsuleRepository.findAll(pageable).map(CapsuleResDTO::of);
+            return capsuleRepository.findAll(pageable).map(capsule -> {
+                CapsuleScore capsuleScore = capsuleScoreRepository.findByCapsuleIdx(capsule);
+                return CapsuleSearchResDTO.of(capsule, capsuleScore);
+            });
         } else {
-            Set<Capsule> result = new TreeSet<>(Comparator.comparing(Capsule::getNameKo).thenComparing(Capsule::getNameEn).thenComparing(Capsule::getSummary));
+            Set<Capsule> capsules = new TreeSet<>(Comparator.comparing(Capsule::getNameKo).thenComparing(Capsule::getNameEn).thenComparing(Capsule::getSummary));
             for (String keyword : keywords) {
                 String processedKeyword = "%" + keyword.toLowerCase() + "%";
-                result.addAll(capsuleRepository.findCapsulesByKeyword(processedKeyword, pageable).getContent());
+                capsules.addAll(capsuleRepository.findCapsulesByKeyword(processedKeyword, pageable).getContent());
             }
-            return new PageImpl<>(new ArrayList<>(result.stream().limit(pageable.getPageSize()).collect(Collectors.toList()))).map(CapsuleResDTO::of);
+            List<CapsuleSearchResDTO> capsuleDTOs = new ArrayList<>();
+            for (Capsule capsule : capsules) {
+                CapsuleScore capsuleScore = capsuleScoreRepository.findByCapsuleIdx(capsule);
+                CapsuleSearchResDTO capsuleDTO = CapsuleSearchResDTO.of(capsule, capsuleScore);
+                capsuleDTOs.add(capsuleDTO);
+            }
+            int fromIndex = (int) pageable.getOffset();
+            int toIndex = Math.min(fromIndex + pageable.getPageSize(), capsuleDTOs.size());
+            List<CapsuleSearchResDTO> pagedCapsuleDTOs = capsuleDTOs.subList(fromIndex, toIndex);
+            return new PageImpl<>(pagedCapsuleDTOs, pageable, capsuleDTOs.size());
         }
     }
 }

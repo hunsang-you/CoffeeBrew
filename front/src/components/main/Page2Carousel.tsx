@@ -5,6 +5,8 @@ import { RootState } from '../../store';
 import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
+import CoffeeCapSule from '../CoffeeCapSule';
+import { CapsuleDetailType } from '../detailcapsule/DetailCapsule';
 
 type CoffeeItem = {
   nameKo?: string;
@@ -69,38 +71,10 @@ const Page2Carousel = () => {
       roastingPoint: '',
     },
   ]);
-  const [capsule, setCapsule] = useState([
-    {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
-    },
-  ]);
-  const [ageCapsule, setAgeCapsule] = useState([
-    {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
-    },
-  ]);
+  const [capsule, setCapsule] = useState<CapsuleDetailType[] | null>(null);
+  const [ageCapsule, setAgeCapsule] = useState<CapsuleDetailType[] | null>(
+    null,
+  );
 
   const cutArr = (arr: []) => {
     return arr.slice(0, 4);
@@ -131,26 +105,30 @@ const Page2Carousel = () => {
         <PageTitle>{usernick}님의 추천원두</PageTitle>
         <InDiv>
           {beanMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
-          {capsule.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
-          })}
+          {capsule
+            ? capsule.map((data: CapsuleDetailType, i) => {
+                return <CoffeeCapSule key={i} capsuleData={data} />;
+              })
+            : null}
         </InDiv>
       </BigDiv>
       <BigDiv>
         <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
         <InDiv>
           {ageMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
-          {ageCapsule.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
-          })}
+          {ageCapsule
+            ? ageCapsule.map((data: CapsuleDetailType, i) => {
+                return <CoffeeCapSule key={i} capsuleData={data} />;
+              })
+            : null}
         </InDiv>
       </BigDiv>
     </Carousel>

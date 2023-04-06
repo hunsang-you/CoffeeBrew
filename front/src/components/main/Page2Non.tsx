@@ -3,6 +3,7 @@ import { mainAPI } from '../../api/api';
 import tw from 'tailwind-styled-components';
 import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
+import CoffeeCapSule from '../CoffeeCapSule';
 
 type CoffeeItem = {
   nameKo?: string;
@@ -127,12 +128,12 @@ const Page2Non = () => {
         <PageTitle>모두가 사랑하는 원두</PageTitle>
         <InDiv>
           {nonBean1.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
           {noncapsule1.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
       </BigDiv>
@@ -140,12 +141,12 @@ const Page2Non = () => {
         <PageTitle>모두가 사랑하는 원두</PageTitle>
         <InDiv>
           {nonBean2.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'bean'} propsdata={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
         <InDiv>
           {noncapsule2.map((data: propsData, i) => {
-            return <CoffeeCard key={i} rec={'capsule'} propsdata={data} />;
+            return <CoffeeCard key={i} beanData={data} />;
           })}
         </InDiv>
       </BigDiv>

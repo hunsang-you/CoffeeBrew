@@ -35,31 +35,29 @@ type CoffeeItem = {
 };
 
 interface propsData {
-  rec: string;
-  propsdata: CoffeeItem;
+  beanData: CoffeeItem;
 }
 
-const CoffeeCard = ({ rec, propsdata }: propsData) => {
-  console.log(propsdata);
-  const propsData: CoffeeItem = propsdata;
+const CoffeeCard = ({ beanData }: propsData) => {
+  console.log(beanData);
   const [taste, setTaste] = useState('');
-  const cardTitle = propsData.origin + ' ' + propsData.rank;
+  const cardTitle = beanData.origin + ' ' + beanData.rank;
   const splitArr = (str: string) => {
     return str.split(',').slice(0, 2);
   };
   const cardNote: string[] | null =
-    typeof propsData.coffeeingNote === 'string'
-      ? splitArr(propsData.coffeeingNote)
+    typeof beanData.coffeeingNote === 'string'
+      ? splitArr(beanData.coffeeingNote)
       : null;
   const [cardImg, setCardImg] = useState('');
   const [cardBg, setCardBg] = useState('white');
 
   const beanTaste = () => {
-    const acidity = propsData.acidity;
-    const bitter = propsData.bitterness;
-    const body = propsData.body;
-    const flavor = propsData.flavor;
-    const sweetness = propsData.sweetness;
+    const acidity = beanData.acidity;
+    const bitter = beanData.bitterness;
+    const body = beanData.body;
+    const flavor = beanData.flavor;
+    const sweetness = beanData.sweetness;
     const values: any[] = [acidity, bitter, body, flavor, sweetness];
     const maxIndex: number = values.indexOf(Math.max(...values));
     const maxVar = Object.keys({ acidity, bitter, body, flavor, sweetness })[
@@ -88,11 +86,11 @@ const CoffeeCard = ({ rec, propsdata }: propsData) => {
     }
   };
   const capsuleTaste = () => {
-    const acidity = propsData.acidity;
-    const bitter = propsData.bitterness;
-    const body = propsData.body;
-    const flavor = propsData.flavor;
-    const sweetness = propsData.sweetness;
+    const acidity = beanData.acidity;
+    const bitter = beanData.bitterness;
+    const body = beanData.body;
+    const flavor = beanData.flavor;
+    const sweetness = beanData.sweetness;
     const values: any[] = [acidity, bitter, body, flavor, sweetness];
     const maxIndex: number = values.indexOf(Math.max(...values));
     const maxVar = Object.keys({ acidity, bitter, body, flavor, sweetness })[
@@ -121,13 +119,7 @@ const CoffeeCard = ({ rec, propsdata }: propsData) => {
       setTaste('단맛');
     }
   };
-  useEffect(() => {
-    if (rec === 'bean') {
-      beanTaste();
-    } else if (rec === 'capsule') {
-      capsuleTaste();
-    }
-  }, []);
+
   return (
     <OutDiv style={{ backgroundColor: cardBg }}>
       <InnerDiv>
@@ -147,6 +139,6 @@ export default CoffeeCard;
 const OutDiv = tw.div`w-full p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
-const UnderDiv = tw.div`h-28 p-2 flex flex-col justify-center`;
+const UnderDiv = tw.div`h-28 flex flex-col justify-center`;
 const UnTitle = tw.div`w-full text-end text-xl font-bold`;
 const UnContent = tw.div`w-full text-end text-xl`;
