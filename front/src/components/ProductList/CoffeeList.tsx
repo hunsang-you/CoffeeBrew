@@ -15,9 +15,11 @@ const CoffeeList = ({ listDatas }: PropsTypes) => {
   return (
     <ListDiv>
       <ProductList>
-        {listDatas.map((data, i) => {
-          return <CoffeeListItem data={data} i={i} />;
-        })}
+        {listDatas
+          ? listDatas.map((data, i) => {
+              return <CoffeeListItem data={data} i={i} />;
+            })
+          : null}
       </ProductList>
     </ListDiv>
   );

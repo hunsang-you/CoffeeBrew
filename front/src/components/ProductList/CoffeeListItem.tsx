@@ -1,10 +1,10 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
-import acidity from '../../assets/detailImg/acidityBean.svg';
-import bitterness from '../../assets/detailImg/bitterBean.svg';
-import sweetness from '../../assets/detailImg/sweetBean.svg';
-import flavor from '../../assets/detailImg/flavorBean.svg';
-import body from '../../assets/detailImg/bodyBean.svg';
+import acidityImg from '../../assets/detailImg/acidityBean.svg';
+import bitternessImg from '../../assets/detailImg/bitterBean.svg';
+import sweetnessImg from '../../assets/detailImg/sweetBean.svg';
+import flavorImg from '../../assets/detailImg/flavorBean.svg';
+import bodyImg from '../../assets/detailImg/bodyBean.svg';
 import { BeanType } from './AllList';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,14 @@ interface PropsTypes {
 }
 const CoffeeListItem = ({ data, i }: PropsTypes) => {
   const navigate = useNavigate();
-  const [imgg, setImgg] = useState(acidity);
+  const [imgg, setImgg] = useState([
+    acidityImg,
+    bitternessImg,
+    flavorImg,
+    bodyImg,
+    sweetnessImg,
+  ]);
+  const [imgNumber, setImgNumber] = useState<number>(0);
   const BackColor: string[] = [
     '#FFAA01',
     '#D4AA70',
@@ -27,12 +34,22 @@ const CoffeeListItem = ({ data, i }: PropsTypes) => {
     '#E8D2A0',
   ];
   useEffect(() => {
-    setImgg(data.taste);
+    if (data.taste === 'acidity') {
+      setImgNumber(0);
+    } else if (data.taste === 'bitterness') {
+      setImgNumber(1);
+    } else if (data.taste === 'flavor') {
+      setImgNumber(2);
+    } else if (data.taste === 'body') {
+      setImgNumber(3);
+    } else if (data.taste === 'sweetness') {
+      setImgNumber(4);
+    }
   }, []);
   return (
-    <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
+    <ProductItemT1 style={{ backgroundColor: BackColor[imgNumber] }} key={i}>
       <ProductItemImg
-        src={imgg}
+        src={imgg[imgNumber]}
         onClick={() => navigate(`/detail/bean/${data.idx}`)}
       />
       <ProductItemB>
