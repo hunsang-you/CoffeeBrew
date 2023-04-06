@@ -17,6 +17,12 @@ import { useSelector } from 'react-redux';
 interface PropsType {
   detailBean: detailType;
 }
+interface likedCheck {
+  expired: boolean;
+  idx: number;
+  itemIdx: number;
+  itemType: string;
+}
 
 const BeanInfo = ({ detailBean }: PropsType) => {
   const [isLike, setIsLike] = useState(false);
@@ -61,10 +67,22 @@ const BeanInfo = ({ detailBean }: PropsType) => {
         .memberLikesBeans()
         .then((request) => {
           console.log(request);
+          const likeCheck: likedCheck[] = request.data.value;
+          const isLiked = likeCheck.filter(
+            (check) =>
+              check.itemType === 'bean' && check.idx === Number(beanId),
+          );
+          if (isLiked.length === 0) {
+            setIsLike(false);
+          } else {
+            setIsLike(true);
+          }
         })
         .catch((e) => console.log(e));
     };
-    getLikesBeans();
+    if (reduxData.login) {
+      getLikesBeans();
+    }
   }, []);
   return (
     <BeanTop1 id="Top">
