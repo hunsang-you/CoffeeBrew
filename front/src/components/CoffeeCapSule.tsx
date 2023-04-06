@@ -72,6 +72,6 @@ export default CoffeeCapSule;
 const OutDiv = tw.div`w-full p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
-const UnderDiv = tw.div`h-28 flex flex-col justify-center`;
+const UnderDiv = tw.div`flex flex-col justify-center`;
 const UnTitle = tw.div`w-full text-end text-xl font-bold`;
 const UnContent = tw.div`w-full text-end text-xl`;
