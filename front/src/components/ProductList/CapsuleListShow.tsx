@@ -2,44 +2,21 @@ import tw from 'tailwind-styled-components';
 import { useNavigate } from 'react-router-dom';
 import capsule from '../../assets/tempImg/capsule.png';
 import { CapsuleType } from './CapsuleList';
+import CapsuleListShowItem from './CapsuleListShowItem';
 
 interface PropsTypes {
   listDatas: CapsuleType[];
 }
 
 const CapsuleListShow = ({ listDatas }: PropsTypes) => {
-  const BackColor: string[] = [
-    '#FFAA01',
-    '#D4AA70',
-    '#E8D2A0',
-    '#F6842B',
-    '#D3BD94',
-    '#9A6533',
-    '#FFAA01',
-    '#D4AA70',
-    '#E8D2A0',
-  ];
-
-  const navigate = useNavigate();
-
   return (
     <ListDiv>
       <ProductList>
-        {listDatas.map((data, i) => {
-          return (
-            <ProductItemT1 style={{ backgroundColor: BackColor[i] }} key={i}>
-              <ProductItemImg
-                src={capsule}
-                onClick={() => navigate(`/detail/capsule/${data.idx}`)}
-              />
-              <ProductItemB>
-                <ProductItemName>{data.nameKo}</ProductItemName>
-                <ProductItemEngName>{data.nameEn}</ProductItemEngName>
-                <ProductInfo>{data.summary}</ProductInfo>
-              </ProductItemB>
-            </ProductItemT1>
-          );
-        })}
+        {listDatas
+          ? listDatas.map((data, i) => {
+              return <CapsuleListShowItem data={data} i={i} />;
+            })
+          : null}
       </ProductList>
     </ListDiv>
   );

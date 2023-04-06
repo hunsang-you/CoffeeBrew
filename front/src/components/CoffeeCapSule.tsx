@@ -76,7 +76,7 @@ const CoffeeCapSule = ({ capsuleData }: PropsType) => {
 
 export default CoffeeCapSule;
 
-const OutDiv = tw.div`w-full p-5 m-5 justify-between content-center rounded-lg`;
+const OutDiv = tw.div`p-5 m-5 justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
 const UnderDiv = tw.div`flex flex-col justify-center`;
