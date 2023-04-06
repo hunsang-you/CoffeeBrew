@@ -47,6 +47,7 @@ const RecommendCapsuleList = ({ data, i }: Propstypes) => {
       style={{ backgroundColor: BackColor[i] }}
       onClick={() => {
         navigate(`/detail/capsule/${data.capsule.idx}`);
+        window.location.reload();
       }}
     >
       <RecomItemImg src={capsuleImg[imgIdx]} />

@@ -45,6 +45,7 @@ const RecommendBeanList = ({ data, i }: Propstypes) => {
       style={{ backgroundColor: BackColor[i] }}
       onClick={() => {
         navigate(`/detail/bean/${data.idx}`);
+        window.location.reload();
       }}
     >
       <RecomItemImg src={beanImg[imgIdx]} />
