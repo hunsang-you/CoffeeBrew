@@ -32,7 +32,7 @@ const NoAnalyze = () => {
           Navigate('/survey');
         }}
       >
-        <p style={{ marginTop: '16px' }}>설문하러가기</p>
+        <p style={{ paddingTop: '16px' }}>설문하러가기</p>
       </NoLinkBtn>
     </NoAnalyzeBody>
   );
