@@ -159,7 +159,7 @@ def recommendation_list_by_id(target_id, matrix, items, k=10):
         recom_title = items.iloc[recom_idx, :].name_ko.values
 
     except:
-        print(recom_idx)
+        print(target_idx)
         print(recom_id, recom_title)
 
     recom_list = [dict(id=id, title=title) for id, title in zip(recom_id, recom_title)]

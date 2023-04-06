@@ -17,8 +17,8 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from .recom import item_recom_cbf
-from .recom import user_recom, user_cbcf_recom
+from .recom import item_recom_cbf, user_recom_cbcf
+from .recom import user_recom
 
 from sqlalchemy.orm import Session
 
@@ -209,17 +209,17 @@ async def getGenderRecom(
 # 사용자 데이터 기반 제품 추천
 @app.get("/user/{userId}/{itemType}")
 async def getUserRecom(
-    userId: Union[int, None] = None, itemType: Union[str, None] = None
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
 ):
     print("Call - {}...".format(getUserRecom.__name__))
     print("userId:{}, itemType:{}".format(userId, itemType))
 
-    result = await getUserRecomByLike(userId, itemType)
-
     if itemType == "bean":
-        result = await getUserRecomByLike(userId, itemType)
+        result = await getUserRecomByLike(userId, itemType, db)
     elif itemType == "capsule":
-        result = await getUserRecomByLike(userId, itemType)
+        result = await getUserRecomByLike(userId, itemType, db)
     else:
         raise HTTPException(status_code=400, detail="Invalid input value")
 
@@ -229,10 +229,14 @@ async def getUserRecom(
 # 사용자 설문 기반 제품 추천
 @app.get("/user/{userId}/{itemType}/survey")
 async def getUserRecomBySurvey(
-    userId: Union[int, None] = None, itemType: Union[str, None] = None
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
 ):
     print("Call - {}...".format(getUserRecomBySurvey.__name__))
     print("userId:{}, itemType:{}".format(userId, itemType))
+
+    data_read = user_recom.load_survey_data(db)
 
     result = await getUserRecomByLike(userId, itemType)
 
@@ -249,16 +253,14 @@ async def getUserRecomBySurvey(
 # 사용자 좋아요 기반 제품 추천
 @app.get("/user/{userId}/{itemType}/like")
 async def getUserRecomByLike(
-    userId: Union[int, None] = None, itemType: Union[str, None] = None
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
 ):
     print("Call - {}...".format(getUserRecomByLike.__name__))
     print("userId:{}, itemType:{}".format(userId, itemType))
 
-    data_read = pd.read_csv(
-        path.join(DIR_PATH, "sql_dummy", "sql_like_list.csv"),
-        low_memory=False,
-        encoding="cp949",
-    )
+    data_read = user_recom.load_like_data(db)
 
     read_file = "null"
     if itemType == "bean":
@@ -269,12 +271,20 @@ async def getUserRecomByLike(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", read_file),
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
 
-    result = user_cbcf_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
+    if (
+        data_read.loc[
+            (data_read["member_idx"] == userId) & (data_read["item_type"] == itemType)
+        ].shape[0]
+        == 0
+    ):
+        return user_recom.get_recom_by_user(1, data_read, recom_read, itemType)
+
+    result = user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -284,16 +294,14 @@ async def getUserRecomByLike(
 # 사용자 리뷰 기반 제품 추천
 @app.get("/user/{userId}/{itemType}/review")
 async def getUserRecomByReview(
-    userId: Union[int, None] = None, itemType: Union[str, None] = None
+    userId: Union[int, None] = None,
+    itemType: Union[str, None] = None,
+    db: Session = Depends(get_db),
 ):
     print("Call - {}...".format(getUserRecomByReview.__name__))
     print("userId:{}, itemType:{}".format(userId, itemType))
 
-    data_read = pd.read_csv(
-        path.join(DIR_PATH, "sql_dummy", "sql_review.csv"),
-        low_memory=False,
-        encoding="cp949",
-    )
+    data_read = user_recom.load_review_data(db)
 
     read_file = "null"
     if itemType == "bean":
@@ -309,7 +317,15 @@ async def getUserRecomByReview(
         encoding="utf-8",
     )
 
-    result = user_cbcf_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
+    if (
+        data_read.loc[
+            (data_read["member_idx"] == userId) & (data_read["item_type"] == itemType)
+        ].shape[0]
+        == 0
+    ):
+        await user_recom.get_recom_by_user(1, data_read, recom_read, itemType)
+
+    result = user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -346,24 +362,40 @@ async def updateRecomByItem(
     return {"message": "update item-based recommendations"}
 
 
-@app.get("/update/{itemType}/{category}")
 @logging_time
-async def updateRecomByCategory(
-    itemType: Union[str, None] = None,
-    category: Union[str, None] = None,
-    db: Session = Depends(get_db),
+@app.get("/update/{itemType}/like")
+async def updateRecomByLike(
+    itemType: Union[str, None] = None, db: Session = Depends(get_db)
 ):
-    print("Call - {}...".format(updateRecomByCategory.__name__))
-    print("itemType:{}, category:{}".format(itemType, category))
+    print("Call - {}...".format(updateRecomByLike.__name__))
+    print("itemType:{}".format(itemType))
 
     if itemType == "bean":
-        item_recom_cbf.calc_recom_bean(db, DIR_PATH)
+        user_recom_cbcf.calc_recom_bean_by_like(db, DIR_PATH)
     elif itemType == "capsule":
-        pass
+        user_recom_cbcf.calc_recom_capsule_by_like(db, DIR_PATH)
     else:
         raise HTTPException(status_code=400, detail="Invalid input value")
 
-    return {"message": "update {}-based recommendations".format(category)}
+    return {"message": "update like-based recommendations"}
+
+
+@logging_time
+@app.get("/update/{itemType}/age")
+async def updateRecomByAge(
+    itemType: Union[str, None] = None, db: Session = Depends(get_db)
+):
+    print("Call - {}...".format(updateRecomByAge.__name__))
+    print("itemType:{}".format(itemType))
+
+    if itemType == "bean":
+        user_recom.calc_recom_bean_by_age(db, DIR_PATH)
+    elif itemType == "capsule":
+        user_recom.calc_recom_capsule_by_age(db, DIR_PATH)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return {"message": "update age-based recommendations"}
 
 
 if __name__ == "__main__":
