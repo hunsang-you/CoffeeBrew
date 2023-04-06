@@ -122,7 +122,7 @@ const Page2Carousel = () => {
       </Carousel>
     );
   } else {
-    <Loading />;
+    return <Loading />;
   }
 };
 
