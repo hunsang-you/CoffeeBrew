@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { detailAPI, reviewAPI } from '../../api/api';
 import CapsuleInfo from './CapsuleInfo';
