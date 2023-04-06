@@ -31,10 +31,15 @@ const NoLinkBtn = tw.div`w-80 h-16 font-bold text-2xl text-white bg-brownBorder 
 
 interface PropsTypes {
   reviewData: ReviewType;
+  setReviewPage: React.Dispatch<React.SetStateAction<string>>;
+  pageNumber: number;
 }
 
-const MyReviewItem = ({ reviewData }: PropsTypes) => {
-  console.log(reviewData);
+const MyReviewItem = ({
+  reviewData,
+  setReviewPage,
+  pageNumber,
+}: PropsTypes) => {
   const navigate = useNavigate();
   const Rating = {
     향: reviewData.flavor,
@@ -95,7 +100,10 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
           onClick={() => {
             reviewAPI
               .deleteReview(Number(reviewData.idx))
-              .then((request) => console.log(request.data))
+              .then((request) => {
+                console.log(request.data);
+                setReviewPage(`page=${pageNumber}`);
+              })
               .catch((e) => console.log(e));
           }}
         >
