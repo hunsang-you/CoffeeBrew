@@ -95,8 +95,19 @@ const Page2Carousel = () => {
         })
         .catch((e) => console.log(e));
     };
+    const getRecommend = async (type: string) => {
+      await mainAPI.getRecommend(type).then((request) => {
+        if (type === 'bean') {
+          setbeanMain(request.data.value);
+        } else if (type === 'capsule') {
+          setCapsule(request.data.value);
+        }
+      });
+    };
     getData(userage, 'bean');
     getData(userage, 'capsule');
+    getRecommend('bean');
+    getRecommend('capsule');
   }, []);
 
   return (
