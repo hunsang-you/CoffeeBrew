@@ -1,15 +1,10 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import bean from '../../assets/tempImg/bean.png';
 import { detailAPI } from '../../api/api';
-import acidityImg from '../../assets/detailImg/acidityBean.svg';
-import bitterImg from '../../assets/detailImg/bitterBean.svg';
-import sweetImg from '../../assets/detailImg/sweetBean.svg';
-import flavorImg from '../../assets/detailImg/flavorBean.svg';
-import bodyImg from '../../assets/detailImg/bodyBean.svg';
+import RecommendBeanList from './RecommendBeanList';
 
-interface recomType {
+export interface recomType {
   flavor: number;
   acidity: number;
   sweetness: number;
@@ -34,13 +29,6 @@ interface recomType {
 
 const RecommendBean = (): JSX.Element => {
   const { beanId } = useParams() as { beanId: string };
-  const [cardImg, setCardImg] = useState<string[]>([
-    acidityImg,
-    acidityImg,
-    acidityImg,
-    acidityImg,
-    acidityImg,
-  ]);
   const [recommendBeanList, setRecommendBeanList] = useState<
     recomType[] | null
   >(null);
@@ -55,123 +43,15 @@ const RecommendBean = (): JSX.Element => {
         })
         .catch((e) => console.log(e));
     };
-    //
-    // const updateCardImg = async () => {
-    //   try {
-    //     await recomBean();
-    //     const cards: string[] = [];
-    //     recommendBeanList?.map((data, i) => {
-    //       const acidity = data?.acidity;
-    //       const bitter = data?.bitterness;
-    //       const body = data?.body;
-    //       const flavor = data?.flavor;
-    //       const sweetness = data?.sweetness;
-    //       const values: any[] = [acidity, bitter, body, flavor, sweetness];
-    //       const maxIndex: number = values.indexOf(Math.max(...values));
-    //       const maxVar = Object.keys({
-    //         acidity,
-    //         bitter,
-    //         body,
-    //         flavor,
-    //         sweetness,
-    //       })[maxIndex];
-    //       console.log(maxVar);
-    //       console.log(cardImg);
-    //       if (maxVar === 'acidity') {
-    //         if (i === 0) {
-    //           cards.push(acidityImg);
-    //         } else {
-    //           cards.push(acidityImg);
-    //         }
-    //       } else if (maxVar === 'bitter') {
-    //         if (i === 0) {
-    //           cards.push(bitterImg);
-    //         } else {
-    //           cards.push(bitterImg);
-    //         }
-    //       } else if (maxVar === 'body') {
-    //         if (i === 0) {
-    //           cards.push(bodyImg);
-    //         } else {
-    //           cards.push(bodyImg);
-    //         }
-    //       } else if (maxVar === 'flavor') {
-    //         if (i === 0) {
-    //           cards.push(flavorImg);
-    //         } else {
-    //           cards.push(flavorImg);
-    //         }
-    //       } else if (maxVar === 'sweetness') {
-    //         if (i === 0) {
-    //           cards.push(sweetImg);
-    //         } else {
-    //           cards.push(sweetImg);
-    //         }
-    //       }
-    //     });
-    //     setCardImg(cards);
-    //   } catch (error) {
-    //     console.log(error);
-    //     setCardImg([]);
-    //   }
-    // };
-    // updateCardImg();
     recomBean();
-    console.log('ddd');
   }, []);
-  const BackColor: string[] = [
-    '#FFAA01',
-    '#D4AA70',
-    '#E8D2A0',
-    '#F6842B',
-    '#D3BD94',
-  ];
 
   return (
     <ListDiv>
       <RecomList>
         {recommendBeanList
-          ? recommendBeanList?.map((data, i) => {
-              const acidity = data?.acidity;
-              const bitter = data?.bitterness;
-              const body = data?.body;
-              const flavor = data?.flavor;
-              const sweetness = data?.sweetness;
-              const values: any[] = [acidity, bitter, body, flavor, sweetness];
-              const maxIndex: number = values.indexOf(Math.max(...values));
-              const maxVar = Object.keys({
-                acidity,
-                bitter,
-                body,
-                flavor,
-                sweetness,
-              })[maxIndex];
-              let tempImg = [...cardImg];
-              if (maxVar === 'acidity') {
-                tempImg[i] = acidityImg;
-              } else if (maxVar === 'bitter') {
-                tempImg[i] = bitterImg;
-              } else if (maxVar === 'body') {
-                tempImg[i] = bodyImg;
-              } else if (maxVar === 'flavor') {
-                tempImg[i] = flavorImg;
-              } else if (maxVar === 'sweetness') {
-                tempImg[i] = sweetImg;
-              }
-              console.log('test' + i);
-              setCardImg(tempImg);
-
-              return (
-                <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-                  <RecomItemImg src={cardImg[i]} />
-                  <RecomItemB>
-                    <RecomItemName>{data.nameKo}</RecomItemName>
-                    <RecomInfo>
-                      <div>{data.summary}</div>
-                    </RecomInfo>
-                  </RecomItemB>
-                </RecomItemT1>
-              );
+          ? recommendBeanList.map((data, i) => {
+              return <RecommendBeanList data={data} i={i} />;
             })
           : null}
       </RecomList>
