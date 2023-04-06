@@ -51,73 +51,42 @@ const CoffeeCard = ({ beanData }: propsTypes) => {
   const [cardImg, setCardImg] = useState('');
   const [cardBg, setCardBg] = useState('white');
 
-  const beanTaste = () => {
-    const acidity = beanData.acidity;
-    const bitter = beanData.bitterness;
-    const body = beanData.body;
-    const flavor = beanData.flavor;
-    const sweetness = beanData.sweetness;
-    const values: any[] = [acidity, bitter, body, flavor, sweetness];
-    const maxIndex: number = values.indexOf(Math.max(...values));
-    const maxVar = Object.keys({ acidity, bitter, body, flavor, sweetness })[
-      maxIndex
-    ];
-    if (maxVar === 'acidity') {
-      setCardImg(Acidity);
-      setCardBg('#FEC200');
-      setTaste('산미');
-    } else if (maxVar === 'bitter') {
-      setCardImg(Bitter);
-      setCardBg('#ACA571');
-      setTaste('쓴맛');
-    } else if (maxVar === 'body') {
-      setCardImg(Body);
-      setCardBg('#A33A1D');
-      setTaste('바디감');
-    } else if (maxVar === 'flavor') {
-      setCardImg(Flavor);
-      setCardBg('#938EAE');
-      setTaste('향');
-    } else if (maxVar === 'sweetness') {
-      setCardImg(Sweetness);
-      setCardBg('#DB7624');
-      setTaste('단맛');
-    }
-  };
-  const capsuleTaste = () => {
-    const acidity = beanData.acidity;
-    const bitter = beanData.bitterness;
-    const body = beanData.body;
-    const flavor = beanData.flavor;
-    const sweetness = beanData.sweetness;
-    const values: any[] = [acidity, bitter, body, flavor, sweetness];
-    const maxIndex: number = values.indexOf(Math.max(...values));
-    const maxVar = Object.keys({ acidity, bitter, body, flavor, sweetness })[
-      maxIndex
-    ];
-
-    if (maxVar === 'acidity') {
-      setCardImg(capAcidity);
-      setCardBg('#FEC200');
-      setTaste('산미');
-    } else if (maxVar === 'bitter') {
-      setCardImg(capBitter);
-      setCardBg('#ACA571');
-      setTaste('쓴맛');
-    } else if (maxVar === 'body') {
-      setCardImg(capBody);
-      setCardBg('#A33A1D');
-      setTaste('바디감');
-    } else if (maxVar === 'flavor') {
-      setCardImg(capFlavor);
-      setCardBg('#938EAE');
-      setTaste('향');
-    } else if (maxVar === 'sweetness') {
-      setCardImg(capSweetness);
-      setCardBg('#DB7624');
-      setTaste('단맛');
-    }
-  };
+  useEffect(() => {
+    const beanTaste = () => {
+      const acidity = beanData.acidity;
+      const bitter = beanData.bitterness;
+      const body = beanData.body;
+      const flavor = beanData.flavor;
+      const sweetness = beanData.sweetness;
+      const values: any[] = [acidity, bitter, body, flavor, sweetness];
+      const maxIndex: number = values.indexOf(Math.max(...values));
+      const maxVar = Object.keys({ acidity, bitter, body, flavor, sweetness })[
+        maxIndex
+      ];
+      if (maxVar === 'acidity') {
+        setCardImg(Acidity);
+        setCardBg('#FEC200');
+        setTaste('산미');
+      } else if (maxVar === 'bitter') {
+        setCardImg(Bitter);
+        setCardBg('#ACA571');
+        setTaste('쓴맛');
+      } else if (maxVar === 'body') {
+        setCardImg(Body);
+        setCardBg('#A33A1D');
+        setTaste('바디감');
+      } else if (maxVar === 'flavor') {
+        setCardImg(Flavor);
+        setCardBg('#938EAE');
+        setTaste('향');
+      } else if (maxVar === 'sweetness') {
+        setCardImg(Sweetness);
+        setCardBg('#DB7624');
+        setTaste('단맛');
+      }
+    };
+    beanTaste();
+  }, []);
 
   return (
     <OutDiv style={{ backgroundColor: cardBg }}>
