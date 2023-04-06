@@ -81,45 +81,49 @@ const Page2Carousel = () => {
     getRecommend('capsule');
   }, []);
 
-  return (
-    <Carousel>
-      <BigDiv>
-        {beanMain ? null : <Loading />}
-        <PageTitle>{usernick}님의 추천원두</PageTitle>
-        <InDiv>
-          {beanMain
-            ? beanMain.map((data: CoffeeItem, i) => {
-                return <CoffeeCard key={i} beanData={data} />;
-              })
-            : null}
-        </InDiv>
-        <InDiv>
-          {capsule
-            ? capsule.map((data: CapsuleDetailType, i) => {
-                return <CoffeeCapSule key={i} capsuleData={data} />;
-              })
-            : null}
-        </InDiv>
-      </BigDiv>
-      <BigDiv>
-        <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
-        <InDiv>
-          {ageMain
-            ? ageMain.map((data: CoffeeItem, i) => {
-                return <CoffeeCard key={i} beanData={data} />;
-              })
-            : null}
-        </InDiv>
-        <InDiv>
-          {ageCapsule
-            ? ageCapsule.map((data: CapsuleDetailType, i) => {
-                return <CoffeeCapSule key={i} capsuleData={data} />;
-              })
-            : null}
-        </InDiv>
-      </BigDiv>
-    </Carousel>
-  );
+  if (beanMain && capsule && ageMain && ageCapsule) {
+    return (
+      <Carousel>
+        <BigDiv>
+          {beanMain ? null : <Loading />}
+          <PageTitle>{usernick}님의 추천원두</PageTitle>
+          <InDiv>
+            {beanMain
+              ? beanMain.map((data: CoffeeItem, i) => {
+                  return <CoffeeCard key={i} beanData={data} />;
+                })
+              : null}
+          </InDiv>
+          <InDiv>
+            {capsule
+              ? capsule.map((data: CapsuleDetailType, i) => {
+                  return <CoffeeCapSule key={i} capsuleData={data} />;
+                })
+              : null}
+          </InDiv>
+        </BigDiv>
+        <BigDiv>
+          <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
+          <InDiv>
+            {ageMain
+              ? ageMain.map((data: CoffeeItem, i) => {
+                  return <CoffeeCard key={i} beanData={data} />;
+                })
+              : null}
+          </InDiv>
+          <InDiv>
+            {ageCapsule
+              ? ageCapsule.map((data: CapsuleDetailType, i) => {
+                  return <CoffeeCapSule key={i} capsuleData={data} />;
+                })
+              : null}
+          </InDiv>
+        </BigDiv>
+      </Carousel>
+    );
+  } else {
+    <Loading />;
+  }
 };
 
 export default Page2Carousel;
