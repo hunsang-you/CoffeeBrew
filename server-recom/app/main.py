@@ -164,7 +164,7 @@ async def getAgeRecom(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", read_file),
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )

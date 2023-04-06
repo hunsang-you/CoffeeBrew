@@ -38,6 +38,9 @@ public class CapsuleScore extends BaseAtTime implements Serializable {
 
     @NotNull
     private int acidity; // 산미
+    
+    @NotNull
+    private int sweetness; // 단맛
 
     @NotNull
     private int bitterness; // 쓴맛

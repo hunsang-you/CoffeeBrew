@@ -35,7 +35,7 @@ const RecommendCapsule = () => {
     '#D3BD94',
   ];
 
-  const [recomCapsuleImg, setRecomCapsuleImg] = useState('');
+  const [recomCapsuleImg, setRecomCapsuleImg] = useState<string[]>([]);
   return (
     <ListDiv>
       <RecomList>
@@ -57,21 +57,21 @@ const RecommendCapsule = () => {
                   roasting,
                 })[maxIndex];
                 if (maxVar === 'acidity') {
-                  setRecomCapsuleImg(acidityCapsuleImg);
+                  setRecomCapsuleImg([...recomCapsuleImg, acidityCapsuleImg]);
                 } else if (maxVar === 'bitter') {
-                  setRecomCapsuleImg(bitterCapsuleImg);
+                  setRecomCapsuleImg([...recomCapsuleImg, bitterCapsuleImg]);
                 } else if (maxVar === 'body') {
-                  setRecomCapsuleImg(bodyCapsuleImg);
+                  setRecomCapsuleImg([...recomCapsuleImg, bodyCapsuleImg]);
                 } else if (maxVar === 'flavor') {
-                  setRecomCapsuleImg(flavorCapsuleImg);
+                  setRecomCapsuleImg([...recomCapsuleImg, flavorCapsuleImg]);
                 } else if (maxVar === 'roasting') {
-                  setRecomCapsuleImg(roastingCapsuleImg);
+                  setRecomCapsuleImg([...recomCapsuleImg, roastingCapsuleImg]);
                 }
               };
               beanTaste();
               return (
                 <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-                  <RecomItemImg src={recomCapsuleImg} />
+                  <RecomItemImg src={recomCapsuleImg[i]} />
                   <RecomItemB>
                     <RecomItemName>{data.capsule.nameKo}</RecomItemName>
                     <RecomInfo>
