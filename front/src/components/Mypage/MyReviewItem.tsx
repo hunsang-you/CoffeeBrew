@@ -24,9 +24,9 @@ const ScoreTitle = tw.div`text-xl flex justify-end drop-shadow-2xl`;
 
 const ReviewContent = tw.div`w-240 h-48 text-sm text-nameColor font-bold text-left my-auto pl-6 ml-4  overflow-scroll break-words`;
 
-const NoReviewBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
+const NoReviewBody = tw.div`rounded-b-lg text-center mb-4`;
 const NoComment = tw.div`text-2xl font-bold text-left ml-10 mb-5 mt-5`;
-const NoUserReviewImg = tw.div`w-720 mx-auto`;
+const NoUserReviewImg = tw.div`w-700 mx-auto`;
 const NoLinkBtn = tw.div`w-80 h-16 font-bold text-2xl text-white bg-brownBorder rounded-3xl cursor-pointer hover:scale-110 mx-auto my-10"`;
 
 interface PropsTypes {
@@ -90,87 +90,60 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
   };
   return (
     <ReviewBody>
-      {reviewData ? (
-        <ReviewItems>
-          <DeleteBtn> 삭 제</DeleteBtn>
-          <Item>
-            <div
-              style={{
-                textAlign: 'center',
-                marginLeft: '20px',
-                marginRight: '20px',
-              }}
-            >
-              <div style={{ marginTop: '24px', fontWeight: 'bold' }}>
-                {reviewData.createdDate
-                  ? reviewData.createdDate[0] +
-                    '년' +
-                    ' ' +
-                    reviewData.createdDate[1] +
-                    '월' +
-                    ' ' +
-                    reviewData.createdDate[2] +
-                    '일' +
-                    ' ' +
-                    reviewData.createdDate[3] +
-                    '시'
-                  : null}
-              </div>
-              <BeanImg src={bean} alt="no_img" />
-              <p
-                style={{
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  color: '#9A6533',
-                  width: '200px',
-                  wordBreak: 'break-word',
-                  marginBottom: '16px',
-                }}
-              >
-                원두이름(뭘채울까)
-              </p>
-            </div>
-
-            <div
-              style={{
-                width: '200px',
-                height: '200px',
-                marginTop: '5%',
-              }}
-            >
-              {beanScore()}
-            </div>
-            <ReviewContent>
-              <div style={{ height: '160px' }}>{reviewData.content}</div>
-            </ReviewContent>
-          </Item>
-        </ReviewItems>
-      ) : (
-        <NoReviewBody
-          style={{
-            border: 'solid 4px #06AACE',
-            minHeight: '630px',
-          }}
-        >
-          <NoUserReviewImg>
-            <img
-              src={NoReviewImg}
-              alt="noReview"
-              style={{ marginLeft: '80px' }}
-            />
-          </NoUserReviewImg>
-
-          <NoComment>아직 남긴 리뷰가 없네요!</NoComment>
-          <NoComment>맘에 드는 커피를 찾아 리뷰를 남겨봐요</NoComment>
-          <NoLinkBtn
-            onClick={() => {
-              navigate('/coffeelist/bean');
+      <ReviewItems>
+        <DeleteBtn> 삭 제</DeleteBtn>
+        <Item>
+          <div
+            style={{
+              textAlign: 'center',
+              marginLeft: '20px',
+              marginRight: '20px',
             }}
           >
-            <p style={{ paddingTop: '16px' }}>원두 보러 가기 →</p>
-          </NoLinkBtn>
-        </NoReviewBody>
-      )}
+            <div style={{ marginTop: '24px', fontWeight: 'bold' }}>
+              {reviewData.createdDate
+                ? reviewData.createdDate[0] +
+                  '년' +
+                  ' ' +
+                  reviewData.createdDate[1] +
+                  '월' +
+                  ' ' +
+                  reviewData.createdDate[2] +
+                  '일' +
+                  ' ' +
+                  reviewData.createdDate[3] +
+                  '시'
+                : null}
+            </div>
+            <BeanImg src={bean} alt="no_img" />
+            <p
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                color: '#9A6533',
+                width: '200px',
+                wordBreak: 'break-word',
+                marginBottom: '16px',
+              }}
+            >
+              원두이름(뭘채울까)
+            </p>
+          </div>
+
+          <div
+            style={{
+              width: '200px',
+              height: '200px',
+              marginTop: '5%',
+            }}
+          >
+            {beanScore()}
+          </div>
+          <ReviewContent>
+            <div style={{ height: '160px' }}>{reviewData.content}</div>
+          </ReviewContent>
+        </Item>
+      </ReviewItems>
     </ReviewBody>
   );
 };

@@ -119,12 +119,7 @@ const LikeCapsuleList = () => {
           );
         })
       ) : (
-        <NoLikeBody
-          style={{
-            border: 'solid 4px #FD0F0F',
-            minHeight: '630px',
-          }}
-        >
+        <NoLikeBody>
           <NoUserLikeImg>
             <img src={NoLikeImg} alt="noLike" />
           </NoUserLikeImg>
@@ -156,7 +151,7 @@ const CapsuleDescription = tw.div`text-sm text-nameColor font-bold text-left mt-
 const FixedDiv = tw.div`w-56 h-10 rounded-b-md bg-gray-500 my-auto flex absolute bottom-0`;
 const LinkBtn = tw.div`w-36 h-8 bg-brownBorder font-bold text-xl text-white rounded-full mt-1 ml-4 mb-1 cursor-pointer`;
 
-const NoLikeBody = tw.div`border-2 rounded-b-lg text-center mb-4`;
+const NoLikeBody = tw.div`rounded-b-lg text-center mb-4`;
 const NoComment = tw.div`text-2xl font-bold text-left ml-10 mb-5 mt-5`;
-const NoUserLikeImg = tw.div`w-720 mx-auto`;
+const NoUserLikeImg = tw.div`w-700 mx-auto`;
 const NoLinkBtn = tw.div`w-80 h-16 font-bold text-2xl text-white bg-brownBorder rounded-3xl cursor-pointer hover:scale-110 mx-auto my-10"`;
