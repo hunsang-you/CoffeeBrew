@@ -17,7 +17,7 @@ const CardComponent = ({ title, titleKo, content }: PropsTypes) => {
     <div className="w-240 m-10 ">
       <Card
         sx={{
-          backgroundColor: 'rgba(244, 244, 244, 0.8)',
+          backgroundColor: 'rgba(244, 244, 244, 1)',
           height: '200px',
           alignItems: 'stretch',
           display: 'flex',
