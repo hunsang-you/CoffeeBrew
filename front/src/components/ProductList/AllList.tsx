@@ -42,6 +42,7 @@ export interface BeanType {
   summary: string;
   thumbnail: string | null;
   userGrade: number | null;
+  taste: string;
 }
 
 const AllList = () => {

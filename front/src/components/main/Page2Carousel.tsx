@@ -29,10 +29,7 @@ interface CoffeeItem {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
-}
-
-interface propsData {
-  [index: number]: CoffeeItem;
+  idx: number;
 }
 
 const Page2Carousel = () => {
@@ -48,7 +45,7 @@ const Page2Carousel = () => {
   );
 
   const cutArr = (arr: []) => {
-    return arr.slice(0, 5);
+    return arr.slice(0, 4);
   };
 
   useEffect(() => {
@@ -69,9 +66,9 @@ const Page2Carousel = () => {
     const getRecommend = async (type: string) => {
       await mainAPI.getRecommend(type).then((request) => {
         if (type === 'bean') {
-          setbeanMain(request.data.value);
+          setbeanMain(cutArr(request.data.value));
         } else if (type === 'capsule') {
-          setCapsule(request.data.value);
+          setCapsule(cutArr(request.data.value));
         }
       });
     };
@@ -129,5 +126,5 @@ const Page2Carousel = () => {
 export default Page2Carousel;
 
 const BigDiv = tw.div`flex flex-col justify-center items-center`;
-const InDiv = tw.div`h-5/6 w-2/3 flex justify-center items-center`;
+const InDiv = tw.div`h-2/3 w-2/3 grid grid-cols-4 justify-center items-center`;
 const PageTitle = tw.div`text-white text-6xl font-extrabold text-center mt-10`;

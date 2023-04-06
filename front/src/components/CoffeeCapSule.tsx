@@ -6,12 +6,14 @@ import capBitter from '../assets/coffeecard/cap_bitter.svg';
 import capBody from '../assets/coffeecard/cap_body.svg';
 import capFlavor from '../assets/coffeecard/cap_flavor.svg';
 import capSweetness from '../assets/coffeecard/cap_sweetness.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface PropsType {
   capsuleData: CapsuleDetailType;
 }
 
 const CoffeeCapSule = ({ capsuleData }: PropsType) => {
+  const navigate = useNavigate();
   const [taste, setTaste] = useState('');
   const [cardImg, setCardImg] = useState('');
   const [cardBg, setCardBg] = useState('white');
@@ -54,7 +56,12 @@ const CoffeeCapSule = ({ capsuleData }: PropsType) => {
   }, []);
 
   return (
-    <OutDiv style={{ backgroundColor: cardBg }}>
+    <OutDiv
+      style={{ backgroundColor: cardBg }}
+      onClick={() => {
+        navigate(`/detail/capsule/${capsuleData.capsule.idx}`);
+      }}
+    >
       <InnerDiv>
         <ImgDiv src={cardImg} />
       </InnerDiv>
@@ -69,9 +76,9 @@ const CoffeeCapSule = ({ capsuleData }: PropsType) => {
 
 export default CoffeeCapSule;
 
-const OutDiv = tw.div`w-full p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
+const OutDiv = tw.div`p-5 m-5 justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
-const UnderDiv = tw.div`h-28 flex flex-col justify-center`;
-const UnTitle = tw.div`w-full text-end text-xl font-bold`;
-const UnContent = tw.div`w-full text-end text-xl`;
+const UnderDiv = tw.div`flex flex-col justify-center`;
+const UnTitle = tw.div`w-full text-xl font-bold text-ellipsis overflow-hidden whitespace-nowrap`;
+const UnContent = tw.div`w-full text-xl text-ellipsis overflow-hidden whitespace-nowrap`;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import tw from 'tailwind-styled-components';
-
+import { useNavigate } from 'react-router-dom';
 import Acidity from '../assets/coffeecard/acidity.svg';
 import Bitter from '../assets/coffeecard/bitter.svg';
 import Body from '../assets/coffeecard/body.svg';
@@ -32,6 +32,7 @@ interface CoffeeItem {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
+  idx: number;
 }
 
 interface propsTypes {
@@ -39,6 +40,7 @@ interface propsTypes {
 }
 
 const CoffeeCard = ({ beanData }: propsTypes) => {
+  const navigate = useNavigate();
   const [taste, setTaste] = useState('');
   const cardTitle = beanData.origin + ' ' + beanData.rank;
   const splitArr = (str: string) => {
@@ -89,7 +91,12 @@ const CoffeeCard = ({ beanData }: propsTypes) => {
   }, []);
 
   return (
-    <OutDiv style={{ backgroundColor: cardBg }}>
+    <OutDiv
+      style={{ backgroundColor: cardBg }}
+      onClick={() => {
+        navigate(`/detail/bean/${beanData.idx}`);
+      }}
+    >
       <InnerDiv>
         <ImgDiv src={cardImg} />
       </InnerDiv>
@@ -104,9 +111,9 @@ const CoffeeCard = ({ beanData }: propsTypes) => {
 
 export default CoffeeCard;
 
-const OutDiv = tw.div`w-full p-5 m-5 flex flex-col justify-between content-center rounded-lg`;
+const OutDiv = tw.div` p-5 m-5 justify-between content-center rounded-lg`;
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
-const UnderDiv = tw.div`h-28 flex flex-col justify-center`;
-const UnTitle = tw.div`w-full text-end text-xl font-bold`;
-const UnContent = tw.div`w-full text-end text-xl`;
+const UnderDiv = tw.div`flex flex-col justify-center`;
+const UnTitle = tw.div`w-full text-xl font-bold text-ellipsis overflow-hidden whitespace-nowrap`;
+const UnContent = tw.div`w-full text-xl text-ellipsis overflow-hidden whitespace-nowrap`;

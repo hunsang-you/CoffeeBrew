@@ -38,6 +38,7 @@ const SearchBar = ({
     keyword4: boolean;
     keyword5: boolean;
     keyword6: boolean;
+    keyword7: boolean;
   }
 
   interface KeywordState2 {
@@ -49,11 +50,24 @@ const SearchBar = ({
     keyword4: boolean;
     keyword5: boolean;
     keyword6: boolean;
+    keyword7: boolean;
+  }
+  interface KeywordState3 {
+    [key: string]: boolean;
+    keyword0: boolean;
+    keyword1: boolean;
+    keyword2: boolean;
+    keyword3: boolean;
+    keyword4: boolean;
+    keyword5: boolean;
+    keyword6: boolean;
+    keyword7: boolean;
   }
 
   interface MoreState {
     morebtn1: boolean;
     morebtn2: boolean;
+    morebtn3: boolean;
   }
 
   // 상세검색 on off
@@ -86,14 +100,14 @@ const SearchBar = ({
       for (let i = 0; i < keys1.length; i++) {
         const key = keys1[i];
         if (isKeywordState1[key]) {
-          newWords = [...newWords, `keywords=${keywordsFruits[i]}`];
+          newWords = [...newWords, `keywords=${keywordsType[i]}`];
         }
       }
       const keys2 = Object.keys(isKeywordState2);
       for (let i = 0; i < keys2.length; i++) {
         const key = keys2[i];
         if (isKeywordState2[key]) {
-          newWords = [...newWords, `keywords=${keywordsNuts[i]}`];
+          newWords = [...newWords, `keywords=${keywordsSweet[i]}`];
         }
       }
       if (textWord.length > 0) {
@@ -115,6 +129,7 @@ const SearchBar = ({
     keyword4: false,
     keyword5: false,
     keyword6: false,
+    keyword7: false,
   });
 
   const [isKeywordState2, setIsKeywordState2] = useState<KeywordState2>({
@@ -125,6 +140,17 @@ const SearchBar = ({
     keyword4: false,
     keyword5: false,
     keyword6: false,
+    keyword7: false,
+  });
+  const [isKeywordState3, setIsKeywordState3] = useState<KeywordState3>({
+    keyword0: false,
+    keyword1: false,
+    keyword2: false,
+    keyword3: false,
+    keyword4: false,
+    keyword5: false,
+    keyword6: false,
+    keyword7: false,
   });
 
   const handleKeyword1 = (keyword: keyof KeywordState1 | string): void => {
@@ -135,11 +161,19 @@ const SearchBar = ({
       });
     }
   };
-  const handleKeyword2 = (keyword: keyof KeywordState1 | string): void => {
+  const handleKeyword2 = (keyword: keyof KeywordState2 | string): void => {
     if (typeof keyword === 'string' && keyword.startsWith('keyword')) {
       setIsKeywordState2({
         ...isKeywordState2,
-        [keyword]: !isKeywordState2[keyword as keyof KeywordState1],
+        [keyword]: !isKeywordState2[keyword as keyof KeywordState2],
+      });
+    }
+  };
+  const handleKeyword3 = (keyword: keyof KeywordState3 | string): void => {
+    if (typeof keyword === 'string' && keyword.startsWith('keyword')) {
+      setIsKeywordState2({
+        ...isKeywordState3,
+        [keyword]: !isKeywordState2[keyword as keyof KeywordState3],
       });
     }
   };
@@ -147,6 +181,7 @@ const SearchBar = ({
   const [isMoreState, setIsMoreState] = useState<MoreState>({
     morebtn1: false,
     morebtn2: false,
+    morebtn3: false,
   });
 
   const handleMoreBtn1 = () => {
@@ -162,41 +197,63 @@ const SearchBar = ({
       morebtn2: !isMoreState.morebtn2,
     });
   };
+  const handleMoreBtn3 = () => {
+    setIsMoreState({
+      ...isMoreState,
+      morebtn3: !isMoreState.morebtn3,
+    });
+  };
 
   // 예시
-  type KeywordsFruits = {
+  type KeywordsType = {
     [key: number]: string;
   };
 
-  const keywordsFruits: KeywordsFruits = {
-    0: '감귤',
-    1: '사과',
-    2: '열대과일',
-    3: '베리',
-    4: '말린 과일',
-    5: '멜론',
-    6: '포도',
+  const keywordsType: KeywordsType = {
+    0: '고소한',
+    1: '부드러운',
+    2: '달콤한',
+    3: '풍부한',
+    4: '깔끔한',
+    5: '균형잡힌',
+    6: '가벼운',
+    7: '깊은',
   };
-  type KeywordsNuts = {
+  type KeywordsSweet = {
     [key: number]: string;
   };
 
-  const keywordsNuts: KeywordsNuts = {
-    0: '아몬드',
-    1: '헤이즐넛',
-    2: '땅콩',
-    3: '보리',
-    4: '호밀',
-    5: '스모키',
-    6: '맥아',
+  const keywordsSweet: KeywordsSweet = {
+    0: '초코',
+    1: '다크초코',
+    2: '밀크초코',
+    3: '갈색설탕',
+    4: '조청',
+    5: '허니',
+    6: '복숭아',
   };
 
-  // 첫번째(keywordsFruits) 렌더링
+  type KeywordsFlavor = {
+    [key: number]: string;
+  };
+
+  const keywordFlavor: KeywordsFlavor = {
+    0: '오렌지',
+    1: '아몬드',
+    2: '견과류',
+    3: '카라멜',
+    4: '플로럴',
+    5: '스모크',
+    6: '시트러스',
+    7: '과일',
+  };
+
+  // 첫번째(keywordsType) 렌더링
   const SelectKeyword1 = () => {
-    const keywordEntries = Object.entries(keywordsFruits);
+    const keywordEntries = Object.entries(keywordsType);
 
     return keywordEntries.map(([key, value]: string[]) => {
-      for (let i = 0; i < Object.keys(keywordsFruits).length + 1; i++) {
+      for (let i = 0; i < Object.keys(keywordsType).length + 1; i++) {
         if (isMoreState.morebtn1 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
@@ -246,12 +303,12 @@ const SearchBar = ({
     });
   };
 
-  // 두번째(keywordsNuts) 렌더링
+  // 두번째(keywordsSweet) 렌더링
   const SelectKeyword2 = () => {
-    const keywordEntries = Object.entries(keywordsNuts);
+    const keywordEntries = Object.entries(keywordsSweet);
 
     return keywordEntries.map(([key, value]: string[]) => {
-      for (let i = 0; i < Object.keys(keywordsNuts).length + 1; i++) {
+      for (let i = 0; i < Object.keys(keywordsSweet).length + 1; i++) {
         if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
@@ -301,9 +358,65 @@ const SearchBar = ({
     });
   };
 
+  const SelectKeyword3 = () => {
+    const keywordEntries = Object.entries(keywordsSweet);
+
+    return keywordEntries.map(([key, value]: string[]) => {
+      for (let i = 0; i < Object.keys(keywordsSweet).length + 1; i++) {
+        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
+          return (
+            <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
+              {isKeywordState2['keyword' + key] ? (
+                <CheckedKeyword
+                  key={value}
+                  onClick={() => handleKeyword3('keyword' + key)}
+                >
+                  {value}
+                </CheckedKeyword>
+              ) : (
+                <CheckKeyword
+                  key={value}
+                  onClick={() => handleKeyword3('keyword' + key)}
+                >
+                  {value}
+                </CheckKeyword>
+              )}
+            </div>
+          );
+        } else if (
+          isMoreState.morebtn2 === true &&
+          parseInt(key) === i &&
+          i >= 0
+        ) {
+          return (
+            <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
+              {isKeywordState2['keyword' + key] ? (
+                <CheckedKeyword
+                  key={value}
+                  onClick={() => handleKeyword3('keyword' + key)}
+                >
+                  {value}
+                </CheckedKeyword>
+              ) : (
+                <CheckKeyword
+                  key={value}
+                  onClick={() => handleKeyword3('keyword' + key)}
+                >
+                  {value}
+                </CheckKeyword>
+              )}
+            </div>
+          );
+        }
+      }
+    });
+  };
+
   return (
     <SearchDiv>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}
+      >
         <img src={Logo} alt="Logo" width={100} style={{ marginTop: '24px' }} />
         <TextField
           id="outlined-basic"
@@ -334,7 +447,7 @@ const SearchBar = ({
               margin: '24px',
             }}
           >
-            <KeywordTitle>과일향</KeywordTitle>
+            {/* <KeywordTitle>과일향</KeywordTitle> */}
 
             <KeywordGroup>
               <div
@@ -381,7 +494,7 @@ const SearchBar = ({
               margin: '24px',
             }}
           >
-            <KeywordTitle>견과류 및 곡물향</KeywordTitle>
+            {/* <KeywordTitle>견과류 및 곡물향</KeywordTitle> */}
             <KeywordGroup>
               <div
                 style={{
@@ -414,6 +527,52 @@ const SearchBar = ({
                     marginRight: '24px',
                   }}
                   onClick={handleMoreBtn2}
+                >
+                  ▼
+                </button>
+              )}
+            </KeywordGroup>
+          </div>
+          {/* 세번째줄 */}
+          <div
+            style={{
+              display: 'flex',
+              margin: '24px',
+            }}
+          >
+            {/* <KeywordTitle>견과류 및 곡물향</KeywordTitle> */}
+            <KeywordGroup>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '500px',
+                  flexWrap: 'wrap',
+                  margin: 'auto',
+                }}
+              >
+                {SelectKeyword3()}
+              </div>
+              {isMoreState.morebtn3 ? (
+                <button
+                  style={{
+                    marginTop: 'auto',
+                    marginBottom: 'auto',
+                    marginLeft: 'auto',
+                    marginRight: '24px',
+                  }}
+                  onClick={handleMoreBtn3}
+                >
+                  ▲
+                </button>
+              ) : (
+                <button
+                  style={{
+                    marginTop: 'auto',
+                    marginBottom: 'auto',
+                    marginLeft: 'auto',
+                    marginRight: '24px',
+                  }}
+                  onClick={handleMoreBtn3}
                 >
                   ▼
                 </button>

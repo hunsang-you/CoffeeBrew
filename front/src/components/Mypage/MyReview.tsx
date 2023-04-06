@@ -50,6 +50,7 @@ export interface ReviewType {
   createdDate: number[] | null;
   updatedDate: number[] | null;
   member_idx: number;
+  idx: number;
 }
 
 // export interface memberType {
@@ -76,19 +77,26 @@ const MyReview = () => {
 
   useEffect(() => {
     const getMemberReviews = async () => {
-      await memberAPI.memberReviews('page=0').then((request) => {
+      await memberAPI.memberReviews(reviewPage).then((request) => {
         console.log(request.data.value);
         setMemberReviews(request.data.value);
       });
     };
     getMemberReviews();
-  }, []);
+  }, [setReviewPage]);
 
   return (
     <MyReviewBody style={{ border: 'solid 4px #06AACE', minHeight: '630px' }}>
       {memberReviews ? (
         memberReviews.content.map((data, i) => {
-          return <MyReviewItem reviewData={data} />;
+          return (
+            <MyReviewItem
+              reviewData={data}
+              setReviewPage={setReviewPage}
+              reviewPage={reviewPage}
+              setMemberReviews={setMemberReviews}
+            />
+          );
         })
       ) : (
         <NoReview />

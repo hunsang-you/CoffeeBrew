@@ -5,9 +5,10 @@ import ratingfull from '../../assets/tempImg/ratingfull.png';
 import ratinghalf from '../../assets/tempImg/ratinghalf.png';
 import ratingempty from '../../assets/tempImg/ratingempty.png';
 import { ReviewType } from './MyReview';
-import { reviewAPI } from '../../api/api';
+import { reviewAPI, memberAPI } from '../../api/api';
 import NoReviewImg from '../../assets/tempImg/NoReviewImg.png';
 import { useNavigate } from 'react-router-dom';
+import { ReviewPageType } from './MyReview';
 
 const ReviewBody = tw.div` flex flex-col mx-auto`;
 const ReviewItems = tw.div`flex-col mx-auto`;
@@ -31,10 +32,17 @@ const NoLinkBtn = tw.div`w-80 h-16 font-bold text-2xl text-white bg-brownBorder 
 
 interface PropsTypes {
   reviewData: ReviewType;
+  setReviewPage: React.Dispatch<React.SetStateAction<string>>;
+  setMemberReviews: React.Dispatch<React.SetStateAction<ReviewPageType | null>>;
+  reviewPage: string;
 }
 
-const MyReviewItem = ({ reviewData }: PropsTypes) => {
-  console.log(reviewData);
+const MyReviewItem = ({
+  reviewData,
+  setReviewPage,
+  reviewPage,
+  setMemberReviews,
+}: PropsTypes) => {
   const navigate = useNavigate();
   const Rating = {
     향: reviewData.flavor,
@@ -91,7 +99,26 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
   return (
     <ReviewBody>
       <ReviewItems>
-        <DeleteBtn> 삭 제</DeleteBtn>
+        <DeleteBtn
+          onClick={() => {
+            reviewAPI
+              .deleteReview(Number(reviewData.idx))
+              .then((request) => {
+                console.log(request.data);
+                memberAPI
+                  .memberReviews(reviewPage)
+                  .then((request) => {
+                    console.log(request);
+                    setMemberReviews(request.data.value);
+                  })
+                  .catch((e) => console.log(e));
+              })
+              .catch((e) => console.log(e));
+          }}
+        >
+          {' '}
+          삭 제
+        </DeleteBtn>
         <Item>
           <div
             style={{
@@ -126,7 +153,7 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
                 marginBottom: '16px',
               }}
             >
-              원두이름(뭘채울까)
+              {reviewData.itemName}
             </p>
           </div>
 

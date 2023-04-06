@@ -503,7 +503,39 @@ function CoffeeMap() {
           지도로 보는 커피
         </div>
         <div className="mt-3 ml-6 text-xl font-bold text-mainColorBrown">
-          초록색 아라비카 빨간색 로부스타 파랑색 둘다
+          <div
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#B2FA5C',
+              borderRadius: '50px',
+            }}
+          >
+            {' '}
+          </div>
+          <div style={{ color: '#B2FA5C' }}> : 아라비카</div>
+          <div
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#F53',
+              borderRadius: '50px',
+            }}
+          >
+            {' '}
+          </div>
+          <div style={{ color: '#F53' }}> : 로부스타</div>
+          <div
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor: '#3296FF',
+              borderRadius: '50px',
+            }}
+          >
+            {' '}
+          </div>
+          <div style={{ color: '#3296FF' }}> : 둘 다</div>
         </div>
         <ComposableMap
           projectionConfig={{

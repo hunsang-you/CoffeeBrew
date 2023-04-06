@@ -6,6 +6,7 @@ import sweetImg from '../../assets/detailImg/sweetBean.svg';
 import flavorImg from '../../assets/detailImg/flavorBean.svg';
 import bodyImg from '../../assets/detailImg/bodyBean.svg';
 import { recomType } from './RecommendBean';
+import { useNavigate } from 'react-router-dom';
 
 interface Propstypes {
   data: recomType;
@@ -13,6 +14,7 @@ interface Propstypes {
 }
 
 const RecommendBeanList = ({ data, i }: Propstypes) => {
+  const navigate = useNavigate();
   const [imgIdx, setImgIdx] = useState(0);
   const [beanImg, setBeanImg] = useState([
     acidityImg,
@@ -39,7 +41,13 @@ const RecommendBeanList = ({ data, i }: Propstypes) => {
     '#D3BD94',
   ];
   return (
-    <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
+    <RecomItemT1
+      style={{ backgroundColor: BackColor[i] }}
+      onClick={() => {
+        navigate(`/detail/bean/${data.idx}`);
+        window.location.reload();
+      }}
+    >
       <RecomItemImg src={beanImg[imgIdx]} />
       <RecomItemB>
         <RecomItemName>{data.nameKo}</RecomItemName>
