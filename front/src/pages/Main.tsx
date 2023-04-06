@@ -168,15 +168,16 @@ const Main = ({ setIsFooter }: IsFooterType) => {
           <Page1 />
           <Page2 />
           <Page3 />
+          <Footer />
         </>
       ) : (
         <>
           <Page2 />
           <Page3 />
           <Page1 />
+          <Footer />
         </>
       )}
-      <Footer />
     </Outer>
   );
 };
