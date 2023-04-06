@@ -22,8 +22,8 @@ from .recom import user_recom
 
 from sqlalchemy.orm import Session
 
-from .db import crud
-from .db import model
+from .db.model import Model
+from .db.dataloader import DataLoader
 
 from .db.database import engine, SessionLocal, Base
 
@@ -65,40 +65,38 @@ async def root():
     return {"message": "Hello FastAPI !!"}
 
 
-# db connect check
-@app.get("/db-check")
-async def checkDB(db: Session = Depends(get_db)):
-    print("Call - {}...".format(checkDB.__name__))
+# # db connect check
+# @app.get("/db-check")
+# async def checkDB(db: Session = Depends(get_db)):
+#     print("Call - {}...".format(checkDB.__name__))
 
-    db_check = crud.get_many(db, model.Bean)
-    return db_check
+#     db_check = crud.get_many(db, model.Bean)
+#     return db_check
 
 
-@app.get("/db-check/{idx}")
-async def checkDBByIdx(idx: Union[int, None] = None, db: Session = Depends(get_db)):
-    print("Call - {}...".format(checkDBByIdx.__name__))
-    print("idx:{}".format(idx))
+# @app.get("/db-check/{idx}")
+# async def checkDBByIdx(idx: Union[int, None] = None, db: Session = Depends(get_db)):
+#     print("Call - {}...".format(checkDBByIdx.__name__))
+#     print("idx:{}".format(idx))
 
-    db_check = crud.get_once(db, model.Bean, idx)
-    if db_check is None:
-        raise HTTPException(status_code=404, detail="DB connect check failed")
-    return db_check
+#     db_check = crud.get_once(db, model.Bean, idx)
+#     if db_check is None:
+#         raise HTTPException(status_code=404, detail="DB connect check failed")
+#     return db_check
 
 
 # cbf 기반 추천 알고리즘
 # 전체 사용자 기준 추천 알고리즘(비회원용)
 @app.get("/item/{itemType}")
-async def getItemRecom(
-    itemType: Union[str, None] = None, itemId: Union[int, None] = None
-):
+async def getItemRecom(itemType: Union[str, None] = None):
     print("Call - {}...".format(getItemRecom.__name__))
     print("itemType:{}".format(itemType))
 
     read_file = "null"
     if itemType == "bean":
-        read_file = "item_recom_bean.csv"
+        read_file = "like_recom_bean_by_age.csv"
     elif itemType == "capsule":
-        read_file = "item_recom_capsule.csv"
+        read_file = "like_recom_capsule_by_age.csv"
     else:
         raise HTTPException(status_code=400, detail="Invalid input value")
 
@@ -108,9 +106,8 @@ async def getItemRecom(
         encoding="utf-8",
     )
 
-    result = item_recom_cbf.get_recom_by_item(
-        np.random.randint(recom_read.shape[0]), recom_read, k=8
-    )
+    # 모든 연령대의 사용자(= 모든 사용자) 기준 가장 인기있는 제품을 k개 출력
+    result = user_recom.get_recom_by_age("00~00", recom_read, k=8)
     if not result:
         raise HTTPException(status_code=404, detail="Item not found")
     else:
@@ -193,7 +190,7 @@ async def getGenderRecom(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", read_file),
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
@@ -260,7 +257,10 @@ async def getUserRecomByLike(
     print("Call - {}...".format(getUserRecomByLike.__name__))
     print("userId:{}, itemType:{}".format(userId, itemType))
 
-    data_read = user_recom.load_like_data(db)
+    model = Model()
+    loader = DataLoader(db)
+
+    data_read = loader.load_data_by_member_idx(model["LikeList"], userId)
 
     read_file = "null"
     if itemType == "bean":
@@ -276,19 +276,10 @@ async def getUserRecomByLike(
         encoding="utf-8",
     )
 
-    if (
-        data_read.loc[
-            (data_read["member_idx"] == userId) & (data_read["item_type"] == itemType)
-        ].shape[0]
-        == 0
-    ):
-        return user_recom.get_recom_by_user(1, data_read, recom_read, itemType)
-
-    result = user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
-    if not result:
-        raise HTTPException(status_code=404, detail="Item not found")
+    if not data_read.empty:
+        return user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     else:
-        return result
+        raise HTTPException(status_code=404, detail="Item not found")
 
 
 # 사용자 리뷰 기반 제품 추천
@@ -301,7 +292,10 @@ async def getUserRecomByReview(
     print("Call - {}...".format(getUserRecomByReview.__name__))
     print("userId:{}, itemType:{}".format(userId, itemType))
 
-    data_read = user_recom.load_review_data(db)
+    model = Model()
+    loader = DataLoader(db)
+
+    data_read = loader.load_data_by_member_idx(model["Review"], userId)
 
     read_file = "null"
     if itemType == "bean":
@@ -312,28 +306,18 @@ async def getUserRecomByReview(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
     recom_read = pd.read_csv(
-        path.join(DIR_PATH, "output", read_file),
+        path.join(DIR_PATH, read_file),
         low_memory=False,
         encoding="utf-8",
     )
 
-    if (
-        data_read.loc[
-            (data_read["member_idx"] == userId) & (data_read["item_type"] == itemType)
-        ].shape[0]
-        == 0
-    ):
-        await user_recom.get_recom_by_user(1, data_read, recom_read, itemType)
-
-    result = user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
-    if not result:
-        raise HTTPException(status_code=404, detail="Item not found")
+    if not data_read.empty:
+        return user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     else:
-        return result
+        raise HTTPException(status_code=404, detail="Item not found")
 
 
 # 스케줄러에서 추천 데이터 최신화를 요청할 때 호출
-@logging_time
 @app.get("/update")
 async def updateRecom(db: Session = Depends(get_db)):
     print("Call - {}...".format(updateRecom.__name__))
@@ -344,7 +328,6 @@ async def updateRecom(db: Session = Depends(get_db)):
     return {"message": "update all recommendations"}
 
 
-@logging_time
 @app.get("/update/{itemType}")
 async def updateRecomByItem(
     itemType: Union[str, None] = None, db: Session = Depends(get_db)
@@ -362,7 +345,6 @@ async def updateRecomByItem(
     return {"message": "update item-based recommendations"}
 
 
-@logging_time
 @app.get("/update/{itemType}/like")
 async def updateRecomByLike(
     itemType: Union[str, None] = None, db: Session = Depends(get_db)
@@ -380,7 +362,23 @@ async def updateRecomByLike(
     return {"message": "update like-based recommendations"}
 
 
-@logging_time
+@app.get("/update/{itemType}/review")
+async def updateRecomByReview(
+    itemType: Union[str, None] = None, db: Session = Depends(get_db)
+):
+    print("Call - {}...".format(updateRecomByReview.__name__))
+    print("itemType:{}".format(itemType))
+
+    if itemType == "bean":
+        user_recom_cbcf.calc_recom_bean_by_review(db, DIR_PATH)
+    elif itemType == "capsule":
+        user_recom_cbcf.calc_recom_capsule_by_review(db, DIR_PATH)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+    return {"message": "update review-based recommendations"}
+
+
 @app.get("/update/{itemType}/age")
 async def updateRecomByAge(
     itemType: Union[str, None] = None, db: Session = Depends(get_db)

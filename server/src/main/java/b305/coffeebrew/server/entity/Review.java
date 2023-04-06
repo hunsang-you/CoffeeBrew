@@ -36,9 +36,11 @@ public class Review extends BaseAtTime implements Serializable {
     private Member memberIdx;
 
     @NotBlank
+    @Column(name = "item_type")
     private String itemType;
 
     @NotNull
+    @Column(name = "item_idx")
     private Long itemIdx;
 
     private String content;
