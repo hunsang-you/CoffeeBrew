@@ -47,11 +47,12 @@ const CoffeeListItem = ({ data, i }: PropsTypes) => {
     }
   }, []);
   return (
-    <ProductItemT1 style={{ backgroundColor: BackColor[imgNumber] }} key={i}>
-      <ProductItemImg
-        src={imgg[imgNumber]}
-        onClick={() => navigate(`/detail/bean/${data.idx}`)}
-      />
+    <ProductItemT1
+      style={{ backgroundColor: BackColor[imgNumber] }}
+      key={i}
+      onClick={() => navigate(`/detail/bean/${data.idx}`)}
+    >
+      <ProductItemImg src={imgg[imgNumber]} />
       <ProductItemB>
         <ProductItemName>{data.nameKo}</ProductItemName>
         <ProductItemEngName>{data.nameEn}</ProductItemEngName>

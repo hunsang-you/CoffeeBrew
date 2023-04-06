@@ -48,11 +48,12 @@ const CapsuleListShowItem = ({ data, i }: PropsTypes) => {
   }, []);
   const navigate = useNavigate();
   return (
-    <ProductItemT1 style={{ backgroundColor: BackColor[imgNumber] }} key={i}>
-      <ProductItemImg
-        src={capsuleImg[imgNumber]}
-        onClick={() => navigate(`/detail/capsule/${data.idx}`)}
-      />
+    <ProductItemT1
+      style={{ backgroundColor: BackColor[imgNumber] }}
+      key={i}
+      onClick={() => navigate(`/detail/capsule/${data.idx}`)}
+    >
+      <ProductItemImg src={capsuleImg[imgNumber]} />
       <ProductItemB>
         <ProductItemName>{data.nameKo}</ProductItemName>
         <ProductItemEngName>{data.nameEn}</ProductItemEngName>
