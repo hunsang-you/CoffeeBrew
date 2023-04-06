@@ -63,91 +63,91 @@ idx,created_date,updated_date,company,description,machine_type,origin,capsule_id
 62,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso Livanto 커피캡슐은 카라멜의 향이 느껴지는 에스프레소로, 부드러운 맛을 선호하는 분들에게 추천합니다.",original,Unknown,62
 63,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso Miami 커피캡슐은 후추와 담배의 향이 느껴지는 에스프레소로, 강한 맛을 선호하는 분들에게 추천합니다.",original,Unknown,63
 64,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso Milano Intenso 커피캡슐은 코코아와 시리얼의 향이 느껴지는 에스프레소로, 적당한 산미와 쓴맛이 어우러져 균형잡힌 맛을 느낄 수 있습니다.",original,Unknown,64
-65,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,65
-66,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,66
-67,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,67
-68,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,68
-69,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,69
-70,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,70
-71,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,71
-72,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,72
-73,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,73
-74,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,74
-75,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,75
-76,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,76
-77,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,77
-78,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,78
-79,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,79
-80,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,80
-81,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,81
-82,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,82
-83,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,83
-84,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,84
-85,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,85
-86,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,86
-87,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,87
-88,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,88
-89,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,89
-90,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,90
-91,2023-03-31 12:00:00.000000,,Nespresso,,original,Unknown,91
-92,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,92
-93,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,93
-94,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,94
-95,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,95
-96,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,96
-97,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,97
-98,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,98
-99,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,99
-100,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,100
-101,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,101
-102,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,102
-103,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,103
-104,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,104
-105,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,105
-106,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,106
-107,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,107
-108,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,108
-109,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,109
-110,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,110
-111,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,111
-112,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,112
-113,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,113
-114,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,114
-115,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,115
-116,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,116
-117,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,117
-118,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,118
-119,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,119
-120,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,120
-121,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,121
-122,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,122
-123,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,123
-124,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,124
-125,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,125
-126,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,126
-127,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,127
-128,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,128
-129,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,129
-130,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,130
-131,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,131
-132,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,132
-133,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,133
-134,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,134
-135,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,135
-136,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,136
-137,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,137
-138,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,138
-139,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,139
-140,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,140
-141,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,141
-142,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,142
-143,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,143
-144,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,144
-145,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,145
-146,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,146
-147,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,147
-148,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,148
-149,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,149
-150,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,150
-151,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,151
-152,2023-03-31 12:00:00.000000,,Nespresso,,vertuo,Unknown,152
+65,2023-03-31 12:00:00.000000,,Nespresso,대담하고 과일 맛으로 Nespresso Millennio는 풍부하고 복잡한 커피 경험을 갈망하는 사람들에게 완벽한 선택입니다. 자극적 인 아로마와 과일 노트는 당신의 감각을 깨우는 조화로운 혼합을 만듭니다.,original,Unknown,65
+66,2023-03-31 12:00:00.000000,,Nespresso,달콤하고 꿀 같은 네스프레소 니카라과는 독특하고 달콤한 맛을 가진 부드럽고 만족스러운 커피입니다. 부드러운 질감과 미묘한 산도는 가벼우면서도 더 섬세한 커피를 선호하는 사람들에게 훌륭한 선택입니다.,original,Unknown,66
+67,2023-03-31 12:00:00.000000,,Nespresso,달콤하고 꿀 같은 네스프레소 니카라과는 독특하고 달콤한 맛을 가진 부드럽고 만족스러운 커피입니다. 부드러운 질감과 미묘한 산도는 가벼우면서도 더 섬세한 커피를 선호하는 사람들에게 훌륭한 선택입니다.,original,Unknown,67
+68,2023-03-31 12:00:00.000000,,Nespresso,Nespresso Nocciola는 헤이즐넛과 초콜릿의 음표와 함께 풍부하고 견고한 맛을 제공합니다. 매끄럽고 크림 같은 질감과 방종 맛은 퇴폐적 인 커피 경험을 즐기는 사람들에게 완벽한 선택입니다.,original,Unknown,68
+69,2023-03-31 12:00:00.000000,,Nespresso,Nespresso Novecento는 강력하고 강렬한 맛을 가진 강력하고 풀 바디 커피입니다. 대담한 향기와 풍부한 맛은 커피 경험을 만들어 가장 분별력있는 커피 애호가조차 만족시킬 수 있습니다.,original,Unknown,69
+70,2023-03-31 12:00:00.000000,,Nespresso,Nespresso Papua New Guinea는 살구와 열대 과일의 힌트와 함께 달콤하고 과일 맛을 제공합니다. 매끄러운 질감과 섬세한 맛은 매일 언제든지 완벽한 상쾌하고 만족스러운 커피를 만듭니다.,original,Unknown,70
+71,2023-03-31 12:00:00.000000,,Nespresso,시리얼과 같은 맛과 비스킷의 힌트로 Nespresso Paris Espresso는 부드럽고 균형 잡힌 커피 경험을 제공합니다. 미묘한 향기와 부드러운 맛은 더 가볍고 섬세한 커피를 선호하는 사람들에게 훌륭한 선택입니다.,original,Unknown,71
+72,2023-03-31 12:00:00.000000,,Nespresso,Nespresso Peru Organic은 과일과 채소 맛을 제공하며 붉은 딸기와 Smokiness의 힌트가 있습니다. 중형 질감과 부드러운 맛은 모든 경우에 완벽한 상쾌하고 만족스러운 커피를 제공합니다.,original,Unknown,72
+73,2023-03-31 12:00:00.000000,,Nespresso,Nespresso Pumpkin Spice Cake는 호박과 계피의 따뜻하고 편안한 맛이있는 맛있고 향기로운 커피입니다. 풍부한 향기와 방종 맛은 쌀쌀한 가을 아침에 완벽한 아늑하고 매력적인 커피 경험을 만듭니다.,original,Unknown,73
+74,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso Rio de Janeiro Espresso는 허브와 향신료의 힌트와 자극적이며 강렬한 맛을 가진 독특한 맛 프로파일을 제공합니다. 대담한 향기와 복잡한 취향은 커피 경험으로, 당신의 감각을 깨울 수 있습니다.",original,Unknown,74
+75,2023-03-31 12:00:00.000000,,Nespresso,Ristretto는 진한 맛과 함께 구운 과일의 풍미가 느껴지는 강렬한 에스프레소입니다.,original,Unknown,75
+76,2023-03-31 12:00:00.000000,,Nespresso,Ristretto Decaffeinato는 강렬한 맛과 함께 구운 과일의 풍미가 느껴지는 디카페인 에스프레소입니다.,original,Unknown,76
+77,2023-03-31 12:00:00.000000,,Nespresso,Roma는 부드러운 우디 계열과 시리얼의 향이 어우러진 스무디한 맛이 특징인 캡슐입니다.,original,Unknown,77
+78,2023-03-31 12:00:00.000000,,Nespresso,진하고 강렬한 맛이 특징인 에스프레소 캡슐입니다.,original,Unknown,78
+79,2023-03-31 12:00:00.000000,,Nespresso,Shanghai Lungo는 오렌지와 복숭아의 상큼한 맛이 조화로운 과일향이 느껴지는 룽고 캡슐입니다.,original,Unknown,79
+80,2023-03-31 12:00:00.000000,,Nespresso,Stockholm Fortissio Lungo는 부드러운 맛과 함께 달콤한 시리얼과 맥아의 향이 조화로운 캡슐입니다.,original,Unknown,80
+81,2023-03-31 12:00:00.000000,,Nespresso,Tamuka mu Zimbabwe은 상큼한 과일향과 꽃향기가 어우러진 플로럴한 맛이 특징인 캡슐입니다.,original,Unknown,81
+82,2023-03-31 12:00:00.000000,,Nespresso,Tokyo Vivalto Lungo는 상큼한 과일향과 꽃향기가 어우러진 플로럴한 맛이 특징인 룽고 캡슐입니다.,original,Unknown,82
+83,2023-03-31 12:00:00.000000,,Nespresso,Tribute to Milano은 달콤한 초코와 과일의 향이 조화로운 맛이 느껴지는 캡슐입니다.,original,Unknown,83
+84,2023-03-31 12:00:00.000000,,Nespresso,Tribute to Trieste는 과일향과 시리얼의 부드러운 풍미가 어우러진 맛이 특징인 캡슐입니다.,original,Unknown,84
+85,2023-03-31 12:00:00.000000,,Nespresso,Nespresso의 Umutima wa Lake Kivu Rwanda는 가벼운 풍미와 함께 풍부한 과일향이 느껴지는 커피입니다.,original,Unknown,85
+86,2023-03-31 12:00:00.000000,,Nespresso,"Vaniglia는 우아한 바닐라 향으로 달콤한 맛을 선사합니다. ",original,Unknown,86
+87,2023-03-31 12:00:00.000000,,Nespresso,Vanilla eclair는 우아한 바닐라 향으로 달콤한 맛을 선사합니다.,original,Unknown,87
+88,2023-03-31 12:00:00.000000,,Nespresso,Venezia는 부드러운 맛이 특징인 커피입니다.,original,Unknown,88
+89,2023-03-31 12:00:00.000000,,Nespresso,Vienna Linizio Lungo는 맥아와 시리얼의 풍미가 조화를 이루며 달콤한 맛이 느껴집니다,original,Unknown,89
+90,2023-03-31 12:00:00.000000,,Nespresso,Vollut는 과일과 시리얼의 향이 균형을 이루는 커피입니다.,original,Unknown,90
+91,2023-03-31 12:00:00.000000,,Nespresso,Volluto Decaffeinato는 과일과 시리얼의 향이 균형을 이루는 커피입니다.,original,Unknown,91
+92,2023-03-31 12:00:00.000000,,Nespresso,"Altissio는 풀 바디와 부드러운 맛, 그리고 고소한 향이 특징인 커피입니다.",vertuo,Unknown,92
+93,2023-03-31 12:00:00.000000,,Nespresso,Altissio Decaffeinato는 시리얼과 구운 향이 특징인 커피입니다.,vertuo,Unknown,93
+94,2023-03-31 12:00:00.000000,,Nespresso,Alto Ambrato는 꿀향과 우아한 향이 느껴지는 커피입니다.,vertuo,Unknown,94
+95,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso의 Alto Onice는 구운 향이 강하게 느껴지는 원두로, 그 중에서도 우디한 맛이 특징입니다",vertuo,Unknown,95
+96,2023-03-31 12:00:00.000000,,Nespresso,Arondio는 시리얼의 향이 느껴지며 부드러운 맛을 선보이는 마일드한 원두입니다.,vertuo,Unknown,96
+97,2023-03-31 12:00:00.000000,,Nespresso,Bianco Doppio는 카라멜과 비스킷의 달콤한 향이 느껴지며 시리얼의 맛도 느껴집니다.,vertuo,Unknown,97
+98,2023-03-31 12:00:00.000000,,Nespresso,Bianco Forte는 다크로스트의 강한 맛을 자랑하는 원두입니다,vertuo,Unknown,98
+99,2023-03-31 12:00:00.000000,,Nespresso,"Bianco Piccolo는 카라멜과 비스킷의 향이 강하게 느껴지며, 달콤한 맛이 특징입니다.",vertuo,Unknown,99
+100,2023-03-31 12:00:00.000000,,Nespresso,Caramel Cookie는 카라멜의 달콤한 향과 맛이 느껴지는 원두입니다.,vertuo,Unknown,100
+101,2023-03-31 12:00:00.000000,,Nespresso,Chocolate Fudge는 다크 초콜릿의 향과 맛이 강하게 느껴지는 원두입니다.,vertuo,Unknown,101
+102,2023-03-31 12:00:00.000000,,Nespresso,Costa Rica는 시리얼의 맛과 마일드한 향이 특징인 원두입니다.,vertuo,Unknown,102
+103,2023-03-31 12:00:00.000000,,Nespresso,"Diavolitto는 강렬한 향과 맛이 느껴지는 원두로, 그 중에서도 특히 강한 맛이 돋보입니다.",vertuo,Unknown,103
+104,2023-03-31 12:00:00.000000,,Nespresso,Double Espresso Chiaro는 무거운 맛과 강렬한 향을 느낄 수 있는 원두입니다.,vertuo,Unknown,104
+105,2023-03-31 12:00:00.000000,,Nespresso,Double Espresso Dolce는 시리얼과 맥아의 풍미가 느껴지는 커피입니다.,vertuo,Unknown,105
+106,2023-03-31 12:00:00.000000,,Nespresso,Double Espresso Scuro는 묵직하고 중후한 맛을 지니고 있습니다,vertuo,Unknown,106
+107,2023-03-31 12:00:00.000000,,Nespresso,Fortado는 강렬하고 풀 바디를 가지고 있는 커피입니다.,vertuo,Unknown,107
+108,2023-03-31 12:00:00.000000,,Nespresso,Fortado Decaffeinato는 구운 우디향이 느껴지는 맛입니다.,vertuo,Unknown,108
+109,2023-03-31 12:00:00.000000,,Nespresso,"Gingerbread LE는 쿠키의 향미를 담고 있는 Nespresso커피 입니다. ",vertuo,Unknown,109
+110,2023-03-31 12:00:00.000000,,Nespresso,Golden Caramel은 부드러우면서 고소한 비스킷 맛이 일품입니다,vertuo,Unknown,110
+111,2023-03-31 12:00:00.000000,,Nespresso,Half-caffeinato는 달콤하면서 우아한 맛을 가지고 있는 커피입니다.,vertuo,Unknown,111
+112,2023-03-31 12:00:00.000000,,Nespresso,Hawaii Kona LE는 과일과 견과류의 조화가 어우러진 맛을 가진 커피입니다.,vertuo,Unknown,112
+113,2023-03-31 12:00:00.000000,,Nespresso,Hazelino Muffin은 견과류의 맛을 담은 커피입니다.,vertuo,Unknown,113
+114,2023-03-31 12:00:00.000000,,Nespresso,"Ice Forte는 시리얼, 우디, 후추의 맛이 살아있는 새콤한 맛을 가지고 있습니다.",vertuo,Unknown,114
+115,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso의 Ice Leggero는 구운 맛과 시리얼의 향이 느껴지며, 과일의 산미가 조화롭게 어우러진 맛이 특징입니다",vertuo,Unknown,115
+116,2023-03-31 12:00:00.000000,,Nespresso,Inizio는 플로럴한 느낌과 시리얼의 맛이 어우러져 상쾌한 느낌을 줍니다.,vertuo,Unknown,116
+117,2023-03-31 12:00:00.000000,,Nespresso,Intenso는 깊은 커피 향과 무거운 맛이 특징을 가진 커피입니다.,vertuo,Unknown,117
+118,2023-03-31 12:00:00.000000,,Nespresso,Jamaica Blue Mountain LE는 우디한 향과 자극적인 맛이 돋보입니다.,vertuo,Unknown,118
+119,2023-03-31 12:00:00.000000,,Nespresso,Melozio는 비스킷과 시리얼의 달콤한 맛이 조화를 이룬 커피입니다.,vertuo,Unknown,119
+120,2023-03-31 12:00:00.000000,,Nespresso,Melozio Boost는 더욱 진한 비스킷과 시리얼 맛이 특징입니다.,vertuo,Unknown,120
+121,2023-03-31 12:00:00.000000,,Nespresso,Melozio Decaffeinato는 시리얼의 향과 허니의 달콤한 맛이 어우러진 맛이 특징입니다.,vertuo,Unknown,121
+122,2023-03-31 12:00:00.000000,,Nespresso,Mexico는 강렬한 커피 향과 자극적인 맛이 특징입니다.,vertuo,Unknown,122
+123,2023-03-31 12:00:00.000000,,Nespresso,Nicaragua La Cumplida는 과일과 설탕의 달콤한 맛이 어우러진 맛이 특징입니다.,vertuo,Unknown,123
+124,2023-03-31 12:00:00.000000,,Nespresso,Odacio는 중후한 맛과 싱그러운 맛이 어우러진 맛이 특징입니다.,vertuo,Unknown,124
+125,2023-03-31 12:00:00.000000,,Nespresso,"Nespresso Orafio는 시리얼과 감초 노트가있는 복잡한 맛 프로파일을 가지고 있으며, 대담하고 자극적 인 마무리와 균형을 이룹니다.",vertuo,Unknown,125
+126,2023-03-31 12:00:00.000000,,Nespresso,Peppermint pintwheel le은 사탕 지팡이와 계피의 힌트와 축제적인 조화입니다.,vertuo,Unknown,126
+127,2023-03-31 12:00:00.000000,,Nespresso,쏟아지는 스타일 강렬한 강한 커피 한 잔을 좋아하는 사람들에게 완벽한 대담하고 우디 블렌드입니다.,vertuo,Unknown,127
+128,2023-03-31 12:00:00.000000,,Nespresso,쏟아지는 스타일의 온화한 것은 단맛의 힌트와 부드럽고 시리얼을 향한 조화입니다.,vertuo,Unknown,128
+129,2023-03-31 12:00:00.000000,,Nespresso,호박 스파이스 케이크 르는 호박과 계피의 따뜻하고 달콤한 조화를 이루는 계절 치료입니다.,vertuo,Unknown,129
+130,2023-03-31 12:00:00.000000,,Nespresso,풍부한 초콜릿은 디저트 커피에 적합한 벨벳 같은 초콜릿 맛과 퇴폐적 인 조화를 이룹니다.,vertuo,Unknown,130
+131,2023-03-31 12:00:00.000000,,Nespresso,구운 헤이즐넛은 오후 픽업에 적합한 풍부하고 영양가가 많은 블렌드입니다.,vertuo,Unknown,131
+132,2023-03-31 12:00:00.000000,,Nespresso,Stormio는 풍부하고 강렬한 맛과 강하고 대담한 조화를 이룹니다.,vertuo,Unknown,132
+133,2023-03-31 12:00:00.000000,,Nespresso,Stormio Boost는 자극의 힌트와 함께 우디 맛을 가지고 있습니다.,vertuo,Unknown,133
+134,2023-03-31 12:00:00.000000,,Nespresso,Solelio는 과일과 가벼운 혼합으로 가벼운 맛을 선호하는 사람들에게 완벽합니다.,vertuo,Unknown,134
+135,2023-03-31 12:00:00.000000,,Nespresso,Nespresso Sweet Vanilla는 부드러우면서도 고소하고 달콤한 맛으로 마시기 좋습니다.,vertuo,Unknown,135
+136,2023-03-31 12:00:00.000000,,Nespresso,Toccanto는 설탕과 과일의 조화로운 맛과 파인애플의 높은 산도가 느껴집니다.,vertuo,Unknown,136
+137,2023-03-31 12:00:00.000000,,Nespresso,Tropical Coconut Flavor Over Ice는 코코넛과 바닐라 맛이 더해져 시원한 아이스 커피로 마시기 좋습니다.,vertuo,Unknown,137
+138,2023-03-31 12:00:00.000000,,Nespresso,"Vanilla Custard Pie는 바닐라의 풍부한 맛으로 달콤하면서도 부드러운 커피입니다. ",vertuo,Unknown,138
+139,2023-03-31 12:00:00.000000,,Nespresso,Vivida B12는 달콤한 시리얼과 과일의 맛이 느껴지는 커피입니다.,vertuo,Unknown,139
+140,2023-03-31 12:00:00.000000,,Nespresso,Voltesso는 가벼운 달콤함으로 부드러운 커피를 선호하는 사람에게 추천합니다.,vertuo,Unknown,140
+141,2023-03-31 12:00:00.000000,,Nespresso,Whiskey Essence는 위스키와 과일 맛이 조화로운 풍부한 맛이 특징입니다.,vertuo,Unknown,141
+142,2023-03-31 12:00:00.000000,,Nespresso,Aflorazio는 플로럴한 향과 우아한 맛이 느껴지는 커피입니다.,vertuo,Unknown,142
+143,2023-03-31 12:00:00.000000,,Nespresso,Bianco Leggero는 달콤한 비스킷 맛이 살아있는 커피입니다.,vertuo,Unknown,143
+144,2023-03-31 12:00:00.000000,,Nespresso,Decaffeinato는 부드러우면서도 맥아의 맛이 느껴지는 디카페인 커피입니다.,vertuo,Unknown,144
+145,2023-03-31 12:00:00.000000,,Nespresso,부드럽고 부드러운 맛의 에스프레소입니다. 미디엄 로스트로 제조되어 깔끔하고 부드러운 맛을 느낄 수 있습니다,vertuo,Unknown,145
+146,2023-03-31 12:00:00.000000,,Nespresso,과일향이 느껴지며 우아한 풍미가 있는 커피입니다. 하이 알티튜드에서 재배된 아라비카콩이 사용되어 특별한 맛을 느낄 수 있습니다.,vertuo,Unknown,146
+147,2023-03-31 12:00:00.000000,,Nespresso,크랜베리와 과자향이 나는 과일향이 풍부한 커피캡슐입니다. 깊은 풍미와 달콤한 맛이 특징입니다.,vertuo,Unknown,147
+148,2023-03-31 12:00:00.000000,,Nespresso,플로럴한 향과 우아한 맛의 에스프레소입니다. 가벼우면서도 깊은 풍미를 가지고 있어 커피 초보자도 쉽게 즐길 수 있습니다.,vertuo,Unknown,148
+149,2023-03-31 12:00:00.000000,,Nespresso,과일향과 시리얼향이 느껴지는 커피입니다. 이탈리아의 전통적인 에스프레소 맛을 즐길 수 있습니다.,vertuo,Unknown,149
+150,2023-03-31 12:00:00.000000,,Nespresso,부드러운 감칠맛과 강한 커피향이 느껴지는 커피캡슐입니다. 깊은 풍미와 함께 강한 커피맛을 즐길 수 있습니다.,vertuo,Unknown,150
+151,2023-03-31 12:00:00.000000,,Nespresso,균형잡힌 풍미와 무거운 맛을 가진 디카페인 커피캡슐입니다. 아침에 마시기 좋은 커피로 추천합니다.,vertuo,Unknown,151
+152,2023-03-31 12:00:00.000000,,Nespresso,맥아와 고소한 맛이 특징인 디카페인 커피캡슐입니다. 부드러우면서도 기름진 맛을 느낄 수 있습니다.,vertuo,Unknown,152
