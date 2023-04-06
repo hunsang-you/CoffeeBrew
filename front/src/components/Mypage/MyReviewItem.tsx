@@ -148,7 +148,7 @@ const MyReviewItem = ({ reviewData }: PropsTypes) => {
       ) : (
         <NoReviewBody
           style={{
-            border: 'solid 4px #03C846',
+            border: 'solid 4px #06AACE',
             minHeight: '630px',
           }}
         >
