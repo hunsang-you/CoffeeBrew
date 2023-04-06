@@ -80,5 +80,5 @@ const OutDiv = tw.div`w-full p-5 m-5 flex flex-col justify-between content-cente
 const InnerDiv = tw.div`flex justify-center items-center`;
 const ImgDiv = tw.img`h-36`;
 const UnderDiv = tw.div`flex flex-col justify-center`;
-const UnTitle = tw.div`w-full text-end text-xl font-bold text-ellipsis`;
-const UnContent = tw.div`w-full text-end text-xl text-ellipsis`;
+const UnTitle = tw.div`w-full text-end text-xl font-bold text-ellipsis overflow-hidden`;
+const UnContent = tw.div`w-full text-end text-xl text-ellipsis overflow-hidden`;
