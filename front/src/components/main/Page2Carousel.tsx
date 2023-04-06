@@ -48,7 +48,7 @@ const Page2Carousel = () => {
   );
 
   const cutArr = (arr: []) => {
-    return arr.slice(0, 4);
+    return arr.slice(0, 5);
   };
 
   useEffect(() => {
