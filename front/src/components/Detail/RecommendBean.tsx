@@ -58,7 +58,7 @@ const RecommendBean = (): JSX.Element => {
     '#F6842B',
     '#D3BD94',
   ];
-  const [cardImg, setCardImg] = useState('');
+  const [cardImg, setCardImg] = useState<string[]>([]);
   return (
     <ListDiv>
       <RecomList>
@@ -79,21 +79,21 @@ const RecommendBean = (): JSX.Element => {
               sweetness,
             })[maxIndex];
             if (maxVar === 'acidity') {
-              setCardImg(acidityImg);
+              setCardImg([...cardImg, acidityImg]);
             } else if (maxVar === 'bitter') {
-              setCardImg(bitterImg);
+              setCardImg([...cardImg, bitterImg]);
             } else if (maxVar === 'body') {
-              setCardImg(bodyImg);
+              setCardImg([...cardImg, bodyImg]);
             } else if (maxVar === 'flavor') {
-              setCardImg(flavorImg);
+              setCardImg([...cardImg, flavorImg]);
             } else if (maxVar === 'sweetness') {
-              setCardImg(sweetImg);
+              setCardImg([...cardImg, sweetImg]);
             }
           };
           beanTaste();
           return (
             <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-              <RecomItemImg src={cardImg} />
+              <RecomItemImg src={cardImg[i]} />
               <RecomItemB>
                 <RecomItemName>{data.nameKo}</RecomItemName>
                 <RecomInfo>
