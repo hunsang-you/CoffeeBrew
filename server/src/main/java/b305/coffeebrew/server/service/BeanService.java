@@ -113,13 +113,13 @@ public class BeanService {
 
     public Page<BeanSearchResDTO> searchBeans(List<String> keywords, Pageable pageable) {
         if (CollectionUtils.isEmpty(keywords)) {
-            List<Bean> beans = beanRepository.findAll(pageable).getContent();
+            Page<Bean> beans = beanRepository.findAll(pageable);
             List<BeanSearchResDTO> dtoList = new ArrayList<>();
             for (Bean bean : beans) {
                 BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
                 dtoList.add(BeanSearchResDTO.of(bean, beanScore));
             }
-            return new PageImpl<>(dtoList, pageable, dtoList.size());
+            return new PageImpl<>(dtoList, pageable, beans.getTotalElements());
         } else {
             Set<Bean> result = new TreeSet<>(Comparator.comparing(Bean::getNameKo)
                     .thenComparing(Bean::getNameEn)
@@ -135,7 +135,8 @@ public class BeanService {
                 BeanScore beanScore = beanScoreRepository.findByBeanIdx(bean);
                 dtoList.add(BeanSearchResDTO.of(bean, beanScore));
             }
-            return new PageImpl<>(dtoList, pageable, dtoList.size());
+            long total = result.size();
+            return new PageImpl<>(dtoList, pageable, total);
         }
     }
 }
