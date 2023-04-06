@@ -147,7 +147,10 @@ const MyReviewItem = ({
                     console.log(request);
                     setMemberReviews(request.data.value);
                   })
-                  .catch((e) => console.log(e));
+                  .catch((e) => {
+                    console.log(e);
+                    window.location.reload();
+                  });
               })
               .catch((e) => console.log(e));
           }}
