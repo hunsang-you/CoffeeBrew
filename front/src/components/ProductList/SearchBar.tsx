@@ -366,7 +366,7 @@ const SearchBar = ({
   };
 
   const SelectKeyword3 = () => {
-    const keywordEntries = Object.entries(keywordsSweet);
+    const keywordEntries = Object.entries(keywordsFlavor);
 
     return keywordEntries.map(([key, value]: string[]) => {
       for (let i = 0; i < Object.keys(keywordsFlavor).length + 1; i++) {
