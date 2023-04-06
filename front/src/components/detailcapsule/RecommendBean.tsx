@@ -1,14 +1,9 @@
 import tw from 'tailwind-styled-components';
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import capsule from '../../assets/tempImg/capsule.png';
 import { detailAPI } from '../../api/api';
 import { CapsuleDetailType } from './DetailCapsule';
-import acidityCapsuleImg from '../../assets/detailImg/acidityCapsule.svg';
-import flavorCapsuleImg from '../../assets/detailImg/flavorCapsule.svg';
-import bodyCapsuleImg from '../../assets/detailImg/bodyCapsule.svg';
-import bitterCapsuleImg from '../../assets/detailImg/bitterCapsule.svg';
-import roastingCapsuleImg from '../../assets/detailImg/roastingCapsule.svg';
+import RecommendCapsuleList from './RecommendCapsuleList';
 
 const RecommendCapsule = () => {
   const { capsuleId } = useParams() as { capsuleId: string };
@@ -27,59 +22,13 @@ const RecommendCapsule = () => {
     };
     recomBean();
   }, []);
-  const BackColor: string[] = [
-    '#FFAA01',
-    '#D4AA70',
-    '#E8D2A0',
-    '#F6842B',
-    '#D3BD94',
-  ];
 
-  const [recomCapsuleImg, setRecomCapsuleImg] = useState<string[]>([]);
   return (
     <ListDiv>
       <RecomList>
         {recommendCapsuleList
           ? recommendCapsuleList?.map((data, i) => {
-              const beanTaste = () => {
-                const acidity = data?.capsuleScore.acidity;
-                const bitter = data?.capsuleScore.bitterness;
-                const body = data?.capsuleScore.body;
-                const flavor = data?.capsuleScore.flavor;
-                const roasting = data?.capsuleScore.roasting;
-                const values: any[] = [acidity, bitter, body, flavor, roasting];
-                const maxIndex: number = values.indexOf(Math.max(...values));
-                const maxVar = Object.keys({
-                  acidity,
-                  bitter,
-                  body,
-                  flavor,
-                  roasting,
-                })[maxIndex];
-                if (maxVar === 'acidity') {
-                  setRecomCapsuleImg([...recomCapsuleImg, acidityCapsuleImg]);
-                } else if (maxVar === 'bitter') {
-                  setRecomCapsuleImg([...recomCapsuleImg, bitterCapsuleImg]);
-                } else if (maxVar === 'body') {
-                  setRecomCapsuleImg([...recomCapsuleImg, bodyCapsuleImg]);
-                } else if (maxVar === 'flavor') {
-                  setRecomCapsuleImg([...recomCapsuleImg, flavorCapsuleImg]);
-                } else if (maxVar === 'roasting') {
-                  setRecomCapsuleImg([...recomCapsuleImg, roastingCapsuleImg]);
-                }
-              };
-              beanTaste();
-              return (
-                <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
-                  <RecomItemImg src={recomCapsuleImg[i]} />
-                  <RecomItemB>
-                    <RecomItemName>{data.capsule.nameKo}</RecomItemName>
-                    <RecomInfo>
-                      <div>{data.capsule.summary}</div>
-                    </RecomInfo>
-                  </RecomItemB>
-                </RecomItemT1>
-              );
+              return <RecommendCapsuleList data={data} i={i} />;
             })
           : null}
       </RecomList>
