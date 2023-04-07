@@ -27,7 +27,6 @@ const LikeBeanList = () => {
       await memberAPI.memberLikesBeans().then((request) => {
         const likes = request.data.value;
         if (likes.length > 0) {
-          console.log('testlog');
           const beanLikes = likes.filter(
             (like: like) => like.itemType === 'bean',
           );
@@ -40,7 +39,6 @@ const LikeBeanList = () => {
             }),
           )
             .then((likedBeans) => {
-              console.log(likedBeans);
               setLikeBeans([...likedBeans]);
               setBeanIdx([...beanLikesIdx]);
             })

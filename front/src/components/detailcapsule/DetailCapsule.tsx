@@ -96,7 +96,6 @@ const DetailCapsule = () => {
       await detailAPI
         .getCapsule(Number(capsuleId))
         .then((request) => {
-          console.log(request.data.value);
           setDetailCapsule(request.data.value);
         })
         .catch((e) => console.log(e));
@@ -105,7 +104,6 @@ const DetailCapsule = () => {
       await reviewAPI
         .getCapsuleReview(Number(capsuleId))
         .then((request) => {
-          console.log(request.data.value);
           setDetailReview(request.data.value);
         })
         .catch((e) => console.log(e));

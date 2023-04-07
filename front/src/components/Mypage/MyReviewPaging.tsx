@@ -22,7 +22,6 @@ const ReviewPaging = ({
         .memberReviews(words)
         .then((request) => {
           setPagination(request.data.value);
-          console.log(request.data.value);
         })
         .catch((e) => console.log(e));
     };
