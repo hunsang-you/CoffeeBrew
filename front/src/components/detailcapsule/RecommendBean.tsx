@@ -15,7 +15,6 @@ const RecommendCapsule = () => {
       await detailAPI
         .recommendCapsule(Number(capsuleId))
         .then((request) => {
-          console.log(request.data);
           setRecommendCapsuleList(request.data.value);
         })
         .catch((e) => console.log(e));

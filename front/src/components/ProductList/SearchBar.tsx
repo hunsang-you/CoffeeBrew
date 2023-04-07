@@ -90,7 +90,6 @@ const SearchBar = ({
         .getBeans(...words)
         .then((request) => {
           setPagination(request.data.value);
-          console.log(request.data.value);
         })
         .catch((e) => console.log(e));
     };

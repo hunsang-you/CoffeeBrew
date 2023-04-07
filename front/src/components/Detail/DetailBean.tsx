@@ -76,7 +76,6 @@ const DetailBean = (): JSX.Element => {
       await detailAPI
         .getBean(Number(beanId))
         .then((request) => {
-          console.log(request.data.value);
           setDetailBean(request.data.value);
         })
         .catch((e) => console.log(e));
@@ -91,7 +90,6 @@ const DetailBean = (): JSX.Element => {
       await reviewAPI
         .getBeanReview(Number(beanId))
         .then((request) => {
-          console.log(request.data.value);
           setDetailReview(request.data.value);
         })
         .catch((e) => console.log(e));

@@ -54,7 +54,6 @@ const AllList = () => {
       await listAPI
         .getBeans(...words)
         .then((request) => {
-          console.log(request.data.value);
           setPagination(request.data.value);
         })
         .catch((e) => console.log(e));

@@ -82,7 +82,6 @@ const LikeCapsuleListItem = ({
             detailAPI
               .capsuleLike(Number(capsuleIdx[i]))
               .then((request) => {
-                console.log('좋아요 해제');
                 handleLike();
               })
               .catch((e) => console.log(e));

@@ -62,9 +62,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                 const scoreArray = Object.entries(Rating);
                 for (let j = 0; j < scoreArray.length; j++) {
                   const score = scoreArray[j];
-                  // score[0] = 기준, score[1] = 점수
-                  // console.log(score); //  ['향', 5]
-                  // .5인지 판별
                   const isHalfCheck =
                     score[1] / 2 - Math.floor(score[1] / 2) > 0;
 
@@ -125,7 +122,6 @@ const ReviewLists = ({ detailReview }: PropsTypes) => {
                           reviewAPI
                             .deleteReview(Number(data.idx))
                             .then((request) => {
-                              console.log('리뷰삭제', request.data);
                               window.location.reload();
                             })
                             .catch((e) => console.log(e));

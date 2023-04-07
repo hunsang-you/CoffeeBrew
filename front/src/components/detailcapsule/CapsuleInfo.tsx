@@ -66,14 +66,12 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
       await memberAPI
         .memberLiskeCapsules()
         .then((request) => {
-          console.log(request);
           const likeCheck: likedCheck[] = request.data.value;
           const isLiked = likeCheck.filter(
             (check) =>
               check.itemType === 'capsule' &&
               check.itemIdx === Number(capsuleId),
           );
-          console.log(isLiked);
           if (isLiked.length === 0) {
             setIsLike(false);
           } else {
@@ -101,7 +99,7 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
                   detailAPI
                     .capsuleLike(Number(capsuleId))
                     .then((request) => {
-                      console.log('like api 취소성공', request.data);
+                      console.log('성공');
                     })
                     .catch((e) => console.log(e));
                 }}
@@ -114,9 +112,8 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
                   setIsLike(true);
                   detailAPI
                     .capsuleLike(Number(capsuleId))
-                    .then((request) =>
-                      console.log('like api 연결', request.data),
-                    );
+                    .then((request) => console.log('성공'))
+                    .catch((e) => console.log(e));
                 }}
                 style={{ color: 'gray' }}
               />

@@ -63,7 +63,6 @@ const MyProfile = ({ isClick, setIsClick }: isClickType) => {
               loginAPI
                 .logout()
                 .then((request) => {
-                  console.log(request);
                   window.localStorage.clear();
                   window.location.replace('/');
                   setIsClick(false);

@@ -78,7 +78,6 @@ const MyReview = () => {
   useEffect(() => {
     const getMemberReviews = async () => {
       await memberAPI.memberReviews(reviewPage).then((request) => {
-        console.log(request.data.value);
         setMemberReviews(request.data.value);
       });
     };
