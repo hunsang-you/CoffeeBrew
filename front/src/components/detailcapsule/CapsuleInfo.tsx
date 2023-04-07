@@ -99,7 +99,7 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
                   detailAPI
                     .capsuleLike(Number(capsuleId))
                     .then((request) => {
-                      null;
+                      console.log('성공');
                     })
                     .catch((e) => console.log(e));
                 }}
@@ -112,7 +112,8 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
                   setIsLike(true);
                   detailAPI
                     .capsuleLike(Number(capsuleId))
-                    .then((request) => null);
+                    .then((request) => console.log('성공'))
+                    .catch((e) => console.log(e));
                 }}
                 style={{ color: 'gray' }}
               />

@@ -98,7 +98,7 @@ const BeanInfo = ({ detailBean }: PropsType) => {
                   detailAPI
                     .beanLike(Number(beanId))
                     .then((request) => {
-                      null;
+                      console.log('성공');
                     })
                     .catch((e) => console.log(e));
                 }}
@@ -109,7 +109,9 @@ const BeanInfo = ({ detailBean }: PropsType) => {
                 size={50}
                 onClick={() => {
                   setIsLike(true);
-                  detailAPI.beanLike(Number(beanId)).then((request) => null);
+                  detailAPI
+                    .beanLike(Number(beanId))
+                    .then((request) => console.log('성공'));
                 }}
                 style={{ color: 'gray' }}
               />
