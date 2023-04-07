@@ -98,7 +98,12 @@ const Page2Carousel = () => {
           </InDiv>
         </BigDiv>
         <BigDiv>
-          <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
+          {userage ? (
+            <PageTitle>
+              {parseInt(userage.split('~')[0])}대가 좋아하는 원두
+            </PageTitle>
+          ) : null}
+
           <InDiv>
             {ageMain
               ? ageMain.map((data: CoffeeItem, i) => {
