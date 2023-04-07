@@ -131,8 +131,6 @@ const DetailBean = (): JSX.Element => {
       </BeanTop3>
       <Line></Line>
 
-      <Line></Line>
-
       <MoreBtn onClick={() => navigate(-1)}> 돌아가기 </MoreBtn>
     </DetailBg>
   );

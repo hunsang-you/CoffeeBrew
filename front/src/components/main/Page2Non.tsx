@@ -116,5 +116,5 @@ const Page2Non = () => {
 export default Page2Non;
 
 const BigDiv = tw.div`flex flex-col justify-center items-center`;
-const InDiv = tw.div`h-2/3 w-2/3 flex justify-center items-center`;
+const InDiv = tw.div`h-2/3 w-2/3 grid grid-cols-4 justify-center items-center`;
 const PageTitle = tw.div`text-white text-6xl font-extrabold text-center mt-10`;

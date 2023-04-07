@@ -4,6 +4,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { memberAPI, detailAPI } from '../../api/api';
 import { CapsuleDetailType } from '../detailcapsule/DetailCapsule';
+import LikeCapsuleListItem from './LikeCapsuleList';
 
 import bean2 from '../../assets/tempImg/bean2.png';
 import NoLikeImg from '../../assets/tempImg/NoLikeImg.png';
@@ -55,67 +56,18 @@ const LikeCapsuleList = () => {
     getLikesCapsule();
   }, [isLikeCheck]);
 
-  const handleLike = () => {
-    setIsLikeCheck(!isLikeCheck);
-  };
-
   return (
     <List style={{ display: 'flex', flexWrap: 'wrap' }}>
       {likeCapsules.length > 0 ? (
         likeCapsules.map((capsule: CapsuleDetailType, i: number) => {
           return (
-            <CardBody>
-              <CapsuleImg src={bean2} alt="bean" />
-              <CardContent style={{ backgroundColor: '#FFF0CE' }}>
-                <div
-                  style={{
-                    wordBreak: 'break-word',
-                    overflow: 'scroll',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  <CapsuleName>{capsule.capsule.nameKo}</CapsuleName>
-                  <CapsuleCountry>
-                    회사: {capsule.capsuleDetail.company}
-                  </CapsuleCountry>
-                  <CapsuleDescription>
-                    {capsule.capsuleDetail.description}
-                  </CapsuleDescription>
-                </div>
-              </CardContent>
-              <FixedDiv
-                style={{
-                  bottom: 0,
-                  backgroundColor: 'rgb(0, 0, 0, 0.7)',
-                }}
-              >
-                <AiFillHeart
-                  size={42}
-                  style={{
-                    color: 'red',
-                    marginLeft: '8px',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => {
-                    detailAPI
-                      .capsuleLike(Number(capsuleIdx[i]))
-                      .then((request) => {
-                        console.log('좋아요 해제');
-                        handleLike();
-                      })
-                      .catch((e) => console.log(e));
-                  }}
-                />
-
-                <LinkBtn
-                  onClick={() => {
-                    navigate(`/detail/capsule/${capsuleIdx[i]}`);
-                  }}
-                >
-                  상세보기
-                </LinkBtn>
-              </FixedDiv>
-            </CardBody>
+            <LikeCapsuleListItem
+              capsule={capsule}
+              i={i}
+              capsuleIdx={capsuleIdx}
+              setIsLikeCheck={setIsLikeCheck}
+              isLikeCheck={isLikeCheck}
+            />
           );
         })
       ) : (

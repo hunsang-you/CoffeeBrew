@@ -110,6 +110,13 @@ const SearchBar = ({
           newWords = [...newWords, `keywords=${keywordsSweet[i]}`];
         }
       }
+      const keys3 = Object.keys(isKeywordState3);
+      for (let i = 0; i < keys3.length; i++) {
+        const key = keys3[i];
+        if (isKeywordState3[key]) {
+          newWords = [...newWords, `keywords=${keywordsFlavor[i]}`];
+        }
+      }
       if (textWord.length > 0) {
         newWords = [...newWords, `keywords=${textWord}`];
       }
@@ -171,9 +178,9 @@ const SearchBar = ({
   };
   const handleKeyword3 = (keyword: keyof KeywordState3 | string): void => {
     if (typeof keyword === 'string' && keyword.startsWith('keyword')) {
-      setIsKeywordState2({
+      setIsKeywordState3({
         ...isKeywordState3,
-        [keyword]: !isKeywordState2[keyword as keyof KeywordState3],
+        [keyword]: !isKeywordState3[keyword as keyof KeywordState3],
       });
     }
   };
@@ -237,7 +244,7 @@ const SearchBar = ({
     [key: number]: string;
   };
 
-  const keywordFlavor: KeywordsFlavor = {
+  const keywordsFlavor: KeywordsFlavor = {
     0: '오렌지',
     1: '아몬드',
     2: '견과류',
@@ -359,14 +366,14 @@ const SearchBar = ({
   };
 
   const SelectKeyword3 = () => {
-    const keywordEntries = Object.entries(keywordsSweet);
+    const keywordEntries = Object.entries(keywordsFlavor);
 
     return keywordEntries.map(([key, value]: string[]) => {
-      for (let i = 0; i < Object.keys(keywordsSweet).length + 1; i++) {
-        if (isMoreState.morebtn2 === false && parseInt(key) === i && i < 4) {
+      for (let i = 0; i < Object.keys(keywordsFlavor).length + 1; i++) {
+        if (isMoreState.morebtn3 === false && parseInt(key) === i && i < 4) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
-              {isKeywordState2['keyword' + key] ? (
+              {isKeywordState3['keyword' + key] ? (
                 <CheckedKeyword
                   key={value}
                   onClick={() => handleKeyword3('keyword' + key)}
@@ -384,13 +391,13 @@ const SearchBar = ({
             </div>
           );
         } else if (
-          isMoreState.morebtn2 === true &&
+          isMoreState.morebtn3 === true &&
           parseInt(key) === i &&
           i >= 0
         ) {
           return (
             <div style={{ display: 'flex', flexDirection: 'row' }} key={i}>
-              {isKeywordState2['keyword' + key] ? (
+              {isKeywordState3['keyword' + key] ? (
                 <CheckedKeyword
                   key={value}
                   onClick={() => handleKeyword3('keyword' + key)}
@@ -425,8 +432,6 @@ const SearchBar = ({
           style={{
             width: '500px',
             marginTop: '2.5rem',
-            // border: 'solid 4px #FF8383',
-            // borderRadius: '10px',
           }}
           onChange={ChangeText}
         />
