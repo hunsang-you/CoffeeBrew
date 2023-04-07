@@ -36,7 +36,6 @@ const Page2Carousel = () => {
   const reudxData = useSelector((state: RootState) => state);
   const usernick = reudxData.memberInfo?.nickname;
   const userage = reudxData.memberInfo?.ageRange;
-  console.log(userage);
   const [beanMain, setbeanMain] = useState<CoffeeItem[] | null>(null);
   const [ageMain, setAgeMain] = useState<CoffeeItem[] | null>(null);
   const [capsule, setCapsule] = useState<CapsuleDetailType[] | null>(null);
@@ -54,7 +53,6 @@ const Page2Carousel = () => {
         .getAgeRecom(age, type)
         .then((request) => {
           const data = request.data.value;
-          console.log(cutArr(data));
           if (type === 'bean') {
             setAgeMain(cutArr(data));
           } else if (type === 'capsule') {

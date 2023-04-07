@@ -279,7 +279,11 @@ async def getUserRecomByLike(
     if not data_read.empty:
         return user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     else:
-        raise HTTPException(status_code=404, detail="Item not found")
+        data_read = loader.load_data_by_member_idx(model["LikeList"], userId % 10)
+        return user_recom.get_recom_by_user(
+            userId % 10, data_read, recom_read, itemType
+        )
+        # raise HTTPException(status_code=404, detail="Item not found")
 
 
 # 사용자 리뷰 기반 제품 추천
@@ -314,7 +318,11 @@ async def getUserRecomByReview(
     if not data_read.empty:
         return user_recom.get_recom_by_user(userId, data_read, recom_read, itemType)
     else:
-        raise HTTPException(status_code=404, detail="Item not found")
+        data_read = loader.load_data_by_member_idx(model["LikeList"], userId % 10)
+        return user_recom.get_recom_by_user(
+            userId % 10, data_read, recom_read, itemType
+        )
+        # raise HTTPException(status_code=404, detail="Item not found")
 
 
 # 스케줄러에서 추천 데이터 최신화를 요청할 때 호출

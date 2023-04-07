@@ -15,11 +15,9 @@ const Main = ({ setIsFooter }: IsFooterType) => {
   const reduxData = useSelector((state: RootState) => state);
   const outerDivRef = useRef<HTMLDivElement>(null);
   const [survey, setSurvey] = useState<number>(0);
-  // const [pageN, setPageN] = useState<Number>(0);
   const [scrollIndex, setScrollIndex] = useState(1);
 
   const pushIndex = (N: number): void => {
-    // console.log(N);
     if (outerDivRef.current && outerDivRef.current.scrollTop) {
       const pageHeight = document.body.offsetHeight;
       if (N === 1) {
@@ -78,13 +76,10 @@ const Main = ({ setIsFooter }: IsFooterType) => {
         const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
         const pageHeight = document.body.offsetHeight; // 화면 세로길이, 100vh와 같습니다.
         const fullPageH = document.body.offsetHeight * 1.1;
-        // console.log('스크롤 윗부분 : ' + scrollTop);
-        // console.log('화면 세로길이 : ' + pageHeight);
 
         if (deltaY > 0) {
           // 스크롤 내릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
-            // console.log('현재 1페이지, down');
             setScrollIndex(2);
             outerDivRef.current.scrollTo({
               top: fullPageH,
@@ -92,7 +87,6 @@ const Main = ({ setIsFooter }: IsFooterType) => {
               behavior: 'smooth',
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            // console.log('현재 2페이지, down');
             setScrollIndex(3);
             outerDivRef.current.scrollTo({
               top: fullPageH * 2,
@@ -100,14 +94,12 @@ const Main = ({ setIsFooter }: IsFooterType) => {
               behavior: 'smooth',
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2.2) {
-            // console.log('현재 3페이지, down');
             outerDivRef.current.scrollTo({
               top: fullPageH * 3,
               left: 0,
               behavior: 'smooth',
             });
           } else {
-            // console.log('현재 푸터, down');
             outerDivRef.current.scrollTo({
               top: fullPageH * 3,
               left: 0,
@@ -117,14 +109,12 @@ const Main = ({ setIsFooter }: IsFooterType) => {
         } else {
           // 스크롤 올릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight * 0.2) {
-            // console.log('현재 1페이지, up');
             outerDivRef.current.scrollTo({
               top: pageHeight * 0.06,
               left: 0,
               behavior: 'smooth',
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 1.2) {
-            // console.log('현재 2페이지, up');
             setScrollIndex(1);
             outerDivRef.current.scrollTo({
               top: pageHeight * 0.06,
@@ -132,7 +122,6 @@ const Main = ({ setIsFooter }: IsFooterType) => {
               behavior: 'smooth',
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2.2) {
-            // console.log('현재 3페이지, up');
             setScrollIndex(2);
             outerDivRef.current.scrollTo({
               top: fullPageH,
@@ -140,7 +129,6 @@ const Main = ({ setIsFooter }: IsFooterType) => {
               behavior: 'smooth',
             });
           } else {
-            // console.log('현재 푸터, up');
             setScrollIndex(3);
             outerDivRef.current.scrollTo({
               top: fullPageH * 2,

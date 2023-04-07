@@ -48,17 +48,8 @@ const MyProfile = () => {
   useEffect(() => {
     const getInfo = async () => {
       await memberAPI
-        .memberInfo()
-        .then((request) => console.log(request))
-        .catch((e) => console.log(e));
-      await memberAPI
-        .memberReviews('page=0')
-        .then((request) => console.log(request))
-        .catch((e) => console.log(e));
-      await memberAPI
         .memberSurvey()
         .then((request) => {
-          console.log(request.data);
           setSurvey(request.data.value);
         })
         .catch((e) => console.log(e));

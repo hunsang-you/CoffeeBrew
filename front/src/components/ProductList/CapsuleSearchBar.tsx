@@ -92,7 +92,6 @@ const CapsuleSearchBar = ({
         .getCapsules(...words)
         .then((request) => {
           setPagination(request.data.value);
-          console.log(request.data.value);
         })
         .catch((e) => console.log(e));
     };
@@ -434,7 +433,6 @@ const CapsuleSearchBar = ({
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
               // 엔터를 쳤을때도 검색
-              console.log(textWord);
             }
           }}
         />

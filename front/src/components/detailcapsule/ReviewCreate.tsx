@@ -33,7 +33,6 @@ const ReviewCreate = () => {
   const [reviewContent, setReviewContent] = useState('');
   const changeContent = (e: any) => {
     setReviewContent(e.target.value);
-    console.log(reviewContent);
   };
 
   const standards = ['향', '산미', '단맛', '쓴맛', '바디감', '평점'];
@@ -153,16 +152,7 @@ const ReviewCreate = () => {
               </CreateReviewBtn>
             ) : null}
 
-            <Submit
-              onClick={() =>
-                console.log(
-                  'reviewContent ::',
-                  reviewContent,
-                  'score',
-                  scoreValue,
-                )
-              }
-            >
+            <Submit>
               <div
                 style={{
                   fontWeight: 'bold',
@@ -185,7 +175,6 @@ const ReviewCreate = () => {
                     )
                     .then((request) => {
                       window.location.reload();
-                      console.log('리뷰 전송 :', request.data);
                       moveReview();
                     })
                     .catch((e) => console.log(e));

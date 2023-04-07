@@ -25,14 +25,12 @@ const CapsulePaging = ({
         .getCapsules(...words)
         .then((request) => {
           setPagination(request.data.value);
-          console.log(request.data.value);
         })
         .catch((e) => console.log(e));
     };
     setWords((prevWords) => {
       const newWords = [`page=${page - 1}`, ...prevWords.slice(1)];
       getPages(newWords);
-      console.log(newWords);
       return newWords;
     });
   };
