@@ -2,7 +2,7 @@ import * as S from '../components/useageStyle';
 import { useEffect } from 'react';
 import { Fireworks } from '@fireworks-js/react';
 import tw from 'tailwind-styled-components';
-import newJeans from '../assets/flavotwheel.png';
+import wheel from '../assets/flavotwheel.png';
 import infoBg from '../assets/mainImg/infobg.jpg';
 
 interface IsFooterType {
@@ -20,7 +20,7 @@ const Intro = ({ setIsFooter }: IsFooterType) => {
   return (
     <S.ContentContainer>
       <OutDiv>
-        <ImgDiv src={newJeans} />
+        <ImgDiv src={wheel} />
         <InnerDiv>
           <TitleDiv>CoffeeBrew</TitleDiv>
           <TextDiv>
