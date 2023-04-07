@@ -179,5 +179,5 @@ Spring Rest API, FastAPI, 추천알고리즘(collaborative filtering, content ba
 <br>
 
 
-![마이페이지-리뷰.JPG](./마이페이지-리뷰.JPG)
+![마이페이지-리뷰.JPG](images/마이페이지-리뷰.JPG)
 <br>
