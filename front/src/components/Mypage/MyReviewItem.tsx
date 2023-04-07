@@ -140,11 +140,9 @@ const MyReviewItem = ({
             reviewAPI
               .deleteReview(Number(reviewData.idx))
               .then((request) => {
-                console.log(request.data);
                 memberAPI
                   .memberReviews(reviewPage)
                   .then((request) => {
-                    console.log(request);
                     setMemberReviews(request.data.value);
                   })
                   .catch((e) => {

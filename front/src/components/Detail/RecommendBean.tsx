@@ -39,7 +39,6 @@ const RecommendBean = (): JSX.Element => {
       await detailAPI
         .recommendBean(Number(beanId))
         .then((request) => {
-          console.log(request.data);
           setRecommendBeanList(request.data.value);
         })
         .catch((e) => console.log(e));

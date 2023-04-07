@@ -10,13 +10,10 @@ interface IsFooterType {
 }
 
 const Intro = ({ setIsFooter }: IsFooterType) => {
-  const array2 = ['keywords=케냐', 'keywords=몰루'];
   useEffect(() => {
     setIsFooter(true);
   }, [setIsFooter]);
-  useEffect(() => {
-    console.log(...array2);
-  }, []);
+
   return (
     <S.ContentContainer>
       <OutDiv>
@@ -64,7 +61,7 @@ export default Intro;
 
 const OutDiv = tw.div`my-auto flex justify-around content-center`;
 const InnerDiv = tw.div`flex flex-col justify-center content-center`;
-const ImgDiv = tw.img``;
-const TitleDiv = tw.div`text-9xl font-extrabold text-center mt-12 text-white z-50`;
-const TextDiv = tw.div`text-3xl font-medium text-center mt-12 text-white z-50`;
-const UnderDiv = tw.div`text-xl font-medium text-start mt-12 text-white z-50`;
+const ImgDiv = tw.img`w-1/2 h-1/2`;
+const TitleDiv = tw.div`text-9xl font-extrabold text-center mt-12 text-white `;
+const TextDiv = tw.div`text-3xl font-medium text-center mt-12 text-white `;
+const UnderDiv = tw.div`text-xl font-medium text-start mt-12 text-white `;

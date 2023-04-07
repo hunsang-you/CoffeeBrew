@@ -26,7 +26,6 @@ const LikeCapsuleList = () => {
       await memberAPI.memberLiskeCapsules().then((request) => {
         const likes = request.data.value;
         if (likes.length > 0) {
-          console.log('testlog');
           const capsuleLikes = likes.filter(
             (like: like) => like.itemType === 'capsule',
           );
@@ -43,7 +42,6 @@ const LikeCapsuleList = () => {
             }),
           )
             .then((likedCapsules) => {
-              console.log(likedCapsules);
               setLikeCapsules([...likedCapsules]);
               setCapsuleIdx([...capsuleLikesIdx]);
             })

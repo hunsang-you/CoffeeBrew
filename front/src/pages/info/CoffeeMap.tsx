@@ -224,9 +224,7 @@ function CoffeeMap() {
   const handleClose = () => setOpen(false);
 
   const [content, setContent] = useState('');
-  const handleClick = (geo: any) => () => {
-    console.log(geo);
-  };
+  const handleClick = (geo: any) => () => {};
   const showModal = (id: string) => {
     setChcekNa(id);
     handleOpen();

@@ -55,7 +55,6 @@ const CapsuleList = () => {
       await listAPI
         .getCapsules(...words)
         .then((request) => {
-          console.log(request.data.value);
           setPagination(request.data.value);
         })
         .catch((e) => console.log(e));
