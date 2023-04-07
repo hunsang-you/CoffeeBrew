@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { memberAPI } from '../api/api';
-
+import Loading from '../components/Loading';
 import tw from 'tailwind-styled-components';
 import { Page1, Page2, Page3, Dots } from '../components/main';
 import Footer from '../components/navbarandfoot/Footer';
@@ -14,7 +14,7 @@ interface IsFooterType {
 const Main = ({ setIsFooter }: IsFooterType) => {
   const reduxData = useSelector((state: RootState) => state);
   const outerDivRef = useRef<HTMLDivElement>(null);
-  const [survey, setSurvey] = useState<boolean>(false);
+  const [survey, setSurvey] = useState<number>(0);
   // const [pageN, setPageN] = useState<Number>(0);
   const [scrollIndex, setScrollIndex] = useState(1);
 
@@ -51,20 +51,22 @@ const Main = ({ setIsFooter }: IsFooterType) => {
   }, [setIsFooter]);
 
   useEffect(() => {
-    const getInfo = async () => {
-      await memberAPI
-        .memberSurvey()
-        .then((request) => {
-          if (request.data.value.param1) {
-            setSurvey(true);
-          } else {
-            setSurvey(false);
-          }
-          setSurvey(request.data.value);
-        })
-        .catch((e) => console.log(e));
-    };
-    getInfo();
+    if (reduxData.login) {
+      const getInfo = async () => {
+        await memberAPI
+          .memberSurvey()
+          .then((request) => {
+            setSurvey(2);
+          })
+          .catch((e) => {
+            console.log(e);
+            setSurvey(1);
+          });
+      };
+      getInfo();
+    } else {
+      setSurvey(1);
+    }
   }, []);
 
   useEffect(() => {
@@ -161,20 +163,23 @@ const Main = ({ setIsFooter }: IsFooterType) => {
     <Outer ref={outerDivRef}>
       <Dots scrollIndex={scrollIndex} pushIndex={pushIndex} />
       <img src="./qweqwe" alt="" />
-      {survey === false ? (
+      {survey === 0 ? (
+        <Loading />
+      ) : survey === 1 ? (
         <>
           <Page1 />
           <Page2 />
           <Page3 />
+          <Footer />
         </>
       ) : (
         <>
           <Page2 />
           <Page3 />
           <Page1 />
+          <Footer />
         </>
       )}
-      <Footer />
     </Outer>
   );
 };

@@ -7,8 +7,9 @@ import Carousel from 'react-material-ui-carousel';
 import CoffeeCard from '../CoffeeCard';
 import CoffeeCapSule from '../CoffeeCapSule';
 import { CapsuleDetailType } from '../detailcapsule/DetailCapsule';
+import Loading from '../Loading';
 
-type CoffeeItem = {
+interface CoffeeItem {
   nameKo?: string;
   nameEn?: string | null;
   summary?: string | null;
@@ -28,10 +29,7 @@ type CoffeeItem = {
   body?: number;
   coffeeingNote?: string | null;
   roastingPoint?: string | null;
-};
-
-interface propsData {
-  [index: number]: CoffeeItem;
+  idx: number;
 }
 
 const Page2Carousel = () => {
@@ -39,38 +37,8 @@ const Page2Carousel = () => {
   const usernick = reudxData.memberInfo?.nickname;
   const userage = reudxData.memberInfo?.ageRange;
   console.log(userage);
-  const [beanMain, setbeanMain] = useState([
-    {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
-    },
-  ]);
-  const [ageMain, setAgeMain] = useState([
-    {
-      origin: '',
-      region: '',
-      rank: '',
-      processing: '',
-      balance: 0,
-      flavor: 0,
-      acidity: 0,
-      sweetness: 0,
-      bitterness: 0,
-      body: 0,
-      coffeeingNote: '',
-      roastingPoint: '',
-    },
-  ]);
+  const [beanMain, setbeanMain] = useState<CoffeeItem[] | null>(null);
+  const [ageMain, setAgeMain] = useState<CoffeeItem[] | null>(null);
   const [capsule, setCapsule] = useState<CapsuleDetailType[] | null>(null);
   const [ageCapsule, setAgeCapsule] = useState<CapsuleDetailType[] | null>(
     null,
@@ -81,7 +49,7 @@ const Page2Carousel = () => {
   };
 
   useEffect(() => {
-    const getData = async (age: any, type: any) => {
+    const getData = async (age: any, type: string) => {
       await mainAPI
         .getAgeRecom(age, type)
         .then((request) => {
@@ -95,48 +63,68 @@ const Page2Carousel = () => {
         })
         .catch((e) => console.log(e));
     };
+    const getRecommend = async (type: string) => {
+      await mainAPI.getRecommend(type).then((request) => {
+        if (type === 'bean') {
+          setbeanMain(cutArr(request.data.value));
+        } else if (type === 'capsule') {
+          setCapsule(cutArr(request.data.value));
+        }
+      });
+    };
     getData(userage, 'bean');
     getData(userage, 'capsule');
+    getRecommend('bean');
+    getRecommend('capsule');
   }, []);
 
-  return (
-    <Carousel>
-      <BigDiv>
-        <PageTitle>{usernick}님의 추천원두</PageTitle>
-        <InDiv>
-          {beanMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} beanData={data} />;
-          })}
-        </InDiv>
-        <InDiv>
-          {capsule
-            ? capsule.map((data: CapsuleDetailType, i) => {
-                return <CoffeeCapSule key={i} capsuleData={data} />;
-              })
-            : null}
-        </InDiv>
-      </BigDiv>
-      <BigDiv>
-        <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
-        <InDiv>
-          {ageMain.map((data: propsData, i) => {
-            return <CoffeeCard key={i} beanData={data} />;
-          })}
-        </InDiv>
-        <InDiv>
-          {ageCapsule
-            ? ageCapsule.map((data: CapsuleDetailType, i) => {
-                return <CoffeeCapSule key={i} capsuleData={data} />;
-              })
-            : null}
-        </InDiv>
-      </BigDiv>
-    </Carousel>
-  );
+  if (beanMain && capsule && ageMain && ageCapsule) {
+    return (
+      <Carousel>
+        <BigDiv>
+          {beanMain ? null : <Loading />}
+          <PageTitle>{usernick}님의 추천원두</PageTitle>
+          <InDiv>
+            {beanMain
+              ? beanMain.map((data: CoffeeItem, i) => {
+                  return <CoffeeCard key={i} beanData={data} />;
+                })
+              : null}
+          </InDiv>
+          <InDiv>
+            {capsule
+              ? capsule.map((data: CapsuleDetailType, i) => {
+                  return <CoffeeCapSule key={i} capsuleData={data} />;
+                })
+              : null}
+          </InDiv>
+        </BigDiv>
+        <BigDiv>
+          <PageTitle>{userage}대가 좋아하는 원두</PageTitle>
+          <InDiv>
+            {ageMain
+              ? ageMain.map((data: CoffeeItem, i) => {
+                  return <CoffeeCard key={i} beanData={data} />;
+                })
+              : null}
+          </InDiv>
+          <InDiv>
+            {ageCapsule
+              ? ageCapsule.map((data: CapsuleDetailType, i) => {
+                  return <CoffeeCapSule key={i} capsuleData={data} />;
+                })
+              : null}
+          </InDiv>
+        </BigDiv>
+      </Carousel>
+    );
+  } else {
+    return <Loading />;
+  }
 };
 
 export default Page2Carousel;
 
 const BigDiv = tw.div`flex flex-col justify-center items-center`;
-const InDiv = tw.div`h-5/6 w-2/3 flex justify-center items-center`;
+const InDiv = tw.div`h-2/3 w-2/3 grid grid-cols-4 justify-center items-center`;
 const PageTitle = tw.div`text-white text-6xl font-extrabold text-center mt-10`;

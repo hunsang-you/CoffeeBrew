@@ -1,4 +1,4 @@
-import Spinner from '../assets/Spin-1s-200px.gif';
+import Spinner from '../assets/Coffee-1s-221px.gif';
 import tw from 'tailwind-styled-components';
 
 const Loading = () => {

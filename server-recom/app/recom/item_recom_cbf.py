@@ -8,99 +8,98 @@ import pandas as pd
 
 from ..util.logging_time import logging_time
 
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
-from fastapi import HTTPException
 
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.decl_api import DeclarativeMeta
 
-from ..db import crud
-from ..db import model
+from ..db.model import Model
+from ..db.dataloader import DataLoader
 
 
 @logging_time
-def load_item_data(item_model: DeclarativeMeta, db: Session):
-    db_items = crud.get_many(db, item_model, limit=sys.maxsize)
-    item_idx = item_model.__tablename__ + "_idx"
-    item_model_detail = None
-    item_model_score = None
+def load_item_data(model: DeclarativeMeta, db: Session):
+    loader = DataLoader(db)
 
-    if item_model == model.Bean:
-        item_model_detail = model.Bean_detail
-        item_model_score = model.Bean_score
-    elif item_model == model.Capsule:
-        item_model_detail = model.Capsule_detail
-        item_model_score = model.Capsule_score
+    db_items = loader.load_data(model)
+    item_idx = model.__tablename__ + "_idx"
+    item_model_detail = Model()[model.__tablename__ + "_detail"]
+    item_model_score = Model()[model.__tablename__ + "_score"]
+
+    if not db_items:
+        db_df = pd.DataFrame()
     else:
-        raise HTTPException(status_code=400, detail="DB item check failed")
+        item_df = pd.DataFrame(
+            data=[item.values() for item in db_items], columns=db_items[0].keys()
+        )
+        item_df = item_df[list(model.__table__.columns.keys())]
 
-    item_df = pd.DataFrame(
-        data=[item.values() for item in db_items], columns=db_items[0].keys()
-    )
-    item_df = item_df[list(item_model.__table__.columns.keys())]
+        item_detail_df = pd.DataFrame(
+            data=[item.detail.values() for item in db_items],
+            columns=db_items[0].detail.keys(),
+        )
+        item_detail_df = item_detail_df[
+            list(item_model_detail.__table__.columns.keys())
+        ]
 
-    item_detail_df = pd.DataFrame(
-        data=[item.detail.values() for item in db_items],
-        columns=db_items[0].detail.keys(),
-    )
-    item_detail_df = item_detail_df[list(item_model_detail.__table__.columns.keys())]
+        item_score_df = pd.DataFrame(
+            data=[item.score.values() for item in db_items],
+            columns=db_items[0].score.keys(),
+        )
+        item_score_df = item_score_df[list(item_model_score.__table__.columns.keys())]
 
-    item_score_df = pd.DataFrame(
-        data=[item.score.values() for item in db_items],
-        columns=db_items[0].score.keys(),
-    )
-    item_score_df = item_score_df[list(item_model_score.__table__.columns.keys())]
+        db_df = item_df.copy()
+        db_df = pd.merge(
+            item_df,
+            item_detail_df.drop(["idx", "created_date", "updated_date"], axis=1),
+            how="left",
+            left_on="idx",
+            right_on=item_idx,
+        )
 
-    item_data_df = item_df.copy()
-    item_data_df = pd.merge(
-        item_df,
-        item_detail_df.drop(["idx", "created_date", "updated_date"], axis=1),
-        how="left",
-        left_on="idx",
-        right_on=item_idx,
-    )
-    item_data_df.drop(item_idx, axis=1, inplace=True)
-    item_data_df = pd.merge(
-        item_df,
-        item_score_df.drop(["idx", "created_date", "updated_date"], axis=1),
-        how="left",
-        left_on="idx",
-        right_on=item_idx,
-    )
-    item_data_df.drop(item_idx, axis=1, inplace=True)
+        db_df.drop(item_idx, axis=1, inplace=True)
 
-    return item_data_df
+        db_df = pd.merge(
+            item_df,
+            item_score_df.drop(["idx", "created_date", "updated_date"], axis=1),
+            how="left",
+            left_on="idx",
+            right_on=item_idx,
+        )
+
+        db_df.drop(item_idx, axis=1, inplace=True)
+
+    return db_df
 
 
 @logging_time
 def calc_recom_bean(db: Session, save_dir: str):
-    bean_data_df = load_item_data(model.Bean, db)
+    model = Model()
 
-    grade_cosine_sim = cosine_similarity(
+    bean_data_df = load_item_data(model["Bean"], db)
+
+    cosine_sim = cosine_similarity(
         bean_data_df[["flavor", "acidity", "sweetness", "bitterness", "body"]]
     )
 
-    df_grade_cosine_sim = pd.DataFrame(
-        grade_cosine_sim,
+    cosine_sim_df = pd.DataFrame(
+        cosine_sim,
         index=bean_data_df["idx"],
         columns=bean_data_df["name_ko"],
         dtype=np.float16,
     )
 
     # 유사도 기준으로 추천 원두의 상위 10개를 출력
-    bean_recom = bean_data_df.copy()[["idx", "name_ko"]]
-    bean_recom["recommendation"] = bean_recom.apply(
-        lambda x: recommendation_list_by_id(
-            x.idx, df_grade_cosine_sim, bean_data_df, k=10
-        ),
+    recom_df = bean_data_df.copy()[["idx", "name_ko"]]
+    recom_df["recommendation"] = recom_df.apply(
+        lambda x: recommendation_list_by_id(x.idx, cosine_sim_df, bean_data_df, k=10),
         axis=1,
     )
 
     # 파일 저장
     os.makedirs(save_dir, exist_ok=True)
-    bean_recom.to_csv(
+    recom_df.to_csv(
         path.join(save_dir, "item_recom_bean.csv"),
         sep=",",
         index=False,
@@ -110,31 +109,33 @@ def calc_recom_bean(db: Session, save_dir: str):
 
 @logging_time
 def calc_recom_capsule(db: Session, save_dir: str):
-    capule_data_df = load_item_data(model.Capsule, db)
+    model = Model()
 
-    grade_cosine_sim = cosine_similarity(
-        capule_data_df[["flavor", "acidity", "roasting", "bitterness", "body"]]
+    capsule_data_df = load_item_data(model["Capsule"], db)
+
+    cosine_sim = cosine_similarity(
+        capsule_data_df[["flavor", "acidity", "roasting", "bitterness", "body"]]
     )
 
-    df_grade_cosine_sim = pd.DataFrame(
-        grade_cosine_sim,
-        index=capule_data_df["idx"],
-        columns=capule_data_df["name_ko"],
+    cosine_sim_df = pd.DataFrame(
+        cosine_sim,
+        index=capsule_data_df["idx"],
+        columns=capsule_data_df["name_ko"],
         dtype=np.float16,
     )
 
-    # 유사도 기준으로 추천 원두의 상위 10개를 출력
-    bean_recom = capule_data_df.copy()[["idx", "name_ko"]]
-    bean_recom["recommendation"] = bean_recom.apply(
+    # 유사도 기준으로 추천 캡슐의 상위 10개를 출력
+    recom_df = capsule_data_df.copy()[["idx", "name_ko"]]
+    recom_df["recommendation"] = recom_df.apply(
         lambda x: recommendation_list_by_id(
-            x.idx, df_grade_cosine_sim, capule_data_df, k=10
+            x.idx, cosine_sim_df, capsule_data_df, k=10
         ),
         axis=1,
     )
 
     # 파일 저장
     os.makedirs(save_dir, exist_ok=True)
-    bean_recom.to_csv(
+    recom_df.to_csv(
         path.join(save_dir, "item_recom_capsule.csv"),
         sep=",",
         index=False,
@@ -168,14 +169,14 @@ def recommendation_list_by_id(target_id, matrix, items, k=10):
 
 
 # 추천 결과가 저장된 json에서 값을 읽어오는 메소드
-def get_recom_by_item(itemIdx, matrix, k=10):
+def get_recom_by_item(itemIdx, matrix, k=5):
     try:
         recom_list = matrix.set_index("idx").loc[itemIdx]["recommendation"]
         recom_list = json.loads(recom_list.replace("'", '"'))
         recom_list = [dict(t) for t in {tuple(d.items()) for d in recom_list}]
 
     except:
-        print(itemIdx)
-        print(recom_list)
+        print("Invalid argument - {}".format(itemIdx))
+        recom_list = []
 
     return recom_list[:k]

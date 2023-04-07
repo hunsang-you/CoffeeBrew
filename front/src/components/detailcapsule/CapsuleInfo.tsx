@@ -5,20 +5,28 @@ import Capsule from '../../assets/tempImg/capsule.png';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Chart from './CapsuleChart';
 import { CapsuleDetailType } from './DetailCapsule';
-import { detailAPI } from '../../api/api';
+import { detailAPI, memberAPI } from '../../api/api';
 import acidityCapsule from '../../assets/detailImg/acidityCapsule.svg';
 import flavorCapsule from '../../assets/detailImg/flavorCapsule.svg';
 import bodyCapsule from '../../assets/detailImg/bodyCapsule.svg';
 import bitterCapsule from '../../assets/detailImg/bitterCapsule.svg';
 import roastingCapsule from '../../assets/detailImg/roastingCapsule.svg';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
 
 interface PropsType {
   detailCapsule: CapsuleDetailType | null;
 }
+interface likedCheck {
+  expired: boolean;
+  idx: number;
+  itemIdx: number;
+  itemType: string;
+}
 
 const CapsuleInfo = ({ detailCapsule }: PropsType) => {
   const [isLike, setIsLike] = useState(false);
-
+  const reduxData = useSelector((state: RootState) => state);
   const note = () => {
     const newwords =
       '#' + detailCapsule?.capsuleScore.coffeeingNote.replaceAll(', ', '#');
@@ -54,6 +62,29 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
 
   useEffect(() => {
     capsuleTaste();
+    const getLikesCapsules = async () => {
+      await memberAPI
+        .memberLiskeCapsules()
+        .then((request) => {
+          console.log(request);
+          const likeCheck: likedCheck[] = request.data.value;
+          const isLiked = likeCheck.filter(
+            (check) =>
+              check.itemType === 'capsule' &&
+              check.itemIdx === Number(capsuleId),
+          );
+          console.log(isLiked);
+          if (isLiked.length === 0) {
+            setIsLike(false);
+          } else {
+            setIsLike(true);
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+    if (reduxData.login) {
+      getLikesCapsules();
+    }
   }, []);
 
   return (
@@ -61,34 +92,36 @@ const CapsuleInfo = ({ detailCapsule }: PropsType) => {
       <CapsuleImgBox>
         <CapsuleImg1 src={capsuleImg} alt="img" />
         <HeartImgLike>
-          {isLike ? (
-            <AiFillHeart
-              size={50}
-              onClick={() => {
-                setIsLike(false);
-                detailAPI
-                  .capsuleLike(Number(capsuleId))
-                  .then((request) => {
-                    console.log('like api 취소성공', request.data);
-                  })
-                  .catch((e) => console.log(e));
-              }}
-              style={{ color: 'red' }}
-            />
-          ) : (
-            <AiOutlineHeart
-              size={50}
-              onClick={() => {
-                setIsLike(true);
-                detailAPI
-                  .capsuleLike(Number(capsuleId))
-                  .then((request) =>
-                    console.log('like api 연결', request.data),
-                  );
-              }}
-              style={{ color: 'gray' }}
-            />
-          )}
+          {reduxData.login ? (
+            isLike ? (
+              <AiFillHeart
+                size={50}
+                onClick={() => {
+                  setIsLike(false);
+                  detailAPI
+                    .capsuleLike(Number(capsuleId))
+                    .then((request) => {
+                      console.log('like api 취소성공', request.data);
+                    })
+                    .catch((e) => console.log(e));
+                }}
+                style={{ color: 'red' }}
+              />
+            ) : (
+              <AiOutlineHeart
+                size={50}
+                onClick={() => {
+                  setIsLike(true);
+                  detailAPI
+                    .capsuleLike(Number(capsuleId))
+                    .then((request) =>
+                      console.log('like api 연결', request.data),
+                    );
+                }}
+                style={{ color: 'gray' }}
+              />
+            )
+          ) : null}
         </HeartImgLike>
       </CapsuleImgBox>
       {/* 최상단 우측(정보, 차트) */}

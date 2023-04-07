@@ -6,6 +6,7 @@ import flavorCapsuleImg from '../../assets/detailImg/flavorCapsule.svg';
 import bodyCapsuleImg from '../../assets/detailImg/bodyCapsule.svg';
 import bitterCapsuleImg from '../../assets/detailImg/bitterCapsule.svg';
 import roastingCapsuleImg from '../../assets/detailImg/roastingCapsule.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface Propstypes {
   data: CapsuleDetailType;
@@ -13,6 +14,7 @@ interface Propstypes {
 }
 
 const RecommendCapsuleList = ({ data, i }: Propstypes) => {
+  const navigate = useNavigate();
   const [imgIdx, setImgIdx] = useState(0);
   const [capsuleImg, setCapsuleImg] = useState([
     acidityCapsuleImg,
@@ -41,7 +43,13 @@ const RecommendCapsuleList = ({ data, i }: Propstypes) => {
   ];
 
   return (
-    <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
+    <RecomItemT1
+      style={{ backgroundColor: BackColor[i] }}
+      onClick={() => {
+        navigate(`/detail/capsule/${data.capsule.idx}`);
+        window.location.reload();
+      }}
+    >
       <RecomItemImg src={capsuleImg[imgIdx]} />
       <RecomItemB>
         <RecomItemName>{data.capsule.nameKo}</RecomItemName>

@@ -1,5 +1,5 @@
 import * as S from '../components/useageStyle';
-import { surveyAPI } from '../api/api';
+import { surveyAPI, memberAPI } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {
@@ -13,6 +13,8 @@ import {
   Servey8,
 } from '../components/servey';
 import tw from 'tailwind-styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, setMemberInfo, RootState } from '../store';
 
 interface IsFooterType {
   setIsFooter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,9 +22,10 @@ interface IsFooterType {
 
 const Survey = ({ setIsFooter }: IsFooterType) => {
   const navigate = useNavigate();
+  const reduxData = useSelector((state: RootState) => state);
   const [page, setPage] = useState<number>(1);
   const [select, setSelect] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0]);
-
+  const dispatch = useDispatch<AppDispatch>();
   const before = () => {
     if (1 < page && page <= 8) {
       setPage(page - 1);
@@ -35,15 +38,22 @@ const Survey = ({ setIsFooter }: IsFooterType) => {
       surveyAPI
         .postSurvey(postData)
         .then((request) => {
-          console.log(request.data);
-          navigate('/');
+          memberAPI.memberInfo().then((request) => {
+            dispatch(setMemberInfo(request.data.value));
+            navigate('/mypage');
+          });
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-
+  useEffect(() => {
+    if (!reduxData.login) {
+      alert('로그인이 필요한 페이지입니다.');
+      navigate('/');
+    }
+  });
   useEffect(() => {
     setPage(1);
   }, []);

@@ -6,6 +6,7 @@ import sweetImg from '../../assets/detailImg/sweetBean.svg';
 import flavorImg from '../../assets/detailImg/flavorBean.svg';
 import bodyImg from '../../assets/detailImg/bodyBean.svg';
 import { recomType } from './RecommendBean';
+import { useNavigate } from 'react-router-dom';
 
 interface Propstypes {
   data: recomType;
@@ -13,6 +14,7 @@ interface Propstypes {
 }
 
 const RecommendBeanList = ({ data, i }: Propstypes) => {
+  const navigate = useNavigate();
   const [imgIdx, setImgIdx] = useState(0);
   const [beanImg, setBeanImg] = useState([
     acidityImg,
@@ -31,34 +33,6 @@ const RecommendBeanList = ({ data, i }: Propstypes) => {
     const maxIndex: number = values.indexOf(Math.max(...values));
     setImgIdx(maxIndex);
   }, []);
-  // const acidity = data?.acidity;
-  // const bitter = data?.bitterness;
-  // const body = data?.body;
-  // const flavor = data?.flavor;
-  // const sweetness = data?.sweetness;
-  // const values: any[] = [acidity, bitter, body, flavor, sweetness];
-  // const maxIndex: number = values.indexOf(Math.max(...values));
-  // const maxVar = Object.keys({
-  //   acidity,
-  //   bitter,
-  //   body,
-  //   flavor,
-  //   sweetness,
-  // })[maxIndex];
-  // let tempImg = [...cardImg];
-  // if (maxVar === 'acidity') {
-  //   tempImg[i] = acidityImg;
-  // } else if (maxVar === 'bitter') {
-  //   tempImg[i] = bitterImg;
-  // } else if (maxVar === 'body') {
-  //   tempImg[i] = bodyImg;
-  // } else if (maxVar === 'flavor') {
-  //   tempImg[i] = flavorImg;
-  // } else if (maxVar === 'sweetness') {
-  //   tempImg[i] = sweetImg;
-  // }
-  // console.log('test' + i);
-  // setCardImg(tempImg);
   const BackColor: string[] = [
     '#FFAA01',
     '#D4AA70',
@@ -67,7 +41,13 @@ const RecommendBeanList = ({ data, i }: Propstypes) => {
     '#D3BD94',
   ];
   return (
-    <RecomItemT1 style={{ backgroundColor: BackColor[i] }}>
+    <RecomItemT1
+      style={{ backgroundColor: BackColor[i] }}
+      onClick={() => {
+        navigate(`/detail/bean/${data.idx}`);
+        window.location.reload();
+      }}
+    >
       <RecomItemImg src={beanImg[imgIdx]} />
       <RecomItemB>
         <RecomItemName>{data.nameKo}</RecomItemName>

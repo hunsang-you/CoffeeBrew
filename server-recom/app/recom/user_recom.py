@@ -1,4 +1,3 @@
-import sys
 import os
 import os.path as path
 import json
@@ -8,63 +7,20 @@ import pandas as pd
 
 from ..util.logging_time import logging_time
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-from fastapi import HTTPException
-
 from sqlalchemy.orm import Session
-from sqlalchemy.orm.decl_api import DeclarativeMeta
 
-from .item_recom_cbf import load_item_data
-from ..db import crud
-from ..db import model
-
-
-@logging_time
-def load_user_data(db: Session):
-    db_users = crud.get_many(db, model.Member, limit=sys.maxsize)
-    user_idx = model.Member.__tablename__ + "_idx"
-
-    user_df = pd.DataFrame(
-        data=[user.values() for user in db_users], columns=db_users[0].keys()
-    )
-    user_df = user_df[list(model.Member.__table__.columns.keys())]
-
-    return user_df
-
-
-@logging_time
-def load_like_data(db: Session):
-    db_likes = crud.get_many(db, model.LikeList, limit=sys.maxsize)
-    like_idx = model.LikeList.__tablename__ + "_idx"
-
-    like_df = pd.DataFrame(
-        data=[like.values() for like in db_likes], columns=db_likes[0].keys()
-    )
-    like_df = like_df[list(model.LikeList.__table__.columns.keys())]
-
-    return like_df
-
-
-@logging_time
-def load_review_data(db: Session):
-    db_reviews = crud.get_many(db, model.Review, limit=sys.maxsize)
-    review_idx = model.Review.__tablename__ + "_idx"
-
-    review_df = pd.DataFrame(
-        data=[review.values() for review in db_reviews], columns=db_reviews[0].keys()
-    )
-    review_df = review_df[list(model.Review.__table__.columns.keys())]
-
-    return review_df
+from ..db.model import Model
+from ..db.dataloader import DataLoader
 
 
 @logging_time
 def calc_recom_bean_by_age(db: Session, save_dir: str):
-    member_df = load_user_data(db)
-    like_list_df = load_like_data(db)
-    bean_data_df = load_item_data(model.Bean, db)
+    model = Model()
+    loader = DataLoader(db)
+
+    member_df = loader.load_data(model["Member"])
+    like_list_df = loader.load_data_by_item_type(model["LikeList"], "bean")
+    bean_data_df = loader.load_data(model["Bean"])
 
     member_like_df = pd.merge(
         like_list_df,
@@ -73,26 +29,29 @@ def calc_recom_bean_by_age(db: Session, save_dir: str):
         right_on="idx",
     )
 
-    member_like_df.drop(
-        member_like_df[member_like_df["item_type"] == "capsule"].index,
-        axis=0,
-        inplace=True,
-    )
-
     member_like_df = pd.merge(
         member_like_df,
         bean_data_df[["idx", "name_ko"]],
         left_on="item_idx",
         right_on="idx",
     )
+
     member_like_df = member_like_df[
         ["item_idx", "name_ko", "member_idx", "age_range", "gender"]
     ]
     member_like_df["count"] = 1
 
+    # 각 연령대별 좋아요를 많이 받은 상품을 표시
     age_like_df = member_like_df.pivot_table(
         index=["age_range"], columns=["item_idx"], values="count", aggfunc="sum"
     )
+
+    # 모든 연령대를 통틀어 가장 좋아요를 많이 받은 상품을 표시
+    age_like_df.loc["00~00"] = member_like_df.pivot_table(
+        columns=["item_idx"], values="count", aggfunc="sum"
+    ).iloc[0]
+
+    # 결측치 채우기
     age_like_df.fillna(0, inplace=True)
 
     # 좋아요 합계 기준으로 연령대별 추천 원두의 상위 10개를 출력
@@ -116,21 +75,18 @@ def calc_recom_bean_by_age(db: Session, save_dir: str):
 
 @logging_time
 def calc_recom_capsule_by_age(db: Session, save_dir: str):
-    member_df = load_user_data(db)
-    like_list_df = load_like_data(db)
-    capsule_data_df = load_item_data(model.Capsule, db)
+    model = Model()
+    loader = DataLoader(db)
+
+    member_df = loader.load_data(model["Member"])
+    like_list_df = loader.load_data_by_item_type(model["LikeList"], "capsule")
+    capsule_data_df = loader.load_data(model["Capsule"])
 
     member_like_df = pd.merge(
         like_list_df,
         member_df[["idx", "age_range", "gender"]],
         left_on="member_idx",
         right_on="idx",
-    )
-
-    member_like_df.drop(
-        member_like_df[member_like_df["item_type"] == "bean"].index,
-        axis=0,
-        inplace=True,
     )
 
     member_like_df = pd.merge(
@@ -144,12 +100,20 @@ def calc_recom_capsule_by_age(db: Session, save_dir: str):
     ]
     member_like_df["count"] = 1
 
+    # 각 연령대별 좋아요를 많이 받은 상품을 표시
     age_like_df = member_like_df.pivot_table(
         index=["age_range"], columns=["item_idx"], values="count", aggfunc="sum"
     )
+
+    # 모든 연령대를 통틀어 가장 좋아요를 많이 받은 상품을 표시
+    age_like_df.loc["00~00"] = member_like_df.pivot_table(
+        columns=["item_idx"], values="count", aggfunc="sum"
+    ).iloc[0]
+
+    # 결측치 채우기
     age_like_df.fillna(0, inplace=True)
 
-    # 좋아요 합계 기준으로 연령대별 추천 원두의 상위 10개를 출력
+    # 좋아요 합계 기준으로 연령대별 추천 캡슐의 상위 10개를 출력
     recom_df = pd.DataFrame(
         [[i + 1, age_range] for i, age_range in enumerate(age_like_df.index)],
         columns=["idx", "age_range"],
@@ -171,12 +135,13 @@ def calc_recom_capsule_by_age(db: Session, save_dir: str):
 def get_recom_by_age(age_range, matrix, k=5):
     try:
         recom_list = matrix.set_index("age_range").loc[age_range]["recommendation"]
-        recom_list = json.loads(recom_list.replace("'", '"'))
-        recom_list = [dict(t) for t in {tuple(d.items()) for d in recom_list}]
 
     except:
-        print(age_range)
-        print(recom_list)
+        print("Invalid argument - {}".format(age_range))
+        recom_list = matrix.set_index("age_range").loc["00~00"]["recommendation"]
+
+    recom_list = json.loads(recom_list.replace("'", '"'))
+    recom_list = [dict(t) for t in {tuple(d.items()) for d in recom_list}]
 
     return recom_list[:k]
 
@@ -184,12 +149,13 @@ def get_recom_by_age(age_range, matrix, k=5):
 def get_recom_by_gender(gender, matrix, k=5):
     try:
         recom_list = matrix.set_index("gender").loc[gender]["recommendation"]
-        recom_list = json.loads(recom_list.replace("'", '"'))
-        recom_list = [dict(t) for t in {tuple(d.items()) for d in recom_list}]
 
     except:
-        print(gender)
-        print(recom_list)
+        print("Invalid argument - {}".format(gender))
+        recom_list = matrix.set_index("gender").loc["None"]["recommendation"]
+
+    recom_list = json.loads(recom_list.replace("'", '"'))
+    recom_list = [dict(t) for t in {tuple(d.items()) for d in recom_list}]
 
     return recom_list[:k]
 

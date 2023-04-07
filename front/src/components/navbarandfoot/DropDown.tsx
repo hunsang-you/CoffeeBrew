@@ -65,8 +65,13 @@ export const DropDown = ({ setMenuDropDownOpen }: DropDownMenuType) => {
                   : null
               }  hover:text-mainColorOrange active:shadow-sm active:relative active:top-1`}
               onClick={() => {
-                navigate('/survey');
-                setMenuDropDownOpen(false);
+                if (reduxData.login) {
+                  navigate('/survey');
+                  setMenuDropDownOpen(false);
+                } else {
+                  alert('로그인이 필요합니다.');
+                  setMenuDropDownOpen(false);
+                }
               }}
             >
               내게 맞는 원두 찾기
