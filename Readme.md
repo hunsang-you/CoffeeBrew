@@ -149,18 +149,19 @@ Spring Rest API, FastAPI, 추천알고리즘(collaborative filtering, content ba
 
 ![커피관련용어.PNG](images/커피관련용어.PNG)
 <br>
+![지도로보는 커피](https://github.com/hunsang-you/CoffeeBrew/assets/51877128/dcd895a4-f18c-4bb9-9a26-e5b2bf48ce56)
 
-
-![지도로보는 커피.JPG](images/지도로보는 커피.JPG)
 <br>
 
 #### 구경하기
+![캡슐,원두 구경하기](https://github.com/hunsang-you/CoffeeBrew/assets/51877128/bf8e153e-09d1-43f6-b7c4-02026e469f0c)
 
-![캡슐,원두 구경하기.JPG](images/캡슐,원두 구경하기.JPG)
+
 <br>
 
 
-![디테일 페이지-커피추천.JPG](images/디테일 페이지-커피추천.JPG)
+![디테일 페이지-커피추천](https://github.com/hunsang-you/CoffeeBrew/assets/51877128/59f8b615-83ae-4757-ab74-f837b21e5dc2)
+
 <br>
 
 #### 원두 성향테스트
